@@ -1,11 +1,26 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'spec_helper'
-ENV['RAILS_ENV'] ||= 'test'
-require_relative '../config/environment'
+require "spec_helper"
+ENV["RAILS_ENV"] ||= "test"
+require_relative "../config/environment"
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
-require 'rspec/rails'
+if Rails.env.production?
+  abort("The Rails environment is running in production mode!")
+end
+require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
+
+require "capybara/cuprite"
+
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(
+    app,
+    timeout: 10,
+    process_timeout: 30,
+    window_size: [1200, 800]
+  )
+end
+Capybara.default_driver = :cuprite
+Capybara.javascript_driver = :cuprite
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
