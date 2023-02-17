@@ -10,7 +10,7 @@ gem "govuk_design_system_formbuilder"
 gem "jsbundling-rails"
 gem "pg", "~> 1.1"
 gem "propshaft"
-gem "puma", "~> 5.0"
+gem "puma", "~> 6.1"
 gem "rails", "~> 7.0.4", ">= 7.0.4.2"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
