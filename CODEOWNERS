@@ -1,0 +1,4 @@
+- @DFE-Digital/access-your-teaching-certificates
+  /.github/ @DFE-Digital/teacher-services-infrastructure @DFE-Digital/access-your-teaching-certificates
+  /terraform/ @DFE-Digital/teacher-services-infrastructure @DFE-Digital/access-your-teaching-certificates
+  Makefile @DFE-Digital/teacher-services-infrastructure @DFE-Digital/access-your-teaching-certificates
