@@ -5,23 +5,23 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+- Ruby version
 
-* System dependencies
+- System dependencies
 
-* Configuration
+- Configuration
 
-* Database creation
+- Database creation
 
-* Database initialization
+- Database initialization
 
-* How to run the test suite
+- How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+- Services (job queues, cache servers, search engines, etc.)
 
-* Deployment instructions
+- Deployment instructions
 
-* ...
+- ...
 
 ## Setup
 
@@ -29,11 +29,11 @@ Things you may want to cover:
 
 This project depends on:
 
-  - [Ruby](https://www.ruby-lang.org/)
-  - [Ruby on Rails](https://rubyonrails.org/)
-  - [NodeJS](https://nodejs.org/)
-  - [Yarn](https://yarnpkg.com/)
-  - [Postgres](https://www.postgresql.org/)
+- [Ruby](https://www.ruby-lang.org/)
+- [Ruby on Rails](https://rubyonrails.org/)
+- [NodeJS](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/)
+- [Postgres](https://www.postgresql.org/)
 
 ### asdf
 
@@ -69,6 +69,7 @@ To run the linters:
 ```bash
 bin/lint
 ```
+
 ### Intellisense
 
 [solargraph](https://github.com/castwide/solargraph) is bundled as part of the
@@ -87,6 +88,7 @@ You'll also need to configure your editor's `solargraph` plugin to
 ```diff
 +  "solargraph.useBundler": true,
 ```
+
 ## How the application works
 
 We keep track of architecture decisions in [Architecture Decision Records
