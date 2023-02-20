@@ -9,6 +9,7 @@ end
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 
+require "capybara/rspec"
 require "capybara/cuprite"
 
 Capybara.register_driver(:cuprite) do |app|
@@ -75,4 +76,5 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.before(:each, type: :system) { driven_by(:cuprite) }
 end
