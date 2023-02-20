@@ -1,0 +1,10 @@
+layout: support_layout
+parent_controller: "SupportInterface::SupportInterfaceController"
+feature_flags:
+  service_open:
+    author: Felix Clack
+    description: Remove the basic authentication when accessing the main
+      website. Keeps it in place for the support interface. This flag should
+      always be inactive on non-production deployments, to prevent accidental
+      access by members of the public. Once the service goes live, this flag
+      should always be active on production.
