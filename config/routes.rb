@@ -6,4 +6,8 @@ Rails.application.routes.draw do
 
     mount FeatureFlags::Engine => "/features"
   end
+
+  get "/accessibility", to: "static#accessibility"
+  get "/cookies", to: "static#cookies"
+  get "/privacy", to: "static#privacy"
 end
