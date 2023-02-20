@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   namespace :support_interface, path: "/support" do
     get "/", to: "support_interface#index"
+
+    mount FeatureFlags::Engine => "/features"
   end
 end
