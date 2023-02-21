@@ -14,6 +14,8 @@ gem "govuk_feature_flags",
     tag: "v1.0.1"
 gem "govuk_markdown"
 gem "jsbundling-rails"
+gem "omniauth-oauth2", "~> 1.8"
+gem "omniauth-rails_csrf_protection"
 gem "pg", "~> 1.1"
 gem "propshaft"
 gem "puma", "~> 6.1"
