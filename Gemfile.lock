@@ -120,6 +120,11 @@ GEM
       railties (>= 3.2)
     e2mmap (0.1.0)
     erubi (1.12.0)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     ferrum (0.13)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
@@ -368,6 +373,7 @@ DEPENDENCIES
   devise
   devise_invitable
   dotenv-rails
+  factory_bot_rails
   govuk-components
   govuk_design_system_formbuilder
   govuk_feature_flags!
