@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :staff
+
   root to: "pages#home"
 
   namespace :support_interface, path: "/support" do

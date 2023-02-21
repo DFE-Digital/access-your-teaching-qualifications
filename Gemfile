@@ -39,6 +39,7 @@ end
 group :test do
   gem "capybara"
   gem "cuprite"
+  gem "shoulda-matchers"
 end
 
 group :test, :development do
