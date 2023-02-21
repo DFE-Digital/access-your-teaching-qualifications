@@ -2,9 +2,10 @@ class Staff < ApplicationRecord
   devise(
     :confirmable,
     :database_authenticatable,
+    :invitable,
     :lockable,
-    :registerable,
     :recoverable,
+    :registerable,
     :rememberable,
     :timeoutable,
     :trackable,
