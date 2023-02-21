@@ -78,6 +78,7 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
     backport (1.2.0)
+    bcrypt (3.1.18)
     benchmark (0.2.1)
     bindex (0.8.1)
     bootsnap (1.16.0)
@@ -103,6 +104,12 @@ GEM
     debug (1.7.1)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    devise (4.9.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
     diff-lcs (1.5.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
@@ -176,6 +183,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.14.2-x86_64-linux)
       racc (~> 1.4)
+    orm_adapter (0.5.0)
     pagy (5.10.1)
       activesupport
     parallel (1.22.1)
@@ -228,6 +236,9 @@ GEM
     regexp_parser (2.7.0)
     reline (0.3.2)
       io-console (~> 0.5)
+    responders (3.1.0)
+      actionpack (>= 5.2)
+      railties (>= 5.2)
     reverse_markdown (2.1.1)
       nokogiri
     rexml (3.2.5)
@@ -322,6 +333,8 @@ GEM
       activesupport (>= 5.0.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
+    warden (1.2.9)
+      rack (>= 2.0.9)
     web-console (4.2.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -347,6 +360,7 @@ DEPENDENCIES
   cssbundling-rails
   cuprite
   debug
+  devise
   dotenv-rails
   govuk-components
   govuk_design_system_formbuilder
