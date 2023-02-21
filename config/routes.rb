@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
-  devise_for :staff
+  devise_for :staff,
+             controllers: {
+               confirmations: "staff/confirmations",
+               invitations: "staff/invitations",
+               passwords: "staff/passwords",
+               sessions: "staff/sessions",
+               unlocks: "staff/unlocks"
+             }
 
   root to: "pages#home"
 
