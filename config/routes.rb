@@ -8,7 +8,10 @@ Rails.application.routes.draw do
                unlocks: "staff/unlocks"
              }
 
-  devise_for :users
+  devise_for :users,
+             controllers: {
+               omniauth_callbacks: "users/omniauth_callbacks"
+             }
   root to: "pages#home"
 
   namespace :support_interface, path: "/support" do
