@@ -8,6 +8,7 @@ Rails.application.routes.draw do
                unlocks: "staff/unlocks"
              }
 
+  devise_for :users
   root to: "pages#home"
 
   namespace :support_interface, path: "/support" do
