@@ -1,1 +1,10 @@
 <h1 class="govuk-heading-l">Sign in</h1>
+
+<%=
+  govuk_button_to(
+    "Sign in with Identity",
+    omniauth_authorize_path(:user, :identity),
+    method: :post
+  )
+%>
+
