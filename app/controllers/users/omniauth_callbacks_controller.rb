@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  # You should configure your model like this:
-  # devise :omniauthable, omniauth_providers: [:twitter]
-
-  # You should also create an action method in this controller like this:
-  # def twitter
-  # end
-
   # More info at:
   # https://github.com/heartcombo/devise#omniauth
 
-  # GET|POST /resource/auth/twitter
+  def identity
+    auth = request.env["omniauth.auth"]
+    @user = User.from_identity(auth)
+    sign_in @user
+    session[:identity_user_token] = auth.credentials.token
+    flash[:notice] = "Signed in successfully."
+    redirect_to root_path
+  end
+
   # def passthru
   #   super
   # end
 
-  # GET|POST /users/auth/twitter/callback
   # def failure
   #   super
   # end
