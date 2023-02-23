@@ -10,17 +10,19 @@ module Omniauth
                token_url: "/connect/token"
              }
       option :pkce, true
-      option :scope, %i[email openid profile trn dqt:read].join(" ")
+      option :scope, "dqt:read"
 
       uid { raw_info["sub"] }
 
       info do
         {
-          date_of_birth: parsed_date_of_birth,
           email: raw_info["email"].downcase,
           email_verified: parsed_email_verified,
           name: raw_info["name"],
-          trn: raw_info["trn"]
+          given_name: raw_info["given_name"],
+          family_name: raw_info["family_name"],
+          trn: raw_info["trn"],
+          date_of_birth: raw_info["birthdate"]
         }
       end
 
@@ -28,13 +30,6 @@ module Omniauth
 
       def raw_info
         @raw_info ||= access_token.get("connect/userinfo").parsed
-      end
-
-      def parsed_date_of_birth
-        raw_date_of_birth = raw_info["birthdate"]
-        return if raw_date_of_birth.blank?
-
-        Date.parse(raw_date_of_birth, "%Y-%m-%d")
       end
 
       def parsed_email_verified
