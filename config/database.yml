@@ -5,12 +5,13 @@ default: &default
 
 development:
   <<: *default
-  database: access_your_teaching_certificates_development
+  database: access_your_teaching_qualifications_development
 
 test:
   <<: *default
-  database: access_your_teaching_certificates_test
+  database: access_your_teaching_qualifications_test
 
 production:
   <<: *default
-  database: access_your_teaching_certificates_production
+  database: access_your_teaching_qualifications_production
+  password: <%= ENV["DATABASE_PASSWORD"] %>
