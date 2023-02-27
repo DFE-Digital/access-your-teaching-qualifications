@@ -1,3 +1,5 @@
+require "sidekiq/web"
+
 Rails.application.routes.draw do
   root to: "pages#home"
 
@@ -9,6 +11,12 @@ Rails.application.routes.draw do
                sessions: "staff/sessions",
                unlocks: "staff/unlocks"
              }
+
+  devise_scope :staff do
+    authenticate :staff do
+      mount Sidekiq::Web, at: "sidekiq"
+    end
+  end
 
   namespace :support_interface, path: "/support" do
     get "/", to: "support_interface#index"
