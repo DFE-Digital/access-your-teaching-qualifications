@@ -15,6 +15,7 @@ gem "govuk_feature_flags",
 gem "govuk_markdown"
 gem "jsbundling-rails"
 gem "mail-notify"
+gem "okcomputer"
 gem "omniauth-oauth2", "~> 1.8"
 gem "omniauth-rails_csrf_protection"
 gem "pg", "~> 1.4"
