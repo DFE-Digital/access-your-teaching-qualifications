@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.describe "Support", type: :system do
-  it "visiting the support interface" do
+RSpec.feature "Support", type: :system do
+  scenario "visiting the support interface" do
     when_i_am_authorized_as_a_support_user
     and_i_visit_the_support_page
     then_i_see_the_support_page
