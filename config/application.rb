@@ -43,5 +43,7 @@ module AccessYourTeachingCertificates
                   "https://github.com/DFE-Digital/refer-serious-misconduct/#notify"
         end
     }
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
