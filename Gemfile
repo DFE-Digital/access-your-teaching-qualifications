@@ -26,8 +26,9 @@ gem "sidekiq"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
-  gem "pry-nav"
   gem "dotenv-rails"
+  gem "launchy"
+  gem "pry-nav"
 end
 
 group :development do

@@ -165,6 +165,8 @@ GEM
       rexml
     kramdown-parser-gfm (1.1.0)
       kramdown (~> 2.0)
+    launchy (2.5.2)
+      addressable (~> 2.8)
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -425,6 +427,7 @@ DEPENDENCIES
   govuk_feature_flags!
   govuk_markdown
   jsbundling-rails
+  launchy
   mail-notify
   okcomputer
   omniauth-oauth2 (~> 1.8)
