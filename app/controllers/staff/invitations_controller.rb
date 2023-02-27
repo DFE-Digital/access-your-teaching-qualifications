@@ -6,7 +6,7 @@ class Staff::InvitationsController < Devise::InvitationsController
   protected
 
   def invite_resource(&block)
-    if current_inviter.is_an?(AnonymousSupportUser)
+    if current_inviter.is_a?(AnonymousSupportUser)
       resource_class.invite!(invite_params, &block)
     else
       super

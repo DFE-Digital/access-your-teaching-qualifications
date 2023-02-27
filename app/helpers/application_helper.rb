@@ -12,6 +12,17 @@ module ApplicationHelper
           href: main_app.support_interface_feature_flags_path,
           text: "Features"
         )
+        header.navigation_item(
+          active: request.path.start_with?("/support/staff"),
+          text: "Staff",
+          href: main_app.support_interface_staff_index_path
+        )
+        if current_staff
+          header.navigation_item(
+            href: main_app.staff_sign_out_path,
+            text: "Sign out"
+          )
+        end
       end
     end
   end

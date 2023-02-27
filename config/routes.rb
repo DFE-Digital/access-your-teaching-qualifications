@@ -16,10 +16,14 @@ Rails.application.routes.draw do
     authenticate :staff do
       mount Sidekiq::Web, at: "sidekiq"
     end
+
+    get "/staff/sign_out", to: "staff/sessions#destroy"
   end
 
   namespace :support_interface, path: "/support" do
     get "/", to: "support_interface#index"
+
+    resources :staff, only: %i[index]
 
     mount FeatureFlags::Engine => "/features"
   end
