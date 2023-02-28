@@ -3,7 +3,7 @@ require "rails_helper"
 RSpec.feature "Staff support", type: :system do
   include CommonSteps
 
-  it "allows inviting a user" do
+  scenario "Initial support user invites Staff" do
     given_the_service_is_open
     and_staff_http_basic_is_active
 
