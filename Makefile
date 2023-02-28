@@ -83,7 +83,7 @@ ci:	## Run in automation environment
 	$(eval SP_AUTH=true)
 
 set-azure-resource-group-tags: ##Tags that will be added to resource group on it's creation in ARM template
-	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early Years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Access Your Teaching Certificates", "Service Line": "Teaching Workforce", "Service": "Teacher Training and Qualifications", "Service Offering": "Access Your Teaching Certificates", "Environment" : "${ENV_TAG}"}' | jq . ))
+	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early Years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Access Your Teaching Qualifications", "Service Line": "Teaching Workforce", "Service": "Teacher Training and Qualifications", "Service Offering": "Access Your Teaching Qualifications", "Environment" : "${ENV_TAG}"}' | jq . ))
 
 set-azure-template-tag:
 	$(eval ARM_TEMPLATE_TAG=1.1.1)
