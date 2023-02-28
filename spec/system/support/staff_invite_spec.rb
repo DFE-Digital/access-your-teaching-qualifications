@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Staff support", type: :system do
+RSpec.feature "Staff support", type: :system do
   include CommonSteps
 
   it "allows inviting a user" do
