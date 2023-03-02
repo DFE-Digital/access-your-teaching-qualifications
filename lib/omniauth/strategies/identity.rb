@@ -28,7 +28,7 @@ module Omniauth
 
       extra { { "raw_info" => raw_info } }
 
-      credentials { { token: access_token } }
+      credentials { { token: access_token.token } }
 
       def raw_info
         @raw_info ||= access_token.get("connect/userinfo").parsed
