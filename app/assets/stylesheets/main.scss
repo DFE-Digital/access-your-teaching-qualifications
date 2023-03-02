@@ -3,3 +3,24 @@ $govuk-new-link-styles: true;
 $govuk-assets-path: "/";
 
 @import "govuk-frontend/govuk/all";
+
+.app__details-menu {
+  h3 {
+    border-bottom: 2px solid #1d70b8;
+    padding-bottom: 10px;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+.app__induction-details {
+  border-top: 1px solid #b1b4b6;
+  margin-bottom: 0;
+  padding-top: 10px;
+}
+
+.app__induction-details-list {
+  font-size: 1rem;
+}
