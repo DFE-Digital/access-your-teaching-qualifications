@@ -1,0 +1,32 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-xl"><%= @user.name.possessive %></span>
+    <h1 class="govuk-heading-xl">Teaching qualifications</h1>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        <%= render InductionSummaryComponent.new(qualification: @induction) if @induction %>
+        <%= render QtsSummaryComponent.new(qualification: @qts) if @qts %>
+        <%= render IttSummaryComponent.new(qualification: @itt) if @itt %>
+      </div>
+
+      <div class="govuk-grid-column-one-third app__details-menu">
+        <h3 class="govuk-heading-m">Your details</h3>
+        <p>
+          Name on certificates<br /> 
+          <strong><%= @user.name.full %></strong>
+        </p>
+
+        <p>
+          Date of birth<br /> 
+          <strong><%= @user.date_of_birth.to_fs(:long_uk) %></strong>  
+        </p>
+
+        <p>
+          Teacher Reference number (TRN)<br /> 
+          <strong><%= @user.trn %></strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

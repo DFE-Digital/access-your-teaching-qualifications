@@ -33,6 +33,11 @@ Rails.application.routes.draw do
                omniauth_callbacks: "users/omniauth_callbacks"
              }
   get "/sign-in", to: "users/sign_in#new"
+
+  devise_scope :user do
+    resource :qualifications, only: [:show]
+  end
+
   get "/accessibility", to: "static#accessibility"
   get "/cookies", to: "static#cookies"
   get "/privacy", to: "static#privacy"
