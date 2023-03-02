@@ -10,7 +10,13 @@ module QualificationsApi
 
     def teacher
       response = client.get("v3/teacher")
-      QualificationsApi::Teacher.new response.body
+
+      case response.status
+      when 200
+        QualificationsApi::Teacher.new response.body
+      when 401
+        raise QualificationsApi::InvalidTokenError
+      end
     end
 
     def client
