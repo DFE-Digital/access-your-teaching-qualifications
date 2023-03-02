@@ -15,6 +15,18 @@ class FakeQualificationsApi < Sinatra::Base
     end
   end
 
+  get "/v3/certificates/qts" do
+    content_type "application/pdf"
+    attachment "qts_certificate.pdf"
+
+    case bearer_token
+    when "token"
+      "pdf data"
+    when "invalid-token"
+      halt 401
+    end
+  end
+
   private
 
   def bearer_token

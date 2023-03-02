@@ -19,6 +19,17 @@ module QualificationsApi
       end
     end
 
+    def qts_certificate
+      response = client.get("v3/certificates/qts")
+
+      case response.status
+      when 200
+        response.body
+      when 401
+        raise QualificationsApi::InvalidTokenError
+      end
+    end
+
     def client
       @client ||=
         Faraday.new(
