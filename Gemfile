@@ -49,9 +49,11 @@ group :test do
   gem "cuprite"
   gem "factory_bot_rails"
   gem "shoulda-matchers"
+  gem "webmock"
 end
 
 group :test, :development do
   gem "rspec"
   gem "rspec-rails"
+  gem "sinatra"
 end
