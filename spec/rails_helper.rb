@@ -12,6 +12,9 @@ require "rspec/rails"
 require "capybara/rspec"
 require "capybara/cuprite"
 require "sidekiq/testing"
+require "webmock/rspec"
+
+WebMock.disable_net_connect!(allow_localhost: true)
 
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(
@@ -80,4 +83,10 @@ RSpec.configure do |config|
   config.before(:each, type: :system) { driven_by(:cuprite) }
   config.before { Sidekiq::Worker.clear_all }
   config.include ActiveJob::TestHelper
+
+  config.before(:each) do
+    stub_request(:any, /preprod-teacher-qualifications-api/).to_rack(
+      FakeQualificationsApi
+    )
+  end
 end
