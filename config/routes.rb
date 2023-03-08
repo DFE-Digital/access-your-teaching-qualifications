@@ -1,7 +1,7 @@
 require "sidekiq/web"
 
 Rails.application.routes.draw do
-  root to: "pages#home"
+  root to: "users/sign_in#new"
 
   devise_for :staff,
              controllers: {

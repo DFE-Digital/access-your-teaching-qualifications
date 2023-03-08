@@ -12,7 +12,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session[:identity_user_token_expiry] = auth.credentials.expires_at
     log_auth_credentials_in_development(auth)
     flash[:notice] = "Signed in successfully."
-    redirect_to root_path
+    redirect_to qualifications_path
   end
 
   # def passthru
