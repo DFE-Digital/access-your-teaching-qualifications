@@ -23,6 +23,13 @@ module ApplicationHelper
             text: "Sign out"
           )
         end
+      else
+        if current_user
+          header.with_navigation_item(
+            href: main_app.sign_out_path,
+            text: "Sign out"
+          )
+        end
       end
     end
   end
