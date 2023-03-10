@@ -28,7 +28,7 @@ class IttSummaryComponent < ViewComponent::Base
           text: "Training type"
         },
         value: {
-          text: qualification.training_type
+          text: qualification.programme_type
         }
       },
       {
@@ -36,7 +36,7 @@ class IttSummaryComponent < ViewComponent::Base
           text: "Subjects"
         },
         value: {
-          text: qualification.subjects.join(", ")
+          text: qualification.subjects.map(&:titleize).join(", ")
         }
       },
       {
