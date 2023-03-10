@@ -19,7 +19,7 @@ module QualificationsApi
     end
 
     def qts_date
-      api_data.fetch("qtsDate")
+      api_data.fetch("qtsDate")&.to_date
     end
   end
 end

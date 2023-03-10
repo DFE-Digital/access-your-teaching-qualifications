@@ -14,6 +14,19 @@ class QtsSummaryComponent < ViewComponent::Base
         value: {
           text: qualification.awarded_at.to_fs(:long_uk)
         }
+      },
+      {
+        key: {
+          text: "Certificate"
+        },
+        value: {
+          text:
+            link_to(
+              "Download QTS certificate",
+              qts_certificate_path,
+              class: "govuk-link"
+            )
+        }
       }
     ]
   end
