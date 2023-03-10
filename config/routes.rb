@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     resource :qualifications, only: [:show]
+    resource :qts_certificate, only: [:show]
   end
 
   get "/accessibility", to: "static#accessibility"

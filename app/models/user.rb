@@ -5,11 +5,11 @@ class User < ApplicationRecord
     email = auth_data.info.email
     user = find_or_initialize_by(email:)
     user.assign_attributes(
-      name: auth_data.info.name,
-      given_name: auth_data.info.given_name,
+      date_of_birth: auth_data.info.date_of_birth,
       family_name: auth_data.info.family_name,
-      trn: auth_data.info.trn,
-      date_of_birth: auth_data.info.date_of_birth
+      given_name: auth_data.info.given_name,
+      name: auth_data.info.name,
+      trn: auth_data.info.trn
     )
     user.tap(&:save!)
   end
@@ -48,13 +48,5 @@ class User < ApplicationRecord
 
   def name
     ::NameOfPerson::PersonName.full(self[:name])
-  end
-
-  def qts
-    Struct.new(:name, :status, :awarded_at).new(
-      "Qualified teacher status (QTS)",
-      :awarded,
-      Date.new(2014, 9, 1)
-    )
   end
 end

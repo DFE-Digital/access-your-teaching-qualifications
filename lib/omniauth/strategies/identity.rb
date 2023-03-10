@@ -5,8 +5,8 @@ module Omniauth
 
       option :client_options,
              {
-               site: ENV.fetch("IDENTITY_API_DOMAIN"),
                authorize_url: "/connect/authorize",
+               site: ENV.fetch("IDENTITY_API_DOMAIN"),
                token_url: "/connect/token"
              }
       option :pkce, true
@@ -16,13 +16,13 @@ module Omniauth
 
       info do
         {
+          date_of_birth: raw_info["birthdate"],
           email: raw_info["email"].downcase,
           email_verified: parsed_email_verified,
-          name: raw_info["name"],
-          given_name: raw_info["given_name"],
           family_name: raw_info["family_name"],
-          trn: raw_info["trn"],
-          date_of_birth: raw_info["birthdate"]
+          given_name: raw_info["given_name"],
+          name: raw_info["name"],
+          trn: raw_info["trn"]
         }
       end
 

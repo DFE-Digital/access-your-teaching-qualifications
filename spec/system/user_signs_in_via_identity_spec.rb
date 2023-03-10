@@ -3,6 +3,7 @@ require "rails_helper"
 
 RSpec.feature "Identity auth", type: :system do
   include CommonSteps
+  include AuthenticationSteps
 
   around do |example|
     OmniAuth.config.test_mode = true
@@ -20,33 +21,6 @@ RSpec.feature "Identity auth", type: :system do
   end
 
   private
-
-  def and_identity_auth_is_mocked
-    OmniAuth.config.mock_auth[:identity] = OmniAuth::AuthHash.new(
-      {
-        provider: "identity",
-        info: {
-          email: "test@example.com",
-          name: "Test User",
-          given_name: "Test",
-          family_name: "User",
-          trn: "123456",
-          date_of_birth: "1986-01-02"
-        },
-        credentials: {
-          token: SecureRandom.hex
-        }
-      }
-    )
-  end
-
-  def when_i_go_to_the_sign_in_page
-    visit sign_in_path
-  end
-
-  def and_click_the_sign_in_button
-    click_button "Sign in with Identity"
-  end
 
   def then_i_am_signed_in_after_successfully_authenticating_with_identity
     expect(page).to have_content "Signed in successfully"
