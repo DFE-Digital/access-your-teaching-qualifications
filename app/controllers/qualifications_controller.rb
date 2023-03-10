@@ -2,8 +2,14 @@ class QualificationsController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    client = QualificationsApi::Client.new(token: session[:identity_user_token])
-    teacher = client.teacher
+    begin
+      client =
+        QualificationsApi::Client.new(token: session[:identity_user_token])
+      teacher = client.teacher
+    rescue QualificationsApi::InvalidTokenError
+      redirect_to sign_out_path
+      return
+    end
 
     if teacher
       @qts =
@@ -12,6 +18,7 @@ class QualificationsController < ApplicationController
           teacher.qts_date.present? ? :awarded : :not_awarded,
           teacher.qts_date
         )
+      @itt = teacher.itt
     end
 
     @user =
@@ -22,6 +29,5 @@ class QualificationsController < ApplicationController
           trn: "1234567"
         )
     @induction = @user.induction
-    @itt = @user.itt
   end
 end

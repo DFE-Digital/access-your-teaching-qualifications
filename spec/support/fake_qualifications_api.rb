@@ -8,7 +8,26 @@ class FakeQualificationsApi < Sinatra::Base
         trn: "3000299",
         firstName: "Terry",
         lastName: "Walsh",
-        qtsDate: "2023-02-27"
+        qtsDate: "2023-02-27",
+        initialTeacherTraining: [
+          {
+            qualification: {
+              name: "BA"
+            },
+            startDate: "2022-02-28",
+            endDate: "2023-01-28",
+            programmeType: "HEI",
+            result: "Pass",
+            ageRange: {
+              description: "10 to 16 years"
+            },
+            provider: {
+              name: "Earl Spencer Primary School",
+              ukprn: nil
+            },
+            subjects: [{ code: "100079", name: "business studies" }]
+          }
+        ]
       }.to_json
     when "invalid-token"
       halt 401

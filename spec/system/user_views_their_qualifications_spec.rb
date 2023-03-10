@@ -49,13 +49,13 @@ RSpec.feature "User views their qualifications", type: :system do
 
   def then_i_see_my_itt_details
     expect(page).to have_content("Initial teacher training (ITT)")
-    expect(page).to have_content("Postgraduate Certificate in Education (PGCE)")
-    expect(page).to have_content("West London University")
+    expect(page).to have_content("BA")
+    expect(page).to have_content("Earl Spencer Primary School")
     expect(page).to have_content("HEI")
-    expect(page).to have_content("English, Maths")
-    expect(page).to have_content("1 October 2015")
-    expect(page).to have_content("23 June 2018")
+    expect(page).to have_content("Business Studies")
+    expect(page).to have_content("28 February 2022")
+    expect(page).to have_content("28 January 2023")
     expect(page).to have_content("Pass")
-    expect(page).to have_content("7 to 18 years")
+    expect(page).to have_content("10 to 16 years")
   end
 end
