@@ -1,6 +1,4 @@
-class QualificationsController < ApplicationController
-  before_action :authenticate_user!
-
+class QualificationsController < QualificationsInterfaceController
   def show
     begin
       client =
