@@ -28,8 +28,6 @@ module Omniauth
 
       extra { { "raw_info" => raw_info } }
 
-      credentials { { token: access_token.token } }
-
       def raw_info
         @raw_info ||= access_token.get("connect/userinfo").parsed
       end
@@ -38,14 +36,8 @@ module Omniauth
         raw_info["email_verified"] == "True"
       end
 
-      def build_access_token
-        verifier = request.params["code"]
-        redirect_uri = full_host + callback_path
-        client.auth_code.get_token(
-          verifier,
-          { redirect_uri: }.merge(token_params.to_hash(symbolize_keys: true)),
-          deep_symbolize(options.auth_token_params)
-        )
+      def callback_url
+        full_host + callback_path
       end
     end
   end
