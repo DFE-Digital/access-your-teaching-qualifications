@@ -5,14 +5,7 @@ RSpec.feature "Identity auth", type: :system do
   include CommonSteps
   include AuthenticationSteps
 
-  around do |example|
-    OmniAuth.config.test_mode = true
-    example.run
-    OmniAuth.config.test_mode = false
-    OmniAuth.config.mock_auth[:identity] = nil
-  end
-
-  scenario "User signs in via Identity" do
+  scenario "User signs in via Identity", test: :with_stubbed_auth do
     given_the_service_is_open
     and_identity_auth_is_mocked
     when_i_go_to_the_sign_in_page

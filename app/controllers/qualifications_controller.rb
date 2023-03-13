@@ -5,20 +5,20 @@ class QualificationsController < ApplicationController
     begin
       client =
         QualificationsApi::Client.new(token: session[:identity_user_token])
-      teacher = client.teacher
+      @teacher = client.teacher
     rescue QualificationsApi::InvalidTokenError
       redirect_to sign_out_path
       return
     end
 
-    if teacher
+    if @teacher
       @qts =
         Struct.new(:name, :status, :awarded_at).new(
           "Qualified teacher status (QTS)",
-          teacher.qts_date.present? ? :awarded : :not_awarded,
-          teacher.qts_date
+          @teacher.qts_date.present? ? :awarded : :not_awarded,
+          @teacher.qts_date
         )
-      @itt = teacher.itt
+      @itt = @teacher.itt
     end
 
     @user =

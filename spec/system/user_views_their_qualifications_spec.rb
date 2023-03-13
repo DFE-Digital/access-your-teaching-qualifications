@@ -4,14 +4,7 @@ RSpec.feature "User views their qualifications", type: :system do
   include CommonSteps
   include AuthenticationSteps
 
-  around do |example|
-    OmniAuth.config.test_mode = true
-    example.run
-    OmniAuth.config.test_mode = false
-    OmniAuth.config.mock_auth[:identity] = nil
-  end
-
-  scenario "when they have qualifications" do
+  scenario "when they have qualifications", test: :with_stubbed_auth do
     given_the_service_is_open
     and_i_am_signed_in_via_identity
 

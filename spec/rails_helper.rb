@@ -89,4 +89,11 @@ RSpec.configure do |config|
       FakeQualificationsApi
     )
   end
+
+  config.around(:each, test: :with_stubbed_auth) do |example|
+    OmniAuth.config.test_mode = true
+    example.run
+    OmniAuth.config.test_mode = false
+    OmniAuth.config.mock_auth[:identity] = nil
+  end
 end
