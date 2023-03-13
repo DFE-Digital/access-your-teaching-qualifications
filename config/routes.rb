@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   get "/sign-out", to: "users/sign_out#new"
 
   devise_scope :user do
+    resource :identity_user, only: [:show]
     resource :qualifications, only: [:show]
     resource :qts_certificate, only: [:show]
   end

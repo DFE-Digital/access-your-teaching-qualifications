@@ -1,0 +1,14 @@
+<% content_for :back_link_url, root_path %>
+
+<%= govuk_panel(title_text: "DfE Identity account", classes: "app-panel--interruption") do %>
+  <div class="app__two-thirds">
+    <p>
+      You can change sign in and personal details in your DfE Identity account.
+    </p>
+    <p>
+      You use your DfE Identity account to sign in to <b>'Access your teaching qualifications'</b>.
+    </p>
+
+    <%= govuk_button_to "Access your DfE Identity account", "#", class: "app-button--inverse govuk-!-margin-bottom-0", method: :get %>
+  </div>
+<% end %>
