@@ -14,7 +14,7 @@
         <h3 class="govuk-heading-m">Your details</h3>
         <p>
           Name on certificates<br /> 
-          <strong><%= @user.name.full %></strong>
+          <strong><%= [@teacher.first_name, @teacher.last_name].join(" ") %></strong>
         </p>
 
         <p>
@@ -24,7 +24,7 @@
 
         <p>
           Teacher Reference number (TRN)<br /> 
-          <strong><%= @user.trn %></strong>
+          <strong><%= @teacher.trn %></strong>
         </p>
       </div>
     </div>
