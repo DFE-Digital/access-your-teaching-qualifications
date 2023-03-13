@@ -24,3 +24,30 @@ $govuk-assets-path: "/";
 .app__induction-details-list {
   font-size: 1rem;
 }
+
+.app-panel--interruption {
+  background-color: #1d70b8;
+  text-align: left;
+
+  p {
+    color: #fff;
+    margin-bottom: govuk-spacing(6);
+  }
+}
+
+.app-button--inverse,
+.app-button--inverse:link,
+.app-button--inverse:visited {
+  background-color: #ffffff;
+  box-shadow: 0 2px 0 #144e81;
+  color: #1d70b8;
+}
+
+.app-button--inverse:hover {
+  background-color: #e8f1f8;
+  color: #1d70b8;
+}
+
+.app__two-thirds {
+  width: 66.66%;
+}

@@ -26,6 +26,11 @@ module ApplicationHelper
       else
         if current_user
           header.with_navigation_item(
+            active: current_page?(main_app.identity_user_path),
+            href: main_app.identity_user_path,
+            text: "Account"
+          )
+          header.with_navigation_item(
             href: main_app.sign_out_path,
             text: "Sign out"
           )
