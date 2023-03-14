@@ -23,7 +23,7 @@ gem "omniauth-rails_csrf_protection"
 gem "pg", "~> 1.4"
 gem "propshaft"
 gem "puma", "~> 6.1"
-gem "rails", "~> 7.0.4", ">= 7.0.4.2"
+gem "rails", "~> 7.0.4"
 gem "sidekiq"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
