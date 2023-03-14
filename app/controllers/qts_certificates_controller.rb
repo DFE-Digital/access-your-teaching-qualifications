@@ -1,6 +1,4 @@
-class QtsCertificatesController < ApplicationController
-  before_action :authenticate_user!
-
+class QtsCertificatesController < QualificationsInterfaceController
   def show
     client = QualificationsApi::Client.new(token: session[:identity_user_token])
     send_data client.qts_certificate,

@@ -23,7 +23,8 @@ module AuthenticationSteps
           trn: "123456"
         },
         credentials: {
-          token: "token"
+          token: "token",
+          expires_at: (Time.zone.now + 1.hour).to_i
         }
       }
     )
