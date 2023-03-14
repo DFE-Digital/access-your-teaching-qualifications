@@ -18,7 +18,7 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module AccessYourTeachingCertificates
+module AccessYourTeachingQualifications
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -40,7 +40,7 @@ module AccessYourTeachingCertificates
         ENV.fetch("GOVUK_NOTIFY_API_KEY") do
           raise "'GOVUK_NOTIFY_API_KEY' should be configured in " \
                   ".env.*environment* file. Please refer to " \
-                  "https://github.com/DFE-Digital/refer-serious-misconduct/#notify"
+                  "https://github.com/DFE-Digital/access-your-teaching-qualifications/#notify"
         end
     }
 

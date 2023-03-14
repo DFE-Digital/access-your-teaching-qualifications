@@ -21,13 +21,7 @@ class QualificationsController < ApplicationController
       @itt = @teacher.itt
     end
 
-    @user =
-      current_user ||
-        User.new(
-          date_of_birth: Date.new(2000, 1, 1),
-          name: "Jane Smith",
-          trn: "1234567"
-        )
+    @user = current_user
     @induction = @user.induction
   end
 end

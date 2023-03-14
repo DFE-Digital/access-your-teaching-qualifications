@@ -8,7 +8,7 @@ The <%= t('service.name') %> service is run by the [Teaching Regulation Agency
 (TRA)](https://www.gov.uk/government/organisations/teaching-regulation-agency/about),
 an executive agency of the Department for Education (DfE).
 
-Our service allows anyone to access their teaching certificates.
+Our service allows anyone to access their teaching qualifications.
 
 For the purpose of data protection legislation, DfE is the data controller for
 the data we hold and process.
