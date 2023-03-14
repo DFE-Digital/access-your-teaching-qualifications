@@ -1,9 +1,9 @@
 en:
   service:
-    name: Access your teaching certificates
+    name: Access your teaching qualifications
     email: my-service@email
     feedback_form: https://forms.gle/mroZH7aVYGPrB37G6
-    url: https://access-your-teaching-certificates.digital.education.gov.uk
+    url: https://access-your-teaching-qualifications.digital.education.gov.uk
 
   validation_errors:
     email_address_format: Enter an email address in the correct format, like name@example.com

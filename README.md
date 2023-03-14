@@ -1,6 +1,6 @@
-# Access your teaching certificates
+# Access your teaching qualifications
 
-A service that allows people to access their teaching certificates.
+A service that allows people to access their teaching qualifications.
 
 ## Dependencies
 
@@ -12,7 +12,7 @@ A service that allows people to access their teaching certificates.
 
 ## How the application works
 
-Access your teaching certificates is a monolithic Rails app built with the GOVUK Design System.
+Access your teaching qualifications is a monolithic Rails app built with the GOVUK Design System.
 
 The application has a number of different interfaces for different types of users:
 
