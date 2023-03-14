@@ -82,18 +82,18 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.before(:each, type: :system) { driven_by(:cuprite) }
   config.before { Sidekiq::Worker.clear_all }
-  config.include ActiveJob::TestHelper
-
   config.before(:each) do
     stub_request(:any, /preprod-teacher-qualifications-api/).to_rack(
       FakeQualificationsApi
     )
   end
-
   config.around(:each, test: :with_stubbed_auth) do |example|
     OmniAuth.config.test_mode = true
     example.run
     OmniAuth.config.test_mode = false
     OmniAuth.config.mock_auth[:identity] = nil
   end
+
+  config.include ActiveJob::TestHelper
+  config.include ActiveSupport::Testing::TimeHelpers
 end
