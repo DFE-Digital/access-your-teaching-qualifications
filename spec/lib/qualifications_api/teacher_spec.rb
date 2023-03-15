@@ -4,13 +4,13 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
   describe "#qts_date" do
     subject(:qts_date) { teacher.qts_date }
 
-    let(:api_data) { { "qtsDate" => "2015-11-01" } }
+    let(:api_data) { { "qts" => { "awarded" => "2015-11-01" } } }
     let(:teacher) { described_class.new(api_data) }
 
     it { is_expected.to eq(Date.new(2015, 11, 1)) }
 
-    context "when the qtsDate is nil" do
-      let(:api_data) { { "qtsDate" => nil } }
+    context "when the qts awarded date is nil" do
+      let(:api_data) { { "qts" => { "awarded" => nil } } }
 
       it { is_expected.to be_nil }
     end
