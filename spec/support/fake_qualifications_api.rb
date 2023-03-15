@@ -8,7 +8,9 @@ class FakeQualificationsApi < Sinatra::Base
         trn: "3000299",
         firstName: "Terry",
         lastName: "Walsh",
-        qtsDate: "2023-02-27",
+        qts: {
+          awarded: "2023-02-27"
+        },
         initialTeacherTraining: [
           {
             qualification: {

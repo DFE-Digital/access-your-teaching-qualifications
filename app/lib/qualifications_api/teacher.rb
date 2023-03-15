@@ -44,7 +44,7 @@ module QualificationsApi
     end
 
     def qts_date
-      api_data.fetch("qtsDate")&.to_date
+      api_data.dig("qts", "awarded")&.to_date
     end
 
     def trn
