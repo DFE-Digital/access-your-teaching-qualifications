@@ -9,6 +9,6 @@
       You use your DfE Identity account to sign in to <b>'Access your teaching qualifications'</b>.
     </p>
 
-    <%= govuk_button_to "Access your DfE Identity account", "#", class: "app-button--inverse govuk-!-margin-bottom-0", method: :get %>
+    <%= govuk_button_to "Access your DfE Identity account", "#{ENV.fetch('IDENTITY_API_DOMAIN')}/account?client_id=access-your-teaching-qualifications&redirect_uri=#{root_url}", class: "app-button--inverse govuk-!-margin-bottom-0", method: :get %>
   </div>
 <% end %>
