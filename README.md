@@ -2,6 +2,29 @@
 
 A service that allows people to access their teaching qualifications.
 
+## Live environments
+
+### Links and application names
+
+| Name       | URL                                                          |
+| ---------- | ------------------------------------------------------------ |
+| Production | not deployed         |
+| Preprod    | not deployed |
+| Test       | not deployed    |
+| Dev        | in testing   |
+
+All environments have continuous deployment, the state of which can be inspected in Github Actions.
+
+### Details and configuration
+
+| Name       | Description                                   |
+| ---------- | --------------------------------------------- |
+| Production | Public site                                   |
+| Preprod    | For internal use by DfE to test deploys       |
+| Test       | For external use by 3rd parties to run audits |
+| Dev        | For internal use by DfE for testing           |
+
+
 ## Dependencies
 
 - Ruby 3.x
