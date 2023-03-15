@@ -5,7 +5,7 @@ class QualificationsInterfaceController < ApplicationController
   def handle_expired_token!
     redirect_to sign_out_path unless session[:identity_user_token_expiry]
 
-    if Time.zone.now > Time.zone.at(session[:identity_user_token_expiry])
+    if Time.zone.at(session[:identity_user_token_expiry]).past?
       flash[:warning] = "Your session has expired. Please sign in again."
       redirect_to sign_out_path
     end
