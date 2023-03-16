@@ -33,6 +33,11 @@ All environments have continuous deployment, the state of which can be inspected
 - PostgreSQL 13.x
 - Redis 6.x
 
+## Local development dependencies
+
+- [jq](https://stedolan.github.io/jq/) (`brew install jq`) to run the Azure makefile commands
+
+
 ## How the application works
 
 Access your teaching qualifications is a monolithic Rails app built with the GOVUK Design System.
