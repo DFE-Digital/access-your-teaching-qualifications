@@ -8,6 +8,7 @@
         <%= render InductionSummaryComponent.new(qualification: @induction) if @induction %>
         <%= render QtsSummaryComponent.new(qualification: @qts) if @qts %>
         <%= render IttSummaryComponent.new(qualification: @itt) if @itt %>
+        <%= render EytsSummaryComponent.new(qualification: @eyts) if @eyts %>
       </div>
 
       <div class="govuk-grid-column-one-third app__details-menu">
