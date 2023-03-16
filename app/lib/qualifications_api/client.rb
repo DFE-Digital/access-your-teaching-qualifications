@@ -8,6 +8,17 @@ module QualificationsApi
       @token = token
     end
 
+    def eyts_certificate
+      response = client.get("v3/certificates/eyts")
+
+      case response.status
+      when 200
+        response.body
+      when 401
+        raise QualificationsApi::InvalidTokenError
+      end
+    end
+
     def teacher
       response = client.get("v3/teacher")
 

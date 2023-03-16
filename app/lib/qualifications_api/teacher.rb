@@ -6,6 +6,10 @@ module QualificationsApi
       @api_data = api_data
     end
 
+    def eyts_date
+      api_data.dig("eyts", "awarded")&.to_date
+    end
+
     def first_name
       api_data.fetch("firstName")
     end

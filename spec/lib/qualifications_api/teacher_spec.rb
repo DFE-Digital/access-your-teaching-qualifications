@@ -76,4 +76,20 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       expect(itt.age_range).to eq("10 to 16 years")
     end
   end
+
+  describe "#eyts_date" do
+    subject { teacher.eyts_date }
+
+    let(:api_data) do
+      {
+        "eyts" => {
+          "awarded" => "2015-11-01",
+          "certificateUrl" => "https://example.com/certificate.pdf"
+        }
+      }
+    end
+    let(:teacher) { described_class.new(api_data) }
+
+    it { is_expected.to eq(Date.new(2015, 11, 1)) }
+  end
 end

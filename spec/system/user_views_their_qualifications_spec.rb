@@ -13,6 +13,8 @@ RSpec.feature "User views their qualifications", type: :system do
     then_i_see_my_qts_details
     and_my_qts_certificate_is_downloadable
     then_i_see_my_itt_details
+    then_i_see_my_eyts_details
+    and_my_eyts_certificate_is_downloadable
   end
 
   private
@@ -34,8 +36,21 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("Download QTS certificate")
   end
 
+  def then_i_see_my_eyts_details
+    expect(page).to have_content("Early years teacher status (EYTS)")
+    expect(page).to have_content("Awarded")
+    expect(page).to have_content("27 February 2023")
+    expect(page).to have_content("Download EYTS certificate")
+  end
+
   def and_my_qts_certificate_is_downloadable
     click_on "Download QTS certificate"
+    expect(page.response_headers["Content-Type"]).to eq("application/pdf")
+    expect(page.response_headers["Content-Disposition"]).to eq("attachment")
+  end
+
+  def and_my_eyts_certificate_is_downloadable
+    click_on "Download EYTS certificate"
     expect(page.response_headers["Content-Type"]).to eq("application/pdf")
     expect(page.response_headers["Content-Disposition"]).to eq("attachment")
   end
