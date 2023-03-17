@@ -30,6 +30,17 @@ module QualificationsApi
       end
     end
 
+    def npq_certificate(url)
+      response = client.get("v3/certificates/npq/#{url.split("/").last}")
+
+      case response.status
+      when 200
+        response.body
+      when 401
+        raise QualificationsApi::InvalidTokenError
+      end
+    end
+
     def qts_certificate
       response = client.get("v3/certificates/qts")
 

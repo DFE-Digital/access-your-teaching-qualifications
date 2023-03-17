@@ -9,6 +9,9 @@
         <%= render QtsSummaryComponent.new(qualification: @qts) if @qts %>
         <%= render IttSummaryComponent.new(qualification: @itt) if @itt %>
         <%= render EytsSummaryComponent.new(qualification: @eyts) if @eyts %>
+        <% @npqs.each do |npq| %>
+          <%= render NpqSummaryComponent.new(qualification: npq) %>
+        <% end %>
       </div>
 
       <div class="govuk-grid-column-one-third app__details-menu">
