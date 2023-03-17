@@ -15,6 +15,8 @@ RSpec.feature "User views their qualifications", type: :system do
     then_i_see_my_itt_details
     then_i_see_my_eyts_details
     and_my_eyts_certificate_is_downloadable
+    then_i_see_my_npq_details
+    and_my_npq_certificate_is_downloadable
   end
 
   private
@@ -65,5 +67,18 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("28 January 2023")
     expect(page).to have_content("Pass")
     expect(page).to have_content("10 to 16 years")
+  end
+
+  def then_i_see_my_npq_details
+    expect(page).to have_content("NPQ headteacher")
+    expect(page).to have_content("Awarded")
+    expect(page).to have_content("27 February 2023")
+    expect(page).to have_content("Download NPQ headteacher certificate")
+  end
+
+  def and_my_npq_certificate_is_downloadable
+    click_on "Download NPQ headteacher certificate"
+    expect(page.response_headers["Content-Type"]).to eq("application/pdf")
+    expect(page.response_headers["Content-Disposition"]).to eq("attachment")
   end
 end

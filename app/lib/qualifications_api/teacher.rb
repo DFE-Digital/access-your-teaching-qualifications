@@ -47,6 +47,19 @@ module QualificationsApi
       api_data.fetch("lastName")
     end
 
+    def npqs
+      api_data
+        .fetch("npqQualifications", [])
+        .map do |npq|
+          Struct.new(:name, :certificate_url, :type, :awarded_at).new(
+            npq["type"]["name"],
+            npq["certificateUrl"],
+            npq["type"]["code"],
+            npq["awarded"]&.to_date
+          )
+        end
+    end
+
     def qts_date
       api_data.dig("qts", "awarded")&.to_date
     end

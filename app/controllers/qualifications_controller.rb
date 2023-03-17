@@ -22,6 +22,7 @@ class QualificationsController < QualificationsInterfaceController
           "Early years teacher status (EYTS)",
           @teacher.eyts_date
         ) if @teacher.eyts_date.present?
+      @npqs = @teacher.npqs
     end
 
     @user = current_user

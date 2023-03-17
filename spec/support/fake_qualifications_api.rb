@@ -33,6 +33,16 @@ class FakeQualificationsApi < Sinatra::Base
             },
             subjects: [{ code: "100079", name: "business studies" }]
           }
+        ],
+        npqQualifications: [
+          {
+            awarded: "2023-02-27",
+            certificateUrl: "/v3/certificates/npq/1",
+            type: {
+              code: "NPQH",
+              name: "NPQ headteacher"
+            }
+          }
         ]
       }.to_json
     when "invalid-token"
@@ -55,6 +65,18 @@ class FakeQualificationsApi < Sinatra::Base
   get "/v3/certificates/eyts" do
     content_type "application/pdf"
     attachment "eyts_certificate.pdf"
+
+    case bearer_token
+    when "token"
+      "pdf data"
+    when "invalid-token"
+      halt 401
+    end
+  end
+
+  get "/v3/certificates/npq/:id" do
+    content_type "application/pdf"
+    attachment "npq_certificate.pdf"
 
     case bearer_token
     when "token"
