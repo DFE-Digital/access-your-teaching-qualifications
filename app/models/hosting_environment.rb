@@ -7,6 +7,10 @@ module HostingEnvironment
     ENV.fetch("HOSTING_DOMAIN")
   end
 
+  def self.aytq_domain
+    host
+  end
+
   def self.environment_name
     ENV.fetch("HOSTING_ENVIRONMENT_NAME", "unknown-environment")
   end
