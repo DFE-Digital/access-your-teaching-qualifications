@@ -8,12 +8,34 @@ module QualificationsApi
       @token = token
     end
 
+    def eyts_certificate
+      response = client.get("v3/certificates/eyts")
+
+      case response.status
+      when 200
+        response.body
+      when 401
+        raise QualificationsApi::InvalidTokenError
+      end
+    end
+
     def teacher
       response = client.get("v3/teacher")
 
       case response.status
       when 200
         QualificationsApi::Teacher.new response.body
+      when 401
+        raise QualificationsApi::InvalidTokenError
+      end
+    end
+
+    def npq_certificate(url)
+      response = client.get("v3/certificates/npq/#{url.split("/").last}")
+
+      case response.status
+      when 200
+        response.body
       when 401
         raise QualificationsApi::InvalidTokenError
       end

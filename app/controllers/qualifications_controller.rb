@@ -17,6 +17,12 @@ class QualificationsController < QualificationsInterfaceController
           @teacher.qts_date
         )
       @itt = @teacher.itt
+      @eyts =
+        Struct.new(:name, :awarded_at).new(
+          "Early years teacher status (EYTS)",
+          @teacher.eyts_date
+        ) if @teacher.eyts_date.present?
+      @npqs = @teacher.npqs
     end
 
     @user = current_user
