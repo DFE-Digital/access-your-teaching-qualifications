@@ -10,27 +10,27 @@ class FakeQualificationsApi < Sinatra::Base
         lastName: "Walsh",
         eyts: {
           awarded: "2022-04-01",
-          certificateUrl: "http://example.com/eyts-certificate.pdf"
+          certificateUrl: "http://example.com/v3/certificates/eyts"
         },
         qts: {
           awarded: "2023-02-27"
         },
         initialTeacherTraining: [
           {
-            qualification: {
-              name: "BA"
-            },
-            startDate: "2022-02-28",
-            endDate: "2023-01-28",
-            programmeType: "HEI",
-            result: "Pass",
             ageRange: {
               description: "10 to 16 years"
             },
+            endDate: "2023-01-28",
+            programmeType: "HEI",
             provider: {
               name: "Earl Spencer Primary School",
               ukprn: nil
             },
+            qualification: {
+              name: "BA"
+            },
+            result: "Pass",
+            startDate: "2022-02-28",
             subjects: [{ code: "100079", name: "business studies" }]
           }
         ],

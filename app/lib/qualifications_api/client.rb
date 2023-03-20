@@ -8,8 +8,8 @@ module QualificationsApi
       @token = token
     end
 
-    def eyts_certificate
-      response = client.get("v3/certificates/eyts")
+    def certificate(type:, id: nil)
+      response = client.get(["v3/certificates/#{type}", id].compact.join("/"))
 
       case response.status
       when 200
@@ -25,28 +25,6 @@ module QualificationsApi
       case response.status
       when 200
         QualificationsApi::Teacher.new response.body
-      when 401
-        raise QualificationsApi::InvalidTokenError
-      end
-    end
-
-    def npq_certificate(url)
-      response = client.get("v3/certificates/npq/#{url.split("/").last}")
-
-      case response.status
-      when 200
-        response.body
-      when 401
-        raise QualificationsApi::InvalidTokenError
-      end
-    end
-
-    def qts_certificate
-      response = client.get("v3/certificates/qts")
-
-      case response.status
-      when 200
-        response.body
       when 401
         raise QualificationsApi::InvalidTokenError
       end

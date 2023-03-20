@@ -73,11 +73,11 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("NPQ headteacher")
     expect(page).to have_content("Awarded")
     expect(page).to have_content("27 February 2023")
-    expect(page).to have_content("Download NPQ headteacher certificate")
+    expect(page).to have_content("Download NPQH certificate")
   end
 
   def and_my_npq_certificate_is_downloadable
-    click_on "Download NPQ headteacher certificate"
+    click_on "Download NPQH certificate"
     expect(page.response_headers["Content-Type"]).to eq("application/pdf")
     expect(page.response_headers["Content-Disposition"]).to eq("attachment")
   end

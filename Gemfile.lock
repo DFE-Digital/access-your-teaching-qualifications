@@ -443,6 +443,7 @@ DEPENDENCIES
   govuk_design_system_formbuilder
   govuk_feature_flags!
   govuk_markdown
+  hashie
   jsbundling-rails
   launchy
   mail-notify

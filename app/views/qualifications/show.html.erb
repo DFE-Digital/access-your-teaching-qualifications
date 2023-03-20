@@ -5,13 +5,11 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
-        <%= render InductionSummaryComponent.new(qualification: @induction) if @induction %>
-        <%= render QtsSummaryComponent.new(qualification: @qts) if @qts %>
-        <%= render IttSummaryComponent.new(qualification: @itt) if @itt %>
-        <%= render EytsSummaryComponent.new(qualification: @eyts) if @eyts %>
-        <% @npqs.each do |npq| %>
-          <%= render NpqSummaryComponent.new(qualification: npq) %>
+        <% @teacher.qualifications.each do |qualification| %>
+          <%= render QualificationSummaryComponent.new(qualification:) %>
         <% end %>
+
+        <%= render InductionSummaryComponent.new(qualification: @induction) if @induction %>
       </div>
 
       <div class="govuk-grid-column-one-third app__details-menu">
