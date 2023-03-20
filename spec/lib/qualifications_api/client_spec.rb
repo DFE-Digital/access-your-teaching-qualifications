@@ -21,10 +21,10 @@ RSpec.describe QualificationsApi::Client do
     end
   end
 
-  describe "#qts_certificate" do
+  describe "#certificate" do
     it "returns a PDF certificate" do
       client = described_class.new(token: "token")
-      response = client.qts_certificate
+      response = client.certificate(type: :qts)
 
       expect(response).to eq "pdf data"
     end
@@ -33,7 +33,7 @@ RSpec.describe QualificationsApi::Client do
       it "raises an error" do
         client = described_class.new(token: "invalid-token")
 
-        expect { client.teacher }.to raise_error(
+        expect { client.certificate(type: :qts) }.to raise_error(
           QualificationsApi::InvalidTokenError
         )
       end

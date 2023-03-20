@@ -1,23 +1,8 @@
 require "rails_helper"
 
 RSpec.describe QualificationsApi::Teacher, type: :model do
-  describe "#qts_date" do
-    subject(:qts_date) { teacher.qts_date }
-
-    let(:api_data) { { "qts" => { "awarded" => "2015-11-01" } } }
-    let(:teacher) { described_class.new(api_data) }
-
-    it { is_expected.to eq(Date.new(2015, 11, 1)) }
-
-    context "when the qts awarded date is nil" do
-      let(:api_data) { { "qts" => { "awarded" => nil } } }
-
-      it { is_expected.to be_nil }
-    end
-  end
-
-  describe "#itt" do
-    subject(:itt) { teacher.itt }
+  describe "#qualifications" do
+    subject(:qualifications) { teacher.qualifications }
 
     let(:api_data) do
       {
@@ -26,8 +11,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "qualification" => {
               "name" => "BA"
             },
-            "startDate" => "2022-02-28",
-            "endDate" => "2023-01-28",
+            "startDate" => "2012-02-28",
+            "endDate" => "2013-01-28",
             "programmeType" => "HEI",
             "result" => "Pass",
             "ageRange" => {
@@ -39,57 +24,38 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             },
             "subjects" => [{ "code" => "100079", "name" => "business studies" }]
           }
+        ],
+        "qts" => {
+          "awarded" => "2015-11-01"
+        },
+        "eyts" => {
+          "awarded" => "2015-11-02",
+          "certificateUrl" => "https://example.com/certificate.pdf"
+        },
+        "npqQualifications" => [
+          {
+            "type" => {
+              "code" => "NPQML",
+              "name" => "NPQ for Middle Leadership"
+            },
+            "awarded" => "2015-11-03",
+            "certificateUrl" => "https://example.com/v3/certificates/456"
+          },
+          {
+            "type" => {
+              "code" => "NPQSL",
+              "name" => "NPQ for Senior Leadership"
+            },
+            "awarded" => "2015-11-04",
+            "certificateUrl" => "https://example.com/v3/certificates/123"
+          }
         ]
       }
     end
     let(:teacher) { described_class.new(api_data) }
 
-    it "returns a qualification name" do
-      expect(itt.qualification_name).to eq("BA")
+    it "sorts the qualifications in reverse chronological order by date of award" do
+      expect(qualifications.map(&:type)).to eq(%i[NPQSL NPQML eyts qts itt])
     end
-
-    it "returns a provider name" do
-      expect(itt.provider_name).to eq("Earl Spencer Primary School")
-    end
-
-    it "returns a programme type" do
-      expect(itt.programme_type).to eq("HEI")
-    end
-
-    it "returns the subjects" do
-      expect(itt.subjects).to eq(["business studies"])
-    end
-
-    it "returns the start date" do
-      expect(itt.start_date).to eq(Date.new(2022, 2, 28))
-    end
-
-    it "returns the end date" do
-      expect(itt.end_date).to eq(Date.new(2023, 1, 28))
-    end
-
-    it "returns the result" do
-      expect(itt.result).to eq("Pass")
-    end
-
-    it "returns the age range" do
-      expect(itt.age_range).to eq("10 to 16 years")
-    end
-  end
-
-  describe "#eyts_date" do
-    subject { teacher.eyts_date }
-
-    let(:api_data) do
-      {
-        "eyts" => {
-          "awarded" => "2015-11-01",
-          "certificateUrl" => "https://example.com/certificate.pdf"
-        }
-      }
-    end
-    let(:teacher) { described_class.new(api_data) }
-
-    it { is_expected.to eq(Date.new(2015, 11, 1)) }
   end
 end

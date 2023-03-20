@@ -3,69 +3,55 @@ module QualificationsApi
     attr_reader :api_data
 
     def initialize(api_data)
-      @api_data = api_data
+      @api_data = Hashie::Mash.new(api_data.deep_transform_keys(&:underscore))
     end
 
-    def eyts_date
-      api_data.dig("eyts", "awarded")&.to_date
-    end
+    delegate :first_name, :last_name, :trn, to: :api_data
 
-    def first_name
-      api_data.fetch("firstName")
-    end
+    def qualifications
+      @qualifications = []
 
-    def itt
-      teaching_training_response = api_data.dig("initialTeacherTraining", 0)
-      return if teaching_training_response.nil?
+      if api_data.qts&.awarded&.present?
+        @qualifications << Qualification.new(
+          awarded_at: api_data.qts.awarded.to_date,
+          certificate_url: api_data.qts.certificate_url,
+          name: "Qualified teacher status (QTS)",
+          type: :qts
+        )
+      end
 
-      Struct.new(
-        :name,
-        :qualification_name,
-        :provider_name,
-        :programme_type,
-        :subjects,
-        :start_date,
-        :end_date,
-        :result,
-        :age_range
-      ).new(
-        "Initial teacher training (ITT)",
-        teaching_training_response.dig("qualification", "name"),
-        teaching_training_response.dig("provider", "name"),
-        teaching_training_response["programmeType"],
-        teaching_training_response["subjects"].map do |subject|
-          subject["name"]
-        end,
-        teaching_training_response["startDate"]&.to_date,
-        teaching_training_response["endDate"]&.to_date,
-        teaching_training_response["result"]&.humanize,
-        teaching_training_response.dig("ageRange", "description")
-      )
-    end
+      if api_data.eyts&.awarded&.present?
+        @qualifications << Qualification.new(
+          awarded_at: api_data.eyts&.awarded&.to_date,
+          certificate_url: api_data.eyts&.certificate_url,
+          name: "Early years teacher status (EYTS)",
+          type: :eyts
+        )
+      end
 
-    def last_name
-      api_data.fetch("lastName")
-    end
-
-    def npqs
       api_data
-        .fetch("npqQualifications", [])
-        .map do |npq|
-          Struct.new(:name, :certificate_url, :type, :awarded_at).new(
-            npq["type"]["name"],
-            npq["certificateUrl"],
-            npq["type"]["code"],
-            npq["awarded"]&.to_date
+        .fetch("npq_qualifications", [])
+        .each do |npq|
+          @qualifications << Qualification.new(
+            awarded_at: npq.awarded.to_date,
+            certificate_url: npq.certificate_url,
+            name: npq.type.name,
+            type: npq.type.code.to_sym
           )
         end
-    end
 
-    def qts_date
-      api_data.dig("qts", "awarded")&.to_date
-    end
+      @qualifications << api_data
+        .fetch("initial_teacher_training", [])
+        .map do |itt_response|
+          Qualification.new(
+            awarded_at: itt_response.end_date&.to_date,
+            details: itt_response,
+            name: "Initial teacher training (ITT)",
+            type: :itt
+          )
+        end
 
-    def trn
-      api_data.fetch("trn")
+      @qualifications.flatten!.sort_by!(&:awarded_at).reverse!
     end
   end
 end
