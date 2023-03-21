@@ -2,10 +2,7 @@
 
 root to: "users/sign_in#new"
 
-devise_for :users,
-           controllers: {
-             omniauth_callbacks: "users/omniauth_callbacks"
-           }
+devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
 get "/sign-in", to: "users/sign_in#new"
 get "/sign-out", to: "users/sign_out#new"
 

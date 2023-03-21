@@ -1,3 +1,1 @@
-RSpec.configure do |config|
-  config.include Shoulda::Matchers::ActiveModel, type: :model
-end
+RSpec.configure { |config| config.include Shoulda::Matchers::ActiveModel, type: :model }

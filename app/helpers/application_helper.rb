@@ -18,10 +18,7 @@ module ApplicationHelper
           href: main_app.support_interface_staff_index_path
         )
         if current_staff
-          header.with_navigation_item(
-            href: main_app.staff_sign_out_path,
-            text: "Sign out"
-          )
+          header.with_navigation_item(href: main_app.staff_sign_out_path, text: "Sign out")
         end
       else
         if current_user
@@ -30,10 +27,7 @@ module ApplicationHelper
             href: main_app.identity_user_path,
             text: "Account"
           )
-          header.with_navigation_item(
-            href: main_app.sign_out_path,
-            text: "Sign out"
-          )
+          header.with_navigation_item(href: main_app.sign_out_path, text: "Sign out")
         end
       end
     end

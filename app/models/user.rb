@@ -15,11 +15,7 @@ class User < ApplicationRecord
   end
 
   def induction
-    Struct.new(:name, :status, :completed_at).new(
-      "Induction",
-      :pass,
-      Date.new(2015, 11, 1)
-    )
+    Struct.new(:name, :status, :completed_at).new("Induction", :pass, Date.new(2015, 11, 1))
   end
 
   def name

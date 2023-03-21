@@ -3,9 +3,7 @@ require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"
 require_relative "../config/environment"
 # Prevent database truncation if the environment is production
-if Rails.env.production?
-  abort("The Rails environment is running in production mode!")
-end
+abort("The Rails environment is running in production mode!") if Rails.env.production?
 require "rspec/rails"
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -17,12 +15,7 @@ require "webmock/rspec"
 WebMock.disable_net_connect!(allow_localhost: true)
 
 Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(
-    app,
-    timeout: 10,
-    process_timeout: 30,
-    window_size: [1200, 800]
-  )
+  Capybara::Cuprite::Driver.new(app, timeout: 10, process_timeout: 30, window_size: [1200, 800])
 end
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
@@ -83,9 +76,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system) { driven_by(:cuprite) }
   config.before { Sidekiq::Worker.clear_all }
   config.before(:each) do
-    stub_request(:any, /preprod-teacher-qualifications-api/).to_rack(
-      FakeQualificationsApi
-    )
+    stub_request(:any, /preprod-teacher-qualifications-api/).to_rack(FakeQualificationsApi)
   end
   config.around(:each, test: :with_stubbed_auth) do |example|
     OmniAuth.config.test_mode = true

@@ -33,9 +33,7 @@ class FlashMessageComponent < ViewComponent::Base
   end
 
   def body
-    if messages.is_a?(Array) && messages.count >= 2
-      tag.p(messages[1], class: "govuk-body")
-    end
+    tag.p(messages[1], class: "govuk-body") if messages.is_a?(Array) && messages.count >= 2
   end
 
   def render?
