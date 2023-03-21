@@ -30,6 +30,21 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
+  describe "#induction?" do
+    subject { qualification.induction? }
+
+    let(:qualification) { described_class.new(type:) }
+    let(:type) { :qts }
+
+    it { is_expected.to be_falsey }
+
+    context "when the qualification type is induction" do
+      let(:type) { :induction }
+
+      it { is_expected.to be_truthy }
+    end
+  end
+
   describe "#itt?" do
     subject { qualification.itt? }
 

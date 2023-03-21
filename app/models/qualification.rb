@@ -14,6 +14,10 @@ class Qualification
     @certificate_url&.split("/")&.last
   end
 
+  def induction?
+    type == :induction
+  end
+
   def itt?
     type == :itt
   end

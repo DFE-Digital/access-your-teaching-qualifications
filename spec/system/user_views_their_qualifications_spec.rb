@@ -28,7 +28,12 @@ RSpec.feature "User views their qualifications", type: :system do
   def then_i_see_my_induction_details
     expect(page).to have_content("Induction")
     expect(page).to have_content("Pass")
-    expect(page).to have_content("1 November 2015")
+    expect(page).to have_content("1 October 2022")
+    expect(page).to have_link("Download Induction certificate")
+    find("span", text: "Induction history").click
+    expect(page).to have_content("Induction body")
+    expect(page).to have_content("1 September 2022")
+    expect(page).to have_content("Number of terms\t1")
   end
 
   def then_i_see_my_qts_details

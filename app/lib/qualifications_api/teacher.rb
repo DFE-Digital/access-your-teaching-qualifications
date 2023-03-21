@@ -51,6 +51,15 @@ module QualificationsApi
           )
         end
 
+      if api_data.induction&.end_date&.present?
+        @qualifications << Qualification.new(
+          awarded_at: api_data.induction.end_date.to_date,
+          details: api_data.induction,
+          name: "Induction",
+          type: :induction
+        )
+      end
+
       @qualifications.flatten!.sort_by!(&:awarded_at).reverse!
     end
   end

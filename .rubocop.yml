@@ -10,6 +10,14 @@ inherit_mode:
   merge:
     - Exclude
 
+Style/BlockDelimiters:
+  Exclude:
+    - app/components/induction_summary_component.rb
+
+Style/MethodCalledOnDoEndBlock:
+  Exclude:
+    - app/components/induction_summary_component.rb
+
 Style/NumericLiterals:
   Exclude:
     - db/schema.rb
