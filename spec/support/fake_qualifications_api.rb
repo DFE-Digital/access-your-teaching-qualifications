@@ -15,6 +15,22 @@ class FakeQualificationsApi < Sinatra::Base
         qts: {
           awarded: "2023-02-27"
         },
+        induction: {
+          startDate: "2022-09-01",
+          endDate: "2022-10-01",
+          status: "pass",
+          certificateUrl: "string",
+          periods: [
+            {
+              startDate: "2022-09-01",
+              endDate: "2022-10-01",
+              terms: 1,
+              appropriateBody: {
+                name: "Induction body"
+              }
+            }
+          ]
+        },
         initialTeacherTraining: [
           {
             ageRange: {

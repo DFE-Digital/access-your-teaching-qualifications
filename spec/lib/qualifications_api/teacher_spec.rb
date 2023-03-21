@@ -6,6 +6,22 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
 
     let(:api_data) do
       {
+        "induction" => {
+          "startDate" => "2015-01-01",
+          "endDate" => "2015-07-01",
+          "status" => "complete",
+          "certificateUrl" => "https",
+          "periods" => [
+            {
+              "startDate" => "string",
+              "endDate" => "string",
+              "terms" => "integer",
+              "appropriateBody" => {
+                "name" => "string"
+              }
+            }
+          ]
+        },
         "initialTeacherTraining" => [
           {
             "qualification" => {
@@ -55,7 +71,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     let(:teacher) { described_class.new(api_data) }
 
     it "sorts the qualifications in reverse chronological order by date of award" do
-      expect(qualifications.map(&:type)).to eq(%i[NPQSL NPQML eyts qts itt])
+      expect(qualifications.map(&:type)).to eq(%i[NPQSL NPQML eyts qts induction itt])
     end
   end
 end

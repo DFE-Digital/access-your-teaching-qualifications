@@ -9,6 +9,5 @@ class QualificationsController < QualificationsInterfaceController
     end
 
     @user = current_user
-    @induction = @user.induction
   end
 end
