@@ -27,10 +27,8 @@ class StaffHttpBasicAuthStrategy < Warden::Strategies::Base
 
   private
 
-  SUPPORT_USERNAME =
-    Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_USERNAME", "test"))
-  SUPPORT_PASSWORD =
-    Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_PASSWORD", "test"))
+  SUPPORT_USERNAME = Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_USERNAME", "test"))
+  SUPPORT_PASSWORD = Digest::SHA256.hexdigest(ENV.fetch("SUPPORT_PASSWORD", "test"))
 
   ANONYMOUS_SUPPORT_USER = AnonymousSupportUser.new
 

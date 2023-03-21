@@ -28,9 +28,7 @@ RSpec.describe User, type: :model do
     end
 
     context "a user exists" do
-      let!(:user) do
-        create(:user, email: "test@example.com", given_name: "Ray")
-      end
+      let!(:user) { create(:user, email: "test@example.com", given_name: "Ray") }
 
       it "updates the user's details" do
         described_class.from_identity(auth_data)

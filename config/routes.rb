@@ -27,7 +27,5 @@ Rails.application.routes.draw do
     mount FeatureFlags::Engine => "/features"
   end
 
-  constraints(
-    RouteConstraints::AccessYourTeachingQualificationsConstraint.new
-  ) { draw(:aytq) }
+  constraints(RouteConstraints::AccessYourTeachingQualificationsConstraint.new) { draw(:aytq) }
 end

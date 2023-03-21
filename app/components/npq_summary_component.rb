@@ -7,14 +7,7 @@ class NpqSummaryComponent < ViewComponent::Base
 
   def rows
     [
-      {
-        key: {
-          text: "Awarded"
-        },
-        value: {
-          text: qualification.awarded_at.to_fs(:long_uk)
-        }
-      },
+      { key: { text: "Awarded" }, value: { text: qualification.awarded_at.to_fs(:long_uk) } },
       {
         key: {
           text: "Certificate"

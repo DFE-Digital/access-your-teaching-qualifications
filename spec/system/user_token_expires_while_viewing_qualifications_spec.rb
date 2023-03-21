@@ -6,8 +6,7 @@ RSpec.feature "Identity auth", type: :system do
 
   after { travel_back }
 
-  scenario "Access token expires while viewing qualifications",
-           test: :with_stubbed_auth do
+  scenario "Access token expires while viewing qualifications", test: :with_stubbed_auth do
     given_the_service_is_open
     and_i_am_signed_in_via_identity
 
@@ -32,8 +31,6 @@ RSpec.feature "Identity auth", type: :system do
   end
 
   def then_i_am_required_to_sign_in_again
-    expect(
-      page
-    ).to have_content "Your session has expired. Please sign in again."
+    expect(page).to have_content "Your session has expired. Please sign in again."
   end
 end

@@ -14,9 +14,7 @@ RSpec.describe QualificationsApi::Client do
       it "raises an error" do
         client = described_class.new(token: "invalid-token")
 
-        expect { client.teacher }.to raise_error(
-          QualificationsApi::InvalidTokenError
-        )
+        expect { client.teacher }.to raise_error(QualificationsApi::InvalidTokenError)
       end
     end
   end

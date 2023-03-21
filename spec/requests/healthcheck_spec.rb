@@ -10,9 +10,7 @@ RSpec.describe "Health check", type: :request do
 
   describe "GET /health/all" do
     before do
-      allow(Notifications::Client).to receive(:new).and_return(
-        double(:client, send_email: true)
-      )
+      allow(Notifications::Client).to receive(:new).and_return(double(:client, send_email: true))
     end
 
     it "responds successfully" do
@@ -36,9 +34,7 @@ RSpec.describe "Health check", type: :request do
   end
 
   it "checks Notify integration health" do
-    allow(Notifications::Client).to receive(:new).and_return(
-      double(:client, send_email: true)
-    )
+    allow(Notifications::Client).to receive(:new).and_return(double(:client, send_email: true))
     get "/health/notify"
     expect(response).to have_http_status(:ok)
   end
