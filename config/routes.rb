@@ -1,5 +1,6 @@
 require "sidekiq/web"
 require "route_constraints/access_your_teaching_qualifications_constraint"
+require "route_constraints/check_records_constraint"
 
 Rails.application.routes.draw do
   devise_for :staff,
@@ -28,4 +29,5 @@ Rails.application.routes.draw do
   end
 
   constraints(RouteConstraints::AccessYourTeachingQualificationsConstraint.new) { draw(:aytq) }
+  constraints(RouteConstraints::CheckRecordsConstraint.new) { draw(:check_records) }
 end
