@@ -17,6 +17,7 @@ RSpec.feature "User views their qualifications", type: :system do
     and_my_eyts_certificate_is_downloadable
     then_i_see_my_npq_details
     and_my_npq_certificate_is_downloadable
+    then_i_see_my_mq_details
   end
 
   private
@@ -85,5 +86,11 @@ RSpec.feature "User views their qualifications", type: :system do
     click_on "Download NPQH certificate"
     expect(page.response_headers["Content-Type"]).to eq("application/pdf")
     expect(page.response_headers["Content-Disposition"]).to eq("attachment")
+  end
+
+  def then_i_see_my_mq_details
+    expect(page).to have_content("Mandatory qualification (MQ): specialist teacher")
+    expect(page).to have_content("Awarded\t28 February 2023")
+    expect(page).to have_content("Specialism\tVisual impairment")
   end
 end

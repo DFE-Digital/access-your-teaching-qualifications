@@ -60,6 +60,15 @@ module QualificationsApi
         )
       end
 
+      @qualifications << api_data.mandatory_qualifications.map do |mq|
+        Qualification.new(
+          awarded_at: mq.awarded.to_date,
+          details: mq,
+          name: "Mandatory qualification (MQ): specialist teacher",
+          type: :mandatory
+        )
+      end
+
       @qualifications.flatten!.sort_by!(&:awarded_at).reverse!
     end
   end
