@@ -11,6 +11,10 @@ module HostingEnvironment
     host
   end
 
+  def self.check_records_domain
+    ENV.fetch("CHECK_RECORDS_DOMAIN", "localhost")
+  end
+
   def self.environment_name
     ENV.fetch("HOSTING_ENVIRONMENT_NAME", "unknown-environment")
   end
