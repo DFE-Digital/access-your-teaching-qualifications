@@ -13,7 +13,8 @@ class FakeQualificationsApi < Sinatra::Base
           certificateUrl: "http://example.com/v3/certificates/eyts"
         },
         qts: {
-          awarded: "2023-02-27"
+          awarded: "2023-02-27",
+          certificateUrl: "http://example.com/v3/certificates/qts"
         },
         induction: {
           startDate: "2022-09-01",
@@ -50,6 +51,7 @@ class FakeQualificationsApi < Sinatra::Base
             subjects: [{ code: "100079", name: "business studies" }]
           }
         ],
+        mandatoryQualifications: [{ awarded: "2023-02-28", specialism: "Visual impairment" }],
         npqQualifications: [
           {
             awarded: "2023-02-27",
