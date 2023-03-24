@@ -8,8 +8,8 @@ gem "cssbundling-rails"
 gem "devise"
 gem "devise_invitable"
 gem "faraday"
-gem "govuk-components"
-gem "govuk_design_system_formbuilder"
+gem "govuk-components", "~> 4.0.0a2"
+gem "govuk_design_system_formbuilder", "~>4.0.0a1"
 gem "govuk_feature_flags",
     git: "https://github.com/DFE-Digital/govuk_feature_flags.git",
     tag: "v1.0.1"
