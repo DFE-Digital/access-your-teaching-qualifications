@@ -45,7 +45,11 @@
       <% footer.with_meta do %>
         <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
           <h2 class="govuk-heading-m">Get help</h2>
-          <p class="govuk-!-font-size-16">Email: <%= govuk_link_to(t('service.email'), t('service.email'), class: "govuk-footer__link") %><br>You’ll get a response within 3 working days.</p>
+          <p class="govuk-!-font-size-16">
+            Email: <%= govuk_mail_to t('service.email'), t('service.email'), class: "govuk-footer__link" %>
+            <br>
+            You’ll get a response within 3 working days.
+          </p>
 
           <p class="govuk-!-font-size-16">Phone: 020 7593 5393<br>Monday to Friday, 9am to 5pm (except public holidays)</p>
           <hr class="govuk-section-break govuk-section-break--l">

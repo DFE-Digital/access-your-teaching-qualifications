@@ -105,7 +105,6 @@ GEM
       capybara (~> 3.0)
       ferrum (~> 0.13.0)
     date (3.3.3)
-    deep_merge (1.2.2)
     devise (4.9.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -142,11 +141,11 @@ GEM
       html-attributes-utils (~> 1.0.0, >= 1.0.0)
       pagy (~> 6.0)
       view_component (~> 3.0.0rc1)
-    govuk_design_system_formbuilder (3.0.2)
+    govuk_design_system_formbuilder (4.0.0a1)
       actionview (>= 6.1)
       activemodel (>= 6.1)
       activesupport (>= 6.1)
-      deep_merge (~> 1.2.1)
+      html-attributes-utils (~> 1)
     govuk_markdown (2.0.0)
       activesupport
       redcarpet
@@ -400,7 +399,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
     version_gem (1.1.1)
-    view_component (3.0.0.rc2)
+    view_component (3.0.0.rc5)
       activesupport (>= 5.2.0, < 8.0)
       concurrent-ruby (~> 1.0)
       method_source (~> 1.0)
@@ -439,8 +438,8 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faraday
-  govuk-components
-  govuk_design_system_formbuilder
+  govuk-components (~> 4.0.0a2)
+  govuk_design_system_formbuilder (~> 4.0.0a1)
   govuk_feature_flags!
   govuk_markdown
   hashie
