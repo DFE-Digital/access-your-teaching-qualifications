@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   devise :omniauthable
 
+  encrypts :email, deterministic: true
+  encrypts :family_name, :given_name, :name
+
   def self.from_identity(auth_data)
     email = auth_data.info.email
     user = find_or_initialize_by(email:)
@@ -12,10 +15,6 @@ class User < ApplicationRecord
       trn: auth_data.info.trn
     )
     user.tap(&:save!)
-  end
-
-  def induction
-    Struct.new(:name, :status, :completed_at).new("Induction", :pass, Date.new(2015, 11, 1))
   end
 
   def name

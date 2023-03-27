@@ -43,5 +43,7 @@ module AccessYourTeachingQualifications
     }
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.active_record.encryption.support_unencrypted_data = true
   end
 end
