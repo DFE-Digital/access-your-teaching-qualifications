@@ -94,5 +94,6 @@ COPY azure/.sshd_config /etc/ssh/sshd_config
 # Open port 2222 for Azure SSH access
 EXPOSE 2222
 
-CMD bundle exec rails db:migrate && \
+CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
+    bundle exec rails data:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails server -b 0.0.0.0

@@ -5,6 +5,7 @@ ruby "3.2.1"
 
 gem "bootsnap", require: false
 gem "cssbundling-rails"
+gem "data_migrate"
 gem "devise"
 gem "devise_invitable"
 gem "faraday"
