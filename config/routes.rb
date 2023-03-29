@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :staff, only: %i[index]
 
     mount FeatureFlags::Engine => "/features"
+    mount Audits1984::Engine => "/console"
   end
 
   constraints(RouteConstraints::AccessYourTeachingQualificationsConstraint.new) { draw(:aytq) }
