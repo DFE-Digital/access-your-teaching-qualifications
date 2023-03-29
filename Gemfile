@@ -3,7 +3,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+gem "audits1984"
 gem "bootsnap", require: false
+gem "console1984"
 gem "cssbundling-rails"
 gem "data_migrate"
 gem "devise"
