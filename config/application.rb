@@ -44,7 +44,6 @@ module AccessYourTeachingQualifications
 
     config.active_job.queue_adapter = :sidekiq
 
-    config.active_record.encryption.support_unencrypted_data = true
     config.audits1984 = {
       auditor_class: "Staff",
       base_controller_class: "SupportInterface::SupportInterfaceController"
