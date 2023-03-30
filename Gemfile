@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+gem "amazing_print"
 gem "audits1984"
 gem "bootsnap", require: false
 gem "console1984"
@@ -19,6 +20,7 @@ gem "govuk_feature_flags",
 gem "govuk_markdown"
 gem "hashie"
 gem "jsbundling-rails"
+gem "logstash-logger"
 gem "mail-notify"
 gem "name_of_person"
 gem "okcomputer"
@@ -29,6 +31,7 @@ gem "pg", "~> 1.4"
 gem "propshaft"
 gem "puma", "~> 6.1"
 gem "rails", "~> 7.0.4"
+gem "rails_semantic_logger"
 gem "sidekiq"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
