@@ -1,0 +1,15 @@
+---
+:shared:
+  :active_storage_blobs:
+    - filename
+  :active_storage_attachments:
+    - name
+  :users:
+    - date_of_birth
+    - email
+    - family_name
+    - given_name
+    - name
+    - trn
+  :staff:
+    - email

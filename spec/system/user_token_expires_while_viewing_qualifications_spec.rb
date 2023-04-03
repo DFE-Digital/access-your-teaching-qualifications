@@ -14,6 +14,7 @@ RSpec.feature "Identity auth", type: :system do
     and_my_access_token_expires
     and_i_try_to_download_a_certificate
     then_i_am_required_to_sign_in_again
+    and_event_tracking_is_working
   end
 
   private

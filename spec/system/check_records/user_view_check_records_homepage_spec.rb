@@ -8,6 +8,7 @@ RSpec.feature "Check records homepage" do
     given_the_service_is_open
     when_i_visit_the_check_records_homepage
     then_i_see_the_check_records_nav
+    and_event_tracking_is_working
   end
 
   private

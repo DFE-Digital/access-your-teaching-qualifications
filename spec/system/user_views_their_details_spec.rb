@@ -8,6 +8,7 @@ RSpec.feature "User views their details" do
     given_the_service_is_open
     and_i_am_signed_in_via_identity
     then_i_see_my_details_as_returned_by_the_api
+    and_event_tracking_is_working
   end
 
   def then_i_see_my_details_as_returned_by_the_api

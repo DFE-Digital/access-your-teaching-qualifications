@@ -153,6 +153,16 @@ the Notify dashboard in the `API integration` section.
 
 _Note:_ You can set `GOVUK_NOTIFY_API_KEY=fake-key` when running locally if you don't need to use Notify.
 
+### BigQuery
+
+Edit `.env.development.local` and add a BigQuery key if you want to use BigQuery locally.
+
+See [DfE Analytics](https://github.com/DFE-Digital/dfe-analytics#2-get-an-api-json-key-key) for information on how to get a key.
+
+You also need to set `BIGQUERY_DISABLE` to `false` as it defaults to `true` in the development environment.
+
+[Read more about setting up BigQuery](https://github.com/DFE-Digital/dfe-analytics/blob/main/docs/google_cloud_bigquery_setup.md).
+
 ### Linting
 
 To run the linters:

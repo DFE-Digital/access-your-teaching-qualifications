@@ -11,6 +11,8 @@ require "capybara/rspec"
 require "capybara/cuprite"
 require "sidekiq/testing"
 require "webmock/rspec"
+require "dfe/analytics/testing"
+require "dfe/analytics/rspec/matchers"
 
 WebMock.disable_net_connect!(allow_localhost: true)
 

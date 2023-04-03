@@ -9,6 +9,7 @@ RSpec.feature "User views and updates their details" do
     and_i_am_signed_in_via_identity
     when_i_visit_view_and_update_details
     then_i_see_the_landing_page
+    and_event_tracking_is_working
   end
 
   private
