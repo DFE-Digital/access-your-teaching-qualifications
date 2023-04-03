@@ -18,6 +18,7 @@ RSpec.feature "User views their qualifications", type: :system do
     then_i_see_my_npq_details
     and_my_npq_certificate_is_downloadable
     then_i_see_my_mq_details
+    and_event_tracking_is_working
   end
 
   private

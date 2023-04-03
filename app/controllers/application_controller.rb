@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include DfE::Analytics::Requests
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
   http_basic_authenticate_with(

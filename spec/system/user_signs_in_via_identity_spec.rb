@@ -11,6 +11,7 @@ RSpec.feature "Identity auth", type: :system do
     when_i_go_to_the_sign_in_page
     and_click_the_sign_in_button
     then_i_am_signed_in_after_successfully_authenticating_with_identity
+    and_event_tracking_is_working
   end
 
   private
