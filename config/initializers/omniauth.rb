@@ -1,4 +1,5 @@
 require "check_records/dfe_sign_in"
+require "omniauth/strategies/identity"
 
 OmniAuth.config.logger = Rails.logger
 
@@ -30,4 +31,8 @@ if CheckRecords::DfESignIn.bypass?
   end
 else
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
+end
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :identity, ENV.fetch("IDENTITY_CLIENT_ID"), ENV.fetch("IDENTITY_CLIENT_SECRET")
 end

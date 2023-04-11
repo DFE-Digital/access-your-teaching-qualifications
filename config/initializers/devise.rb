@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../lib/omniauth/strategies/identity"
-
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -323,7 +321,6 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :identity, ENV.fetch("IDENTITY_CLIENT_ID"), ENV.fetch("IDENTITY_CLIENT_SECRET")
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

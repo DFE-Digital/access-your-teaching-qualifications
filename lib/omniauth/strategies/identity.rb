@@ -1,4 +1,4 @@
-module Omniauth
+module OmniAuth
   module Strategies
     class Identity < OmniAuth::Strategies::OAuth2
       option :name, :identity
