@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  devise :omniauthable
-
   encrypts :email, deterministic: true
   encrypts :family_name, :given_name, :name
 
