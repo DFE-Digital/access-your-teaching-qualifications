@@ -2,6 +2,22 @@ class QualificationsInterfaceController < ApplicationController
   before_action :authenticate_user!
   before_action :handle_expired_token!
 
+  def current_user
+    @current_user ||= User.find(session[:identity_user_id]) if session[:identity_user_id]
+  end
+  helper_method :current_user
+
+  def authenticate_user!
+    if current_user.blank?
+      flash[:warning] = "You need to sign in to continue."
+      redirect_to sign_in_path
+    end
+  end
+
+  def user_signed_in?
+    !!current_user
+  end
+
   def handle_expired_token!
     redirect_to sign_out_path unless session[:identity_user_token_expiry]
 

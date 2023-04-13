@@ -1,5 +1,7 @@
-class Users::SignOutController < ApplicationController
+class Users::SignOutController < QualificationsInterfaceController
+  skip_before_action :handle_expired_token!
+
   def new
-    sign_out(:user) if user_signed_in?
+    session[:identity_user_id] = nil if user_signed_in?
   end
 end
