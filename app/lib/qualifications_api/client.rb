@@ -20,7 +20,18 @@ module QualificationsApi
     end
 
     def teacher
-      response = client.get("v3/teacher")
+      response =
+        client.get(
+          "v3/teacher",
+          {
+            include: %w[
+              Induction
+              InitialTeacherTraining
+              NpqQualifications
+              MandatoryQualifications
+            ].join(",")
+          }
+        )
 
       case response.status
       when 200
