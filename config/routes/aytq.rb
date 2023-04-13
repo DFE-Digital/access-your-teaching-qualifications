@@ -2,6 +2,7 @@
 
 root to: "users/sign_in#new"
 
+get "/users/auth/identity/callback", to: "users/omniauth_callbacks#identity"
 get "/sign-in", to: "users/sign_in#new"
 get "/sign-out", to: "users/sign_out#new"
 

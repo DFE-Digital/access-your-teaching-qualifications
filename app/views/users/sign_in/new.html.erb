@@ -1,7 +1,7 @@
 <%=
   govuk_button_to(
     "Sign in with Identity",
-    omniauth_authorize_path(:user, :identity),
+    "/users/auth/identity",
     method: :post
   )
 %>
