@@ -20,7 +20,7 @@ module ApplicationHelper
         if current_staff
           header.with_navigation_item(href: main_app.staff_sign_out_path, text: "Sign out")
         end
-      else
+      when "qualifications"
         if current_user
           header.with_navigation_item(
             active: current_page?(main_app.identity_user_path),
