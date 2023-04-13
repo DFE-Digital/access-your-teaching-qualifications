@@ -1,4 +1,4 @@
-class IdentityUsersController < ApplicationController
+class IdentityUsersController < QualificationsInterfaceController
   before_action :authenticate_user!
 
   def show
