@@ -37,7 +37,9 @@
       <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= render(FlashMessageComponent.new(flash: flash)) %>
-        <%= yield :content %>
+
+        <%= yield %>
+
       </main>
     </div>
 
