@@ -1,0 +1,2 @@
+class DsiUser < ApplicationRecord
+end
