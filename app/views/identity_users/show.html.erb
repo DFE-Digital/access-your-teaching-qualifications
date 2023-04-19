@@ -6,9 +6,13 @@
       You can change sign in and personal details in your DfE Identity account.
     </p>
     <p>
-      You use your DfE Identity account to sign in to <b>'Access your teaching qualifications'</b>.
+      You use your DfE Identity account to sign in to <b>'<%= t('service.name') %>'</b>.
     </p>
 
-    <%= govuk_button_to "Access your DfE Identity account", "#{ENV.fetch('IDENTITY_API_DOMAIN')}/account?client_id=access-your-teaching-qualifications&redirect_uri=#{root_url}", class: "app-button--inverse govuk-!-margin-bottom-0", method: :get %>
+      <%= govuk_link_to(
+        "Access your DfE Identity account", 
+        "#{ENV.fetch('IDENTITY_API_DOMAIN')}account?client_id=#{ENV.fetch("IDENTITY_CLIENT_ID")}&redirect_uri=#{CGI::escape(root_url)}&sign_out_uri=#{CGI::escape(sign_out_url)}",
+        class: "govuk-button app-button--inverse govuk-!-margin-bottom-0"
+      ) %>
   </div>
 <% end %>
