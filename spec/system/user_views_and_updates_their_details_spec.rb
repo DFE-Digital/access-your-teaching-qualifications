@@ -20,6 +20,6 @@ RSpec.feature "User views and updates their details" do
 
   def then_i_see_the_landing_page
     expect(page).to have_text("DfE Identity account")
-    expect(page).to have_button("Access your DfE Identity account")
+    expect(page).to have_link("Access your DfE Identity account")
   end
 end
