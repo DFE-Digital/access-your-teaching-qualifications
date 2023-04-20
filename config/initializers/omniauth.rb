@@ -27,7 +27,10 @@ options = {
 
 if CheckRecords::DfESignIn.bypass?
   Rails.application.config.middleware.use OmniAuth::Builder do
-    provider :developer, fields: %i[uid email first_name last_name], uid_field: :uid, path_prefix: "/check-records/auth"
+    provider :developer,
+             fields: %i[uid email first_name last_name],
+             uid_field: :uid,
+             path_prefix: "/check-records/auth"
   end
 else
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
