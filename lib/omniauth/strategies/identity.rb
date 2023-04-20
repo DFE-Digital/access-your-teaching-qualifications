@@ -5,6 +5,7 @@ module OmniAuth
 
       option :client_options,
              {
+               authorize_params: lambda { |request| { session_id: request.session.id } },
                authorize_url: "/connect/authorize",
                site: ENV.fetch("IDENTITY_API_DOMAIN"),
                token_url: "/connect/token"
