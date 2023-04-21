@@ -7,7 +7,7 @@ help: ## Show this help
 
 ##@ Set environment and corresponding configuration
 .PHONY: dev
-dev:
+dev: ## set the dev enironment variables
 	$(eval DEPLOY_ENV=dev)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-development)
 	$(eval RESOURCE_NAME_PREFIX=s165d01)
@@ -17,7 +17,7 @@ dev:
 	$(eval RESOURCE_ENV=${ENV_SHORT})
 
 .PHONY: test
-test:
+test: ## set the test enironment variables
 	$(eval DEPLOY_ENV=test)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
 	$(eval RESOURCE_NAME_PREFIX=s165t01)
@@ -27,7 +27,7 @@ test:
 	$(eval RESOURCE_ENV=${ENV_SHORT})
 
 .PHONY: preprod
-preprod:
+preprod:  ## set the pre-production enironment variables
 	$(eval DEPLOY_ENV=preprod)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-test)
 	$(eval RESOURCE_NAME_PREFIX=s165t01)
@@ -37,7 +37,7 @@ preprod:
 	$(eval RESOURCE_ENV=${ENV_SHORT})
 
 .PHONY: production
-production:
+production:  ## set the production enironment variables
 	$(eval DEPLOY_ENV=production)
 	$(eval AZURE_SUBSCRIPTION=s165-teachingqualificationsservice-production)
 	$(eval RESOURCE_NAME_PREFIX=s165p01)
@@ -109,36 +109,36 @@ install-fetch-config: ## Install the fetch-config script, for viewing/editing se
 		&& chmod +x bin/fetch_config.rb \
 		|| true
 
-edit-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
+edit-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account ## make <env> edit-keyvault-secret -  edit (with default editor) keyvault secret for INFRASTRUCTURE
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
 		-e -d azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml -c
 
-create-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
+create-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account  ## make <env> create-keyvault-secret - create and edit  INFRASTRUCTURE secret
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} \
 		-i -e -d azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml -c
 
-print-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
+print-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account ## make <env>  print-keyvault-secret -  print out keyvault secret for INFRASTRUCTURE
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -f yaml
 
 validate-keyvault-secret: read-keyvault-config install-fetch-config set-azure-account
 	bin/fetch_config.rb -s azure-key-vault-secret:${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} -d quiet \
 		&& echo Data in ${KEY_VAULT_NAME}/${KEY_VAULT_SECRET_NAME} looks valid
 
-terraform-init:
+terraform-init: ## make <env> terraform-init - run terraform init against the <env> environment
 	$(if ${IMAGE_TAG}, , $(eval export IMAGE_TAG=main))
 	[[ "${SP_AUTH}" != "true" ]] && az account set -s ${AZURE_SUBSCRIPTION} || true
 	terraform -chdir=terraform init -backend-config workspace_variables/${DEPLOY_ENV}.backend.tfvars ${backend_config} -upgrade -reconfigure
 
-terraform-plan: terraform-init
+terraform-plan: terraform-init  ## make <env> terraform-plan - run terraform init against the <env> environment
 	terraform -chdir=terraform plan -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json
 
-terraform-apply: terraform-init
+terraform-apply: terraform-init ## make <env> terraform-apply - run terraform init against the <env> environment
 	terraform -chdir=terraform apply -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
-terraform-destroy: terraform-init
+terraform-destroy: terraform-init ## ## make <env> terraform-destroy - run terraform init against the <env> environment
 	terraform -chdir=terraform destroy -var-file workspace_variables/${DEPLOY_ENV}.tfvars.json ${AUTO_APPROVE}
 
-deploy-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags# make dev deploy-azure-resources AUTO_APPROVE=1
+deploy-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## make <env> deploy-azure-resources AUTO_APPROVE=1 - setup store for terraform state and keyvault storage,  use AUTO_APPROVE=1
 	$(if ${AUTO_APPROVE}, , $(error can only run with AUTO_APPROVE))
 	az deployment sub create --name "resourcedeploy-aytq-$(shell date +%Y%m%d%H%M%S)" -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-aytq-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' \
@@ -146,7 +146,7 @@ deploy-azure-resources: set-azure-account set-azure-template-tag set-azure-resou
 			"dbBackupStorageAccountName=${AZURE_BACKUP_STORAGE_ACCOUNT_NAME}" "dbBackupStorageContainerName=${AZURE_BACKUP_STORAGE_CONTAINER_NAME}" \
 			"keyVaultName=${RESOURCE_NAME_PREFIX}-aytq-${ENV_SHORT}-kv"
 
-validate-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags# make dev validate-azure-resources
+validate-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## make <env> validate-azure-resources - runs a '--what-if'
 	az deployment sub create --name "resourcedeploy-aytq-$(shell date +%Y%m%d%H%M%S)" -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-aytq-${ENV_SHORT}-rg" 'tags=${RG_TAGS}' \
 			"tfStorageAccountName=${RESOURCE_NAME_PREFIX}aytqtfstate${ENV_SHORT}" "tfStorageContainerName=aytq-tfstate" \
@@ -154,7 +154,7 @@ validate-azure-resources: set-azure-account set-azure-template-tag set-azure-res
 			"keyVaultName=${RESOURCE_NAME_PREFIX}-aytq-${ENV_SHORT}-kv" \
 		--what-if
 
-domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags# make domain domain-azure-resources AUTO_APPROVE=1
+domain-azure-resources: set-azure-account set-azure-template-tag set-azure-resource-group-tags ## make domain domain-azure-resources AUTO_APPROVE=1
 	$(if ${AUTO_APPROVE}, , $(error can only run with AUTO_APPROVE))
 	az deployment sub create -l "West Europe" --template-uri "https://raw.githubusercontent.com/DFE-Digital/tra-shared-services/${ARM_TEMPLATE_TAG}/azure/resourcedeploy.json" \
 		--parameters "resourceGroupName=${RESOURCE_NAME_PREFIX}-aytqdomains-rg" 'tags=${RG_TAGS}' "environment=${DEPLOY_ENV}" \

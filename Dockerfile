@@ -47,6 +47,7 @@ RUN DATABASE_PASSWORD=required-to-run-but-not-used \
     IDENTITY_API_DOMAIN=required-to-run-but-not-used \
     IDENTITY_CLIENT_ID=required-to-run-but-not-used \
     IDENTITY_CLIENT_SECRET=required-to-run-but-not-used \
+    RAILS_SERVE_STATIC_FILES=true \
     bundle exec rails assets:precompile
 
 # Cleanup to save space in the production image
