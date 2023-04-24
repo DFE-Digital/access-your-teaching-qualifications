@@ -16,7 +16,7 @@ class NpqSummaryComponent < ViewComponent::Base
           text:
             link_to(
               "Download #{qualification.name} certificate",
-              npq_certificate_path(url: qualification.certificate_url),
+              qualifications_npq_certificate_path(url: qualification.certificate_url),
               class: "govuk-link"
             )
         }

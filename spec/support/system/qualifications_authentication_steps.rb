@@ -1,4 +1,4 @@
-module AuthenticationSteps
+module QualificationAuthenticationSteps
   def and_i_am_signed_in
     @user = create(:user)
     sign_in(@user)
@@ -32,7 +32,7 @@ module AuthenticationSteps
   alias_method :and_identity_auth_is_mocked, :given_identity_auth_is_mocked
 
   def when_i_go_to_the_sign_in_page
-    visit sign_in_path
+    visit qualifications_sign_in_path
   end
 
   def and_click_the_sign_in_button

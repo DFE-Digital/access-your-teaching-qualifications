@@ -21,6 +21,7 @@ Capybara.register_driver(:cuprite) do |app|
 end
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
+Capybara.app_host = "http://qualifications.localhost"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -87,6 +88,12 @@ RSpec.configure do |config|
 
     OmniAuth.config.mock_auth.delete(:identity)
     OmniAuth.config.mock_auth.delete(:dfe)
+  end
+
+  config.around(:each, host: :check_records) do |example|
+    Capybara.app_host = "http://check_records.localhost"
+    example.run
+    Capybara.app_host = "http://qualifications.localhost"
   end
 
   config.include ActiveJob::TestHelper

@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "User views their details" do
   include CommonSteps
-  include AuthenticationSteps
+  include QualificationAuthenticationSteps
 
   scenario "The details are retrieved from the API", test: :with_stubbed_auth do
     given_the_service_is_open

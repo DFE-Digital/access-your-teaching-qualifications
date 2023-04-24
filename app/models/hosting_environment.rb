@@ -12,7 +12,7 @@ module HostingEnvironment
   end
 
   def self.check_records_domain
-    ENV.fetch("CHECK_RECORDS_DOMAIN", "localhost")
+    ENV.fetch("CHECK_RECORDS_DOMAIN")
   end
 
   def self.environment_name

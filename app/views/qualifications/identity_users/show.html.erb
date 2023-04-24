@@ -1,4 +1,4 @@
-<% content_for :back_link_url, root_path %>
+<% content_for :back_link_url, qualifications_dashboard_path %>
 
 <%= govuk_panel(title_text: "DfE Identity account", classes: "app-panel--interruption") do %>
   <div class="app__two-thirds">
@@ -11,7 +11,7 @@
 
       <%= govuk_link_to(
         "Access your DfE Identity account", 
-        "#{ENV.fetch('IDENTITY_API_DOMAIN')}account?client_id=#{ENV.fetch("IDENTITY_CLIENT_ID")}&redirect_uri=#{CGI::escape(root_url)}&sign_out_uri=#{CGI::escape(sign_out_url)}",
+        "#{ENV.fetch('IDENTITY_API_DOMAIN')}account?client_id=#{ENV.fetch("IDENTITY_CLIENT_ID")}&redirect_uri=#{CGI::escape(qualifications_dashboard_url)}&sign_out_uri=#{CGI::escape(qualifications_sign_out_url)}",
         class: "govuk-button app-button--inverse govuk-!-margin-bottom-0"
       ) %>
   </div>

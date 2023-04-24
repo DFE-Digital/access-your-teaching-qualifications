@@ -40,5 +40,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   provider :identity,
            ENV.fetch("IDENTITY_CLIENT_ID"),
            ENV.fetch("IDENTITY_CLIENT_SECRET"),
-           { path_prefix: "/users/auth" }
+           { path_prefix: "/qualifications/users/auth" }
 end
