@@ -27,7 +27,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= render(CheckRecords::NavigationComponent.new) %>
+    <%= render(CheckRecords::NavigationComponent.new(current_dsi_user: current_dsi_user)) %>
 
     <div class="govuk-width-container">
       <%= govuk_phase_banner(tag: { text: "Beta" }) do %>

@@ -1,4 +1,9 @@
 <%=
   govuk_header(service_name: t("check_records_service.name"), service_url: "/check-records") do |header|
+    if current_dsi_user
+      header.with_navigation_item(href: check_records_sign_out_path, text: "Sign out")
+    else
+      header.with_navigation_item(href: check_records_sign_in_path, text: "Sign in")
+    end
   end
 %>
