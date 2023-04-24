@@ -48,7 +48,7 @@ class InductionSummaryComponent < ViewComponent::Base
           text:
             link_to(
               "Download Induction certificate",
-              certificate_path(:induction),
+              qualifications_certificate_path(:induction),
               class: "govuk-link"
             )
         }

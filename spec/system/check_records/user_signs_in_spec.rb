@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "DSI authentication" do
+RSpec.describe "DSI authentication", host: :check_records do
   include AuthorizationSteps
   include CheckRecords::AuthenticationSteps
 

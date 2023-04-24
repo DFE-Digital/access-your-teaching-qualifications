@@ -10,7 +10,7 @@ class QualificationsInterfaceController < ApplicationController
   def authenticate_user!
     if current_user.blank?
       flash[:warning] = "You need to sign in to continue."
-      redirect_to sign_in_path
+      redirect_to qualifications_sign_in_path
     end
   end
 
@@ -19,11 +19,11 @@ class QualificationsInterfaceController < ApplicationController
   end
 
   def handle_expired_token!
-    redirect_to sign_out_path unless session[:identity_user_token_expiry]
+    redirect_to qualifications_sign_out_path unless session[:identity_user_token_expiry]
 
     if Time.zone.at(session[:identity_user_token_expiry]).past?
       flash[:warning] = "Your session has expired. Please sign in again."
-      redirect_to sign_out_path
+      redirect_to qualifications_sign_out_path
     end
   end
 end

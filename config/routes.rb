@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
   namespace :support_interface, path: "/support" do
     get "/", to: "support_interface#index"
+    root to: "support_interface#index", as: :staff_root
 
     resources :staff, only: %i[index]
 

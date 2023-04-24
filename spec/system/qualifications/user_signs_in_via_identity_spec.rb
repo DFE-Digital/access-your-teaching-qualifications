@@ -3,7 +3,7 @@ require "rails_helper"
 
 RSpec.feature "Identity auth", type: :system do
   include CommonSteps
-  include AuthenticationSteps
+  include QualificationAuthenticationSteps
 
   scenario "User signs in via Identity", test: :with_stubbed_auth do
     given_the_service_is_open

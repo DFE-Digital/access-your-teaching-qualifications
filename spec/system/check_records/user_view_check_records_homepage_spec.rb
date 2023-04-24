@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require "rails_helper"
 
-RSpec.feature "Check records homepage" do
+RSpec.feature "Check records homepage", host: :check_records do
   include CommonSteps
 
   scenario "User views Check records homepage" do

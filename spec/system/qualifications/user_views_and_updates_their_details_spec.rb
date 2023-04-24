@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "User views and updates their details" do
   include CommonSteps
-  include AuthenticationSteps
+  include QualificationAuthenticationSteps
 
   scenario "User updates their details", test: :with_stubbed_auth do
     given_the_service_is_open

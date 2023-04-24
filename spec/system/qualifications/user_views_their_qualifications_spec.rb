@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "User views their qualifications", type: :system do
   include CommonSteps
-  include AuthenticationSteps
+  include QualificationAuthenticationSteps
 
   scenario "when they have qualifications", test: :with_stubbed_auth do
     given_the_service_is_open
@@ -24,7 +24,7 @@ RSpec.feature "User views their qualifications", type: :system do
   private
 
   def when_i_visit_the_qualifications_page
-    visit qualifications_path
+    visit qualifications_dashboard_path
   end
 
   def then_i_see_my_induction_details

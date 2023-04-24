@@ -23,11 +23,11 @@ module ApplicationHelper
       when "qualifications"
         if current_user
           header.with_navigation_item(
-            active: current_page?(main_app.identity_user_path),
-            href: main_app.identity_user_path,
+            active: current_page?(main_app.qualifications_identity_user_path),
+            href: main_app.qualifications_identity_user_path,
             text: "Account"
           )
-          header.with_navigation_item(href: main_app.sign_out_path, text: "Sign out")
+          header.with_navigation_item(href: main_app.qualifications_sign_out_path, text: "Sign out")
         end
       end
     end

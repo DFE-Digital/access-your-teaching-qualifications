@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "Identity auth", type: :system do
   include CommonSteps
-  include AuthenticationSteps
+  include QualificationAuthenticationSteps
 
   after { travel_back }
 
@@ -20,7 +20,7 @@ RSpec.feature "Identity auth", type: :system do
   private
 
   def when_i_visit_the_qualifications_page
-    visit qualifications_path
+    visit qualifications_dashboard_path
   end
 
   def and_my_access_token_expires

@@ -1,5 +1,4 @@
 module CommonSteps
-  include AuthenticationSteps
   include AuthorizationSteps
   include ActivateFeaturesSteps
 
