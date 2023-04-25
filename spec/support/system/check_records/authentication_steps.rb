@@ -5,6 +5,7 @@ module CheckRecords
       when_i_visit_the_sign_in_page
       and_click_the_dsi_sign_in_button
     end
+    alias_method :and_i_am_signed_in_via_dsi, :when_i_sign_in_via_dsi
 
     def given_dsi_auth_is_mocked
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(

@@ -13,8 +13,4 @@ class DsiUser < ApplicationRecord
 
     dsi_user
   end
-
-  def begin_session!(session)
-    session[:dsi_user_id] = id
-  end
 end
