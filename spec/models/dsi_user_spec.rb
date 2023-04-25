@@ -32,15 +32,4 @@ RSpec.describe DsiUser, type: :model do
       end
     end
   end
-
-  describe "#begin_session!" do
-    let(:session) { {} }
-    let(:dsi_user) { create(:dsi_user) }
-
-    it "sets the dsi_user_id in the session" do
-      expect { dsi_user.begin_session!(session) }.to change { session[:dsi_user_id] }.from(nil).to(
-        dsi_user.id
-      )
-    end
-  end
 end

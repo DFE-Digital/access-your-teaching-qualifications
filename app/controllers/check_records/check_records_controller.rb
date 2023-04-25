@@ -1,6 +1,7 @@
 module CheckRecords
   class CheckRecordsController < ApplicationController
     before_action :authenticate_dsi_user!
+    before_action :handle_expired_session!
 
     layout "check_records_layout"
 
@@ -18,6 +19,18 @@ module CheckRecords
 
     def dsi_user_signed_in?
       !!current_dsi_user
+    end
+
+    def handle_expired_session!
+      if session[:dsi_user_session_expiry].nil?
+        redirect_to check_records_sign_out_path
+        return
+      end
+
+      if Time.zone.at(session[:dsi_user_session_expiry]).past?
+        flash[:warning] = "Your session has expired. Please sign in again."
+        redirect_to check_records_sign_out_path
+      end
     end
   end
 end
