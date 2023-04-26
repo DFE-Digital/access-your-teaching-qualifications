@@ -1,7 +1,17 @@
-<%=
-  govuk_button_to(
-    "Sign in with DSI bypass",
-    "/check-records/auth/developer",
-    method: :post
-  )
-%>
+<% if CheckRecords::DfESignIn.bypass? %>
+  <%=
+    govuk_button_to(
+      "Sign in with DSI bypass",
+      "/check-records/auth/developer",
+      method: :post
+    )
+  %>
+<% else %>
+  <%=
+    govuk_button_to(
+      "Sign in with DSI",
+      "/check-records/auth/dfe",
+      method: :post
+    )
+  %>
+<% end %>

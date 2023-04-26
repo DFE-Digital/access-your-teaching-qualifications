@@ -3,11 +3,11 @@
 class CheckRecords::OmniauthCallbacksController < ApplicationController
   protect_from_forgery except: :dfe_bypass
 
-  def dfe_bypass
-    redirect_to check_records_root_path unless CheckRecords::DfESignIn.bypass?
+  def dfe
     @dsi_user = DsiUser.create_or_update_from_dsi(request.env["omniauth.auth"])
     @dsi_user.begin_session!(session)
 
     redirect_to check_records_root_path
   end
+  alias_method :dfe_bypass, :dfe
 end

@@ -84,7 +84,9 @@ RSpec.configure do |config|
     OmniAuth.config.test_mode = true
     example.run
     OmniAuth.config.test_mode = false
-    OmniAuth.config.mock_auth[:identity] = nil
+
+    OmniAuth.config.mock_auth.delete(:identity)
+    OmniAuth.config.mock_auth.delete(:dfe)
   end
 
   config.include ActiveJob::TestHelper
