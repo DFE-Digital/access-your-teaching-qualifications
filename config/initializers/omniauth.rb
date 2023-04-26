@@ -36,6 +36,7 @@ else
   Rails.application.config.middleware.use OmniAuth::Strategies::OpenIDConnect, options
 end
 
+# Identity setup
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :identity,
            ENV.fetch("IDENTITY_CLIENT_ID"),
