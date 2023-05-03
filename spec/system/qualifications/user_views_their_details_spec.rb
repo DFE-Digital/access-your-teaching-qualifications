@@ -4,7 +4,8 @@ RSpec.feature "User views their details" do
   include CommonSteps
   include QualificationAuthenticationSteps
 
-  scenario "The details are retrieved from the API", test: :with_stubbed_auth do
+  scenario "The details are retrieved from the API",
+           test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_service_is_open
     and_i_am_signed_in_via_identity
     then_i_see_my_details_as_returned_by_the_api

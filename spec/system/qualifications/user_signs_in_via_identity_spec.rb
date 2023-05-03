@@ -5,7 +5,7 @@ RSpec.feature "Identity auth", type: :system do
   include CommonSteps
   include QualificationAuthenticationSteps
 
-  scenario "User signs in via Identity", test: :with_stubbed_auth do
+  scenario "User signs in via Identity", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_service_is_open
     and_identity_auth_is_mocked
     when_i_go_to_the_sign_in_page

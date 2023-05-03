@@ -19,10 +19,13 @@ module QualificationsApi
       end
     end
 
-    def teacher
+    def teacher(trn: nil)
+      # If TRN is provided, we use an endpoint which expects a fixed Bearer token.
+      # If TRN is blank, the token needs to come from an authenticated Identity user.
+      endpoint = (trn ? "v3/teachers/#{trn}" : "v3/teacher")
       response =
         client.get(
-          "v3/teacher",
+          endpoint,
           {
             include: %w[
               Induction
