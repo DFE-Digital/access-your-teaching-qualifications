@@ -4,65 +4,18 @@ class FakeQualificationsApi < Sinatra::Base
 
     case bearer_token
     when "token"
-      {
-        trn: "3000299",
-        firstName: "Terry",
-        lastName: "Walsh",
-        eyts: {
-          awarded: "2022-04-01",
-          certificateUrl: "http://example.com/v3/certificates/eyts"
-        },
-        qts: {
-          awarded: "2023-02-27",
-          certificateUrl: "http://example.com/v3/certificates/qts"
-        },
-        induction: {
-          startDate: "2022-09-01",
-          endDate: "2022-10-01",
-          status: "pass",
-          certificateUrl: "string",
-          periods: [
-            {
-              startDate: "2022-09-01",
-              endDate: "2022-10-01",
-              terms: 1,
-              appropriateBody: {
-                name: "Induction body"
-              }
-            }
-          ]
-        },
-        initialTeacherTraining: [
-          {
-            ageRange: {
-              description: "10 to 16 years"
-            },
-            endDate: "2023-01-28",
-            programmeType: "HEI",
-            provider: {
-              name: "Earl Spencer Primary School",
-              ukprn: nil
-            },
-            qualification: {
-              name: "BA"
-            },
-            result: "Pass",
-            startDate: "2022-02-28",
-            subjects: [{ code: "100079", name: "business studies" }]
-          }
-        ],
-        mandatoryQualifications: [{ awarded: "2023-02-28", specialism: "Visual impairment" }],
-        npqQualifications: [
-          {
-            awarded: "2023-02-27",
-            certificateUrl: "/v3/certificates/npq/1",
-            type: {
-              code: "NPQH",
-              name: "NPQ headteacher"
-            }
-          }
-        ]
-      }.to_json
+      quals_data
+    when "invalid-token"
+      halt 401
+    end
+  end
+
+  get "/v3/teachers/1234567" do
+    content_type :json
+
+    case bearer_token
+    when "token"
+      quals_data(trn: "1234567")
     when "invalid-token"
       halt 401
     end
@@ -105,6 +58,68 @@ class FakeQualificationsApi < Sinatra::Base
   end
 
   private
+
+  def quals_data(trn: nil)
+    {
+      trn: trn || "3000299",
+      firstName: "Terry",
+      lastName: "Walsh",
+      eyts: {
+        awarded: "2022-04-01",
+        certificateUrl: trn ? nil : "http://example.com/v3/certificates/eyts"
+      },
+      qts: {
+        awarded: "2023-02-27",
+        certificateUrl: trn ? nil : "http://example.com/v3/certificates/qts"
+      },
+      induction: {
+        startDate: "2022-09-01",
+        endDate: "2022-10-01",
+        status: "pass",
+        certificateUrl: trn ? nil : "string",
+        periods: [
+          {
+            startDate: "2022-09-01",
+            endDate: "2022-10-01",
+            terms: 1,
+            appropriateBody: {
+              name: "Induction body"
+            }
+          }
+        ]
+      },
+      initialTeacherTraining: [
+        {
+          ageRange: {
+            description: "10 to 16 years"
+          },
+          endDate: "2023-01-28",
+          programmeType: "HEI",
+          provider: {
+            name: "Earl Spencer Primary School",
+            ukprn: nil
+          },
+          qualification: {
+            name: "BA"
+          },
+          result: "Pass",
+          startDate: "2022-02-28",
+          subjects: [{ code: "100079", name: "business studies" }]
+        }
+      ],
+      mandatoryQualifications: [{ awarded: "2023-02-28", specialism: "Visual impairment" }],
+      npqQualifications: [
+        {
+          awarded: "2023-02-27",
+          certificateUrl: trn ? nil : "/v3/certificates/npq/1",
+          type: {
+            code: "NPQH",
+            name: "NPQ headteacher"
+          }
+        }
+      ]
+    }.to_json
+  end
 
   def bearer_token
     auth_header = request.env.fetch("HTTP_AUTHORIZATION")

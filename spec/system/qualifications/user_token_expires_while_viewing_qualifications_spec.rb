@@ -6,7 +6,8 @@ RSpec.feature "Identity auth", type: :system do
 
   after { travel_back }
 
-  scenario "Access token expires while viewing qualifications", test: :with_stubbed_auth do
+  scenario "Access token expires while viewing qualifications",
+           test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_service_is_open
     and_i_am_signed_in_via_identity
 
