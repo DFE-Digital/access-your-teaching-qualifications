@@ -1,0 +1,25 @@
+<% content_for :back_link_url, check_records_search_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= @teacher.name %></h1>
+
+    <h2 class="govuk-heading-m">Personal Details</h2>
+    <%= govuk_summary_list(
+      rows: [
+        { key: { text: "Teacher reference number (TRN)" }, value: { text: @teacher.trn } },
+        { key: { text: "Email address" }, value: { text: "TODO" } }
+      ])
+    %>
+
+    <h2 class="govuk-heading-m">Organisation Details</h2>
+    <p>TODO</p>
+
+    <h2 class="govuk-heading-m">Qualified teacher status (QTS)</h2>
+    <h2 class="govuk-heading-m">Early years teacher status (EYTS)</h2>
+    <h2 class="govuk-heading-m">Induction</h2>
+    <h2 class="govuk-heading-m">Initial teacher training (ITT)</h2>
+    <h2 class="govuk-heading-m">Mandatory qualifications (MQ)</h2>
+    <h2 class="govuk-heading-m">National professional qualifications (NPQ)</h2>
+  </div>
+</div>
