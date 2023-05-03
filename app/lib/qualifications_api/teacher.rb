@@ -6,6 +6,10 @@ module QualificationsApi
       @api_data = Hashie::Mash.new(api_data.deep_transform_keys(&:underscore))
     end
 
+    def name
+      ::NameOfPerson::PersonName.full("#{first_name} #{last_name}")
+    end
+
     delegate :first_name, :last_name, :trn, to: :api_data
 
     def qualifications
