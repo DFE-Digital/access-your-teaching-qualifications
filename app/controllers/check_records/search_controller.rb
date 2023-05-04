@@ -5,7 +5,7 @@ module CheckRecords
     def new
     end
 
-    def result
+    def show
       redirect_to check_records_search_path if params[:trn].blank?
 
       client = QualificationsApi::Client.new(token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"])

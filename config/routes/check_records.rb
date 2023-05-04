@@ -8,7 +8,7 @@ namespace :check_records, path: "check-records" do
   post "/auth/developer/callback" => "omniauth_callbacks#dfe_bypass"
 
   get "/search", to: "search#new"
-  get "/result", to: "search#result"
+  get "/result", to: "search#show"
 end
 
 root to: redirect("/check-records/search"), as: :check_records_root
