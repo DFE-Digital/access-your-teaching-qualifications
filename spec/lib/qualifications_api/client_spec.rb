@@ -27,6 +27,15 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
         expect(response.trn).to eq "1234567"
       end
     end
+
+    context "when an invalid trn is provided" do
+      it "raises an error" do
+        client = described_class.new(token: "token")
+        expect { client.teacher(trn: "bad-trn") }.to raise_error(
+          QualificationsApi::TeacherNotFoundError
+        )
+      end
+    end
   end
 
   describe "#certificate" do

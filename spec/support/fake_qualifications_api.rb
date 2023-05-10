@@ -10,12 +10,17 @@ class FakeQualificationsApi < Sinatra::Base
     end
   end
 
-  get "/v3/teachers/1234567" do
+  get "/v3/teachers/:trn" do
     content_type :json
 
+    trn = params[:trn]
     case bearer_token
     when "token"
-      quals_data(trn: "1234567")
+      if trn == "1234567"
+        quals_data(trn: "1234567")
+      else
+        halt 404
+      end
     when "invalid-token"
       halt 401
     end

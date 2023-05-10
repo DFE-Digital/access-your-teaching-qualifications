@@ -39,6 +39,8 @@ module QualificationsApi
       case response.status
       when 200
         QualificationsApi::Teacher.new response.body
+      when 404
+        raise QualificationsApi::TeacherNotFoundError
       when 401
         raise QualificationsApi::InvalidTokenError
       end
