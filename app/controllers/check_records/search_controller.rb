@@ -8,8 +8,12 @@ module CheckRecords
     def show
       redirect_to check_records_search_path if params[:trn].blank?
 
-      client = QualificationsApi::Client.new(token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"])
-      @teacher = client.teacher(trn: params[:trn])
+      begin
+        client = QualificationsApi::Client.new(token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"])
+        @teacher = client.teacher(trn: params[:trn])
+      rescue QualificationsApi::TeacherNotFoundError
+        render "not_found"
+      end
     end
   end
 end
