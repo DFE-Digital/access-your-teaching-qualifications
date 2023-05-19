@@ -5,7 +5,7 @@ class Qualification
   attr_writer :details
 
   def certificate_type
-    return :npq if type.downcase.starts_with?("npq")
+    return :npq if type&.downcase&.starts_with?("npq")
 
     type
   end
@@ -24,5 +24,13 @@ class Qualification
 
   def itt?
     type == :itt
+  end
+
+  def mq?
+    type == :mandatory
+  end
+
+  def npq?
+    type&.downcase&.starts_with?("npq")
   end
 end

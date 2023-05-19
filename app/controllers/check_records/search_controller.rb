@@ -11,6 +11,9 @@ module CheckRecords
       begin
         client = QualificationsApi::Client.new(token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"])
         @teacher = client.teacher(trn: params[:trn])
+        @npqs = @teacher.qualifications.filter(&:npq?)
+        @other_qualifications =
+          @teacher.qualifications.filter { |qualification| !qualification.npq? }
       rescue QualificationsApi::TeacherNotFoundError
         render "not_found"
       end
