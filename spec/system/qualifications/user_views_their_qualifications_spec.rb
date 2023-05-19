@@ -90,7 +90,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def then_i_see_my_mq_details
-    expect(page).to have_content("Mandatory qualification (MQ): specialist teacher")
+    expect(page).to have_content("Mandatory qualification (MQ)")
     expect(page).to have_content("Awarded\t28 February 2023")
     expect(page).to have_content("Specialism\tVisual impairment")
   end

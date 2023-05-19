@@ -91,7 +91,7 @@ module QualificationsApi
         Qualification.new(
           awarded_at: mq.awarded.to_date,
           details: mq,
-          name: "Mandatory qualification (MQ): specialist teacher",
+          name: "Mandatory qualification (MQ)",
           type: :mandatory
         )
       end
