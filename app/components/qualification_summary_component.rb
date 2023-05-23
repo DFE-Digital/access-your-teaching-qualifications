@@ -39,8 +39,8 @@ class QualificationSummaryComponent < ViewComponent::Base
 
   def itt_rows
     [
-      { key: { text: "Qualification" }, value: { text: details.qualification.name } },
-      { key: { text: "ITT provider" }, value: { text: details.provider.name } },
+      { key: { text: "Qualification" }, value: { text: details.dig(:qualification, :name) } },
+      { key: { text: "ITT provider" }, value: { text: details.dig(:provider, :name) } },
       { key: { text: "Training type" }, value: { text: details.programme_type } },
       {
         key: {
@@ -50,10 +50,17 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: details.subjects.map { |subject| subject.name.titleize }.join(", ")
         }
       },
-      { key: { text: "Start date" }, value: { text: details.start_date.to_date.to_fs(:long_uk) } },
-      { key: { text: "End date" }, value: { text: details.end_date.to_date.to_fs(:long_uk) } },
-      { key: { text: "Result" }, value: { text: details.result.to_s.humanize } },
-      { key: { text: "Age range" }, value: { text: details.age_range.description } }
+      {
+        key: {
+          text: "Start date"
+        },
+        value: {
+          text: details.start_date&.to_date&.to_fs(:long_uk)
+        }
+      },
+      { key: { text: "End date" }, value: { text: details.end_date&.to_date&.to_fs(:long_uk) } },
+      { key: { text: "Result" }, value: { text: details.result&.to_s&.humanize } },
+      { key: { text: "Age range" }, value: { text: details.age_range&.description } }
     ]
   end
 end
