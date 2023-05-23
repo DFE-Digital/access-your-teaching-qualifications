@@ -54,10 +54,10 @@ module QualificationsApi
         .fetch("npq_qualifications", [])
         .each do |npq|
           @qualifications << Qualification.new(
-            awarded_at: npq.awarded.to_date,
+            awarded_at: npq.awarded&.to_date,
             certificate_url: npq.certificate_url,
-            name: npq.type.name,
-            type: npq.type.code.to_sym
+            name: npq.type&.name,
+            type: npq.type&.code&.to_sym
           )
         end
     end
