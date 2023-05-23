@@ -15,6 +15,19 @@ module QualificationsApi
     def qualifications
       @qualifications = []
 
+      add_qts
+      add_eyts
+      add_npq
+      add_itt
+      add_induction
+      add_mandatory_qualifications
+
+      @qualifications.flatten!.sort_by!(&:awarded_at).reverse!
+    end
+
+    private
+
+    def add_qts
       if api_data.qts&.awarded&.present?
         @qualifications << Qualification.new(
           awarded_at: api_data.qts.awarded.to_date,
@@ -23,7 +36,9 @@ module QualificationsApi
           type: :qts
         )
       end
+    end
 
+    def add_eyts
       if api_data.eyts&.awarded&.present?
         @qualifications << Qualification.new(
           awarded_at: api_data.eyts&.awarded&.to_date,
@@ -32,7 +47,9 @@ module QualificationsApi
           type: :eyts
         )
       end
+    end
 
+    def add_npq
       api_data
         .fetch("npq_qualifications", [])
         .each do |npq|
@@ -43,7 +60,9 @@ module QualificationsApi
             type: npq.type.code.to_sym
           )
         end
+    end
 
+    def add_itt
       @qualifications << api_data
         .fetch("initial_teacher_training", [])
         .map do |itt_response|
@@ -54,7 +73,9 @@ module QualificationsApi
             type: :itt
           )
         end
+    end
 
+    def add_induction
       if api_data.induction&.end_date&.present?
         @qualifications << Qualification.new(
           awarded_at: api_data.induction.end_date.to_date,
@@ -63,7 +84,9 @@ module QualificationsApi
           type: :induction
         )
       end
+    end
 
+    def add_mandatory_qualifications
       @qualifications << api_data.mandatory_qualifications.map do |mq|
         Qualification.new(
           awarded_at: mq.awarded.to_date,
@@ -72,8 +95,6 @@ module QualificationsApi
           type: :mandatory
         )
       end
-
-      @qualifications.flatten!.sort_by!(&:awarded_at).reverse!
     end
   end
 end
