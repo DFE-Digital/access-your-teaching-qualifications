@@ -8,7 +8,7 @@ class DsiUser < ApplicationRecord
     dsi_user.update!(
       first_name: dsi_payload.info.first_name,
       last_name: dsi_payload.info.last_name,
-      uid: dsi_payload.info.uid
+      uid: dsi_payload.uid
     )
 
     dsi_user
