@@ -11,11 +11,11 @@ module CheckRecords
       OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
         {
           provider: "dfe",
+          uid: "123456",
           info: {
             email: "test@example.com",
             first_name: "Test",
-            last_name: "User",
-            uid: "123456"
+            last_name: "User"
           }
         }
       )
