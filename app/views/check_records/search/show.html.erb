@@ -1,25 +1,32 @@
-<% content_for :back_link_url, check_records_search_path %>
-
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l"><%= @teacher.name %></h1>
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <h1 class="govuk-heading-l">Search results (<%= @total %>)</h1>
 
-    <div class="govuk-!-margin-bottom-9">
-      <h2 class="govuk-heading-m">Personal Details</h2>
-      <%= govuk_summary_list(
-        rows: [
-          { key: { text: "Teacher reference number (TRN)" }, value: { text: @teacher.trn } },
-          { key: { text: "Email address" }, value: { text: "TODO" } }
-        ])
-      %>
+    <div class="search-results">
+      <% @teachers.each do |teacher| %>
+        <div class="search-results__item">
+          <h2 class="govuk-heading-s">
+            <%= link_to teacher.name, check_records_teacher_path(teacher.trn), class: "govuk-link--no-visited-state" %>
+          </h2>
+          <strong class="govuk-tag govuk-tag--green">
+            No restrictions
+          </strong>
+
+          <% 
+            rows = [
+              {
+                key: { text: "TRN" },
+                value: { text: teacher.trn }
+              },
+              {
+                key: { text: "Date of birth" },
+                value: { text: Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
+              }
+            ] 
+          %>
+          <%= render GovukComponent::SummaryListComponent.new(rows:, borders: false, classes: ['app-summary-list--compact']) %>
+        </div>
+      <% end %>
     </div>
-
-    <% @other_qualifications.each do |qualification| %>
-      <%= render CheckRecords::QualificationSummaryComponent.new(qualification:) %>
-    <% end %>
-
-    <% if @npqs %>
-      <%= render CheckRecords::NpqSummaryComponent.new(npqs: @npqs) %>
-    <% end %>
   </div>
 </div>

@@ -10,6 +10,17 @@ class FakeQualificationsApi < Sinatra::Base
     end
   end
 
+  get "/v3/teachers" do
+    content_type :json
+
+    case bearer_token
+    when "token"
+      { total: 1, results: [teacher_data] }.to_json
+    when "invalid-token"
+      halt 401
+    end
+  end
+
   get "/v3/teachers/:trn" do
     content_type :json
 
@@ -63,6 +74,10 @@ class FakeQualificationsApi < Sinatra::Base
   end
 
   private
+
+  def teacher_data(trn: "1234567")
+    { dateOfBirth: "2000-01-01", firstName: "Terry", lastName: "Walsh", middleName: "John", trn: }
+  end
 
   def quals_data(trn: nil)
     {
