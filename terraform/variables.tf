@@ -140,6 +140,13 @@ variable "statuscake_ssl_contact_group" {
   default     = null
   description = "ID of the StatusCake contact group. If empty, SSL check is not enabled"
 }
+
+variable "statuscake_domain" {
+  type        = string
+  default     = null
+  description = "Domain/url for statuscake ssl check"
+}
+
 locals {
   hosting_environment          = var.environment_name
   aytq_web_app_name            = "${var.resource_prefix}-${var.environment_name}${var.app_suffix}-app"
