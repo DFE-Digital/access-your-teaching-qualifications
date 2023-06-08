@@ -10,7 +10,7 @@ module QualificationsApi
       ::NameOfPerson::PersonName.full("#{first_name} #{last_name}")
     end
 
-    delegate :first_name, :last_name, :trn, to: :api_data
+    delegate :date_of_birth, :first_name, :last_name, :middle_name, :trn, to: :api_data
 
     def qualifications
       @qualifications = []

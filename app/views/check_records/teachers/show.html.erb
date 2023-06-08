@@ -1,0 +1,25 @@
+<% content_for :back_link_url, check_records_search_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l"><%= @teacher.name %></h1>
+
+    <div class="govuk-!-margin-bottom-9">
+      <h2 class="govuk-heading-m">Personal Details</h2>
+      <%= govuk_summary_list(
+        rows: [
+          { key: { text: "Teacher reference number (TRN)" }, value: { text: @teacher.trn } },
+          { key: { text: "Email address" }, value: { text: "TODO" } }
+        ])
+      %>
+    </div>
+
+    <% @other_qualifications.each do |qualification| %>
+      <%= render CheckRecords::QualificationSummaryComponent.new(qualification:) %>
+    <% end %>
+
+    <% if @npqs %>
+      <%= render CheckRecords::NpqSummaryComponent.new(npqs: @npqs) %>
+    <% end %>
+  </div>
+</div>

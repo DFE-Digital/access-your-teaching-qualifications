@@ -3,19 +3,24 @@
 module CheckRecords
   class SearchController < CheckRecordsController
     def new
+      @search = Search.new
     end
 
     def show
-      redirect_to check_records_search_path if params[:trn].blank?
-
-      begin
-        client = QualificationsApi::Client.new(token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"])
-        @teacher = client.teacher(trn: params[:trn])
-        @npqs = @teacher.qualifications.filter(&:npq?)
-        @other_qualifications =
-          @teacher.qualifications.filter { |qualification| !qualification.npq? }
-      rescue QualificationsApi::TeacherNotFoundError
-        render "not_found"
+      date_of_birth = [
+        params["search"]["date_of_birth(1i)"],
+        params["search"]["date_of_birth(2i)"],
+        params["search"]["date_of_birth(3i)"]
+      ]
+      @search = Search.new(date_of_birth:, last_name: params[:search][:last_name])
+      if @search.invalid?
+        render :new
+      else
+        @total, @teachers =
+          QualificationsApi::Client.new(token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"]).teachers(
+            date_of_birth: @search.date_of_birth,
+            last_name: @search.last_name
+          )
       end
     end
   end

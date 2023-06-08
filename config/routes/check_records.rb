@@ -9,6 +9,8 @@ namespace :check_records, path: "check-records" do
 
   get "/search", to: "search#new"
   get "/result", to: "search#show"
+
+  resources :teachers, only: %i[show]
 end
 
 root to: redirect("/check-records/search"), as: :check_records_root

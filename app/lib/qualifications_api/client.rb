@@ -46,6 +46,20 @@ module QualificationsApi
       end
     end
 
+    def teachers(date_of_birth:, last_name:)
+      response =
+        client.get(
+          "v3/teachers",
+          { dateOfBirth: date_of_birth.to_s, findBy: "LastNameAndDateOfBirth", lastName: last_name }
+        )
+
+      raise(QualificationApi::InvalidTokenError) if response.status == 401
+
+      results = response.body["results"].map { |teacher| QualificationsApi::Teacher.new(teacher) }
+
+      [response.body["total"], results]
+    end
+
     def client
       @client ||=
         Faraday.new(
