@@ -1,10 +1,24 @@
-# Access your teaching qualifications
+# Access your teaching qualifications & Check the record of a teacher in England
 
-A service that allows people to access their teaching qualifications.
+This repo is home to two services:
+
+- A service that allows people to access their teaching qualifications (AYTQ)
+- A service that allows employers to check teacher records (Check)
 
 ## Live environments
 
 ### Links and application names
+
+#### AYTQ
+
+| Name       | URL          |
+| ---------- | ------------ |
+| Production | not deployed |
+| Preprod    | not deployed |
+| Test       | not deployed |
+| Dev        | in testing   |
+
+#### Check
 
 | Name       | URL          |
 | ---------- | ------------ |
@@ -34,9 +48,7 @@ All environments have continuous deployment, the state of which can be inspected
 
 ## How the application works
 
-Access your teaching qualifications is a monolithic Rails app built with the GOVUK Design System.
-
-The application has a number of different interfaces for different types of users:
+Both services are monolithic Rails apps built with the GOVUK Design System.
 
 ### Architecture
 
