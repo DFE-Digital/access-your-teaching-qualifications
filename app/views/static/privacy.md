@@ -42,7 +42,7 @@ You have the right:
   produces a legal or similarly significant effect on you
 
 If you have any questions about how we’ll use your personal information,
-email [qts.enquiries@education.gov.uk](mailto:qts.enquiries@education.gov.uk)
+email [teachingstatus@education.gov.uk](mailto:teachingstatus@education.gov.uk)
 and enter ‘Data protection enquiry’ as a reference.
 
 You can also contact the Data Protection Office by emailing
@@ -58,7 +58,7 @@ As we have a clear purpose for processing your personal data, we would not
 explicitly seek your consent to process your data.
 
 If you’re unhappy with our use of your personal data, please
-email [qts.enquiries@education.gov.uk](mailto:qts.enquiries@education.gov.uk).
+email [teachingstatus@education.gov.uk](mailto:teachingstatus@education.gov.uk).
 
 You can also contact the DfE Data Protection Office:
 
