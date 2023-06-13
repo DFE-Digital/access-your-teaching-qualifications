@@ -11,7 +11,6 @@ module Qualifications
         session[:identity_user_token_expiry] = auth.credentials.expires_at
 
         log_auth_credentials_in_development(auth)
-        flash[:notice] = "Signed in successfully."
         redirect_to qualifications_dashboard_path
       end
 

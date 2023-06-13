@@ -17,7 +17,6 @@ RSpec.feature "Identity auth", type: :system do
   private
 
   def then_i_am_signed_in_after_successfully_authenticating_with_identity
-    expect(page).to have_content "Signed in successfully"
     expect(User.last.email).to eq "test@example.com"
   end
 end
