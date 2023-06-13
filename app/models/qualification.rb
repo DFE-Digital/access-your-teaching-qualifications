@@ -15,6 +15,9 @@ class Qualification
   end
 
   def id
+    # QTS certificate URLs don't contain an id
+    return nil if qts?
+
     @certificate_url&.split("/")&.last
   end
 
@@ -32,5 +35,9 @@ class Qualification
 
   def npq?
     type&.downcase&.starts_with?("npq")
+  end
+
+  def qts?
+    type == :qts
   end
 end
