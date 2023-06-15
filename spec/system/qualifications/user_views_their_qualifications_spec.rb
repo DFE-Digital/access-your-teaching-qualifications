@@ -72,7 +72,7 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("Business Studies")
     expect(page).to have_content("28 February 2022")
     expect(page).to have_content("28 January 2023")
-    expect(page).to have_content("Pass")
+    expect(page).to have_content("Status\tPass")
     expect(page).to have_content("10 to 16 years")
   end
 
