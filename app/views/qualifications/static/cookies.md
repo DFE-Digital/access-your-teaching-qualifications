@@ -25,7 +25,7 @@ t('service.name') %> service. We do not need to ask permission to use them.
   <tbody class="govuk-table__body">
     <tr class="govuk-table__row">
       <td class="govuk-table__cell">
-        _session_id
+      _access_your_teaching_qualifications_session
       </td>
       <td class="govuk-table__cell" width="50%">
         Used to keep you signed in
