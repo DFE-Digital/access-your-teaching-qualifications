@@ -3,6 +3,8 @@ module Qualifications
     before_action :authenticate_user!
     before_action :handle_expired_token!
 
+    layout "qualifications_layout"
+
     def current_user
       @current_user ||= User.find(session[:identity_user_id]) if session[:identity_user_id]
     end
