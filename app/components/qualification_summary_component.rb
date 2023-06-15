@@ -59,7 +59,7 @@ class QualificationSummaryComponent < ViewComponent::Base
         }
       },
       { key: { text: "End date" }, value: { text: details.end_date&.to_date&.to_fs(:long_uk) } },
-      { key: { text: "Result" }, value: { text: details.result&.to_s&.humanize } },
+      { key: { text: "Status" }, value: { text: details.result&.to_s&.humanize } },
       { key: { text: "Age range" }, value: { text: details.age_range&.description } }
     ]
   end
