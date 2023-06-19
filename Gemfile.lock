@@ -120,7 +120,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    cssbundling-rails (1.1.2)
+    cssbundling-rails (1.2.0)
       railties (>= 6.0.0)
     cuprite (0.14.3)
       capybara (~> 3.0)
@@ -257,7 +257,7 @@ GEM
     memoist (0.16.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    minitest (5.18.0)
+    minitest (5.18.1)
     msgpack (1.6.0)
     multi_json (1.15.0)
     multi_xml (0.6.0)
