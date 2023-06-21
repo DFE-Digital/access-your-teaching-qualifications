@@ -5,6 +5,8 @@ class FakeQualificationsApi < Sinatra::Base
     case bearer_token
     when "token"
       quals_data
+    when "no-itt-token"
+      quals_data(trn: "1234567", itt: false)
     when "invalid-token"
       halt 401
     end
@@ -79,7 +81,7 @@ class FakeQualificationsApi < Sinatra::Base
     { dateOfBirth: "2000-01-01", firstName: "Terry", lastName: "Walsh", middleName: "John", trn: }
   end
 
-  def quals_data(trn: nil)
+  def quals_data(trn: nil, itt: true)
     {
       trn: trn || "3000299",
       firstName: "Terry",
@@ -108,25 +110,32 @@ class FakeQualificationsApi < Sinatra::Base
           }
         ]
       },
-      initialTeacherTraining: [
-        {
-          ageRange: {
-            description: "10 to 16 years"
-          },
-          endDate: "2023-01-28",
-          programmeType: "HEI",
-          provider: {
-            name: "Earl Spencer Primary School",
-            ukprn: nil
-          },
-          qualification: {
-            name: "BA"
-          },
-          result: "Pass",
-          startDate: "2022-02-28",
-          subjects: [{ code: "100079", name: "business studies" }]
-        }
-      ],
+      initialTeacherTraining:
+        (
+          if !itt
+            []
+          else
+            [
+              {
+                ageRange: {
+                  description: "10 to 16 years"
+                },
+                endDate: "2023-01-28",
+                programmeType: "HEI",
+                provider: {
+                  name: "Earl Spencer Primary School",
+                  ukprn: nil
+                },
+                qualification: {
+                  name: "BA"
+                },
+                result: "Pass",
+                startDate: "2022-02-28",
+                subjects: [{ code: "100079", name: "business studies" }]
+              }
+            ]
+          end
+        ),
       mandatoryQualifications: [{ awarded: "2023-02-28", specialism: "Visual impairment" }],
       npqQualifications: [
         {
