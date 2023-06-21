@@ -38,6 +38,8 @@ class QualificationSummaryComponent < ViewComponent::Base
   end
 
   def itt_rows
+    return [] if details.end_date.blank?
+
     [
       { key: { text: "Qualification" }, value: { text: details.dig(:qualification, :name) } },
       { key: { text: "ITT provider" }, value: { text: details.dig(:provider, :name) } },
