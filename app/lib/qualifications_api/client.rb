@@ -8,12 +8,12 @@ module QualificationsApi
       @token = token
     end
 
-    def certificate(type:, id: nil)
+    def certificate(name:, type:, id: nil)
       response = client.get(["v3/certificates/#{type}", id].compact.join("/"))
 
       case response.status
       when 200
-        response.body
+        QualificationsApi::Certificate.new(name, type, response.body)
       when 401
         raise QualificationsApi::InvalidTokenError
       end

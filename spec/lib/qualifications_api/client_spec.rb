@@ -41,16 +41,18 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
   describe "#certificate" do
     it "returns a PDF certificate" do
       client = described_class.new(token: "token")
-      response = client.certificate(type: :qts)
+      certificate = client.certificate(name: "Steven Toast", type: :qts)
 
-      expect(response).to eq "pdf data"
+      expect(certificate).to be_a(QualificationsApi::Certificate)
+      expect(certificate.file_data).to eq "pdf data"
+      expect(certificate.file_name).to eq "Steven Toast_qts_certificate.pdf"
     end
 
     context "with an invalid token" do
       it "raises an error" do
         client = described_class.new(token: "invalid-token")
 
-        expect { client.certificate(type: :qts) }.to raise_error(
+        expect { client.certificate(name: "Steven Toast", type: :qts) }.to raise_error(
           QualificationsApi::InvalidTokenError
         )
       end
