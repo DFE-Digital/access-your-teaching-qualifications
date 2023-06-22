@@ -15,9 +15,8 @@ class Qualification
   end
 
   def id
-    # QTS certificate URLs don't contain an id
-    return nil if qts?
-
+    # QTS and EYTS certificate URLs don't contain an id
+    return nil if qts? || eyts?
     @certificate_url&.split("/")&.last
   end
 
@@ -39,5 +38,9 @@ class Qualification
 
   def qts?
     type == :qts
+  end
+
+  def eyts?
+    type == :eyts
   end
 end
