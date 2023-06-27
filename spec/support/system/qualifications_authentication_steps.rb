@@ -32,10 +32,10 @@ module QualificationAuthenticationSteps
   alias_method :and_identity_auth_is_mocked, :given_identity_auth_is_mocked
 
   def when_i_go_to_the_sign_in_page
-    visit qualifications_sign_in_path
+    visit qualifications_root_path
   end
 
   def and_click_the_sign_in_button
-    click_button "Sign in with Identity"
+    click_button "Start now"
   end
 end
