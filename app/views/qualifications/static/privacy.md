@@ -1,78 +1,77 @@
 <% content_for :page_title, 'Privacy notice' %>
 
-# Privacy notice
+## Privacy notice
 
-## Who we are
+When you have a DfE (Department for Education) Identity account, DfE collects and processes some of your personal data.
 
-The <%= t('service.name') %> service is run by the [Teaching Regulation Agency
-(TRA)](https://www.gov.uk/government/organisations/teaching-regulation-agency/about),
-an executive agency of the Department for Education (DfE).
+DfE is the data controller for your information, as defined by data protection law.
 
-Our service allows anyone to access their teaching qualifications.
+DfE is referred to as ‘we’, ‘us’ and ‘our’ in this privacy policy.
 
-For the purpose of data protection legislation, DfE is the data controller for
-the data we hold and process.
+### What personal data we collect
 
-## What data we collect
+When you create a DfE Identity account, we collect the following information about you:
 
-We do not collect any personal data about you when you use this service.
+- name
+- email address
+- mobile phone number
+- date of birth
+- National Insurance number
+- initial teacher training (ITT) provider - where you gained qualified teacher status(QTS) or early years teacher status (EYTS).
+- teacher reference number (TRN)
 
-## Our legal basis for processing your data
+### How we use your personal data
 
-So that our use of your personal data is lawful, we need to meet one (or more)
-conditions in the data protection legislation. For our service, this is:
+We use your personal data to:
 
-- article 6(1)(e) UK General Data Protection Regulation (UK GDPR), to perform a
-  public task carried out in the public interest as part of our function as a
-  department
+- create and secure your account
+- let you access many DfE teaching services
+- let you update your personal information in one place with DfE
+- check if you’re registered in our database of educational professionals
+- add you to our database of educational professionals
+- help us inform government policy to improve education
+- improve the service - we may ask you to participate in user research
 
-## Your data protection rights
+### Who we share your data with
 
-You have the right:
+We need to share personal data for the purposes mentioned in ‘How we use your personal data’. We do so in compliance with UK General Data Protection Regulation (GDPR) and the UK Data Protection Act 2018.
 
-- to ask us what information we hold about you
-- to have your personal data rectified if it is inaccurate or incomplete
-- to request the deletion or removal of personal data where there is no
-  compelling reason for its continued processing
-- to restrict our processing of your personal data (for instance allow us to
-  store it but not process it further)
-- to object to direct marketing (including profiling) and processing for the
-  purposes of scientific or historical research and statistics
-- not to be subject to decisions based purely on automated processing where it
-  produces a legal or similarly significant effect on you
+#### Customer service systems
 
-If you have any questions about how we’ll use your personal information,
-email [teachingstatus@education.gov.uk](mailto:teachingstatus@education.gov.uk)
-and enter ‘Data protection enquiry’ as a reference.
+We use Zendesk to manage and respond to your queries.
 
-You can also contact the Data Protection Office by emailing
-[dataprotection.office@education.gov.uk](mailto:dataprotection.office@education.gov.uk).
+<a href="https://www.zendesk.co.uk/company/privacy-and-data-protection/#faq-general-1" rel="noreferrer noopener" target="_blank"> Visit the Zendesk website to find out how they use and look after your data (“service data”)</a> (opens in new tab)
 
-You can find further information about your data protection rights on
-the [Information Commissioner’s
-website](https://ico.org.uk/for-organisations/guide-to-data-protection/principle-6-rights/).
+#### Hosting services
 
-### Consent and how to make a complaint
+We host the DfE Identity account service on Microsoft Azure. Your data is encrypted to prevent it from being accessed by unauthorised people.
 
-As we have a clear purpose for processing your personal data, we would not
-explicitly seek your consent to process your data.
+### How long we keep your personal data for
 
-If you’re unhappy with our use of your personal data, please
-email [teachingstatus@education.gov.uk](mailto:teachingstatus@education.gov.uk).
+We keep your personal data for as long as you use the service. We’ll keep it for no longer than 7 years after you stop using the service.
 
-You can also contact the DfE Data Protection Office:
+### Your rights
 
-Deputy Director, Departmental Data Protection Officer<br />
-Wellington Place<br />
-Leeds<br />
-LS1 4AP<br />
-[data.protection@education.gov.uk](mailto:data.protection@education.gov.uk)
+Under the Data Protection Act 2018, you have the right to:
 
-Alternatively, you have the right to raise any concerns with the [Information
-Commissioner’s Office (ICO)](https://ico.org.uk/concerns/).
+- access personal data
+- be informed about how your data is being used
+- get and reuse your data for different services
+- have data erased
+- have incorrect data updated
+- object to how your data is processed in certain circumstances
+- stop or restrict the processing of your data
 
-## Changes to this notice
+### Get help
 
-We’ll update this privacy notice when required. You should review it at least once a year.
+<a href="https://form.education.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-f1453496-7d8a-463f-9f33-1da2ac47ed76/AF-Stage-1e64d4cc-25fb-499a-a8d7-74e98203ac00/definition.json&amp;redirectlink=%2Fen&amp;cancelRedirectLink=%2Fen">Contact the Department for Education</a> if you want to ask us to remove your data or you want access to the data we have about you.
 
-This version was last updated on 20 February 2023.
+For further information, or to raise a concern, visit the <a href="https://ico.org.uk/">Information Commissioner’s Office</a>.
+
+### Changes to this privacy notice
+
+We reserve the right to update this policy at any time.
+
+We’ll provide you with a new policy if we make substantial changes.
+
+We may also notify you in other ways about the processing of your personal information.
