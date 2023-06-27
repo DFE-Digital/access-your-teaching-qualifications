@@ -13,7 +13,7 @@ module Qualifications
     def authenticate_user!
       if current_user.blank?
         flash[:warning] = "You need to sign in to continue."
-        redirect_to qualifications_sign_in_path
+        redirect_to qualifications_root_path
       end
     end
 

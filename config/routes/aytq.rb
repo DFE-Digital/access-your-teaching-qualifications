@@ -20,4 +20,4 @@ namespace :qualifications do
   end
 end
 
-root to: redirect("/qualifications/sign-in"), as: :qualifications_root
+root to: redirect("/qualifications/start"), as: :qualifications_root
