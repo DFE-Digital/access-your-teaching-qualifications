@@ -1,24 +1,17 @@
 <% content_for :page_title, 'Accessibility statement' %>
 
-# Accessibility statement for <%= t('service.name') %>
+# Accessibility statement
 
-This page only contains information about the <%= t('service.name') %>
-service, available at: <a href="<%= t('service.url') %>" class="govuk-link
-govuk-link--no-visited-state"><%= t('service.url') %> </a>
+This statement applies to the <%= t('service.name') %> service.
 
-## Using this service
-
-This service is run by the Department for Education. We want as many people as
-possible to be able to use this service.
-
-For example, that means you should be able to:
+This service is run by the Department for Education. We want as many people as possible to be able to use it. You should be able to:
 
 - change colours, contrast levels and fonts
 - zoom in up to 300% without the text spilling off the screen
-- get from the start of the service to the end using just a keyboard
-- get from the start of the service to the end using speech recognition
+- navigate most of the service using just a keyboard
+- navigate most of the service using speech recognition
   software
-- listen to the service using a screen reader (including the most recent
+- listen to most of the service using a screen reader (including the most recent
   versions of JAWS, NVDA and VoiceOver)
 
 We’ve also made the text in the service as simple as possible to understand.
@@ -28,27 +21,19 @@ easier to use if you have a disability.
 
 ## How accessible this service is
 
-This service is fully compliant with [the Web Content Accessibility Guidelines
-version 2.2 AA standard](https://www.w3.org/TR/WCAG22/).
-
-## Feedback and contact information
-
-If you have difficulty using this service, email: <a href="mailto:<%=
-t('service.email') %>" class="govuk-link govuk-link--no-visited-state"><%=
-t('service.email') %></a>
-
-As part of providing this service, we may need to send you messages or
-documents. We'll ask you how you want us to send messages or documents to you,
-but contact us if you need them in a different format, for example, large print,
-audio recording or braille.
+All parts of this service are fully accessible.
 
 ## Reporting accessibility problems with this service
 
-We’re always looking to improve the accessibility of this service.
+We are always looking to improve the accessibility of this service.
 
-If you find any problems that are not listed on this page or think we’re not
-meeting accessibility requirements, email: <a href="mailto:<%= t('service.email')
-%>" class="govuk-link govuk-link--no-visited-state"><%= t('service.email') %></a>
+If you find any problems not listed on this page or think we are not meeting accessibility requirements, contact us:
+
+Email: <a href="mailto:<%=
+t('service.email') %>" class="govuk-link govuk-link--no-visited-state"><%=
+t('service.email') %></a>
+
+<a class="govuk-link" href="http://www.w3.org/WAI/users/inaccessible">Read tips on contacting organisations about inaccessible websites</a>
 
 ## Enforcement procedure
 
@@ -66,28 +51,21 @@ The Department for Education is committed to making this service accessible, in
 accordance with the Public Sector Bodies (Websites and Mobile Applications)
 (No. 2) Accessibility Regulations 2018.
 
-### Compliance status
+## Compliance status
 
 This service is fully compliant with [the Web Content Accessibility Guidelines
 version 2.2 AA standard](https://www.w3.org/TR/WCAG22/).
 
-## What we are doing to improve accessibility
+There may be accessibility issues we have not found yet. If you find any please contact us so we can continue to improve the services we provide.
 
-We’ll carry out ongoing internal audits to check the accessibility of this
-service as well as taking feedback from users.
+### Disproportionate burden
 
-Any required changes will be planned into our continuous improvement work for
-this service.
+Not applicable
 
-This accessibility statement will be updated based on any issues we identify or
-any changes we make to address any issues raised.
+### Content not within scope of this accessibility statement
 
-We're also planning a full accessibility audit on the service by the Digital
-Accessibility Centre (DAC) before March 2023.
+Not applicable
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on Monday 21 November 2022. It was last reviewed on
-Monday 20 February 2023.
-
-Last updated: Monday 20 February 2023
+This statement was prepared on 12 June 2023.
