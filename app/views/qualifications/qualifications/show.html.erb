@@ -1,6 +1,6 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <span class="govuk-caption-xl"><%= @user.name.possessive %></span>
+    <span class="govuk-caption-xl"><%= @user.name.possessive.gsub("'","’") %></span>
     <h1 class="govuk-heading-xl">Teaching qualifications</h1>
 
     <div class="govuk-grid-row">
