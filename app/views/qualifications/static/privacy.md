@@ -2,13 +2,13 @@
 
 ## Privacy notice
 
-When you have a DfE (Department for Education) Identity account, DfE collects and processes some of your personal data.
+When you use the <%= t('service.name') %> service DfE (Department for Education) processes some of your personal data.
 
 DfE is the data controller for your information, as defined by data protection law.
 
 DfE is referred to as ‘we’, ‘us’ and ‘our’ in this privacy policy.
 
-### What personal data we collect
+### What personal data we process
 
 When you create a DfE Identity account, we collect the following information about you:
 
@@ -22,15 +22,12 @@ When you create a DfE Identity account, we collect the following information abo
 
 ### How we use your personal data
 
-We use your personal data to:
+We use your personal data collected for the DfE Identity account to give you access to your teaching qualifications and certificates in the Access your teaching qualifications service.
 
-- create and secure your account
-- let you access many DfE teaching services
-- let you update your personal information in one place with DfE
-- check if you’re registered in our database of educational professionals
-- add you to our database of educational professionals
+We also use your data in Access your teaching qualifications to:
+
 - help us inform government policy to improve education
-- improve the service - we may ask you to participate in user research
+- improve the service - we may ask you to participate in user research. Your participation in research or survey activity is entirely voluntary.
 
 ### Who we share your data with
 
@@ -44,7 +41,7 @@ We use Zendesk to manage and respond to your queries.
 
 #### Hosting services
 
-We host the DfE Identity account service on Microsoft Azure. Your data is encrypted to prevent it from being accessed by unauthorised people.
+We host the <%= t('service.name') %> service on Microsoft Azure. Your data is encrypted to prevent it from being accessed by unauthorised people.
 
 ### How long we keep your personal data for
 
@@ -70,7 +67,7 @@ For further information, or to raise a concern, visit the <a href="https://ico.o
 
 ### Changes to this privacy notice
 
-We reserve the right to update this policy at any time.
+We reserve the right to update this policy at any time. It was last updated 28 July 2023.
 
 We’ll provide you with a new policy if we make substantial changes.
 
