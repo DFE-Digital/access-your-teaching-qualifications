@@ -5,13 +5,11 @@
 Cookies are small files saved on your phone, tablet or computer when you visit
 a website.
 
-We use cookies to make the <%= t('service.name') %> service work and
-collect information about how you use our service.
+We use cookies to store information about how you use <%= t('service.name') %>, such as the pages you visit.
 
 ## Essential cookies
 
-Essential cookies keep your information secure while you use the <%=
-t('service.name') %> service. We do not need to ask permission to use them.
+Essential cookies keep your information secure while you use the service. We do not need to ask permission to use them.
 
 <table class="govuk-table">
   <caption class="govuk-visually-hidden">Essential cookies</caption>
@@ -27,11 +25,11 @@ t('service.name') %> service. We do not need to ask permission to use them.
       <td class="govuk-table__cell">
       _access_your_teaching_qualifications_session
       </td>
-      <td class="govuk-table__cell" width="50%">
-        Used to keep you signed in
+      <td class="govuk-table__cell">
+        Keeps you signed in
       </td>
       <td class="govuk-table__cell">
-        2 hours
+        When the session ends
       </td>
     </tr>
   </tbody>
