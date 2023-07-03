@@ -2,17 +2,13 @@
 
 <%= govuk_panel(title_text: "DfE Identity account", classes: "app-panel--interruption") do %>
   <div class="app__two-thirds">
-    <p>
-      You can change sign in and personal details in your DfE Identity account.
-    </p>
-    <p>
-      You use your DfE Identity account to sign in to <b><%= t('service.name') %></b>.
-    </p>
+    <p>You can change sign in and personal details in your DfE Identity account.</p>
+    <p>You use your DfE Identity account to sign in to <b><%= t('service.name') %></b>.</p>
 
-      <%= govuk_link_to(
-        "Access your DfE Identity account", 
-        "#{ENV.fetch('IDENTITY_API_DOMAIN')}account?client_id=#{ENV.fetch("IDENTITY_CLIENT_ID")}&redirect_uri=#{CGI::escape(qualifications_dashboard_url)}&sign_out_uri=#{CGI::escape(qualifications_sign_out_url)}",
-        class: "govuk-button app-button--inverse govuk-!-margin-bottom-0"
-      ) %>
+    <%= govuk_link_to(
+      "Access your DfE Identity account", 
+      "#{ENV.fetch('IDENTITY_API_DOMAIN')}account?client_id=#{ENV.fetch("IDENTITY_CLIENT_ID")}&redirect_uri=#{CGI::escape(qualifications_dashboard_url)}&sign_out_uri=#{CGI::escape(qualifications_sign_out_url)}",
+      class: "govuk-button app-button--inverse govuk-!-margin-bottom-0"
+    ) %>
   </div>
 <% end %>
