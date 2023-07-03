@@ -2,6 +2,7 @@ require "check_records/dfe_sign_in"
 require "omniauth/strategies/identity"
 
 OmniAuth.config.logger = Rails.logger
+OmniAuth.config.on_failure = proc { |env| AuthFailuresController.action(:failure).call(env) }
 
 # DSI setup
 dfe_sign_in_identifier = ENV.fetch("DFE_SIGN_IN_CLIENT_ID", "example")
