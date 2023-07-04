@@ -5,12 +5,23 @@ module OmniAuth
 
       option :client_options,
              {
-               authorize_params: lambda { |request| { session_id: request.session.id } },
                authorize_url: "connect/authorize",
                end_session_uri: "connect/signout",
                site: ENV.fetch("IDENTITY_API_DOMAIN"),
                token_url: "connect/token"
              }
+      option :authorize_options, %i[scope state session_id trn_token]
+      option :trn_token,
+             lambda { |env|
+               request = Rack::Request.new(env)
+               request.params["trn_token"]
+             }
+      option :session_id,
+             lambda { |env|
+               request = Rack::Request.new(env)
+               request.session.id
+             }
+
       option :pkce, true
       option :scope, "dqt:read"
       option :post_logout_redirect_uri, "#{ENV.fetch("HOSTING_DOMAIN")}/qualifications/sign-out"
