@@ -22,31 +22,34 @@ module QualificationsApi
       add_induction
       add_mandatory_qualifications
 
-      @qualifications.flatten!.sort_by!(&:awarded_at).reverse!
+      @qualifications
+        .flatten!
+        .sort_by! { |qualification| qualification.awarded_at || Date.new }
+        .reverse!
     end
 
     private
 
     def add_qts
-      if api_data.qts.present?
-        @qualifications << Qualification.new(
-          awarded_at: api_data.qts.awarded&.to_date,
-          certificate_url: api_data.qts.certificate_url,
-          name: "Qualified teacher status (QTS)",
-          type: :qts
-        )
-      end
+      return if api_data.qts.blank?
+
+      @qualifications << Qualification.new(
+        awarded_at: api_data.qts.awarded&.to_date,
+        certificate_url: api_data.qts.certificate_url,
+        name: "Qualified teacher status (QTS)",
+        type: :qts
+      )
     end
 
     def add_eyts
-      if api_data.eyts.present?
-        @qualifications << Qualification.new(
-          awarded_at: api_data.eyts.awarded&.to_date,
-          certificate_url: api_data.eyts.certificate_url,
-          name: "Early years teacher status (EYTS)",
-          type: :eyts
-        )
-      end
+      return if api_data.eyts.blank?
+
+      @qualifications << Qualification.new(
+        awarded_at: api_data.eyts.awarded&.to_date,
+        certificate_url: api_data.eyts.certificate_url,
+        name: "Early years teacher status (EYTS)",
+        type: :eyts
+      )
     end
 
     def add_npq
@@ -76,17 +79,19 @@ module QualificationsApi
     end
 
     def add_induction
-      if api_data.induction.present?
-        @qualifications << Qualification.new(
-          awarded_at: api_data.induction.end_date&.to_date,
-          details: api_data.induction,
-          name: "Induction",
-          type: :induction
-        )
-      end
+      return if api_data.induction.blank?
+
+      @qualifications << Qualification.new(
+        awarded_at: api_data.induction.end_date&.to_date,
+        details: api_data.induction,
+        name: "Induction",
+        type: :induction
+      )
     end
 
     def add_mandatory_qualifications
+      return if api_data.mandatory_qualifications.blank?
+
       @qualifications << api_data.mandatory_qualifications.map do |mq|
         Qualification.new(
           awarded_at: mq.awarded&.to_date,

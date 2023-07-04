@@ -76,5 +76,53 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     it "sorts the qualifications in reverse chronological order by date of award" do
       expect(qualifications.map(&:type)).to eq(%i[NPQSL NPQML eyts qts induction mandatory itt])
     end
+
+    context "when a qualification has no awarded date" do
+      let(:api_data) do
+        {
+          "initial_teacher_training" => [
+            {
+              "qualification" => {
+                "name" => "BA"
+              },
+              "startDate" => "2012-02-28",
+              "endDate" => "2013-01-28",
+              "programmeType" => "HEI",
+              "result" => "Pass",
+              "ageRange" => {
+                "description" => "10 to 16 years"
+              },
+              "provider" => {
+                "name" => "Earl Spencer Primary School",
+                "ukprn" => nil
+              },
+              "subjects" => [{ "code" => "100079", "name" => "business studies" }]
+            }
+          ],
+          "npqQualifications" => [
+            {
+              "type" => {
+                "code" => "NPQML",
+                "name" => "NPQ for Middle Leadership"
+              },
+              "awarded" => nil,
+              "certificateUrl" => "https://example.com/v3/certificates/456"
+            }
+          ]
+        }
+      end
+
+      it "sorts the qualifications in reverse chronological order by date of award" do
+        expect(qualifications.map(&:type)).to eq(%i[itt NPQML])
+      end
+    end
+
+    context "when there are no MQs returned" do
+      let(:api_data) { {} }
+
+      it "returns an empty array" do
+        expect(qualifications).to eq([])
+      end
+    end
   end
 end
