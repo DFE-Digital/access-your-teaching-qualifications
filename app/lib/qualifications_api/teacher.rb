@@ -15,12 +15,12 @@ module QualificationsApi
     def qualifications
       @qualifications = []
 
-      add_qts
       add_eyts
-      add_npq
-      add_itt
       add_induction
+      add_itt
       add_mandatory_qualifications
+      add_npq
+      add_qts
 
       @qualifications
         .flatten!
