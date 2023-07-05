@@ -30,6 +30,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "startDate" => "2012-02-28",
             "endDate" => "2013-01-28",
             "programmeType" => "HEI",
+            "programmeTypeDescription" => "Higher Education Institution",
             "result" => "Pass",
             "ageRange" => {
               "description" => "10 to 16 years"
@@ -88,6 +89,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
               "startDate" => "2012-02-28",
               "endDate" => "2013-01-28",
               "programmeType" => "HEI",
+              "programmeTypeDescription" => "Higher Education Institution",
               "result" => "Pass",
               "ageRange" => {
                 "description" => "10 to 16 years"
@@ -136,6 +138,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
               "startDate" => "2012-02-28",
               "endDate" => "2013-01-28",
               "programmeType" => "HEI",
+              "programmeTypeDescription" => "Higher Education Institution",
               "result" => "Pass",
               "ageRange" => {
                 "description" => "10 to 16 years"

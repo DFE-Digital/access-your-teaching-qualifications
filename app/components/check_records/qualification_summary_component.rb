@@ -37,7 +37,7 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
     [
       { key: { text: "Qualification" }, value: { text: details.dig(:qualification, :name) } },
       { key: { text: "ITT provider" }, value: { text: details.dig(:provider, :name) } },
-      { key: { text: "Programme type" }, value: { text: details.programme_type } },
+      { key: { text: "Programme type" }, value: { text: details.programme_type_description } },
       {
         key: {
           text: "Subject"
