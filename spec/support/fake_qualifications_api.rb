@@ -122,6 +122,7 @@ class FakeQualificationsApi < Sinatra::Base
                 },
                 endDate: "2023-01-28",
                 programmeType: "HEI",
+                programmeTypeDescription: "Higher education institution",
                 provider: {
                   name: "Earl Spencer Primary School",
                   ukprn: nil

@@ -62,7 +62,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     expect(page).to have_content("Initial teacher training (ITT)")
     expect(page).to have_content("BA")
     expect(page).to have_content("Earl Spencer Primary School")
-    expect(page).to have_content("HEI")
+    expect(page).to have_content("Higher education institution")
     expect(page).to have_content("Business Studies")
     expect(page).to have_content("28 January 2023")
     expect(page).to have_content("Pass")
