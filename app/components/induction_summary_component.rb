@@ -39,7 +39,7 @@ class InductionSummaryComponent < ViewComponent::Base
   def rows
     [
       { key: { text: "Status" }, value: { text: details.status.to_s.humanize } },
-      { key: { text: "Completed" }, value: { text: awarded_at.to_fs(:long_uk) } },
+      { key: { text: "Completed" }, value: { text: awarded_at&.to_fs(:long_uk) } },
       {
         key: {
           text: "Certificate"
