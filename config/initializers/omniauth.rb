@@ -13,7 +13,7 @@ options = {
   name: :dfe,
   discovery: true,
   response_type: :code,
-  scope: %i[email profile],
+  scope: %i[email profile organisation],
   path_prefix: "/check-records/auth",
   callback_path: "/check-records/auth/dfe/callback",
   client_options: {
