@@ -6,11 +6,11 @@ class User < ApplicationRecord
     email = auth_data.info.email
     user = find_or_initialize_by(email:)
     user.assign_attributes(
-      date_of_birth: auth_data.info.date_of_birth,
-      family_name: auth_data.info.family_name,
-      given_name: auth_data.info.given_name,
+      date_of_birth: auth_data.extra.raw_info.birthdate,
+      family_name: auth_data.info.last_name,
+      given_name: auth_data.info.first_name,
       name: auth_data.info.name,
-      trn: auth_data.info.trn
+      trn: auth_data.extra.raw_info.trn
     )
     user.tap(&:save!)
   end

@@ -25,7 +25,7 @@ RSpec.feature "Identity auth", type: :system do
   end
 
   def and_my_access_token_expires
-    travel_to Time.zone.now + 61.minutes
+    travel_to 61.minutes.from_now
   end
 
   def and_i_try_to_download_a_certificate

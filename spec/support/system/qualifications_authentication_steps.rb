@@ -15,16 +15,20 @@ module QualificationAuthenticationSteps
       {
         provider: "identity",
         info: {
-          date_of_birth: "1986-01-02",
           email: "test@example.com",
-          family_name: "User",
-          given_name: "Test",
-          name: "Test User",
-          trn: "123456"
+          first_name: "User",
+          last_name: "Test",
+          name: "Test User"
         },
         credentials: {
           token: "token",
-          expires_at: (Time.zone.now + 1.hour).to_i
+          expires_in: 1.hour.to_i
+        },
+        extra: {
+          raw_info: {
+            birthdate: "1986-01-02",
+            trn: "123456"
+          }
         }
       }
     )

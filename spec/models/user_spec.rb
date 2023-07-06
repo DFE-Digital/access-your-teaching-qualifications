@@ -8,11 +8,10 @@ RSpec.describe User, type: :model do
           OpenStruct.new(
             email: "test@example.com",
             name: "Test User",
-            given_name: "Test",
-            family_name: "User",
-            trn: "123456",
-            date_of_birth: "1986-01-02"
-          )
+            first_name: "Test",
+            last_name: "User"
+          ),
+        extra: OpenStruct.new(raw_info: OpenStruct.new(birthdate: "1986-01-02", trn: "123456"))
       )
     end
 

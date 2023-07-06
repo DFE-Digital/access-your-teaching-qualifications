@@ -19,16 +19,21 @@ RSpec.feature "User views their qualifications", type: :system do
       {
         provider: "identity",
         info: {
-          date_of_birth: "1986-01-02",
           email: "test@example.com",
-          family_name: "Trained",
-          given_name: "Not",
-          name: "Not Trained",
-          trn: "0000000"
+          email_verified: "True",
+          first_name: "Trained",
+          last_name: "Not",
+          name: "Not Trained"
         },
         credentials: {
           token: "no-itt-token",
-          expires_at: (Time.zone.now + 1.hour).to_i
+          expires_in: 1.hour.to_i
+        },
+        extra: {
+          raw_info: {
+            birthdate: "1986-01-02",
+            trn: "0000000"
+          }
         }
       }
     )

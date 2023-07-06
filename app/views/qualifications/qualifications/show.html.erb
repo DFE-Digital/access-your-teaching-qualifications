@@ -23,7 +23,7 @@
 
         <p>
           Date of birth<br /> 
-          <strong><%= @user.date_of_birth.to_fs(:long_uk) %></strong>  
+          <strong><%= @user.date_of_birth&.to_fs(:long_uk) %></strong>  
         </p>
 
         <p>
