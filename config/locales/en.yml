@@ -6,6 +6,7 @@ en:
     url: https://access-your-teaching-qualifications.digital.education.gov.uk
   check_records_service:
     name: Check the record of a teacher in England
+    email: employer.access@education.gov.uk
 
   validation_errors:
     email_address_format: Enter an email address in the correct format, like name@example.com
