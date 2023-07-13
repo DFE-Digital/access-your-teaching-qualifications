@@ -5,9 +5,9 @@ OmniAuth.config.logger = Rails.logger
 OmniAuth.config.on_failure = proc { |env| AuthFailuresController.action(:failure).call(env) }
 
 # DSI setup
-dfe_sign_in_identifier = ENV.fetch("DFE_SIGN_IN_CLIENT_ID", "example")
-dfe_sign_in_secret = ENV.fetch("DFE_SIGN_IN_SECRET", "example")
-dfe_sign_in_redirect_uri = ENV.fetch("DFE_SIGN_IN_REDIRECT_URL", "example")
+dfe_sign_in_identifier = ENV["DFE_SIGN_IN_CLIENT_ID"]
+dfe_sign_in_secret = ENV["DFE_SIGN_IN_SECRET"]
+dfe_sign_in_redirect_uri = ENV["DFE_SIGN_IN_REDIRECT_URL"]
 dfe_sign_in_issuer_uri = ENV["DFE_SIGN_IN_ISSUER"].present? ? URI(ENV["DFE_SIGN_IN_ISSUER"]) : nil
 options = {
   name: :dfe,
@@ -41,7 +41,7 @@ end
 # Identity setup
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :identity,
-           ENV.fetch("IDENTITY_CLIENT_ID"),
-           ENV.fetch("IDENTITY_CLIENT_SECRET"),
+           ENV["IDENTITY_CLIENT_ID"],
+           ENV["IDENTITY_CLIENT_SECRET"],
            { path_prefix: "/qualifications/users/auth" }
 end
