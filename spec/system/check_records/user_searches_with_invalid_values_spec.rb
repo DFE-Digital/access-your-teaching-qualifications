@@ -40,11 +40,13 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_the_missing_dob_error
-    expect(page).to have_content "Date of birth\nError:\nEnter a valid date of birth"
+    expect(
+      page
+    ).to have_content "Date of birth\nError: \nEnter a valid date of birth"
   end
 
   def then_i_see_the_missing_name_error
-    expect(page).to have_content "Last name\nError:\nEnter a last name"
+    expect(page).to have_content "Last name\nError: \nEnter a last name"
   end
 
   def then_the_search_is_successful
