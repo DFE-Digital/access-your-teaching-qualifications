@@ -39,6 +39,12 @@ resource "azurerm_postgresql_flexible_server" "postgres-server" {
   }
 }
 
+data "azurerm_linux_web_app" "aytq-app" {
+  provider            = azurerm
+  name                = local.aytq_web_app_name
+  resource_group_name = data.azurerm_resource_group.group.name
+}
+
 resource "azurerm_postgresql_flexible_server_database" "postgres-database" {
   name      = local.postgres_database_name
   server_id = azurerm_postgresql_flexible_server.postgres-server.id
@@ -118,7 +124,11 @@ resource "azurerm_linux_web_app" "aytq-app" {
     }] : []
   }
 
-  app_settings = local.aytq_env_vars
+  sticky_settings {
+    app_setting_names = keys(data.azurerm_linux_web_app.aytq-app.app_settings)
+  }
+
+  app_settings = data.azurerm_linux_web_app.aytq-app.app_settings
 
   lifecycle {
     ignore_changes = [
