@@ -41,6 +41,7 @@ COPY . .
 
 # Precompile assets
 RUN DATABASE_PASSWORD=required-to-run-but-not-used \
+    DFE_SIGN_IN_ISSUER=required-to-run-but-not-used \
     GOVUK_NOTIFY_API_KEY=required-to-run-but-not-used \
     HOSTING_DOMAIN=required-to-run-but-not-used \
     RAILS_ENV=production \
