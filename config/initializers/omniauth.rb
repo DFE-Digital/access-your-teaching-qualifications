@@ -12,7 +12,7 @@ if CheckRecords::DfESignIn.bypass?
              path_prefix: "/check-records/auth"
   end
 else
-  dfe_sign_in_issuer_uri = URI(ENV["DFE_SIGN_IN_ISSUER"])
+  dfe_sign_in_issuer_uri = URI(ENV.fetch("DFE_SIGN_IN_ISSUER", "example"))
 
   Rails.application.config.middleware.use OmniAuth::Builder do
     provider :openid_connect,
