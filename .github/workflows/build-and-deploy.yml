@@ -110,6 +110,7 @@ jobs:
           image_name_tag: ${{ needs.build_image.outputs.image_name_tag }}
           image_tag: ${{ github.sha }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          site_up_retries: 120
 
   deploy_prod:
     name: Deploy to production environment
