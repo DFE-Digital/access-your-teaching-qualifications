@@ -20,7 +20,14 @@ class InductionSummaryComponent < ViewComponent::Base
       .periods
       .map do |period|
         [
-          { key: { text: "Appropriate body" }, value: { text: period.appropriate_body.name } },
+          {
+            key: {
+              text: "Appropriate body"
+            },
+            value: {
+              text: period.appropriate_body.name
+            }
+          },
           {
             key: {
               text: "Start date"
@@ -29,7 +36,14 @@ class InductionSummaryComponent < ViewComponent::Base
               text: period.start_date.to_date.to_fs(:long_uk)
             }
           },
-          { key: { text: "End date" }, value: { text: period.end_date.to_date.to_fs(:long_uk) } },
+          {
+            key: {
+              text: "End date"
+            },
+            value: {
+              text: period.end_date&.to_date&.to_fs(:long_uk)
+            }
+          },
           { key: { text: "Number of terms" }, value: { text: period.terms } }
         ]
       end
@@ -38,8 +52,22 @@ class InductionSummaryComponent < ViewComponent::Base
 
   def rows
     [
-      { key: { text: "Status" }, value: { text: details.status.to_s.humanize } },
-      { key: { text: "Completed" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+      {
+        key: {
+          text: "Status"
+        },
+        value: {
+          text: details.status.to_s.humanize
+        }
+      },
+      {
+        key: {
+          text: "Completed"
+        },
+        value: {
+          text: awarded_at&.to_fs(:long_uk)
+        }
+      },
       {
         key: {
           text: "Certificate"
