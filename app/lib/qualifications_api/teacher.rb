@@ -10,7 +10,12 @@ module QualificationsApi
       ::NameOfPerson::PersonName.full("#{first_name} #{last_name}")
     end
 
-    delegate :date_of_birth, :first_name, :last_name, :middle_name, :trn, to: :api_data
+    delegate :date_of_birth,
+             :first_name,
+             :last_name,
+             :middle_name,
+             :trn,
+             to: :api_data
 
     def qualifications
       @qualifications = []
@@ -83,6 +88,7 @@ module QualificationsApi
 
       @qualifications << Qualification.new(
         awarded_at: api_data.induction.end_date&.to_date,
+        certificate_url: api_data.induction&.certificate_url,
         details: api_data.induction,
         name: "Induction",
         type: :induction

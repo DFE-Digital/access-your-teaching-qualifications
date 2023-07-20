@@ -51,7 +51,7 @@ class InductionSummaryComponent < ViewComponent::Base
   end
 
   def rows
-    [
+    @rows = [
       {
         key: {
           text: "Status"
@@ -67,8 +67,11 @@ class InductionSummaryComponent < ViewComponent::Base
         value: {
           text: awarded_at&.to_fs(:long_uk)
         }
-      },
-      {
+      }
+    ]
+
+    if details.certificate_url.present?
+      @rows << {
         key: {
           text: "Certificate"
         },
@@ -76,12 +79,13 @@ class InductionSummaryComponent < ViewComponent::Base
           text:
             link_to(
               "Download Induction certificate",
-              qualifications_certificate_path(:induction),
+              details.certificate_url,
               class: "govuk-link"
             )
         }
       }
-    ]
+    end
+    @rows
   end
 
   def title
