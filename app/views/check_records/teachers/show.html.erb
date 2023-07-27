@@ -9,7 +9,7 @@
       <%= govuk_summary_list(
         rows: [
           { key: { text: "Teacher reference number (TRN)" }, value: { text: @teacher.trn } },
-          { key: { text: "Email address" }, value: { text: "TODO" } }
+          { key: { text: "Date of birth" }, value: { text: @teacher.date_of_birth } }
         ])
       %>
     </div>
@@ -18,7 +18,7 @@
       <%= render CheckRecords::QualificationSummaryComponent.new(qualification:) %>
     <% end %>
 
-    <% if @npqs %>
+    <% if @npqs.present? %>
       <%= render CheckRecords::NpqSummaryComponent.new(npqs: @npqs) %>
     <% end %>
   </div>
