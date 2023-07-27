@@ -38,7 +38,11 @@
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= render(FlashMessageComponent.new(flash: flash)) %>
 
-        <%= yield %>
+        <% if content_for?(:two_thirds) %>
+          <%= yield(:two_thirds)%>
+        <% else %>
+          <%= yield %>
+        <% end %>
       </main>
     </div>
 
