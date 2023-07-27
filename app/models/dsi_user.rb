@@ -11,6 +11,22 @@ class DsiUser < ApplicationRecord
       uid: dsi_payload.uid
     )
 
+    dsi_user.organisation =
+      Organisation.find_by(
+        company_registration_number:
+          dsi_payload.extra.dig(
+            "raw_info",
+            "organisation",
+            "companyRegistrationNumber"
+          )
+      )
+
     dsi_user
+  end
+
+  attr_accessor :organisation
+
+  def valid_organisation?
+    organisation.present?
   end
 end

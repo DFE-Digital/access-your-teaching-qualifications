@@ -101,3 +101,8 @@ shared:
     - auditor_id
     - created_at
     - updated_at
+  :organisations:
+    - id
+    - company_registration_number
+    - created_at
+    - updated_at
