@@ -1,1 +1,5 @@
-<%= render template: 'layouts/application' %>
+<% content_for :content do %>
+  <%= yield %>
+<% end %>
+
+<%= render template: 'layouts/base' %>

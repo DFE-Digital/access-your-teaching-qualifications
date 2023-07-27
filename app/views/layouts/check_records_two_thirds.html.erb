@@ -1,0 +1,9 @@
+<% content_for :two_thirds do %>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <%= yield %>
+    </div>
+  </div>
+<% end %>
+
+<%= render template: 'layouts/check_records_layout' %>
