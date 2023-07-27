@@ -2,7 +2,7 @@
 
 ## Privacy notice
 
-When you use the <%= t('service.name') %> service, DfE (Department for Education) processes some of your personal data.
+When you use the <%= t('check_records_service.name') %> service, DfE (Department for Education) processes some of your personal data.
 
 DfE is the data controller for your information, as defined by data protection law.
 
@@ -10,21 +10,16 @@ DfE is referred to as ‘we’, ‘us’ and ‘our’ in this privacy policy.
 
 ### What personal data we process
 
-When you create a DfE Identity account, we collect the following information about you:
+When you create a DfE Sign-in account, we collect the following information about you:
 
 - name
 - email address
-- mobile phone number
-- date of birth
-- National Insurance number
-- initial teacher training (ITT) provider - where you gained qualified teacher status(QTS) or early years teacher status (EYTS).
-- teacher reference number (TRN)
 
 ### How we use your personal data
 
-We use your personal data collected for the DfE Identity account to give you access to your teaching qualifications and certificates in the Access your teaching qualifications service.
+We use your personal data collected for the DfE Identity account to give you access to teacher records.
 
-We also use your data in Access your teaching qualifications to:
+We also use your data in <%= t('check_records_service.name') %> to:
 
 - help us inform government policy to improve education
 - improve the service - we may ask you to participate in user research. Your participation in research or survey activity is entirely voluntary.
@@ -41,7 +36,7 @@ We use Zendesk to manage and respond to your queries.
 
 #### Hosting services
 
-We host the <%= t('service.name') %> service on Microsoft Azure. Your data is encrypted to prevent it from being accessed by unauthorised people.
+We host the <%= t('check_records_service.name') %> service on Microsoft Azure. Your data is encrypted to prevent it from being accessed by unauthorised people.
 
 ### How long we keep your personal data for
 
@@ -61,7 +56,7 @@ Under the Data Protection Act 2018, you have the right to:
 
 ### Get help
 
-<a href="https://form.education.gov.uk/en/AchieveForms/?form_uri=sandbox-publish://AF-Process-f1453496-7d8a-463f-9f33-1da2ac47ed76/AF-Stage-1e64d4cc-25fb-499a-a8d7-74e98203ac00/definition.json&amp;redirectlink=%2Fen&amp;cancelRedirectLink=%2Fen">Contact the Department for Education</a> if you want to ask us to remove your data or you want access to the data we have about you.
+[Contact the Department for Education](mailto:data.protection@education.gov.uk) if you want to ask us to remove your data or you want access to the data we have about you.
 
 For further information, or to raise a concern, visit the <a href="https://ico.org.uk/">Information Commissioner’s Office</a>.
 
