@@ -1,7 +1,8 @@
 module Qualifications
   class CertificatesController < QualificationsInterfaceController
     def show
-      client = QualificationsApi::Client.new(token: session[:identity_user_token])
+      client =
+        QualificationsApi::Client.new(token: session[:identity_user_token])
       certificate =
         client.certificate(
           name: current_user.name,
@@ -9,9 +10,14 @@ module Qualifications
           id: params[:certificate_id]
         )
 
-      send_data certificate.file_data,
-                filename: certificate.file_name,
-                content_type: "application/pdf"
+      if certificate
+        send_data certificate.file_data,
+                  filename: certificate.file_name,
+                  content_type: "application/pdf"
+      else
+        redirect_to qualifications_dashboard_path,
+                    alert: "Certificate not found"
+      end
     end
 
     private
