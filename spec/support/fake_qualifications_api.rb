@@ -69,7 +69,11 @@ class FakeQualificationsApi < Sinatra::Base
 
     case bearer_token
     when "token"
-      "pdf data"
+      if params[:id] == "missing"
+        halt 404
+      else
+        "pdf data"
+      end
     when "invalid-token"
       halt 401
     end
@@ -78,7 +82,13 @@ class FakeQualificationsApi < Sinatra::Base
   private
 
   def teacher_data(trn: "1234567")
-    { dateOfBirth: "2000-01-01", firstName: "Terry", lastName: "Walsh", middleName: "John", trn: }
+    {
+      dateOfBirth: "2000-01-01",
+      firstName: "Terry",
+      lastName: "Walsh",
+      middleName: "John",
+      trn:
+    }
   end
 
   def quals_data(trn: nil, itt: true)
@@ -88,11 +98,11 @@ class FakeQualificationsApi < Sinatra::Base
       lastName: "Walsh",
       eyts: {
         awarded: "2022-04-01",
-        certificateUrl: trn ? nil : "http://example.com/v3/certificates/eyts"
+        certificateUrl: trn ? nil : "/v3/certificates/eyts"
       },
       qts: {
         awarded: "2023-02-27",
-        certificateUrl: trn ? nil : "http://example.com/v3/certificates/qts"
+        certificateUrl: trn ? nil : "/v3/certificates/qts"
       },
       induction: {
         startDate: "2022-09-01",
@@ -137,7 +147,9 @@ class FakeQualificationsApi < Sinatra::Base
             ]
           end
         ),
-      mandatoryQualifications: [{ awarded: "2023-02-28", specialism: "Visual impairment" }],
+      mandatoryQualifications: [
+        { awarded: "2023-02-28", specialism: "Visual impairment" }
+      ],
       npqQualifications: [
         {
           awarded: "2023-02-27",
@@ -145,6 +157,14 @@ class FakeQualificationsApi < Sinatra::Base
           type: {
             code: "NPQH",
             name: "NPQ headteacher"
+          }
+        },
+        {
+          awarded: "2023-01-27",
+          certificateUrl: "/v3/certificates/npq/missing",
+          type: {
+            code: "NPQSL",
+            name: "NPQ senior leadership"
           }
         }
       ]
