@@ -14,7 +14,9 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
       it "raises an error" do
         client = described_class.new(token: "invalid-token")
 
-        expect { client.teacher }.to raise_error(QualificationsApi::InvalidTokenError)
+        expect { client.teacher }.to raise_error(
+          QualificationsApi::InvalidTokenError
+        )
       end
     end
 
@@ -39,21 +41,38 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
   end
 
   describe "#certificate" do
-    it "returns a PDF certificate" do
-      client = described_class.new(token: "token")
-      certificate = client.certificate(name: "Steven Toast", type: :qts)
+    subject(:certificate) do
+      described_class.new(token:).certificate(name:, type:, url:)
+    end
 
-      expect(certificate).to be_a(QualificationsApi::Certificate)
+    let(:name) { "Steven Toast" }
+    let(:token) { "token" }
+    let(:type) { :qts }
+    let(:url) { "/v3/certificates/qts" }
+
+    it { is_expected.to be_a(QualificationsApi::Certificate) }
+
+    it "returns a PDF certificate" do
       expect(certificate.file_data).to eq "pdf data"
       expect(certificate.file_name).to eq "Steven Toast_qts_certificate.pdf"
     end
 
     context "with an invalid token" do
-      it "raises an error" do
-        client = described_class.new(token: "invalid-token")
+      let(:token) { "invalid-token" }
 
-        expect { client.certificate(name: "Steven Toast", type: :qts) }.to raise_error(
+      it "raises an error" do
+        expect { certificate }.to raise_error(
           QualificationsApi::InvalidTokenError
+        )
+      end
+    end
+
+    context "with an invalid certificate url" do
+      let(:url) { "/some/invalid/url" }
+
+      it "raises an error" do
+        expect { certificate }.to raise_error(
+          QualificationsApi::InvalidCertificateUrlError
         )
       end
     end

@@ -7,7 +7,7 @@ module Qualifications
         client.certificate(
           name: current_user.name,
           type: certificate_type,
-          id: params[:certificate_id]
+          url: params[:certificate_url]
         )
 
       if certificate
