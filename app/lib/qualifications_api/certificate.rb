@@ -1,16 +1,12 @@
 module QualificationsApi
   class Certificate
-    VALID_TYPES = %i[eyts induction itt mq npq qts].freeze
-    attr_reader :user_name, :type, :file_data
+    include ActiveModel::Model
 
-    def initialize(user_name, type, file_data)
-      @user_name = user_name
-      @type = type
-      @file_data = file_data
-    end
+    VALID_TYPES = %i[eyts induction itt mq npq qts].freeze
+    attr_accessor :name, :type, :file_data
 
     def file_name
-      "#{user_name}_#{type}_certificate.pdf"
+      "#{name}_#{type}_certificate.pdf"
     end
   end
 end

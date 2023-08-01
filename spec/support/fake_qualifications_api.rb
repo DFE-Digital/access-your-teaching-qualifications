@@ -39,30 +39,6 @@ class FakeQualificationsApi < Sinatra::Base
     end
   end
 
-  get "/v3/certificates/qts" do
-    content_type "application/pdf"
-    attachment "qts_certificate.pdf"
-
-    case bearer_token
-    when "token"
-      "pdf data"
-    when "invalid-token"
-      halt 401
-    end
-  end
-
-  get "/v3/certificates/eyts" do
-    content_type "application/pdf"
-    attachment "eyts_certificate.pdf"
-
-    case bearer_token
-    when "token"
-      "pdf data"
-    when "invalid-token"
-      halt 401
-    end
-  end
-
   get "/v3/certificates/npq/:id" do
     content_type "application/pdf"
     attachment "npq_certificate.pdf"
@@ -74,6 +50,18 @@ class FakeQualificationsApi < Sinatra::Base
       else
         "pdf data"
       end
+    when "invalid-token"
+      halt 401
+    end
+  end
+
+  get "/v3/certificates/:id" do
+    content_type "application/pdf"
+    attachment "#{params[:id]}_certificate.pdf"
+
+    case bearer_token
+    when "token"
+      "pdf data"
     when "invalid-token"
       halt 401
     end
@@ -108,7 +96,7 @@ class FakeQualificationsApi < Sinatra::Base
         startDate: "2022-09-01",
         endDate: "2022-10-01",
         status: "pass",
-        certificateUrl: trn ? nil : "string",
+        certificateUrl: "/v3/certificates/induction",
         periods: [
           {
             startDate: "2022-09-01",

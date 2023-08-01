@@ -1,4 +1,7 @@
 module QualificationsApi
+  class InvalidCertificateUrlError < StandardError
+  end
+
   class Client
     TIMEOUT_IN_SECONDS = 5
 
@@ -8,12 +11,20 @@ module QualificationsApi
       @token = token
     end
 
-    def certificate(name:, type:, id: nil)
-      response = client.get(["v3/certificates/#{type}", id].compact.join("/"))
+    def certificate(name:, type:, url:)
+      unless valid_certificate_path?(url)
+        raise QualificationsApi::InvalidCertificateUrlError
+      end
+
+      response = client.get(url)
 
       case response.status
       when 200
-        QualificationsApi::Certificate.new(name, type, response.body)
+        QualificationsApi::Certificate.new(
+          file_data: response.body,
+          name:,
+          type:
+        )
       when 401
         raise QualificationsApi::InvalidTokenError
       end
@@ -50,12 +61,19 @@ module QualificationsApi
       response =
         client.get(
           "v3/teachers",
-          { dateOfBirth: date_of_birth.to_s, findBy: "LastNameAndDateOfBirth", lastName: last_name }
+          {
+            dateOfBirth: date_of_birth.to_s,
+            findBy: "LastNameAndDateOfBirth",
+            lastName: last_name
+          }
         )
 
       raise(QualificationApi::InvalidTokenError) if response.status == 401
 
-      results = response.body["results"].map { |teacher| QualificationsApi::Teacher.new(teacher) }
+      results =
+        response.body["results"].map do |teacher|
+          QualificationsApi::Teacher.new(teacher)
+        end
 
       [response.body["total"], results]
     end
@@ -73,6 +91,12 @@ module QualificationsApi
           faraday.response :json
           faraday.adapter Faraday.default_adapter
         end
+    end
+
+    private
+
+    def valid_certificate_path?(path)
+      path.start_with?("/v3/certificates")
     end
   end
 end

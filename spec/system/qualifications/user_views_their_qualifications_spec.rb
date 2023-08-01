@@ -4,12 +4,14 @@ RSpec.feature "User views their qualifications", type: :system do
   include CommonSteps
   include QualificationAuthenticationSteps
 
-  scenario "when they have qualifications", test: %i[with_stubbed_auth with_fake_quals_api] do
+  scenario "when they have qualifications",
+           test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_service_is_open
     and_i_am_signed_in_via_identity
 
     when_i_visit_the_qualifications_page
     then_i_see_my_induction_details
+    and_my_induction_certificate_is_downloadable
     then_i_see_my_qts_details
     and_my_qts_certificate_is_downloadable
     then_i_see_my_itt_details
@@ -38,6 +40,17 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("Number of terms\t1")
   end
 
+  def and_my_induction_certificate_is_downloadable
+    click_on "Download Induction certificate"
+    expect(page.response_headers["Content-Type"]).to eq("application/pdf")
+    expect(page.response_headers["Content-Disposition"]).to include(
+      "attachment"
+    )
+    expect(page.response_headers["Content-Disposition"]).to include(
+      "filename=\"Test User_induction_certificate.pdf\""
+    )
+  end
+
   def then_i_see_my_qts_details
     expect(page).to have_content("Qualified teacher status (QTS)")
     expect(page).to have_content("Awarded")
@@ -55,7 +68,9 @@ RSpec.feature "User views their qualifications", type: :system do
   def and_my_qts_certificate_is_downloadable
     click_on "Download QTS certificate"
     expect(page.response_headers["Content-Type"]).to eq("application/pdf")
-    expect(page.response_headers["Content-Disposition"]).to include("attachment")
+    expect(page.response_headers["Content-Disposition"]).to include(
+      "attachment"
+    )
     expect(page.response_headers["Content-Disposition"]).to include(
       "filename=\"Test User_qts_certificate.pdf\";"
     )
@@ -64,7 +79,9 @@ RSpec.feature "User views their qualifications", type: :system do
   def and_my_eyts_certificate_is_downloadable
     click_on "Download EYTS certificate"
     expect(page.response_headers["Content-Type"]).to eq("application/pdf")
-    expect(page.response_headers["Content-Disposition"]).to include("attachment")
+    expect(page.response_headers["Content-Disposition"]).to include(
+      "attachment"
+    )
     expect(page.response_headers["Content-Disposition"]).to include(
       "filename=\"Test User_eyts_certificate.pdf\";"
     )
@@ -92,7 +109,9 @@ RSpec.feature "User views their qualifications", type: :system do
   def and_my_npq_certificate_is_downloadable
     click_on "Download NPQH certificate"
     expect(page.response_headers["Content-Type"]).to eq("application/pdf")
-    expect(page.response_headers["Content-Disposition"]).to include("attachment")
+    expect(page.response_headers["Content-Disposition"]).to include(
+      "attachment"
+    )
     expect(page.response_headers["Content-Disposition"]).to include(
       "filename=\"Test User_npq_certificate.pdf\";"
     )
