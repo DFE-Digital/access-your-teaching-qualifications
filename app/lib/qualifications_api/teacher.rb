@@ -26,6 +26,7 @@ module QualificationsApi
       add_mandatory_qualifications
       add_npq
       add_qts
+      add_higher_education_qualifications
 
       @qualifications
         .flatten!
@@ -104,6 +105,19 @@ module QualificationsApi
           details: mq,
           name: "Mandatory qualification (MQ)",
           type: :mandatory
+        )
+      end
+    end
+
+    def add_higher_education_qualifications
+      return if api_data.higher_education_qualifications.blank?
+
+      @qualifications << api_data.higher_education_qualifications.map do |heq|
+        Qualification.new(
+          awarded_at: heq.awarded&.to_date,
+          details: heq,
+          name: heq.name,
+          type: :higher_education
         )
       end
     end

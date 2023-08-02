@@ -39,6 +39,7 @@ module QualificationsApi
           endpoint,
           {
             include: %w[
+              HigherEducationQualifications
               Induction
               InitialTeacherTraining
               NpqQualifications
