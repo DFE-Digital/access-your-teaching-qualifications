@@ -123,6 +123,12 @@ variable "statuscake_alerts" {
 
 variable "domain" {
   default = null
+  description = "The domain at which the AYTQ service can be accessed"
+}
+
+variable "check_domain" {
+  default = null
+  description = "The domain at which the Check service can be accessed"
 }
 
 variable "region_name" {

@@ -1,0 +1,51 @@
+name: Run smoke test
+
+inputs:
+  environment:
+    description: The name of the environment
+    required: true
+  azure_credentials:
+    description: JSON object containing a service principal that can read from Azure Key Vault
+    required: true
+  url:
+    description: Sets the HOSTING_DOMAIN environment variable
+    required: true
+
+runs:
+  using: composite
+
+  steps:
+    - uses: Azure/login@v1
+      with:
+        creds: ${{ inputs.azure_credentials }}
+
+    - uses: ./.github/actions/prepare-app-env
+
+    # Set environment variables
+    - run: |
+        tf_vars_file=terraform/workspace_variables/${{ inputs.environment }}.tfvars.json
+        echo "KEY_VAULT_NAME=$(jq -r '.key_vault_name' ${tf_vars_file})" >> $GITHUB_ENV
+      shell: bash
+
+    - uses: DfE-Digital/keyvault-yaml-secret@v1
+      id: keyvault-yaml-secret
+      with:
+        keyvault: ${{ env.KEY_VAULT_NAME }}
+        secret: INFRASTRUCTURE
+        key: GOVUK_NOTIFY_API_KEY,SUPPORT_USERNAME,SUPPORT_PASSWORD
+
+    # Run deployment smoke test
+    - uses: nick-fields/retry@v2.8.3
+      with:
+        max_attempts: 5
+        timeout_minutes: 3
+        command: bin/smoke
+        shell: bash
+      env:
+        HOSTING_DOMAIN: ${{ inputs.url }}
+        CHECK_RECORDS_DOMAIN: ${{ inputs.check_url }}
+        HOSTING_ENVIRONMENT_NAME: ${{ inputs.environment }}
+        # GOVUK_NOTIFY_API_KEY: ${{ steps.keyvault-yaml-secret.outputs.GOVUK_NOTIFY_API_KEY }}
+        SUPPORT_USERNAME: ${{ steps.keyvault-yaml-secret.outputs.SUPPORT_USERNAME }}
+        SUPPORT_PASSWORD: ${{ steps.keyvault-yaml-secret.outputs.SUPPORT_PASSWORD }}
+        CUPRITE_TIMEOUT: 60
