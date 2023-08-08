@@ -8,6 +8,9 @@ locals {
       HOSTING_ENVIRONMENT_NAME              = local.hosting_environment
       RAILS_SERVE_STATIC_FILES              = "true"
       ConnectionStrings__Redis              = azurerm_redis_cache.redis.primary_connection_string
+      BIGQUERY_PROJECT_ID = "teaching-qualifications",
+      BIGQUERY_DATASET    = "events_${var.environment_name}",
+      BIGQUERY_TABLE_NAME = "events",
     }
   )
 }
