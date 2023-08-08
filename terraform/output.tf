@@ -2,6 +2,10 @@ output "app_fqdn" {
   value = "https://${var.domain != null ? var.domain : azurerm_linux_web_app.aytq-app.default_hostname}"
 }
 
+output "app_check_service_fqdn" {
+  value = "https://${var.check_domain != null ? var.check_domain : azurerm_linux_web_app.aytq-app.default_hostname}"
+}
+
 output "app_resource_group_name" {
   value = data.azurerm_resource_group.group.name
 }

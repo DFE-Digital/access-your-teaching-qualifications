@@ -112,6 +112,14 @@ jobs:
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           site_up_retries: 120
 
+      - uses: ./.github/actions/smoke-test
+        id: smoke-test
+        with:
+          environment: ${{ matrix.environment }}
+          azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          url: ${{ steps.deploy.outputs.environment_url }}
+          check_url: ${{ steps.deploy.outputs.check_service_url }}
+
   deploy_prod:
     name: Deploy to production environment
     runs-on: ubuntu-latest
