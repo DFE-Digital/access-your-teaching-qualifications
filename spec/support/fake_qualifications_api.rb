@@ -17,7 +17,11 @@ class FakeQualificationsApi < Sinatra::Base
 
     case bearer_token
     when "token"
-      { total: 1, results: [teacher_data] }.to_json
+      if params[:lastName] == "NotAMatch"
+        { total: 0, results: [] }.to_json
+      else
+        { total: 1, results: [teacher_data] }.to_json
+      end
     when "invalid-token"
       halt 401
     end

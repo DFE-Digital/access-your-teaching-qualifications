@@ -77,4 +77,36 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
       end
     end
   end
+
+  describe "#teachers" do
+    subject do
+      described_class.new(token: "token").teachers(date_of_birth:, last_name:)
+    end
+
+    let(:date_of_birth) { "1990-01-01" }
+    let(:last_name) { "Walsh" }
+
+    it "returns a list of teachers" do
+      expect(subject.first).to eq 1
+      expect(subject.last).to all(be_a(QualificationsApi::Teacher))
+    end
+
+    context "when there are no matches" do
+      let(:last_name) { "NotAMatch" }
+
+      it "returns an empty list" do
+        expect(subject.first).to eq 0
+        expect(subject.last).to eq []
+      end
+    end
+
+    context "when the API returns a 500 error" do
+      before { stub_request(:get, /teachers/).to_return(status: 500) }
+
+      it "returns an empty list" do
+        expect(subject.first).to eq 0
+        expect(subject.last).to eq []
+      end
+    end
+  end
 end

@@ -72,11 +72,13 @@ module QualificationsApi
       raise(QualificationApi::InvalidTokenError) if response.status == 401
 
       results =
-        response.body["results"].map do |teacher|
+        response.body["results"]&.map do |teacher|
           QualificationsApi::Teacher.new(teacher)
         end
 
-      [response.body["total"], results]
+      results ||= []
+      total = response.body["total"] || 0
+      [total, results]
     end
 
     def client
