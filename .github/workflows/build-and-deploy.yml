@@ -119,6 +119,7 @@ jobs:
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
           url: ${{ steps.deploy.outputs.environment_url }}
           check_url: ${{ steps.deploy.outputs.check_service_url }}
+        if: matrix.environment != 'preprod'
 
   deploy_prod:
     name: Deploy to production environment
