@@ -10,6 +10,9 @@ inputs:
   url:
     description: Sets the HOSTING_DOMAIN environment variable
     required: true
+  check_url:
+    description: Sets the CHECK_RECORDS_DOMAIN environment variable
+    required: true
 
 runs:
   using: composite
