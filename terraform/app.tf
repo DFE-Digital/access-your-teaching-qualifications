@@ -146,3 +146,29 @@ resource "azurerm_linux_web_app_slot" "aytq-stage" {
     ]
   }
 }
+
+resource "azurerm_container_group" "aytq-worker" {
+  name                = local.aytq_worker_group_name
+  location            = data.azurerm_resource_group.group.location
+  resource_group_name = data.azurerm_resource_group.group.name
+  os_type             = "Linux"
+  ip_address_type     = "None"
+
+  container {
+    name  = local.aytq_worker_app_name
+    image = var.aytq_docker_image
+
+    cpu    = "0.5"
+    memory = "0.5"
+
+    environment_variables = local.aytq_env_vars
+
+    commands = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
+  }
+
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
+}

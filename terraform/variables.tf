@@ -153,9 +153,15 @@ variable "statuscake_domain" {
   description = "Domain/url for statuscake ssl check"
 }
 
+variable "aytq_docker_image" {
+  type = string
+}
+
 locals {
   hosting_environment          = var.environment_name
   aytq_web_app_name            = "${var.resource_prefix}-${var.environment_name}${var.app_suffix}-app"
+  aytq_worker_app_name         = "${var.resource_prefix}-${var.environment_name}${var.app_suffix}-wkr-aci"
+  aytq_worker_group_name       = "${var.resource_prefix}-${var.environment_name}${var.app_suffix}-wkr-cg"
   postgres_server_name         = "${var.resource_prefix}-${var.environment_name}${var.app_suffix}-psql"
   postgres_database_name       = "access_your_teaching_qualifications_production"
   redis_database_name          = "${var.resource_prefix}-${var.environment_name}${var.app_suffix}-redis"
