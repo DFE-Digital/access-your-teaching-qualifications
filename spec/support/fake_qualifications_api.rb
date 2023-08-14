@@ -17,7 +17,10 @@ class FakeQualificationsApi < Sinatra::Base
 
     case bearer_token
     when "token"
-      { total: 1, results: [teacher_data] }.to_json
+      {
+        total: 1,
+        results: [teacher_data(sanctions: params[:last_name] == "Restricted")]
+      }.to_json
     when "invalid-token"
       halt 401
     end
@@ -69,12 +72,13 @@ class FakeQualificationsApi < Sinatra::Base
 
   private
 
-  def teacher_data(trn: "1234567")
+  def teacher_data(sanctions: false, trn: "1234567")
     {
       dateOfBirth: "2000-01-01",
       firstName: "Terry",
       lastName: "Walsh",
       middleName: "John",
+      sanctions: sanctions ? [{ type: "Restricted" }] : [],
       trn:
     }
   end
