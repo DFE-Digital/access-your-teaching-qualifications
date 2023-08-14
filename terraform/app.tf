@@ -5,6 +5,7 @@ locals {
       DATABASE_URL                          = "postgres://postgres@${local.postgres_server_name}.postgres.database.azure.com:5432"
       DATABASE_PASSWORD                     = local.infrastructure_secrets.POSTGRES_ADMIN_PASSWORD
       HOSTING_DOMAIN                        = var.domain != null ? "https://${var.domain}" : "https://${local.aytq_web_app_name}.azurewebsites.net"
+      CHECK_RECORDS_DOMAIN                  = var.check_domain != null ? "https://${var.check_domain}" : "https://${local.aytq_web_app_name}.azurewebsites.net"
       HOSTING_ENVIRONMENT_NAME              = local.hosting_environment
       RAILS_SERVE_STATIC_FILES              = "true"
       ConnectionStrings__Redis              = azurerm_redis_cache.redis.primary_connection_string
