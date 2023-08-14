@@ -48,8 +48,6 @@ shared:
   :staff:
     - id
     - email
-    - encrypted_password
-    - reset_password_token
     - reset_password_sent_at
     - remember_created_at
     - sign_in_count
@@ -57,12 +55,10 @@ shared:
     - last_sign_in_at
     - current_sign_in_ip
     - last_sign_in_ip
-    - confirmation_token
     - confirmed_at
     - confirmation_sent_at
     - unconfirmed_email
     - failed_attempts
-    - unlock_token
     - locked_at
     - created_at
     - updated_at
@@ -73,7 +69,6 @@ shared:
     - invitations_count
     - invited_by_type
     - invited_by_id
-    - invitation_token
   :console1984_users:
     - id
     - username
