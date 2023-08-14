@@ -12,6 +12,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     when_i_sign_in_via_dsi
     and_search_with_a_valid_name_and_dob
     then_i_see_a_teacher_record_in_the_results
+    and_they_have_no_restrictions
 
     when_i_click_on_the_teacher_record
     then_i_see_induction_details
@@ -34,6 +35,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def then_i_see_a_teacher_record_in_the_results
     expect(page).to have_content "Terry Walsh"
+  end
+
+  def and_they_have_no_restrictions
+    expect(page).to have_content "NO RESTRICTIONS"
   end
 
   def when_i_click_on_the_teacher_record
