@@ -16,7 +16,7 @@ module HostingEnvironment
   end
 
   def self.environment_name
-    ENV.fetch("HOSTING_ENVIRONMENT", "unknown-environment")
+    ENV.fetch("HOSTING_ENVIRONMENT_NAME", "unknown-environment")
   end
 
   def self.test_environment?
