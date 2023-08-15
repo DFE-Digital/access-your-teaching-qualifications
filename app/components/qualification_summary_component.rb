@@ -20,7 +20,7 @@ class QualificationSummaryComponent < ViewComponent::Base
     return itt_rows if itt?
 
     @rows = [
-      { key: { text: "Awarded" }, value: { text: awarded_at.to_fs(:long_uk) } }
+      { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } }
     ]
 
     if qualification.certificate_url
