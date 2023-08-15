@@ -12,12 +12,15 @@ module CheckRecords
         params["search"]["date_of_birth(2i)"],
         params["search"]["date_of_birth(3i)"]
       ]
-      @search = Search.new(date_of_birth:, last_name: params[:search][:last_name])
+      @search =
+        Search.new(date_of_birth:, last_name: params[:search][:last_name])
       if @search.invalid?
         render :new
       else
         @total, @teachers =
-          QualificationsApi::Client.new(token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"]).teachers(
+          QualificationsApi::Client.new(
+            token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"]
+          ).teachers(
             date_of_birth: @search.date_of_birth,
             last_name: @search.last_name
           )
