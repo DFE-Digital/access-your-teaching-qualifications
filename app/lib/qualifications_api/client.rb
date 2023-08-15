@@ -69,7 +69,7 @@ module QualificationsApi
           }
         )
 
-      raise(QualificationApi::InvalidTokenError) if response.status == 401
+      raise(QualificationsApi::InvalidTokenError) if response.status == 401
 
       results =
         response.body["results"].map do |teacher|
