@@ -95,3 +95,18 @@ $govuk-assets-path: "/";
 .govuk-summary-list__row:not(.govuk-summary-list__row--no-actions) > :last-child {
   padding-right: 0;
 }
+
+.app__search-detail-heading {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+
+  .govuk-heading-l {
+    margin-bottom: 0;
+  }
+
+  .govuk-tag {
+    margin-left: 10px;
+  }
+}

@@ -159,7 +159,8 @@ class FakeQualificationsApi < Sinatra::Base
             name: "NPQ senior leadership"
           }
         }
-      ]
+      ],
+      sanctions: []
     }.to_json
   end
 

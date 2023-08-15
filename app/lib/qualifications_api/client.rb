@@ -44,6 +44,7 @@ module QualificationsApi
               InitialTeacherTraining
               NpqQualifications
               MandatoryQualifications
+              Sanctions
             ].join(",")
           }
         )

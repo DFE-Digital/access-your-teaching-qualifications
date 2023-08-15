@@ -2,7 +2,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-l"><%= @teacher.name %></h1>
+    <div class="app__search-detail-heading">
+      <h1 class="govuk-heading-l"><%= @teacher.name %></h1>
+      <strong class="govuk-tag govuk-tag--<%= @teacher.sanctions.any? ? "red" : "green" %>"%>
+        <%= @teacher.sanctions.any? ? "Restrictions" : "No restrictions" %>
+      </strong>
+    </div>
 
     <div class="govuk-!-margin-bottom-9">
       <h2 class="govuk-heading-m">Personal Details</h2>
