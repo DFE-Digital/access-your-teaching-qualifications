@@ -155,8 +155,10 @@ runs:
         inlineScript: |
           az webapp deployment slot swap -g ${{ env.app_resource_group_name }} -n ${{ env.web_app_name }} --slot ${{ env.web_app_slot_name }} --target-slot production
 
-    # Check new site is up
-    - run: |
+
+    - name: "Check new site is up"
+      if: ${{ inputs.environment_name != 'review' }}
+      run: |
         echo "Checking new site is up"
         attempt_counter=0
         max_attempts=$RETRIES
