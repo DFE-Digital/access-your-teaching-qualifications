@@ -6,7 +6,7 @@ class AuthFailuresController < ApplicationController
 
     case strategy
     when :identity
-      handle_failure_then_redirect_to qualifications_sign_in_path
+      handle_failure_then_redirect_to qualifications_root_path
     when :dfe
       handle_failure_then_redirect_to check_records_sign_in_path
     end
