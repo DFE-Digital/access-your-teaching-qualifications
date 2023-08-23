@@ -35,6 +35,10 @@ module QualificationsApi
         .reverse!
     end
 
+    def sanctions
+      api_data.sanctions.map { |sanction| Sanction.new(type: sanction) }
+    end
+
     private
 
     def add_qts
