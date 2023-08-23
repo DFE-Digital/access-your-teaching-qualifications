@@ -9,6 +9,19 @@
       </strong>
     </div>
 
+    <% if @teacher.sanctions.any? %>
+      <div class="app__restrictions">
+        <h2 class="govuk-heading-m">Restrictions</h2>
+        <%= govuk_inset_text do %>
+          <% @teacher.sanctions.each do |sanction| %>
+            <h3 class="govuk-heading-s">
+              <%= sanction.title %>
+            </h3>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+
     <div class="govuk-!-margin-bottom-9">
       <h2 class="govuk-heading-m">Personal Details</h2>
       <%= govuk_summary_list(
