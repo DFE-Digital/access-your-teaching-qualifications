@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     get "/", to: "support_interface#index"
     root to: "support_interface#index", as: :staff_root
 
+    resources :organisations
     resources :staff, only: %i[index]
 
     mount FeatureFlags::Engine => "/features"

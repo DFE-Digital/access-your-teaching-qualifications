@@ -1,0 +1,20 @@
+<% content_for :page_title, 'Organisations' %>
+
+<h1 class="govuk-heading-l">Organisations</h1>
+
+<p class="govuk-body">
+  <%= govuk_button_link_to 'Create new organisation', new_support_interface_organisation_path %>
+</p>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <% @organisations.each do |organisation| %>
+      <h2 class="govuk-heading-m"><%= organisation.company_registration_number %></h2>
+
+      <% rows = [
+          { key: { text: 'Created'}, value: { text: organisation.created_at.to_fs(:long) } },
+      ] %>
+      <%= govuk_summary_list(rows:) %>
+    <% end %>
+  </div>
+</div>

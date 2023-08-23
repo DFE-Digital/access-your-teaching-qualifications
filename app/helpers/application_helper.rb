@@ -17,6 +17,11 @@ module ApplicationHelper
           text: "Staff",
           href: main_app.support_interface_staff_index_path
         )
+        header.with_navigation_item(
+          active: request.path.start_with?("/support/organisations"),
+          text: "Organisations",
+          href: main_app.support_interface_organisations_path
+        )
         if current_staff
           header.with_navigation_item(href: main_app.staff_sign_out_path, text: "Sign out")
         end
