@@ -1,11 +1,11 @@
 <% if CheckRecords::DfESignIn.bypass? %>
-  <%=
-    govuk_button_to(
-      "Sign in with DSI bypass",
-      "/check-records/auth/developer",
-      method: :post
-    )
-  %>
+  <%= form_tag("/check-records/auth/developer/callback") do %>
+    <%= hidden_field_tag "email", "test-agency@example.org" %>
+    <%= hidden_field_tag "first_name", "Test" %>
+    <%= hidden_field_tag "last_name", "Agency" %>
+    <%= hidden_field_tag "uid", "test-agency-123" %>
+    <%= submit_tag "Sign in as agency", class: "govuk-button govuk-!-margin-bottom-2" %>
+  <% end %>
 <% else %>
   <%=
     govuk_button_to(
