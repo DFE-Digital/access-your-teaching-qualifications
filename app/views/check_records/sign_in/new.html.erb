@@ -1,3 +1,12 @@
+<h1 class="govuk-heading-l">Sign in</h1>
+<p class="govuk-body">
+  Use this service to:
+</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>check a teacher&lsquo;s qualifications</li>
+  <li>check if a teacher has any restrictions</li>
+</ul>
+
 <% if CheckRecords::DfESignIn.bypass? %>
   <%= form_tag("/check-records/auth/developer/callback") do %>
     <%= hidden_field_tag "email", "test-agency@example.org" %>
@@ -8,10 +17,10 @@
   <% end %>
 <% else %>
   <%=
-    govuk_button_to(
-      "Sign in with DSI",
-      "/check-records/auth/dfe",
-      method: :post
+    govuk_start_button(
+      text: "Sign in with DSI",
+      href: "/check-records/auth/dfe",
+      as_button: true
     )
   %>
 <% end %>
