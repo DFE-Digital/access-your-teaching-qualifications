@@ -19,7 +19,7 @@ class FakeQualificationsApi < Sinatra::Base
     when "token"
       {
         total: 1,
-        results: [teacher_data(sanctions: params[:last_name] == "Restricted")]
+        results: [teacher_data(sanctions: params["lastName"] == "Restricted")]
       }.to_json
     when "invalid-token"
       halt 401
@@ -34,6 +34,8 @@ class FakeQualificationsApi < Sinatra::Base
     when "token"
       if trn == "1234567"
         quals_data(trn: "1234567")
+      elsif trn == "987654321"
+        quals_data(trn:)
       else
         halt 404
       end
@@ -73,13 +75,28 @@ class FakeQualificationsApi < Sinatra::Base
   private
 
   def teacher_data(sanctions: false, trn: "1234567")
+    sanctions ? sanctions_data : no_sanctions_data(trn:)
+  end
+
+  def no_sanctions_data(trn:)
     {
       dateOfBirth: "2000-01-01",
       firstName: "Terry",
       lastName: "Walsh",
       middleName: "John",
-      sanctions: sanctions ? [{ type: "Restricted" }] : [],
+      sanctions: [],
       trn:
+    }
+  end
+
+  def sanctions_data
+    {
+      dateOfBirth: "2000-01-01",
+      firstName: "Teacher",
+      lastName: "Restricted",
+      middleName: "",
+      sanctions: ["C2"],
+      trn: "987654321"
     }
   end
 
@@ -160,7 +177,7 @@ class FakeQualificationsApi < Sinatra::Base
           }
         }
       ],
-      sanctions: []
+      sanctions: trn == "987654321" ? ["C2"] : []
     }.to_json
   end
 

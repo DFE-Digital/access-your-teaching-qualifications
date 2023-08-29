@@ -12,6 +12,9 @@ RSpec.describe "Teacher search with restrictions",
     when_i_sign_in_via_dsi
     and_search_returns_a_restricted_record
     then_i_see_the_restriction_on_the_result
+
+    when_i_click_on_the_result
+    then_i_see_the_details_of_the_restriction
   end
 
   private
@@ -26,5 +29,14 @@ RSpec.describe "Teacher search with restrictions",
 
   def then_i_see_the_restriction_on_the_result
     expect(page).to have_content("RESTRICTIONS")
+  end
+
+  def when_i_click_on_the_result
+    click_link "Teacher Restricted"
+  end
+
+  def then_i_see_the_details_of_the_restriction
+    expect(page).to have_content("RESTRICTIONS")
+    expect(page).to have_content("Failed induction")
   end
 end

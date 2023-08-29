@@ -110,3 +110,12 @@ $govuk-assets-path: "/";
     margin-left: 10px;
   }
 }
+
+.app__restrictions {
+  margin-bottom: govuk-spacing(9);
+  margin-top: govuk-spacing(9);
+
+  .govuk-inset-text {
+    border-left-color: red;
+  }
+}
