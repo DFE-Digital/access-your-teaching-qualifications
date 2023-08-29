@@ -1,6 +1,6 @@
 # Review apps
 
-Like other services at DfE, both Access your teaching qualifications (AYTQ) and Check the record of a teacher (Check) have support for review apps. Adding the 'deploy' label to a PR will start the process of creating a review app. Its URL will be posted in a PR comment once its running.
+Like other services at DfE, both Access your teaching qualifications (AYTQ) and Check the record of a teacher (Check) have support for review apps. Adding the 'deploy' label to a PR will start the process of creating a review app. Its URL will be posted in a PR comment once it's running.
 
 Both services are accessible at the single URL. By default, the base path will redirect to AYTQ. The Check service is available by manually entering one of its routes (eg - `/check-records/sign-in`). The routes for both services are namespaced (`/qualifications` and `/check-records`, respectively), helping to ensure that their routes are distinct. The review app relies on this distinctness to work correctly - we'd have to implement service-specific review apps if conflicting routes were ever introduced.
 
