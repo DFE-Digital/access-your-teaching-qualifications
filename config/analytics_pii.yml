@@ -17,3 +17,6 @@
     - trn
   :staff:
     - email
+  :feedbacks:
+    - email
+    - improvement_suggestion
