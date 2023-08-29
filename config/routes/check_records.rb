@@ -15,6 +15,12 @@ namespace :check_records, path: "check-records" do
   get "/result", to: "search#show"
 
   resources :teachers, only: %i[show]
+
+  scope "/feedback" do
+    get "/", to: "feedbacks#new", as: :feedbacks
+    post "/", to: "feedbacks#create"
+    get "/success", to: "feedbacks#success"
+  end
 end
 
 root to: redirect("/check-records/search"), as: :check_records_root

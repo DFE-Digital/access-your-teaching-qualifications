@@ -27,3 +27,16 @@ en:
               in_the_future: Date of birth must be in the past
             last_name:
               blank: Enter a last name
+  activerecord:
+    errors:
+      models:
+        feedback:
+          attributes:
+            satisfaction_rating:
+              inclusion: Select how satisfied you are with the service
+            improvement_suggestion:
+              blank: Enter how we can improve the service
+            contact_permission_given:
+              inclusion: Select yes if we can contact you about your feedback
+            email:
+              blank: Enter an email address
