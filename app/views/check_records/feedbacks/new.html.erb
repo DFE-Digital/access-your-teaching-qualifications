@@ -6,7 +6,7 @@
       Give feedback about checking the record of a teacher
     </h1>
 
-    <%= form_with model: @feedback, url: [:check_records, :feedbacks] do |f| %>
+    <%= form_with model: [:check_records, @feedback] do |f| %>
       <%= f.govuk_error_summary %>
       <%= f.govuk_collection_radio_buttons(
           :satisfaction_rating,
