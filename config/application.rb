@@ -50,5 +50,7 @@ module AccessYourTeachingQualifications
       base_controller_class: "SupportInterface::SupportInterfaceController"
     }
     config.console1984 = { ask_for_username_if_empty: true }
+
+    config.exceptions_app = routes
   end
 end
