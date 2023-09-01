@@ -95,7 +95,12 @@ class FakeQualificationsApi < Sinatra::Base
       firstName: "Teacher",
       lastName: "Restricted",
       middleName: "",
-      sanctions: ["C2"],
+      sanctions: [
+        {
+          code: "C2",
+          startDate: "2019-10-25"
+        }
+      ],
       trn: "987654321"
     }
   end
@@ -177,7 +182,7 @@ class FakeQualificationsApi < Sinatra::Base
           }
         }
       ],
-      sanctions: trn == "987654321" ? ["C2"] : []
+      sanctions: trn == "987654321" ? [ { code: "C2", startDate: "2020-10-25" } ] : []
     }.to_json
   end
 
