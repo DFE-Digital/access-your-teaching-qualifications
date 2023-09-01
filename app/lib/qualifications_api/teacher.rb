@@ -36,7 +36,7 @@ module QualificationsApi
     end
 
     def sanctions
-      api_data.sanctions.map { |sanction| Sanction.new(type: sanction) }
+      api_data.sanctions.map { |sanction| Sanction.new(sanction) }
     end
 
     private

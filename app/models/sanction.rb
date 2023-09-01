@@ -1,7 +1,10 @@
 class Sanction
-  include ActiveModel::Model
+  attr_accessor :code, :start_date
 
-  attr_accessor :type
+  def initialize(api_data)
+    @code = api_data[:code]
+    @start_date = api_data[:start_date].present? ? Date.parse(api_data[:start_date]) : nil
+  end
 
   SANCTIONS = {
     "A13" => { title: "Suspension order - with conditions" },
@@ -37,7 +40,7 @@ class Sanction
     "T7" => { title: "Section 128 barring direction" }
   }.freeze
 
-  def title  
-    SANCTIONS[type][:title] if SANCTIONS[type]
+  def title
+    SANCTIONS[code][:title] if SANCTIONS[code]
   end
 end

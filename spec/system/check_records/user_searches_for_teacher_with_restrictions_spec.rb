@@ -38,5 +38,6 @@ RSpec.describe "Teacher search with restrictions",
   def then_i_see_the_details_of_the_restriction
     expect(page).to have_content("RESTRICTIONS")
     expect(page).to have_content("Failed induction")
+    expect(page).to have_content("25 October 2020")
   end
 end
