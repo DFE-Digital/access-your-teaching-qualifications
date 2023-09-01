@@ -10,6 +10,11 @@ module CheckRecords
     end
     helper_method :current_dsi_user
 
+    # Differentiate web requests sent to BigQuery via dfe-analytics
+    def current_namespace
+      "check-the-record-of-a-teacher"
+    end
+
     def authenticate_dsi_user!
       if current_dsi_user.blank?
         flash[:warning] = "You need to sign in to continue."

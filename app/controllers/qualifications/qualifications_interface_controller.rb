@@ -10,6 +10,11 @@ module Qualifications
     end
     helper_method :current_user
 
+    # Differentiate web requests sent to BigQuery via dfe-analytics
+    def current_namespace
+      "access-your-teaching-qualifications"
+    end
+
     def authenticate_user!
       if current_user.blank?
         flash[:warning] = "You need to sign in to continue."
