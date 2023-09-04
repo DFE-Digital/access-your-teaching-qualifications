@@ -21,6 +21,7 @@ gem "govuk_feature_flags",
 gem "govuk_markdown"
 gem "hashie"
 gem "jsbundling-rails"
+gem "jwt"
 gem "logstash-logger"
 gem "mail-notify"
 gem "name_of_person"
