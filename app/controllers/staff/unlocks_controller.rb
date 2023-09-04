@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Staff::UnlocksController < Devise::UnlocksController
+  include SupportNamespaceable
+
   # GET /resource/unlock/new
   # def new
   #   super

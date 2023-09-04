@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Staff::InvitationsController < Devise::InvitationsController
+  include SupportNamespaceable
   protect_from_forgery prepend: true
 
   protected

@@ -8,7 +8,7 @@
         autofocus: true, 
         autocomplete: "email", 
         value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email), 
-        label: { text: "Email" } 
+        label: { text: "Email" })
       %>
       <%= f.govuk_submit "Resend confirmation instructions" %>
     <% end %>

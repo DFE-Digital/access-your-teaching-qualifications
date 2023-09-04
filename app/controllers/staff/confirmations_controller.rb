@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Staff::ConfirmationsController < Devise::ConfirmationsController
+  include SupportNamespaceable
+
   # GET /resource/confirmation/new
   # def new
   #   super
