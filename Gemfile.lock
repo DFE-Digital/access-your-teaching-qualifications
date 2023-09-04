@@ -595,6 +595,7 @@ DEPENDENCIES
   govuk_markdown
   hashie
   jsbundling-rails
+  jwt
   launchy
   logstash-logger
   mail-notify
