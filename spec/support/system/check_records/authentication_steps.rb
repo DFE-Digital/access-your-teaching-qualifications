@@ -26,7 +26,7 @@ module CheckRecords
     end
 
     def and_click_the_dsi_sign_in_button
-      click_button "Sign in with DSI"
+      click_button "Sign in"
     end
   end
 end
