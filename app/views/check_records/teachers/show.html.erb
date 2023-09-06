@@ -27,7 +27,7 @@
       <%= govuk_summary_list(
         rows: [
           { key: { text: "Teacher reference number (TRN)" }, value: { text: @teacher.trn } },
-          { key: { text: "Date of birth" }, value: { text: @teacher.date_of_birth } }
+          { key: { text: "Date of birth" }, value: { text: Date.parse(@teacher.date_of_birth).to_fs(:long_uk) } }
         ])
       %>
     </div>
