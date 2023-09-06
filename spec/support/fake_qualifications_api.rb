@@ -108,6 +108,7 @@ class FakeQualificationsApi < Sinatra::Base
   def quals_data(trn: nil, itt: true)
     {
       trn: trn || "3000299",
+      dateOfBirth: "2000-01-01",
       firstName: "Terry",
       lastName: "Walsh",
       eyts: {
