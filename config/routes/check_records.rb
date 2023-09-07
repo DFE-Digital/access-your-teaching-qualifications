@@ -6,6 +6,7 @@ namespace :check_records, path: "check-records" do
   get "/privacy", to: "static#privacy"
 
   get "/sign-in", to: "sign_in#new"
+  get "/not-authorised", to: "sign_in#not_authorised"
   get "/sign-out", to: "sign_out#new"
 
   get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
