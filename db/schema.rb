@@ -90,6 +90,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_07_120219) do
   create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
+  create_table "dsi_user_sessions", force: :cascade do |t|
+    t.bigint "dsi_user_id"
+    t.string "role_id"
+    t.string "role_code"
+    t.string "organisation_id"
+    t.string "organisation_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dsi_user_id"], name: "index_dsi_user_sessions_on_dsi_user_id"
+  end
+
   create_table "dsi_users", force: :cascade do |t|
     t.string "email", limit: 510, null: false
     t.string "first_name", limit: 510
