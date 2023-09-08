@@ -22,5 +22,6 @@ RSpec.describe "TRN search", host: :check_records, type: :system do
 
   def then_i_see_a_not_found_page
     expect(page).to have_content "Teacher not found"
+    expect(page).to have_title "Teacher not found - Check the record of a teacher in England"
   end
 end
