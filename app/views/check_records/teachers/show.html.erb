@@ -1,3 +1,4 @@
+<% content_for :page_title, @teacher.name %>
 <% content_for :breadcrumbs, govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Search results" => url_for(:back), @teacher.name => nil}) %>
 
 <div class="govuk-grid-row">
