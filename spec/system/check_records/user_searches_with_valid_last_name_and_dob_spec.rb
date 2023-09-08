@@ -6,12 +6,13 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   include ActivateFeaturesSteps
   include CheckRecords::AuthenticationSteps
 
-  scenario "User searches with a last name and date of birth and finds a records",
+  scenario "User searches with a last name and date of birth and finds a record",
            test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_service_is_open
     when_i_sign_in_via_dsi
     and_search_with_a_valid_name_and_dob
     then_i_see_a_teacher_record_in_the_results
+    and_my_search_is_logged
     and_they_have_no_restrictions
 
     when_i_click_on_the_teacher_record
@@ -27,14 +28,19 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def and_search_with_a_valid_name_and_dob
     fill_in "Last name", with: "Walsh"
-    fill_in "Day", with: "1"
-    fill_in "Month", with: "January"
-    fill_in "Year", with: "1990"
+    fill_in "Day", with: "5"
+    fill_in "Month", with: "April"
+    fill_in "Year", with: "1992"
     click_button "Find record"
   end
 
   def then_i_see_a_teacher_record_in_the_results
     expect(page).to have_content "Terry Walsh"
+  end
+
+  def and_my_search_is_logged
+    expect(SearchLog.last.last_name).to eq "Walsh"
+    expect(SearchLog.last.date_of_birth.to_s).to eq "1992-04-05"
   end
 
   def and_they_have_no_restrictions
