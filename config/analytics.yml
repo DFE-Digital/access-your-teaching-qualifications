@@ -45,6 +45,13 @@ shared:
     - family_name
     - trn
     - date_of_birth
+  :search_logs:
+    - id
+    - dsi_user_id
+    - last_name
+    - date_of_birth
+    - created_at
+    - updated_at
   :staff:
     - id
     - email
