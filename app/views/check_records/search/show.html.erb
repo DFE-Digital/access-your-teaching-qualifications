@@ -3,32 +3,38 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <h1 class="govuk-heading-l">Search results (<%= @total %>)</h1>
+    <% if @total.zero? %>
+      <p class="govuk-body">
+        No teachers found.
+        <%= govuk_link_to("Try another search", check_records_search_path) %>.
+      </p>
+    <% else %>
+      <div class="search-results">
+        <% @teachers.each do |teacher| %>
+          <div class="search-results__item">
+            <h2 class="govuk-heading-s">
+              <%= link_to teacher.name, check_records_teacher_path(teacher.trn), class: "govuk-link--no-visited-state" %>
+            </h2>
+            <strong class="govuk-tag govuk-tag--<%= teacher.sanctions.any? ? "red" : "green" %>"%>
+              <%= teacher.sanctions.any? ? "Restrictions" : "No restrictions" %>
+            </strong>
 
-    <div class="search-results">
-      <% @teachers.each do |teacher| %>
-        <div class="search-results__item">
-          <h2 class="govuk-heading-s">
-            <%= link_to teacher.name, check_records_teacher_path(teacher.trn), class: "govuk-link--no-visited-state" %>
-          </h2>
-          <strong class="govuk-tag govuk-tag--<%= teacher.sanctions.any? ? "red" : "green" %>"%>
-            <%= teacher.sanctions.any? ? "Restrictions" : "No restrictions" %>
-          </strong>
-
-          <% 
-            rows = [
-              {
-                key: { text: "TRN" },
-                value: { text: teacher.trn }
-              },
-              {
-                key: { text: "Date of birth" },
-                value: { text: Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
-              }
-            ] 
-          %>
-          <%= render GovukComponent::SummaryListComponent.new(rows:, borders: false, classes: ['app-summary-list--compact']) %>
-        </div>
-      <% end %>
-    </div>
+            <%
+              rows = [
+                {
+                  key: { text: "TRN" },
+                  value: { text: teacher.trn }
+                },
+                {
+                  key: { text: "Date of birth" },
+                  value: { text: Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
+                }
+              ]
+            %>
+            <%= render GovukComponent::SummaryListComponent.new(rows:, borders: false, classes: ['app-summary-list--compact']) %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
