@@ -17,6 +17,8 @@ class FakeQualificationsApi < Sinatra::Base
 
     case bearer_token
     when "token"
+      return { total: 0, results: [] }.to_json if params["lastName"] == "No match"
+
       {
         total: 1,
         results: [teacher_data(sanctions: params["lastName"] == "Restricted")]
