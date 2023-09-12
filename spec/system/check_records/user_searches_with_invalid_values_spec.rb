@@ -11,6 +11,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     given_the_service_is_open
     when_i_sign_in_via_dsi
     and_press_find_record
+    then_i_see_the_error_summary
     then_i_see_the_missing_name_error
     then_i_see_the_missing_dob_error
 
@@ -37,6 +38,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def and_press_find_record
     click_button "Find record"
+  end
+
+  def then_i_see_the_error_summary
+    expect(page).to have_content "There’s a problem"
   end
 
   def then_i_see_the_missing_dob_error
