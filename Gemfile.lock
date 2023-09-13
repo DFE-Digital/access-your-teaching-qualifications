@@ -264,7 +264,7 @@ GEM
     multi_xml (0.6.0)
     mustermann (3.0.0)
       ruby2_keywords (~> 0.0.1)
-    name_of_person (1.1.1)
+    name_of_person (1.1.2)
       activesupport (>= 5.2.0)
     net-imap (0.3.7)
       date
