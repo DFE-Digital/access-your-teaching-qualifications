@@ -13,12 +13,14 @@
     <% if @teacher.sanctions.any? %>
       <div class="app__restrictions">
         <h2 class="govuk-heading-m">Restrictions</h2>
-        <%= govuk_inset_text do %>
+        <%= govuk_inset_text classes: "govuk-!-padding-bottom-2 govuk-!-padding-top-3 govuk-!-margin-bottom- govuk-!-margin-top-0" do %>
           <% @teacher.sanctions.each do |sanction| %>
-            <h3 class="govuk-heading-s">
+            <h3 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-0">
               <%= sanction.title %>
             </h3>
-            <%= sanction.start_date.strftime("%d %B %Y") if sanction.start_date %>
+            <p class="govuk-!-margin-bottom-l">
+              <%= sanction.start_date.strftime("%d %B %Y") if sanction.start_date %>
+            </p>
           <% end %>
         <% end %>
       </div>
