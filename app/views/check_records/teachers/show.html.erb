@@ -19,7 +19,7 @@
               <%= sanction.title %>
             </h3>
             <p class="govuk-!-margin-bottom-l">
-              <%= sanction.start_date.strftime("%d %B %Y") if sanction.start_date %>
+              <%= sanction.start_date.to_fs(:long_uk) if sanction.start_date %>
             </p>
           <% end %>
         <% end %>
