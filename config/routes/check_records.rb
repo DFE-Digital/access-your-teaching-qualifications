@@ -9,6 +9,8 @@ namespace :check_records, path: "check-records" do
   get "/not-authorised", to: "sign_in#not_authorised"
   get "/sign-out", to: "sign_out#new"
 
+  get "/auth/dfe/sign-out", to: "sign_out#new", as: :dsi_sign_out
+
   get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
   post "/auth/developer/callback" => "omniauth_callbacks#dfe_bypass"
 

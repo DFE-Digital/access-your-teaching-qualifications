@@ -12,6 +12,9 @@ module CheckRecords
         {
           provider: "dfe",
           uid: "123456",
+          credentials: {
+            id_token: "abc123",
+          },
           info: {
             email: "test@example.com",
             first_name: "Test",

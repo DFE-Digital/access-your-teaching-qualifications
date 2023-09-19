@@ -17,6 +17,7 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
 
     @dsi_user = DsiUser.create_or_update_from_dsi(auth, role)
     session[:dsi_user_id] = @dsi_user.id
+    session[:id_token] = auth.credentials.id_token
     session[:dsi_user_session_expiry] = 2.hours.from_now.to_i
 
     redirect_to check_records_root_path
