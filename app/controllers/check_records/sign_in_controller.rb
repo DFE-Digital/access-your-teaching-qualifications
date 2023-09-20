@@ -5,5 +5,8 @@ module CheckRecords
 
     def new
     end
+
+    def not_authorised
+    end
   end
 end

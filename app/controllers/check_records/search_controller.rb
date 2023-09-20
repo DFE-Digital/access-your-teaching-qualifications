@@ -17,6 +17,11 @@ module CheckRecords
       if @search.invalid?
         render :new
       else
+        SearchLog.create!(
+          dsi_user: current_dsi_user,
+          last_name: @search.last_name,
+          date_of_birth: @search.date_of_birth.to_s
+        )
         @total, @teachers =
           QualificationsApi::Client.new(
             token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"]

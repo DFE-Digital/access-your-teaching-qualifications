@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_29_122729) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_120219) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,6 +90,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_122729) do
   create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
   end
 
+  create_table "dsi_user_sessions", force: :cascade do |t|
+    t.bigint "dsi_user_id"
+    t.string "role_id"
+    t.string "role_code"
+    t.string "organisation_id"
+    t.string "organisation_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dsi_user_id"], name: "index_dsi_user_sessions_on_dsi_user_id"
+  end
+
   create_table "dsi_users", force: :cascade do |t|
     t.string "email", limit: 510, null: false
     t.string "first_name", limit: 510
@@ -115,6 +126,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_122729) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "search_logs", force: :cascade do |t|
+    t.bigint "dsi_user_id"
+    t.string "last_name"
+    t.date "date_of_birth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dsi_user_id"], name: "index_search_logs_on_dsi_user_id"
   end
 
   create_table "staff", force: :cascade do |t|
@@ -168,4 +188,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_29_122729) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "search_logs", "dsi_users"
 end

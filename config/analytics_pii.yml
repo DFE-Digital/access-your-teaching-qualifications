@@ -15,6 +15,9 @@
     - given_name
     - name
     - trn
+  :search_logs:
+    - last_name
+    - date_of_birth
   :staff:
     - email
   :feedbacks:

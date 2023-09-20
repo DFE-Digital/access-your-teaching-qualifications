@@ -29,6 +29,15 @@ shared:
     - uid
     - created_at
     - updated_at
+  :dsi_user_sessions:
+    - id
+    - dsi_user_id
+    - role_id
+    - role_code
+    - organisation_id
+    - organisation_name
+    - created_at
+    - updated_at
   :feature_flags_features:
     - id
     - name
@@ -45,6 +54,13 @@ shared:
     - family_name
     - trn
     - date_of_birth
+  :search_logs:
+    - id
+    - dsi_user_id
+    - last_name
+    - date_of_birth
+    - created_at
+    - updated_at
   :staff:
     - id
     - email

@@ -1,26 +1,33 @@
-<h1 class="govuk-heading-l">Sign in</h1>
-<p class="govuk-body">
-  Use this service to:
-</p>
-<ul class="govuk-list govuk-list--bullet">
-  <li>check a teacher&rsquo;s qualifications</li>
-  <li>check if a teacher has any restrictions</li>
-</ul>
+<% content_for :page_title, "Sign in" %>
 
-<% if CheckRecords::DfESignIn.bypass? %>
-  <%= form_tag("/check-records/auth/developer/callback") do %>
-    <%= hidden_field_tag "email", "test-agency@example.org" %>
-    <%= hidden_field_tag "first_name", "Test" %>
-    <%= hidden_field_tag "last_name", "Agency" %>
-    <%= hidden_field_tag "uid", "test-agency-123" %>
-    <%= submit_tag "Sign in as agency", class: "govuk-button govuk-!-margin-bottom-2" %>
-  <% end %>
-<% else %>
-  <%=
-    govuk_start_button(
-      text: "Sign in with DSI",
-      href: "/check-records/auth/dfe",
-      as_button: true
-    )
-  %>
-<% end %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">Sign in</h1>
+    <p class="govuk-body">
+      Use this service to check:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>a teacher&rsquo;s qualifications</li>
+      <li>if a teacher has any restrictions that affect the type of work they can be employed to do</li>
+    </ul>
+
+    <% if CheckRecords::DfESignIn.bypass? %>
+      <%= form_tag("/check-records/auth/developer/callback") do %>
+        <%= hidden_field_tag "email", "test-agency@example.org" %>
+        <%= hidden_field_tag "first_name", "Test" %>
+        <%= hidden_field_tag "last_name", "Agency" %>
+        <%= hidden_field_tag "uid", "test-agency-123" %>
+        <%= submit_tag "Sign in as agency", class: "govuk-button govuk-!-margin-bottom-2" %>
+      <% end %>
+    <% else %>
+      <%=
+        govuk_start_button(
+          text: "Sign in",
+          href: "/check-records/auth/dfe",
+          as_button: true
+        )
+      %>
+    <% end %>
+  </div>
+</div>
