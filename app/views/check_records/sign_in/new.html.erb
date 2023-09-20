@@ -3,13 +3,17 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
 
-    <h1 class="govuk-heading-l">Sign in</h1>
+    <h1 class="govuk-heading-l">Sign in to check a teacher’s record</h1>
+
     <p class="govuk-body">
-      Use this service to check:
+      A teacher's record shows their qualifications. It also shows if:
     </p>
+
     <ul class="govuk-list govuk-list--bullet">
-      <li>a teacher&rsquo;s qualifications</li>
-      <li>if a teacher has any restrictions that affect the type of work they can be employed to do</li>
+      <li>they failed their induction or probation</li>
+      <li>they’re prevented from teaching by a prohibition order</li>
+      <li>they were sanctioned by the General Teaching Council for England (GTCE)</li>
+      <li>someone with their last name and date of birth is on the children’s barred list</li>
     </ul>
 
     <% if CheckRecords::DfESignIn.bypass? %>
@@ -18,7 +22,7 @@
         <%= hidden_field_tag "first_name", "Test" %>
         <%= hidden_field_tag "last_name", "Agency" %>
         <%= hidden_field_tag "uid", "test-agency-123" %>
-        <%= submit_tag "Sign in as agency", class: "govuk-button govuk-!-margin-bottom-2" %>
+        <%= submit_tag "Sign in (bypass)", class: "govuk-button govuk-!-margin-bottom-2" %>
       <% end %>
     <% else %>
       <%=
