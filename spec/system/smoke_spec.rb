@@ -31,7 +31,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
     end
   end
 
-  describe "Check the record of a teacher in England" do
+  describe "Check a teacher’s record" do
     before do
       Capybara.app_host = ENV["CHECK_RECORDS_DOMAIN"]
     end
@@ -59,7 +59,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   end
 
   def then_i_see_the_check_service
-    expect(page).to have_content "Check the record of a teacher in England"
+    expect(page).to have_content "Check a teacher’s record"
     expect(page).to have_content "Sign in"
   end
 

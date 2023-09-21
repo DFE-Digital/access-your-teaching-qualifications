@@ -28,7 +28,7 @@ RSpec.describe "Teacher search with restrictions",
   end
 
   def then_i_see_the_restriction_on_the_result
-    expect(page).to have_title("Search results (1) - Check the record of a teacher in England")
+    expect(page).to have_title("Search results (1) - Check a teacher’s record")
     expect(page).to have_content("RESTRICTIONS")
   end
 
@@ -40,6 +40,6 @@ RSpec.describe "Teacher search with restrictions",
     expect(page).to have_content("RESTRICTIONS")
     expect(page).to have_content("Failed induction")
     expect(page).to have_content("25 October 2020")
-    expect(page).to have_title("Terry Walsh - Check the record of a teacher in England")
+    expect(page).to have_title("Terry Walsh - Check a teacher’s record")
   end
 end
