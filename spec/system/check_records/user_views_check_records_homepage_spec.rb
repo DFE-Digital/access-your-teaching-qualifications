@@ -18,6 +18,6 @@ RSpec.feature "Check records homepage", host: :check_records do
   end
 
   def then_i_see_the_check_records_nav
-    within("header") { expect(page).to have_content("Check the record of a teacher in England") }
+    within("header") { expect(page).to have_content("Check a teacher’s record") }
   end
 end

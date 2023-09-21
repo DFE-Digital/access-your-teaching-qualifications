@@ -5,7 +5,7 @@ en:
     feedback_form: https://forms.office.com/e/dg8g2HMkED
     url: https://access-your-teaching-qualifications.digital.education.gov.uk
   check_records_service:
-    name: Check the record of a teacher in England
+    name: Check a teacher’s record
     email: employer.access@education.gov.uk
 
   validation_errors:

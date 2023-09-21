@@ -1,4 +1,4 @@
-# Access your teaching qualifications & Check the record of a teacher in England
+# Access your teaching qualifications & Check a teacher’s record
 
 This repo is home to two services:
 
