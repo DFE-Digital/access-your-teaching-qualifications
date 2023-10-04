@@ -98,4 +98,6 @@ RSpec.configure do |config|
 
   config.include ActiveJob::TestHelper
   config.include ActiveSupport::Testing::TimeHelpers
+  config.include FakeQualificationsData, test: :with_fake_quals_data
+  config.include ViewComponent::TestHelpers, type: :component
 end

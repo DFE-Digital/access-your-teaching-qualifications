@@ -53,7 +53,7 @@ class QualificationSummaryComponent < ViewComponent::Base
       }
     end
 
-    @rows
+    @rows.select { |row| row[:value][:text].present? }
   end
 
   def itt_rows
