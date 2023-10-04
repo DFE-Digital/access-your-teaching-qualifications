@@ -1,5 +1,5 @@
 class DeviseMailer < Devise::Mailer
-  DEVISE_NOTIFY_TEMPLATE = "f92c39f3-ec99-4607-a16b-5a0eeb4ef7a3".freeze
+  DEVISE_NOTIFY_TEMPLATE = "5e1842e6-d806-49ce-ba19-0483a056e367".freeze
 
   def devise_mail(record, action, opts = {}, &_block)
     initialize_from_record(record)
