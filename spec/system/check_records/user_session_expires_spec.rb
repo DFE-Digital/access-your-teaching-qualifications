@@ -21,7 +21,7 @@ RSpec.feature "DSI session expiry", host: :check_records, type: :system do
   end
 
   def then_i_am_required_to_sign_in_again
-    expect(page).to have_content "Your session has expired. Please sign in again."
+    expect(page).to have_content "Sign in to check a teacher’s record"
   end
 
   def when_i_refresh_the_page
