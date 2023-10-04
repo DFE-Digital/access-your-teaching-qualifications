@@ -1,6 +1,7 @@
 azure-cli 2.48.1
 nodejs 19.6.0
 postgres 13.5
+redis 6.2.13
 ruby 3.2.1
 terraform 1.5.4
 yarn 1.22.19
