@@ -96,26 +96,11 @@ $govuk-assets-path: "/";
   padding-right: 0;
 }
 
-.app__search-detail-heading {
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 20px;
-
-  .govuk-heading-l {
-    margin-bottom: 0;
-  }
-
-  .govuk-tag {
-    margin-left: 10px;
-  }
+h1 .govuk-tag {
+  position: relative;
+  top: -5px;
 }
 
-.app__restrictions {
-  margin-bottom: govuk-spacing(9);
-  margin-top: govuk-spacing(9);
-
-  .govuk-inset-text {
-    border-left-color: red;
-  }
+.app-inset-text--red {
+  border-color: govuk-colour("red");
 }
