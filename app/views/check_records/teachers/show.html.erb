@@ -3,27 +3,25 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <div class="app__search-detail-heading">
-      <h1 class="govuk-heading-l"><%= @teacher.name %></h1>
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-7">
+      <%= @teacher.name %>
       <strong class="govuk-tag govuk-tag--<%= @teacher.sanctions.any? ? "red" : "green" %>"%>
         <%= @teacher.sanctions.any? ? "Restrictions" : "No restrictions" %>
       </strong>
-    </div>
+    </h1>
 
     <% if @teacher.sanctions.any? %>
-      <div class="app__restrictions">
-        <h2 class="govuk-heading-m">Restrictions</h2>
-        <%= govuk_inset_text classes: "govuk-!-padding-bottom-2 govuk-!-padding-top-3 govuk-!-margin-bottom- govuk-!-margin-top-0" do %>
-          <% @teacher.sanctions.each do |sanction| %>
-            <h3 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-0">
-              <%= sanction.title %>
-            </h3>
-            <p class="govuk-!-margin-bottom-l">
-              <%= sanction.start_date.to_fs(:long_uk) if sanction.start_date %>
-            </p>
-          <% end %>
+      <h2 class="govuk-heading-m">Restrictions</h2>
+      <%= govuk_inset_text classes: "app-inset-text--red govuk-!-padding-bottom-2 govuk-!-padding-top-3 govuk-!-margin-bottom- govuk-!-margin-top-0" do %>
+        <% @teacher.sanctions.each do |sanction| %>
+          <h3 class="govuk-heading-s govuk-!-margin-bottom-1 govuk-!-margin-top-0">
+            <%= sanction.title %>
+          </h3>
+          <p class="govuk-!-margin-bottom-1">
+            <%= sanction.start_date.to_fs(:long_uk) if sanction.start_date %>
+          </p>
         <% end %>
-      </div>
+      <% end %>
     <% end %>
     
     <div class="govuk-!-margin-bottom-9">
