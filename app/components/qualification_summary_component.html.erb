@@ -1,1 +1,1 @@
-<%= render GovukComponent::SummaryListComponent.new(rows:, card: { title: }) %>
+<%= render GovukComponent::SummaryListComponent.new(rows:, card: { title: }) if rows.any? %>
