@@ -48,6 +48,7 @@ class InductionSummaryComponent < ViewComponent::Base
         ]
       end
       .flatten
+      .select { |row| row[:value][:text].present? }
   end
 
   def rows
@@ -88,7 +89,7 @@ class InductionSummaryComponent < ViewComponent::Base
         }
       }
     end
-    @rows
+    @rows.select { |row| row[:value][:text].present? }
   end
 
   def title
