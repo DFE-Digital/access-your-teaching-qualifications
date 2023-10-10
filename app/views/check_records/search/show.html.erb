@@ -20,19 +20,32 @@
               <%= teacher.sanctions.any? ? "Restrictions" : "No restrictions" %>
             </strong>
 
-            <%
-              rows = [
-                {
-                  key: { text: "TRN" },
-                  value: { text: teacher.trn }
-                },
-                {
-                  key: { text: "Date of birth" },
-                  value: { text: Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
-                }
-              ]
+            <%= govuk_summary_list borders: false, classes: ['app-summary-list--compact'] do |summary_list|
+              summary_list.with_row do |row|
+                row.with_key { "TRN" }
+                row.with_value { teacher.trn }
+              end
+
+              summary_list.with_row do |row|
+                row.with_key { "Date of birth" }
+                row.with_value { Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
+              end
+
+              if teacher.sanctions.any?
+                summary_list.with_row do |row|
+                  row.with_key { "Restrictions" }
+                  row.with_value do
+                  %>
+                    <ul class="govuk-list govuk-list--spaced govuk-!-font-size-16">
+                      <% teacher.sanctions.each do |sanction| %>
+                        <li><%= sanction.title %></li>
+                      <% end %>
+                    </ul>
+                  <% end
+                  end
+                end
+              end
             %>
-            <%= render GovukComponent::SummaryListComponent.new(rows:, borders: false, classes: ['app-summary-list--compact']) %>
           </div>
         <% end %>
       </div>

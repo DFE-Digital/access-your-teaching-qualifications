@@ -101,6 +101,10 @@ class FakeQualificationsApi < Sinatra::Base
         {
           code: "C2",
           startDate: "2019-10-25"
+        },
+        {
+          code: "A1A",
+          startDate: "2018-9-20"
         }
       ],
       trn: "987654321"
