@@ -24,6 +24,7 @@ module CheckRecords
             raw_info: {
               organisation: {
                 id: org_id,
+                name: "Test School",
               }
             }
           }
