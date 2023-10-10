@@ -34,7 +34,7 @@ gem "propshaft"
 gem "puma", "~> 6.4"
 gem "rails", "~> 7.0.8"
 gem "rails_semantic_logger"
-gem "sentry-rails", "~> 5.11"
+gem "sentry-rails", "~> 5.12"
 gem "sidekiq", "~> 6"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
