@@ -2,7 +2,6 @@
 
 class CheckRecords::OmniauthCallbacksController < ApplicationController
   protect_from_forgery except: :dfe_bypass
-  before_action :clear_session_attributes
   before_action :add_auth_attributes_to_session, only: :dfe
 
   def dfe
@@ -40,12 +39,5 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
     @dsi_user = DsiUser.create_or_update_from_dsi(auth)
     session[:dsi_user_id] = @dsi_user.id
     session[:dsi_user_session_expiry] = 2.hours.from_now.to_i
-  end
-
-  def clear_session_attributes
-    session[:organisation_name] = nil
-    session[:id_token] = nil
-    session[:dsi_user_id] = nil
-    session[:dsi_user_session_expiry] = nil
   end
 end
