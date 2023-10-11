@@ -1,9 +1,11 @@
 <%=
   govuk_header(service_name: t("check_records_service.name"), service_url: check_records_root_path) do |header|
-    if current_dsi_user
-      header.with_navigation_item(href: check_records_dsi_sign_out_path(id_token_hint: session[:id_token]), text: "Sign out")
-    else
-      header.with_navigation_item(href: check_records_sign_in_path, text: "Sign in")
+    if request.path != check_records_not_authorised_path
+      if current_dsi_user
+        header.with_navigation_item(href: check_records_dsi_sign_out_path(id_token_hint: session[:id_token]), text: "Sign out")
+      else
+        header.with_navigation_item(href: check_records_sign_in_path, text: "Sign in")
+      end
     end
   end
 %>
