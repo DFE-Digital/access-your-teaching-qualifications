@@ -15,6 +15,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     and_my_search_is_logged
 
     when_i_click_on_the_teacher_record
+    then_the_trn_is_not_in_the_url
     then_i_see_induction_details
     then_i_see_qts_details
     then_i_see_itt_details
@@ -35,6 +36,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def then_i_see_a_teacher_record_in_the_results
     expect(page).to have_content "Terry Walsh"
+  end
+
+  def then_the_trn_is_not_in_the_url
+    expect(page).to have_current_path("/check-records/teachers/#{SecureIdentifier.encode('1234567')}")
   end
 
   def and_my_search_is_logged
