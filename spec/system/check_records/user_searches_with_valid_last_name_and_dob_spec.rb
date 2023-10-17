@@ -13,7 +13,6 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     and_search_with_a_valid_name_and_dob
     then_i_see_a_teacher_record_in_the_results
     and_my_search_is_logged
-    and_they_have_no_restrictions
 
     when_i_click_on_the_teacher_record
     then_i_see_induction_details
@@ -41,10 +40,6 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   def and_my_search_is_logged
     expect(SearchLog.last.last_name).to eq "Walsh"
     expect(SearchLog.last.date_of_birth.to_s).to eq "1992-04-05"
-  end
-
-  def and_they_have_no_restrictions
-    expect(page).to have_content "NO RESTRICTIONS"
   end
 
   def when_i_click_on_the_teacher_record

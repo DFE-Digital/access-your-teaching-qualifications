@@ -5,9 +5,11 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l govuk-!-margin-bottom-7">
       <%= @teacher.name %>
-      <strong class="govuk-tag govuk-tag--<%= @teacher.sanctions.any? ? "red" : "green" %>"%>
-        <%= @teacher.sanctions.any? ? "Restrictions" : "No restrictions" %>
-      </strong>
+      <% if @teacher.sanctions.any? %>
+        <strong class="govuk-tag govuk-tag--red">
+          Restrictions
+        </strong>
+      <% end %>
     </h1>
 
     <% if @teacher.sanctions.any? %>
@@ -23,7 +25,7 @@
         <% end %>
       <% end %>
     <% end %>
-    
+
     <div class="govuk-!-margin-bottom-9">
       <h2 class="govuk-heading-m">Personal details</h2>
       <%= govuk_summary_list(
