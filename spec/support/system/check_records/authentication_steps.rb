@@ -40,6 +40,23 @@ module CheckRecords
       )
     end
 
+    def given_dsi_auth_is_mocked_with_a_failure(message)
+      allow(Sentry).to receive(:capture_exception)
+      OmniAuth.config.mock_auth[:dfe] = message.to_sym
+
+      global_failure_handler = OmniAuth.config.on_failure
+
+      local_failure_handler = proc do |env|
+        env["omniauth.error"] = OmniAuth::Strategies::OpenIDConnect::CallbackError.new(error: message)
+        env
+      end
+      OmniAuth.config.on_failure = global_failure_handler << local_failure_handler
+
+      yield if block_given?
+
+      OmniAuth.config.on_failure = global_failure_handler
+    end
+
     def when_i_visit_the_sign_in_page
       visit check_records_sign_in_path
     end

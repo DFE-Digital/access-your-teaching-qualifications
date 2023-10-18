@@ -8,6 +8,8 @@ class AuthFailuresController < ApplicationController
     when :identity
       handle_failure_then_redirect_to qualifications_root_path
     when :dfe
+      return redirect_to(check_records_dsi_sign_out_path(id_token_hint: session[:id_token])) if session_expired?
+
       handle_failure_then_redirect_to check_records_sign_in_path(oauth_failure: true)
     end
   end
@@ -15,7 +17,6 @@ class AuthFailuresController < ApplicationController
   private
 
   def handle_failure_then_redirect_to(path)
-    error_message = request.env["omniauth.error"]&.message
     oidc_error = OpenIdConnectProtocolError.new(error_message)
     unless Rails.env.development?
       Sentry.capture_exception(oidc_error)
@@ -24,5 +25,13 @@ class AuthFailuresController < ApplicationController
     end
 
     raise oidc_error
+  end
+
+  def error_message
+    @error_message ||= request.env["omniauth.error"]&.message
+  end
+
+  def session_expired?
+    error_message == "sessionexpired"
   end
 end
