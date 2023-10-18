@@ -6,3 +6,5 @@
     - confirmation_token
     - unlock_token
     - invitation_token
+  :data_migrations:
+    - version
