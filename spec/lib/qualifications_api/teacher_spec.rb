@@ -80,6 +80,38 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       )
     end
 
+    context "ITT result field" do
+      before do
+        api_data["initialTeacherTraining"][0]["result"] = "DeferredForSkillsTests"
+      end
+
+      it "returns human readable values" do
+        expect(qualifications.find { |q| q.type == :itt }.details.result).to eq("Deferred for skills tests")
+      end
+    end
+
+    context "Induction status field" do
+      context "when the status is FailedInWales" do
+        before do
+          api_data["induction"]["status"] = "FailedInWales"
+        end
+
+        it "returns human readable values" do
+          expect(qualifications.find { |q| q.type == :induction }.details.status).to eq("Failed in Wales")
+        end
+      end
+
+      context "when the status is RequiredtoComplete" do
+        before do
+          api_data["induction"]["status"] = "RequiredtoComplete"
+        end
+
+        it "returns human readable values" do
+          expect(qualifications.find { |q| q.type == :induction }.details.status).to eq("Required to complete")
+        end
+      end
+    end
+
     context "when a qualification has no awarded date" do
       let(:api_data) do
         {

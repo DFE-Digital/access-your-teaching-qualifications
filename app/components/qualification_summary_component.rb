@@ -65,7 +65,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "Qualification"
         },
         value: {
-          text: details.dig(:qualification, :name)
+          text: details.qualification&.name
         }
       },
       {
@@ -73,7 +73,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "ITT provider"
         },
         value: {
-          text: details.dig(:provider, :name)
+          text: details.provider&.name
         }
       },
       {

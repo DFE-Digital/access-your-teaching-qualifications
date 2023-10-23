@@ -82,7 +82,7 @@ module QualificationsApi
         .map do |itt_response|
           Qualification.new(
             awarded_at: itt_response.end_date&.to_date,
-            details: itt_response,
+            details: CoercedDetails.new(itt_response),
             name: "Initial teacher training (ITT)",
             type: :itt
           )
@@ -95,7 +95,7 @@ module QualificationsApi
       @qualifications << Qualification.new(
         awarded_at: api_data.induction.end_date&.to_date,
         certificate_url: api_data.induction&.certificate_url,
-        details: api_data.induction,
+        details: CoercedDetails.new(api_data.induction),
         name: "Induction",
         type: :induction
       )
@@ -125,6 +125,21 @@ module QualificationsApi
           type: :higher_education
         )
       end
+    end
+  end
+
+  class CoercedDetails < Hash
+    include Hashie::Extensions::Coercion
+    include Hashie::Extensions::MergeInitializer
+    include Hashie::Extensions::MethodAccess
+
+    coerce_key :result, ->(value) { value.underscore.humanize }
+    coerce_key :status, ->(value) do
+      value
+        .underscore
+        .humanize
+        .sub("Requiredto", "Required to")
+        .sub("wales", "Wales")
     end
   end
 end
