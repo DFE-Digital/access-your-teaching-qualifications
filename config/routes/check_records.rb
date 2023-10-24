@@ -26,4 +26,10 @@ namespace :check_records, path: "check-records" do
   end
 end
 
+scope via: :all do
+  get '/404', to: 'check_records/errors#not_found'
+  get '/422', to: 'check_records/errors#unprocessable_entity'
+  get '/500', to: 'check_records/errors#internal_server_error'
+end
+
 root to: redirect("/check-records/search"), as: :check_records_root
