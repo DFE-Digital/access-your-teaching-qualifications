@@ -1,4 +1,4 @@
-require "check_records/dfe_sign_in"
+require "dfe_sign_in"
 require "omniauth/strategies/dfe_openid_connect"
 
 OmniAuth.config.add_camelization('dfe_openid_connect', 'DfEOpenIDConnect')
@@ -6,7 +6,7 @@ OmniAuth.config.logger = Rails.logger
 OmniAuth.config.on_failure =
   proc { |env| AuthFailuresController.action(:failure).call(env) }
 
-if CheckRecords::DfESignIn.bypass?
+if DfESignIn.bypass?
   Rails.application.config.middleware.use OmniAuth::Builder do
     provider :developer,
              fields: %i[uid email first_name last_name],

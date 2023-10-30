@@ -7,8 +7,8 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
   attr_reader :role
 
   def dfe
-    unless CheckRecords::DfESignIn.bypass?
-      check_user_access_to_service
+    unless ::DfESignIn.bypass?
+      role = check_user_access_to_service
 
       return redirect_to check_records_not_authorised_path unless role
     end

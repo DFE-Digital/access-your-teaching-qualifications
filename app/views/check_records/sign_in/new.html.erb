@@ -18,7 +18,7 @@
       <li>were sanctioned by the General Teaching Council for England (GTCE)</li>
     </ul>
 
-    <% if CheckRecords::DfESignIn.bypass? %>
+    <% if DfESignIn.bypass? %>
       <%= form_tag("/check-records/auth/developer/callback") do %>
         <%= hidden_field_tag "email", "test-agency@example.org" %>
         <%= hidden_field_tag "first_name", "Test" %>
