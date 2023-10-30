@@ -18,8 +18,6 @@
   :search_logs:
     - last_name
     - date_of_birth
-  :staff:
-    - email
   :feedbacks:
     - email
     - improvement_suggestion

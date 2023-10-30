@@ -1,2 +1,0 @@
-class Staff < ApplicationRecord
-end
