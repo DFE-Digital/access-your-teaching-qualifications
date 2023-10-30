@@ -5,7 +5,7 @@ class DsiUser < ApplicationRecord
   has_many :search_logs
   has_many :dsi_user_sessions, dependent: :destroy
 
-  def self.create_or_update_from_dsi(dsi_payload, role = nil)
+  def self.create_or_update_from_dsi(dsi_payload, role: nil)
     dsi_user = find_or_initialize_by(email: dsi_payload.info.fetch(:email))
 
     dsi_user.update!(

@@ -47,7 +47,7 @@ RSpec.describe DsiUser, type: :model do
     context "when the user has a role" do
       it "creates a session record" do
         role = { "id" => "123", "code" => "TestRole_code" }
-        described_class.create_or_update_from_dsi(dsi_payload, role)
+        described_class.create_or_update_from_dsi(dsi_payload, role:)
 
         dsi_user_session = DsiUser.first.dsi_user_sessions.first
         expect(dsi_user_session).to be_present
