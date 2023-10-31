@@ -2,8 +2,11 @@
 require "rails_helper"
 
 RSpec.feature "Support", type: :system do
-  scenario "visiting the support interface" do
+  include AuthenticationSteps
+
+  scenario "visiting the support interface", test: :with_stubbed_auth do
     when_i_am_authorized_as_a_support_user
+    and_i_am_signed_in_via_dsi
     and_i_visit_the_support_page
     then_i_see_the_support_page
   end

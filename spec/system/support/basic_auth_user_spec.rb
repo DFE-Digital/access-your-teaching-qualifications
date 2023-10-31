@@ -12,7 +12,7 @@ RSpec.feature "Basic auth user" do
 
     when_i_am_authorized_with_basic_auth
     when_i_refresh_and_try_again
-    then_i_see_the_support_interface
+    then_i_see_the_support_interface_sign_in_page
   end
 
   private
@@ -21,7 +21,7 @@ RSpec.feature "Basic auth user" do
     page.driver.refresh
   end
 
-  def then_i_see_the_support_interface
-    expect(page).to have_content("Support")
+  def then_i_see_the_support_interface_sign_in_page
+    expect(page).to have_content("Sign in as staff")
   end
 end
