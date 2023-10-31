@@ -47,7 +47,7 @@ else
                host: dfe_sign_in_issuer_uri&.host,
                identifier: ENV["DFE_SIGN_IN_CLIENT_ID"],
                port: dfe_sign_in_issuer_uri&.port,
-               redirect_uri: ENV["DFE_SIGN_IN_REDIRECT_URL"],
+               redirect_uri: ENV["DFE_SIGN_IN_STAFF_REDIRECT_URL"],
                scheme: dfe_sign_in_issuer_uri&.scheme,
                secret: ENV.fetch("DFE_SIGN_IN_SECRET", "example")
              },
