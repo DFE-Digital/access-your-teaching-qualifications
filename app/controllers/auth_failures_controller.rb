@@ -8,9 +8,17 @@ class AuthFailuresController < ApplicationController
     when :identity
       handle_failure_then_redirect_to qualifications_root_path
     when :dfe
-      return redirect_to(check_records_dsi_sign_out_path(id_token_hint: session[:id_token])) if session_expired?
+      return redirect_to(
+        check_records_dsi_sign_out_path(id_token_hint: session[:id_token])
+      ) if session_expired?
 
       handle_failure_then_redirect_to check_records_sign_in_path(oauth_failure: true)
+    when :staff
+      return redirect_to(
+        support_interface_dsi_sign_out_path(id_token_hint: session[:id_token])
+      ) if session_expired?
+
+      handle_failure_then_redirect_to support_interface_sign_in_path(oauth_failure: true)
     end
   end
 
