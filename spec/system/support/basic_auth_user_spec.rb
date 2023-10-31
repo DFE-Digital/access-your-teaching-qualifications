@@ -5,8 +5,7 @@ RSpec.feature "Basic auth user" do
   include CommonSteps
 
   scenario "Access is restricted by basic auth", type: :system do
-    given_the_service_is_open
-    and_staff_http_basic_is_active
+    given_staff_http_basic_is_active
 
     when_i_visit_the_support_interface
     then_i_am_unauthorized
