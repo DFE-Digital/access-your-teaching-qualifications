@@ -2,10 +2,6 @@
 
 <h1 class="govuk-heading-l">Staff</h1>
 
-<p class="govuk-body">
-  <%= govuk_button_link_to 'Invite staff user', new_staff_invitation_path %>
-</p>
-
 <% @staff.find_each do |staff| %>
   <h2 class="govuk-heading-m"><%= staff.email %></h2>
 
@@ -13,25 +9,6 @@
     summary_list.with_row do |row|
       row.with_key { 'Created at' }
       row.with_value { staff.created_at.to_s }
-    end
-
-    if staff.created_by_invite?
-      summary_list.with_row do |row|
-        row.with_key { 'Invitation status' }
-
-        row.with_value do
-          if staff.invitation_accepted?
-             govuk_tag(text: "Accepted", colour: "green")
-          else
-            govuk_tag(text: "Not accepted", colour: "red")
-          end
-        end
-      end
-
-      summary_list.with_row do |row|
-        row.with_key { 'Invited at' }
-        row.with_value { staff.invitation_sent_at.to_s }
-      end
     end
 
     summary_list.with_row do |row|
