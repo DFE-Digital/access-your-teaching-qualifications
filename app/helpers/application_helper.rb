@@ -18,7 +18,7 @@ module ApplicationHelper
           href: main_app.support_interface_staff_index_path
         )
         if current_staff
-          header.with_navigation_item(href: main_app.staff_sign_out_path, text: "Sign out")
+          header.with_navigation_item(href: main_app.support_interface_sign_out_path, text: "Sign out")
         end
       when "qualifications"
         if current_user
