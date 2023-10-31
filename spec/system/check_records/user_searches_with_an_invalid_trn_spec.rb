@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "TRN search", host: :check_records, type: :system do
   include ActivateFeaturesSteps
-  include CheckRecords::AuthenticationSteps
+  include AuthenticationSteps
 
   scenario "User tries to view a teacher with invalid TRN",
            test: %i[with_stubbed_auth with_fake_quals_api] do

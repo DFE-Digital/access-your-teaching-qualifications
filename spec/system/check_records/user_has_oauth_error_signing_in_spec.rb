@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "DSI authentication", host: :check_records, type: :system do
   include AuthorizationSteps
-  include CheckRecords::AuthenticationSteps
+  include AuthenticationSteps
 
   before do
     when_i_am_authorized_with_basic_auth

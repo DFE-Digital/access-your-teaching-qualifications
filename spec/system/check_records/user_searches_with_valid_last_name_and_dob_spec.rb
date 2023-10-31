@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Teacher search", host: :check_records, type: :system do
   include ActivateFeaturesSteps
-  include CheckRecords::AuthenticationSteps
+  include AuthenticationSteps
 
   scenario "User searches with a last name and date of birth and finds a record",
            test: %i[with_stubbed_auth with_fake_quals_api] do

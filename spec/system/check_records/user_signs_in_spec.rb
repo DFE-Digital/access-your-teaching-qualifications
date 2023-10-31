@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe "DSI authentication", host: :check_records do
   include AuthorizationSteps
-  include CheckRecords::AuthenticationSteps
+  include AuthenticationSteps
 
   scenario "User signs in via DfE Sign In", test: :with_stubbed_auth do
     when_i_am_authorized_with_basic_auth

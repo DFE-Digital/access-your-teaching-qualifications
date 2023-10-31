@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe "No matches", host: :check_records, type: :system do
   include ActivateFeaturesSteps
-  include CheckRecords::AuthenticationSteps
+  include AuthenticationSteps
 
   scenario "User searches with a last name and date of birth and finds no matches",
            test: %i[with_stubbed_auth with_fake_quals_api] do

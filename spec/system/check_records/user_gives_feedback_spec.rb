@@ -3,7 +3,7 @@ require "rails_helper"
 
 RSpec.feature "Feedback", host: :check_records, type: :system do
   include ActivateFeaturesSteps
-  include CheckRecords::AuthenticationSteps
+  include AuthenticationSteps
 
   scenario "User gives feedback", test: :with_stubbed_auth do
     given_the_service_is_open
