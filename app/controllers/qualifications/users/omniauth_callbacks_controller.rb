@@ -3,6 +3,11 @@
 module Qualifications
   module Users
     class OmniauthCallbacksController < ApplicationController
+      # Differentiate web requests sent to BigQuery via dfe-analytics
+      def current_namespace
+        "access-your-teaching-qualifications"
+      end
+
       def identity
         auth = request.env["omniauth.auth"]
         @user = User.from_identity(auth)
