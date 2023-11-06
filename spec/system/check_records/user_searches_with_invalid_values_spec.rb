@@ -47,7 +47,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   def then_i_see_the_missing_dob_error
     within "#search-date-of-birth-error" do
       expect(page).to have_content "Error:"
-      expect(page).to have_content "Enter a valid date of birth"
+      expect(page).to have_content "Enter a day for the date of birth, formatted as a number"
     end
   end
 

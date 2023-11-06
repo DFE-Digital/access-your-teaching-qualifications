@@ -18,9 +18,10 @@ en:
         search:
           attributes:
             date_of_birth:
-              blank: Enter a valid date of birth
+              blank: Enter a your date of birth
               born_after_1900: Enter a year of birth later than 1900
               inclusion: People must be 16 or over to use this service
+              invalid: Date of birth must be a real date
               missing_day: Enter a day for the date of birth, formatted as a number
               missing_month: Enter a month for the date of birth, formatted as a number
               missing_year: Enter a year with 4 digits

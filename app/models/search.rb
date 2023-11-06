@@ -1,3 +1,102 @@
+module GOVUKDesignSystemFormBuilder
+  module Elements
+    class Date
+      using PrefixableArray
+
+      def field_id(segment:, link_errors: false)
+        if link_errors && has_errors?(segment)
+          build_id('field-error', attribute_name: segment, include_value: false)
+        else
+          build_id('field')
+        end
+      end
+
+      private
+
+      def classes(width, segment = nil)
+        build_classes(
+          %(input),
+          %(date-input__input),
+          %(input--width-#{width}),
+          %(input--error) => has_errors?(segment),
+        ).prefix(brand)
+      end
+
+      def has_errors?(segment = nil)
+        @builder.object.respond_to?(:errors) && @builder.object.errors.any? && 
+          (@builder.object.errors.messages[@attribute_name].present? || 
+          @builder.object.errors.messages[segment].present?)
+      end
+
+      def id(segment, link_errors)
+        if has_errors?(segment) && link_errors
+          field_id(link_errors:, segment:)
+        else
+          [@object_name, @attribute_name, SEGMENTS.fetch(segment)].join("_")
+        end
+      end
+
+      def input(segment, link_errors, width, value)
+        tag.input(
+          id: id(segment, link_errors),
+          class: classes(width, segment),
+          name: name(segment),
+          type: 'text',
+          inputmode: 'numeric',
+          value:,
+          autocomplete: date_of_birth_autocomplete_value(segment),
+          maxlength: (width if maxlength_enabled?),
+        )
+      end
+
+      def day
+        date_part(:day, width: 2, link_errors: true)
+      end
+
+      def month
+        date_part(:month, width: 2, link_errors: true)
+      end
+
+      def year
+        date_part(:year, width: 4, link_errors: true)
+      end
+    end
+
+    class ErrorMessage < Base
+      def has_errors?
+        @builder.object.respond_to?(:errors) && @builder.object.errors.any? && 
+          (@builder.object.errors[@attribute_name].present? || 
+            (@attribute_name == :date_of_birth && 
+              (@builder.object.errors.messages.keys & %i[date_of_birth day month year]).any?
+            )
+          )
+      end
+
+      private
+
+      def message
+        error = @builder.object.errors.messages[@attribute_name]&.first
+        error ||= @builder.object.errors.messages[:day]&.first if has_errors?
+        set_message_safety(error)
+      end
+    end
+  end
+
+  module Containers
+    class FormGroup < Base
+      def has_errors?
+        @builder.object.respond_to?(:errors) && 
+          @builder.object.errors.any? && 
+          (@builder.object.errors[@attribute_name].present? || 
+            (@attribute_name == :date_of_birth && 
+              (@builder.object.errors.messages.keys & %i[date_of_birth day month year]).any?
+            )
+          )
+      end
+    end
+  end
+end
+
 class Search
   DateOfBirth =
     Struct.new(:year, :month, :day) do
@@ -12,7 +111,8 @@ class Search
   attr_reader :date_of_birth
 
   validates :last_name, presence: true
-  validate :date_of_birth_is_valid
+  validates :date_of_birth, presence: true
+  validate :date_of_birth_is_valid, if: -> { date_of_birth.present? }
 
   def date_of_birth=(date_fields)
     return if date_fields.nil?
@@ -28,28 +128,20 @@ class Search
   private
 
   def date_of_birth_is_valid
-    if @date_of_birth.nil?
-      errors.add(:date_of_birth, t(:blank))
-      return
-    end
-
-    year = @date_of_birth.year.to_i
-    month = @date_of_birth.month.to_i
-    day = @date_of_birth.day.to_i
-
-    if day.zero? && month.zero? && year.zero?
-      errors.add(:date_of_birth, t(:blank))
-      return
-    end
+    year = date_of_birth.year.to_i
+    month = date_of_birth.month.to_i
+    day = date_of_birth.day.to_i
 
     if day.zero?
-      errors.add(:date_of_birth, t(:missing_day))
-      return
+      errors.add(:day, t(:missing_day))
     end
 
     if month.zero?
-      errors.add(:date_of_birth, t(:missing_month))
-      nil
+      errors.add(:month, t(:missing_month))
+    end
+
+    if year.zero?
+      errors.add(:year, t(:missing_year))
     end
 
     begin
@@ -60,22 +152,20 @@ class Search
       end
 
       if date.after?(16.years.ago)
-        errors.add(:date_of_birth, t(:inclusion))
+        errors.add(:year, t(:inclusion))
         return
       end
 
       if date.year < 1000
-        errors.add(:date_of_birth, t(:missing_year))
+        errors.add(:year, t(:missing_year))
         return
       end
 
       if date.year < 1900
-        errors.add(:date_of_birth, t(:born_after_1900))
-        nil
+        errors.add(:year, t(:born_after_1900))
       end
     rescue Date::Error
-      errors.add(:date_of_birth, t(:blank))
-      nil
+      errors.add(:date_of_birth, t(:invalid)) if (errors.messages.keys & %i[day month year]).empty?
     end
   end
 

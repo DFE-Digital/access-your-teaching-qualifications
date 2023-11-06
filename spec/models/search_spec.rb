@@ -22,7 +22,7 @@ RSpec.describe Search do
 
       it "is invalid" do
         expect(search).to be_invalid
-        expect(search.errors[:date_of_birth]).to include(
+        expect(search.errors[:day]).to include(
           "Enter a day for the date of birth, formatted as a number"
         )
       end
@@ -33,7 +33,7 @@ RSpec.describe Search do
 
       it "is invalid" do
         expect(search).to be_invalid
-        expect(search.errors[:date_of_birth]).to include(
+        expect(search.errors[:month]).to include(
           "Enter a month for the date of birth, formatted as a number"
         )
       end
@@ -62,7 +62,7 @@ RSpec.describe Search do
 
       it "is invalid" do
         expect(search).to be_invalid
-        expect(search.errors[:date_of_birth]).to include("Enter a valid date of birth")
+        expect(search.errors[:date_of_birth]).to include("Date of birth must be a real date")
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe Search do
 
       it "is invalid" do
         expect(search).to be_invalid
-        expect(search.errors[:date_of_birth]).to include(
+        expect(search.errors[:year]).to include(
           "People must be 16 or over to use this service"
         )
       end
@@ -91,7 +91,7 @@ RSpec.describe Search do
 
       it "is invalid" do
         expect(search).to be_invalid
-        expect(search.errors[:date_of_birth]).to include("Enter a year of birth later than 1900")
+        expect(search.errors[:year]).to include("Enter a year of birth later than 1900")
       end
     end
 
@@ -100,7 +100,7 @@ RSpec.describe Search do
 
       it "is invalid" do
         expect(search).to be_invalid
-        expect(search.errors[:date_of_birth]).to include("Enter a year with 4 digits")
+        expect(search.errors[:year]).to include("Enter a year with 4 digits")
       end
     end
   end
