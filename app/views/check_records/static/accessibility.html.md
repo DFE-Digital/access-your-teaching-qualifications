@@ -2,7 +2,7 @@
 
 # Accessibility statement
 
-This statement applies to the <%= t('check_records_service.name') %> service.
+This accessibility statement applies to the <%= t('check_records_service.name') %> service.
 
 This service is run by the Department for Education. We want as many people as possible to be able to use it. You should be able to:
 
@@ -22,7 +22,6 @@ easier to use if you have a disability.
 ## Feedback and contact information
 
 If you need to check a teacher’s record but cannot use this service, email [<%= t('check_records_service.email') %>](mailto:<%= t('check_records_service.email') %>).
-
 
 ## Reporting accessibility problems with this service
 
@@ -56,4 +55,4 @@ standard. We’ll update this page once the service has been audited.
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on 12 June 2023.
+This statement was prepared on 24 October 2023.
