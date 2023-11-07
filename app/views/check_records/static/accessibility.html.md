@@ -19,21 +19,16 @@ We’ve also made the text in the service as simple as possible to understand.
 [AbilityNet](https://mcmw.abilitynet.org.uk/) has advice on making your device
 easier to use if you have a disability.
 
-## How accessible this service is
+## Feedback and contact information
 
-All parts of this service are fully accessible.
+If you need to check a teacher’s record but cannot use this service, email [<%= t('check_records_service.email') %>](mailto:<%= t('check_records_service.email') %>).
+
 
 ## Reporting accessibility problems with this service
 
-We are always looking to improve the accessibility of this service.
+We’re always looking to improve the accessibility of this service.
 
-If you find any problems not listed on this page or think we are not meeting accessibility requirements, contact us:
-
-Email: <a href="mailto:<%=
-t('service.email') %>" class="govuk-link govuk-link--no-visited-state"><%=
-t('service.email') %></a>
-
-<a class="govuk-link" href="http://www.w3.org/WAI/users/inaccessible">Read tips on contacting organisations about inaccessible websites</a>
+If you find any problems not listed on this page or think we are not meeting accessibility requirements, email [<%= t('check_records_service.email') %>](mailto:<%= t('check_records_service.email') %>).
 
 ## Enforcement procedure
 
@@ -41,8 +36,8 @@ The Equality and Human Rights Commission (EHRC) is responsible for enforcing
 the Public Sector Bodies (Websites and Mobile Applications) (No. 2)
 Accessibility Regulations 2018 (the ‘accessibility regulations’).
 
-If you’re not happy with how we respond to your complaint, contact [the
-Equality Advisory and Support Service
+If you’re not happy with how we respond to your complaint, contact the
+[Equality Advisory and Support Service
 (EASS)](https://www.equalityadvisoryservice.com/).
 
 ## Technical information about this service’s accessibility
@@ -53,18 +48,11 @@ accordance with the Public Sector Bodies (Websites and Mobile Applications)
 
 ## Compliance status
 
-This service is fully compliant with [the Web Content Accessibility Guidelines
-version 2.2 AA standard](https://www.w3.org/TR/WCAG22/).
+We intend for this service to be fully compliant with the Web Content
+Accessibility Guidelines version 2.2 AA standard.
 
-There may be accessibility issues we have not found yet. If you find any please contact us so we can continue to improve the services we provide.
-
-### Disproportionate burden
-
-Not applicable
-
-### Content not within scope of this accessibility statement
-
-Not applicable
+The service has not yet been audited to confirm that it complies with the
+standard. We’ll update this page once the service has been audited.
 
 ## Preparation of this accessibility statement
 
