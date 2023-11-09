@@ -372,7 +372,7 @@ GEM
     rails-html-sanitizer (1.6.0)
       loofah (~> 2.21)
       nokogiri (~> 1.14)
-    rails_semantic_logger (4.12.0)
+    rails_semantic_logger (4.13.0)
       rack
       railties (>= 5.1)
       semantic_logger (~> 4.13)
@@ -461,7 +461,7 @@ GEM
       rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
-    semantic_logger (4.13.0)
+    semantic_logger (4.15.0)
       concurrent-ruby (~> 1.0)
     sentry-rails (5.13.0)
       railties (>= 5.0)
