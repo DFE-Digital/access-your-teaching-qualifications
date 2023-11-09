@@ -3,7 +3,6 @@
 namespace :check_records, path: "check-records" do
   get "/accessibility", to: "static#accessibility"
   get "/cookies", to: "static#cookies"
-  get "/privacy", to: "static#privacy"
 
   get "/sign-in", to: "sign_in#new"
   get "/not-authorised", to: "sign_in#not_authorised"
