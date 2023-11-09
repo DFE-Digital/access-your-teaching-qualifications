@@ -3,7 +3,6 @@
 namespace :qualifications do
   get "/accessibility", to: "static#accessibility"
   get "/cookies", to: "static#cookies"
-  get "/privacy", to: "static#privacy"
 
   get "/users/auth/identity/callback", to: "users/omniauth_callbacks#identity"
   get "/sign-in", to: "users/sign_in#new"
