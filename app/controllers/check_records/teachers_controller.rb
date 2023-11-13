@@ -5,7 +5,10 @@ module CheckRecords
       trn = SecureIdentifier.decode(params[:id])
       @teacher = client.teacher(trn:)
       @npqs = @teacher.qualifications.filter(&:npq?)
-      @other_qualifications = @teacher.qualifications.filter { |qualification| !qualification.npq? }
+      @mqs = @teacher.qualifications.filter(&:mq?)
+      @other_qualifications = @teacher.qualifications.reject do |qualification|
+        qualification.npq? || qualification.mq?
+      end
     rescue QualificationsApi::TeacherNotFoundError
       render "not_found"
     end

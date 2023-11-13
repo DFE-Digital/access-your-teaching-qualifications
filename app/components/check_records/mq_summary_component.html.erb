@@ -1,0 +1,6 @@
+<% if rows.any? %>
+  <div class="govuk-!-margin-bottom-9">
+    <h2 class="govuk-heading-m">Mandatory qualifications (MQs) for specialist teachers of pupils with sensory impairments</h2>
+    <%= render GovukComponent::SummaryListComponent.new(rows:) %>
+  </div>
+<% end %>

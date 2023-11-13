@@ -85,8 +85,9 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_mq_details
-    expect(page).to have_content("Mandatory qualification (MQ)")
-    expect(page).to have_content("Date awarded\t28 February 2023")
-    expect(page).to have_content("Specialism\tVisual impairment")
+    expect(page).to have_content("Date visual impairment MQ awarded")
+    expect(page).to have_content("28 February 2023")
+    expect(page).to have_content("Date hearing MQ awarded")
+    expect(page).to have_content("1 January 2022")
   end
 end
