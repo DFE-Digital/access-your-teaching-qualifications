@@ -25,6 +25,24 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         "initialTeacherTraining" => [
           {
             "qualification" => {
+              "name" => "PGCE"
+            },
+            "startDate" => "2011-01-17",
+            "endDate" => "2012-02-2",
+            "programmeType" => "EYITTSchoolDirectEarlyYears",
+            "programmeTypeDescription" => "Early Years Initial Teacher Training (School Direct)",
+            "result" => "Pass",
+            "ageRange" => {
+              "description" => "3 to 7 years"
+            },
+            "provider" => {
+              "name" => "Earl Spencer Primary School",
+              "ukprn" => nil
+            },
+            "subjects" => [{ "code" => "100079", "name" => "business studies" }]
+          },
+          {
+            "qualification" => {
               "name" => "BA"
             },
             "startDate" => "2012-02-28",
@@ -76,13 +94,20 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
 
     it "sorts the qualifications in reverse chronological order by date of award" do
       expect(qualifications.map(&:type)).to eq(
-        %i[NPQSL NPQML eyts qts induction mandatory itt]
+        %i[NPQSL NPQML mandatory induction qts itt eyts itt]
+      )
+    end
+
+    it "orders QTS ITT qualifications before EYTS ITT qualifications" do
+      itt_qualifications = qualifications.select { |q| q.type == :itt }
+      expect(itt_qualifications.map { |q| q.details.programme_type }).to eq(
+        %w[HEI EYITTSchoolDirectEarlyYears]
       )
     end
 
     context "ITT result field" do
       before do
-        api_data["initialTeacherTraining"][0]["result"] = "DeferredForSkillsTests"
+        api_data["initialTeacherTraining"].each { |itt| itt["result"] = "DeferredForSkillsTests" }
       end
 
       it "returns human readable values" do
@@ -150,8 +175,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         }
       end
 
-      it "sorts the qualifications in reverse chronological order by date of award" do
-        expect(qualifications.map(&:type)).to eq(%i[itt NPQML])
+      it "sorts the qualifications in reverse order by date of award and type" do
+        expect(qualifications.map(&:type)).to eq(%i[NPQML itt])
       end
     end
 
