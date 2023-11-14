@@ -74,7 +74,7 @@ module FakeQualificationsData
           certificateUrl: "/v3/certificates/npq/missing",
           type: {
             code: "NPQSL",
-            name: "NPQ senior leadership"
+            name: "National Professional Qualification (NPQ) for Early Years Leadership"
           }
         }
       ],

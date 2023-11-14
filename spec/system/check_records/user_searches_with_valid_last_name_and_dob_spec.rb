@@ -80,7 +80,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_npq_details
-    expect(page).to have_content("Date NPQ headteacher awarded")
+    expect(page).to have_content("Date NPQ for Early Years Leadership awarded")
     expect(page).to have_content("27 February 2023")
   end
 
