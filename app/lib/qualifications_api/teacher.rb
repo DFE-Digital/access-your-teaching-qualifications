@@ -120,19 +120,6 @@ module QualificationsApi
         )
       end
     end
-
-    def add_higher_education_qualifications
-      return if api_data.higher_education_qualifications.blank?
-
-      @qualifications << api_data.higher_education_qualifications.map do |heq|
-        Qualification.new(
-          awarded_at: heq.awarded&.to_date,
-          details: heq,
-          name: heq.name,
-          type: :higher_education
-        )
-      end
-    end
   end
 
   class CoercedDetails < Hash

@@ -223,29 +223,5 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         expect(qualifications.map(&:type)).to eq(%i[qts itt])
       end
     end
-
-    context "when a Higher Education qualification is returned" do
-      let(:api_data) do
-        {
-          "higherEducationQualifications" => [
-            {
-              "name" => "Some Qualification",
-              "awarded" => "2022-2-22",
-              "subjects" => [
-                { "code" => "100079", "name" => "Business Studies" }
-              ]
-            }
-          ]
-        }
-      end
-
-      it "creates a qualification with the correct attributes" do
-        expect(qualifications.first).to have_attributes(
-          type: :higher_education,
-          name: "Some Qualification",
-          awarded_at: Date.parse("2022-2-22")
-        )
-      end
-    end
   end
 end
