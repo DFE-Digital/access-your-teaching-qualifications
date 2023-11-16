@@ -16,11 +16,6 @@
             <h2 class="govuk-heading-s">
               <%= link_to teacher.name, check_records_teacher_path(SecureIdentifier.encode(teacher.trn)), class: "govuk-link--no-visited-state" %>
             </h2>
-            <% if teacher.sanctions.any? %>
-              <strong class="govuk-tag govuk-tag--red">
-                Restrictions
-              </strong>
-            <% end %>
 
             <%= govuk_summary_list borders: false, classes: ['app-summary-list--compact'] do |summary_list|
               summary_list.with_row do |row|
@@ -32,22 +27,7 @@
                 row.with_key { "Date of birth" }
                 row.with_value { Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
               end
-
-              if teacher.sanctions.any?
-                summary_list.with_row do |row|
-                  row.with_key { "Restrictions" }
-                  row.with_value do
-                  %>
-                    <ul class="govuk-list govuk-list--spaced govuk-!-font-size-16">
-                      <% teacher.sanctions.each do |sanction| %>
-                        <li><%= sanction.title %></li>
-                      <% end %>
-                    </ul>
-                  <% end
-                  end
-                end
-              end
-            %>
+            end %>
           </div>
         <% end %>
       </div>
