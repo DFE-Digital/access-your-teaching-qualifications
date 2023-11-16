@@ -59,6 +59,7 @@ shared:
     - dsi_user_id
     - last_name
     - date_of_birth
+    - result_count
     - created_at
     - updated_at
   :staff:

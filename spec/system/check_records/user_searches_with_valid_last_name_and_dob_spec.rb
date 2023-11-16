@@ -43,8 +43,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def and_my_search_is_logged
-    expect(SearchLog.last.last_name).to eq "Walsh"
-    expect(SearchLog.last.date_of_birth.to_s).to eq "1992-04-05"
+    search_log = SearchLog.last
+    expect(search_log.last_name).to eq "Walsh"
+    expect(search_log.date_of_birth.to_s).to eq "1992-04-05"
+    expect(search_log.result_count).to eq 1
   end
 
   def when_i_click_on_the_teacher_record
