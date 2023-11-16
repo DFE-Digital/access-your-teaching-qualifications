@@ -15,7 +15,7 @@ RSpec.describe Sanction, type: :model do
     subject { sanction.title }
 
     context 'when type exists in SANCTIONS' do
-      it { is_expected.to eq('Suspension order - with conditions') }
+      it { is_expected.to eq('Suspension order with conditions') }
     end
 
     context 'when type does not exist in SANCTIONS' do
@@ -24,6 +24,27 @@ RSpec.describe Sanction, type: :model do
       it { is_expected.to be_nil }
     end
   end
+
+  describe '#description' do
+    subject(:description) { sanction.description }
+
+    context 'when type exists in SANCTIONS' do
+      let(:code) { "G1" }
+      
+      it "returns the description as markdown" do
+        expect(description)
+          .to eq('Email the Disclosure and Barring Service (DBS) at [dbscost@dbs.gov.uk](mailto:dbscost@dbs.gov.uk) ' \
+                 'to check if this person is allowed to work with children.')
+      end
+    end
+
+    context 'when type does not exist in SANCTIONS' do
+      let(:code) { "Z99" }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
 
   describe "start_date" do
     subject { sanction.start_date }

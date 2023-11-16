@@ -13,6 +13,11 @@
           <h2 class="govuk-heading-m govuk-!-margin-bottom-1 govuk-!-margin-top-0">
             <%= sanction.title %>
           </h2>
+          <% if sanction.description.present? %>
+            <div class="govuk-!-margin-bottom-1">
+              <%= GovukMarkdown.render(sanction.description).html_safe %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     <% end %>
