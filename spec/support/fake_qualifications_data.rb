@@ -78,7 +78,7 @@ module FakeQualificationsData
           }
         }
       ],
-      sanctions: trn == "987654321" ? [ { code: "C2", startDate: "2020-10-25" } ] : []
+      sanctions: trn == "987654321" ? [ { code: "G1", startDate: "2020-10-25" } ] : []
     }
   end
 end

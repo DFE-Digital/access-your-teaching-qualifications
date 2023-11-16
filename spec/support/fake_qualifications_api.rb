@@ -103,7 +103,7 @@ class FakeQualificationsApi < Sinatra::Base
       middleName: "",
       sanctions: [
         {
-          code: "C2",
+          code: "G1",
           startDate: "2019-10-25"
         },
         {
