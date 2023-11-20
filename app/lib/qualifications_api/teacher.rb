@@ -14,6 +14,7 @@ module QualificationsApi
              :first_name,
              :last_name,
              :middle_name,
+             :previous_names,
              :sanctions,
              :trn,
              to: :api_data

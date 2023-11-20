@@ -44,6 +44,7 @@ module QualificationsApi
               NpqQualifications
               MandatoryQualifications
               Sanctions
+              PreviousNames
             ].join(",")
           }
         )

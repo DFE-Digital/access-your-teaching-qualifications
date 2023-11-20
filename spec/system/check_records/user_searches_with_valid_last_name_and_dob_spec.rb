@@ -22,6 +22,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     then_i_see_eyts_details
     then_i_see_npq_details
     then_i_see_mq_details
+    then_i_see_previous_last_names
   end
 
   private
@@ -91,5 +92,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     expect(page).to have_content("28 February 2023")
     expect(page).to have_content("Date hearing MQ awarded")
     expect(page).to have_content("1 January 2022")
+  end
+
+  def then_i_see_previous_last_names
+    expect(page).to have_content("Previous last names")
+    expect(page).to have_content("Jones<br />Smith")
   end
 end
