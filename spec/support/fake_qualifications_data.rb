@@ -5,6 +5,7 @@ module FakeQualificationsData
       dateOfBirth: "2000-01-01",
       firstName: "Terry",
       lastName: "Walsh",
+      previousNames: ["Jones", "Smith"],
       eyts: {
         awarded: "2022-04-01",
         certificateUrl: trn ? nil : "/v3/certificates/eyts"
