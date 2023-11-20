@@ -105,6 +105,16 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       )
     end
 
+    it "designates ITT qualifications as QTS if no programme type is present" do
+      itt_qualification = api_data["initialTeacherTraining"].first
+      itt_qualification["programmeType"] = nil
+      api_data["initialTeacherTraining"] = [itt_qualification]
+
+      expect(qualifications.map(&:type)).to eq(
+        %i[NPQSL NPQML mandatory induction qts itt eyts]
+      )
+    end
+
     context "ITT result field" do
       before do
         api_data["initialTeacherTraining"].each { |itt| itt["result"] = "DeferredForSkillsTests" }
