@@ -25,6 +25,24 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         "initialTeacherTraining" => [
           {
             "qualification" => {
+              "name" => "PGCE"
+            },
+            "startDate" => "2011-01-17",
+            "endDate" => "2012-02-2",
+            "programmeType" => "EYITTSchoolDirectEarlyYears",
+            "programmeTypeDescription" => "Early Years Initial Teacher Training (School Direct)",
+            "result" => "Pass",
+            "ageRange" => {
+              "description" => "3 to 7 years"
+            },
+            "provider" => {
+              "name" => "Earl Spencer Primary School",
+              "ukprn" => nil
+            },
+            "subjects" => [{ "code" => "100079", "name" => "business studies" }]
+          },
+          {
+            "qualification" => {
               "name" => "BA"
             },
             "startDate" => "2012-02-28",
@@ -76,13 +94,30 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
 
     it "sorts the qualifications in reverse chronological order by date of award" do
       expect(qualifications.map(&:type)).to eq(
-        %i[NPQSL NPQML eyts qts induction mandatory itt]
+        %i[NPQSL NPQML mandatory induction qts itt eyts itt]
+      )
+    end
+
+    it "orders QTS ITT qualifications before EYTS ITT qualifications" do
+      itt_qualifications = qualifications.select { |q| q.type == :itt }
+      expect(itt_qualifications.map { |q| q.details.programme_type }).to eq(
+        %w[HEI EYITTSchoolDirectEarlyYears]
+      )
+    end
+
+    it "designates ITT qualifications as QTS if no programme type is present" do
+      itt_qualification = api_data["initialTeacherTraining"].first
+      itt_qualification["programmeType"] = nil
+      api_data["initialTeacherTraining"] = [itt_qualification]
+
+      expect(qualifications.map(&:type)).to eq(
+        %i[NPQSL NPQML mandatory induction qts itt eyts]
       )
     end
 
     context "ITT result field" do
       before do
-        api_data["initialTeacherTraining"][0]["result"] = "DeferredForSkillsTests"
+        api_data["initialTeacherTraining"].each { |itt| itt["result"] = "DeferredForSkillsTests" }
       end
 
       it "returns human readable values" do
@@ -150,8 +185,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         }
       end
 
-      it "sorts the qualifications in reverse chronological order by date of award" do
-        expect(qualifications.map(&:type)).to eq(%i[itt NPQML])
+      it "sorts the qualifications in reverse order by date of award and type" do
+        expect(qualifications.map(&:type)).to eq(%i[NPQML itt])
       end
     end
 
@@ -196,30 +231,6 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
 
       it "the QTS gets priority in the sort order" do
         expect(qualifications.map(&:type)).to eq(%i[qts itt])
-      end
-    end
-
-    context "when a Higher Education qualification is returned" do
-      let(:api_data) do
-        {
-          "higherEducationQualifications" => [
-            {
-              "name" => "Some Qualification",
-              "awarded" => "2022-2-22",
-              "subjects" => [
-                { "code" => "100079", "name" => "Business Studies" }
-              ]
-            }
-          ]
-        }
-      end
-
-      it "creates a qualification with the correct attributes" do
-        expect(qualifications.first).to have_attributes(
-          type: :higher_education,
-          name: "Some Qualification",
-          awarded_at: Date.parse("2022-2-22")
-        )
       end
     end
   end

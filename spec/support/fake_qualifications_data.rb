@@ -5,6 +5,7 @@ module FakeQualificationsData
       dateOfBirth: "2000-01-01",
       firstName: "Terry",
       lastName: "Walsh",
+      previousNames: ["Jones", "Smith"],
       eyts: {
         awarded: "2022-04-01",
         certificateUrl: trn ? nil : "/v3/certificates/eyts"
@@ -74,11 +75,11 @@ module FakeQualificationsData
           certificateUrl: "/v3/certificates/npq/missing",
           type: {
             code: "NPQSL",
-            name: "NPQ senior leadership"
+            name: "National Professional Qualification (NPQ) for Early Years Leadership"
           }
         }
       ],
-      sanctions: trn == "987654321" ? [ { code: "C2", startDate: "2020-10-25" } ] : []
+      sanctions: trn == "987654321" ? [ { code: "G1", startDate: "2020-10-25" } ] : []
     }
   end
 end

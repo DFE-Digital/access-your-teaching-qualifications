@@ -39,12 +39,12 @@ module QualificationsApi
           endpoint,
           {
             include: %w[
-              HigherEducationQualifications
               Induction
               InitialTeacherTraining
               NpqQualifications
               MandatoryQualifications
               Sanctions
+              PreviousNames
             ].join(",")
           }
         )

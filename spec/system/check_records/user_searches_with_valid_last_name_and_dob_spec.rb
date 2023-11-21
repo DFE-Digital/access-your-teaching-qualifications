@@ -22,6 +22,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     then_i_see_eyts_details
     then_i_see_npq_details
     then_i_see_mq_details
+    then_i_see_previous_last_names
   end
 
   private
@@ -43,8 +44,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def and_my_search_is_logged
-    expect(SearchLog.last.last_name).to eq "Walsh"
-    expect(SearchLog.last.date_of_birth.to_s).to eq "1992-04-05"
+    search_log = SearchLog.last
+    expect(search_log.last_name).to eq "Walsh"
+    expect(search_log.date_of_birth.to_s).to eq "1992-04-05"
+    expect(search_log.result_count).to eq 1
   end
 
   def when_i_click_on_the_teacher_record
@@ -80,7 +83,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_npq_details
-    expect(page).to have_content("Date NPQ headteacher awarded")
+    expect(page).to have_content("Date NPQ for Early Years Leadership awarded")
     expect(page).to have_content("27 February 2023")
   end
 
@@ -89,5 +92,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     expect(page).to have_content("28 February 2023")
     expect(page).to have_content("Date hearing MQ awarded")
     expect(page).to have_content("1 January 2022")
+  end
+
+  def then_i_see_previous_last_names
+    expect(page).to have_content("Previous last names")
+    expect(page).to have_content("Jones<br />Smith")
   end
 end
