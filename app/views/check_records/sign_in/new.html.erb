@@ -6,14 +6,16 @@
     <h1 class="govuk-heading-l">Sign in to check a teacher’s record</h1>
 
     <p class="govuk-body">
-      A teacher's record shows their qualifications. It also shows if:
+      You can search for a teacher’s record using their last name and date of birth.
+    </p>
+    <p class="govuk-body">
+      A teacher’s record includes their qualifications and also tells you if they:
     </p>
 
     <ul class="govuk-list govuk-list--bullet">
-      <li>they failed their induction or probation</li>
-      <li>they’re prevented from teaching by a prohibition order</li>
-      <li>they were sanctioned by the General Teaching Council for England (GTCE)</li>
-      <li>someone with their last name and date of birth is on the children’s barred list</li>
+      <li>failed their induction or probation</li>
+      <li>are prevented from teaching by a prohibition order</li>
+      <li>were sanctioned by the General Teaching Council for England (GTCE)</li>
     </ul>
 
     <% if CheckRecords::DfESignIn.bypass? %>
@@ -33,5 +35,15 @@
         )
       %>
     <% end %>
+
+    <h2 class="govuk-heading-m">Qualified teacher learning and skills (QTLS) status</h2>
+    <p class="govuk-body">
+      This service will not tell you if a teacher has QTLS. You need to check the <a href="https://set.et-foundation.co.uk/your-career/professional-status-register">Society for Education and Training professional register</a>.
+    </p>
+
+    <h2 class="govuk-heading-m">School managers and governors</h2>
+    <p class="govuk-body">
+      There’s a separate <a href="https://www.gov.uk/government/collections/individuals-prohibited-from-managing-or-governing-schools">list of people who are not allowed to manage or govern schools</a>. This is sometimes called the section 128 list.
+    </p>
   </div>
 </div>
