@@ -25,7 +25,7 @@ class InductionSummaryComponent < ViewComponent::Base
               text: "Appropriate body"
             },
             value: {
-              text: period.appropriate_body.name
+              text: period&.appropriate_body&.name
             }
           },
           {
@@ -33,7 +33,7 @@ class InductionSummaryComponent < ViewComponent::Base
               text: "Start date"
             },
             value: {
-              text: period.start_date.to_date.to_fs(:long_uk)
+              text: period.start_date&.to_date&.to_fs(:long_uk)
             }
           },
           {
