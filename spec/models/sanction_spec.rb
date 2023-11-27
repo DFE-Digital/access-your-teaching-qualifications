@@ -33,8 +33,7 @@ RSpec.describe Sanction, type: :model do
       
       it "returns the description as markdown" do
         expect(description)
-          .to eq('Email the Disclosure and Barring Service (DBS) at [dbscost@dbs.gov.uk](mailto:dbscost@dbs.gov.uk) ' \
-                 'to check if this person is allowed to work with children.')
+          .to eq("Contact DBS for more details [dbscost@dbs.gov.uk](mailto:dbscost@dbs.gov.uk).")
       end
     end
 

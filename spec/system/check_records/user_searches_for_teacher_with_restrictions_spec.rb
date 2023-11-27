@@ -36,7 +36,7 @@ RSpec.describe "Teacher search with restrictions",
   end
 
   def then_i_see_the_details_of_the_restriction
-    expect(page).to have_content("Possible match on the children’s barred list")
+    expect(page).to have_content("Record found")
     expect(page).to have_title("Terry Walsh - Check a teacher’s record")
   end
 end
