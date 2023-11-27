@@ -5,7 +5,10 @@ module FakeQualificationsData
       dateOfBirth: "2000-01-01",
       firstName: "Terry",
       lastName: "Walsh",
-      previousNames: ["Jones", "Smith"],
+      previousNames: [
+        { first_name: "Terry", last_name: "Jones", middle_name: "" }, 
+        { first_name: "Terry", last_name: "Smith", middle_name: "" }
+      ],
       eyts: {
         awarded: "2022-04-01",
         certificateUrl: trn ? nil : "/v3/certificates/eyts"

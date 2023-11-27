@@ -96,6 +96,6 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def then_i_see_previous_last_names
     expect(page).to have_content("Previous last names")
-    expect(page).to have_content("Jones<br />Smith")
+    expect(page).to have_content("Jones\nSmith")
   end
 end
