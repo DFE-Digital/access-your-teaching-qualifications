@@ -35,7 +35,7 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
 
   def induction_rows
     [
-      { key: { text: "Induction status" }, value: { text: details.status&.to_s&.humanize } },
+      { key: { text: "Induction status" }, value: { text: details.status_description } },
       { key: { text: "Date completed" }, value: { text: awarded_at&.to_fs(:long_uk) } }
     ]
   end
