@@ -129,12 +129,5 @@ module QualificationsApi
     include Hashie::Extensions::MethodAccess
 
     coerce_key :result, ->(value) { value.underscore.humanize }
-    coerce_key :status, ->(value) do
-      value
-        .underscore
-        .humanize
-        .sub("Requiredto", "Required to")
-        .sub("wales", "Wales")
-    end
   end
 end
