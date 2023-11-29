@@ -1,4 +1,5 @@
 require_relative "fake_qualifications_data"
+require_relative "fake_qualifications_data_with_nulling"
 
 class FakeQualificationsApi < Sinatra::Base
   include FakeQualificationsData
@@ -11,6 +12,8 @@ class FakeQualificationsApi < Sinatra::Base
       quals_data.to_json
     when "no-itt-token"
       quals_data(trn: "1234567", itt: false).to_json
+    when "nulled-quals-data"
+      FakeQualificationsDataWithNulling.generate.to_json
     when "invalid-token"
       halt 401
     end
