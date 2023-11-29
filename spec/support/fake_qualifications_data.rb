@@ -8,11 +8,11 @@ module FakeQualificationsData
       previousNames: ["Jones", "Smith"],
       eyts: {
         awarded: "2022-04-01",
-        certificateUrl: trn ? nil : "/v3/certificates/eyts"
+        certificateUrl: "/v3/certificates/eyts"
       },
       qts: {
         awarded: "2023-02-27",
-        certificateUrl: trn ? nil : "/v3/certificates/qts"
+        certificateUrl: "/v3/certificates/qts"
       },
       induction: {
         startDate: "2022-09-01",
@@ -65,7 +65,7 @@ module FakeQualificationsData
       npqQualifications: [
         {
           awarded: "2023-02-27",
-          certificateUrl: trn ? nil : "/v3/certificates/npq/1",
+          certificateUrl: "/v3/certificates/npq/1",
           type: {
             code: "NPQH",
             name: "NPQ headteacher"
