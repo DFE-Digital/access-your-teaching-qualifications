@@ -38,21 +38,21 @@ module FakeQualificationsData
           else
             [
               {
-                ageRange: {
-                  description: "10 to 16 years"
+                qualification: {
+                  name: "BA"
                 },
+                startDate: "2022-02-28",
                 endDate: "2023-01-28",
                 programmeType: "HEI",
                 programmeTypeDescription: "Higher education institution",
+                result: "Pass",
+                ageRange: {
+                  description: "10 to 16 years"
+                },
                 provider: {
                   name: "Earl Spencer Primary School",
                   ukprn: nil
                 },
-                qualification: {
-                  name: "BA"
-                },
-                result: "Pass",
-                startDate: "2022-02-28",
                 subjects: [{ code: "100079", name: "business studies" }]
               }
             ]
