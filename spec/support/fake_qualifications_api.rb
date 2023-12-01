@@ -13,6 +13,8 @@ class FakeQualificationsApi < Sinatra::Base
       quals_data(trn: "1234567", itt: false).to_json
     when "invalid-token"
       halt 401
+    when "api-error"
+      halt 500
     end
   end
 

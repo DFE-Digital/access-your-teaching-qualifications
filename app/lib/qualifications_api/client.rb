@@ -1,6 +1,6 @@
 module QualificationsApi
-  class InvalidCertificateUrlError < StandardError
-  end
+  class InvalidCertificateUrlError < StandardError; end
+  class UnknownError < StandardError; end
 
   class Client
     TIMEOUT_IN_SECONDS = 5
@@ -56,6 +56,8 @@ module QualificationsApi
         raise QualificationsApi::TeacherNotFoundError
       when 401
         raise QualificationsApi::InvalidTokenError
+      else
+        raise QualificationsApi::UnknownError, "API returned unhandled status #{response.status}"
       end
     end
 
