@@ -14,7 +14,7 @@ require "webmock/rspec"
 require "dfe/analytics/testing"
 require "dfe/analytics/rspec/matchers"
 
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!(allow_localhost: true, allow: "http://qualifications.localhost")
 
 Capybara.register_driver(:cuprite) do |app|
   Capybara::Cuprite::Driver.new(app, timeout: 10, process_timeout: 30, window_size: [1200, 800])
