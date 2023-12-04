@@ -11,11 +11,11 @@ module FakeQualificationsData
       ],
       eyts: {
         awarded: "2022-04-01",
-        certificateUrl: trn ? nil : "/v3/certificates/eyts"
+        certificateUrl: "/v3/certificates/eyts"
       },
       qts: {
         awarded: "2023-02-27",
-        certificateUrl: trn ? nil : "/v3/certificates/qts"
+        certificateUrl: "/v3/certificates/qts"
       },
       induction: {
         startDate: "2022-09-01",
@@ -41,21 +41,21 @@ module FakeQualificationsData
           else
             [
               {
-                ageRange: {
-                  description: "10 to 16 years"
+                qualification: {
+                  name: "BA"
                 },
+                startDate: "2022-02-28",
                 endDate: "2023-01-28",
                 programmeType: "HEI",
                 programmeTypeDescription: "Higher education institution",
+                result: "Pass",
+                ageRange: {
+                  description: "10 to 16 years"
+                },
                 provider: {
                   name: "Earl Spencer Primary School",
                   ukprn: nil
                 },
-                qualification: {
-                  name: "BA"
-                },
-                result: "Pass",
-                startDate: "2022-02-28",
                 subjects: [{ code: "100079", name: "business studies" }]
               }
             ]
@@ -68,7 +68,7 @@ module FakeQualificationsData
       npqQualifications: [
         {
           awarded: "2023-02-27",
-          certificateUrl: trn ? nil : "/v3/certificates/npq/1",
+          certificateUrl: "/v3/certificates/npq/1",
           type: {
             code: "NPQH",
             name: "NPQ headteacher"
