@@ -38,6 +38,17 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
         )
       end
     end
+
+    context "when an unknown error occurs" do
+      it "raises an error" do
+        client = described_class.new(token: "api-error")
+
+        expect { client.teacher }.to raise_error do |error|
+          expect(error).to be_a(QualificationsApi::UnknownError)
+          expect(error.message).to eq("API returned unhandled status 500")
+        end
+      end
+    end
   end
 
   describe "#certificate" do
