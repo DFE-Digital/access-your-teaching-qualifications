@@ -4,6 +4,12 @@ module SupportInterface
     include DsiAuthenticatable
     include SupportNamespaceable
 
+    http_basic_authenticate_with(
+      name: ENV.fetch("SUPPORT_USERNAME", nil),
+      password: ENV.fetch("SUPPORT_PASSWORD", nil),
+      unless: -> { FeatureFlags::FeatureFlag.active?("support_service_open") }
+    )
+
     layout "support_layout"
 
     def current_staff

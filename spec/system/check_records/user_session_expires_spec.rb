@@ -7,7 +7,7 @@ RSpec.feature "DSI session expiry", host: :check_records, type: :system do
   after { travel_back }
 
   scenario "Session expires", test: :with_stubbed_auth do
-    given_the_service_is_open
+    given_the_check_service_is_open
     and_i_am_signed_in_via_dsi
     and_my_session_expires
     when_i_refresh_the_page

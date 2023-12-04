@@ -2,12 +2,6 @@ class ApplicationController < ActionController::Base
   include DfE::Analytics::Requests
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
 
-  http_basic_authenticate_with(
-    name: ENV.fetch("SUPPORT_USERNAME", nil),
-    password: ENV.fetch("SUPPORT_PASSWORD", nil),
-    unless: -> { FeatureFlags::FeatureFlag.active?("service_open") }
-  )
-
   def trigger_request_event
     return unless DfE::Analytics.enabled?
 

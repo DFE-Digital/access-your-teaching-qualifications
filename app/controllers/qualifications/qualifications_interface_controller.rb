@@ -3,6 +3,12 @@ module Qualifications
     before_action :authenticate_user!
     before_action :handle_expired_token!
 
+    http_basic_authenticate_with(
+      name: ENV.fetch("SUPPORT_USERNAME", nil),
+      password: ENV.fetch("SUPPORT_PASSWORD", nil),
+      unless: -> { FeatureFlags::FeatureFlag.active?("qualifications_service_open") }
+    )
+
     layout "qualifications_layout"
 
     def current_user
