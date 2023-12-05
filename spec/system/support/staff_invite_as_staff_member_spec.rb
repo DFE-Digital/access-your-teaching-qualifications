@@ -4,7 +4,7 @@ RSpec.feature 'Staff support', type: :system do
   include CommonSteps
 
   scenario "Staff user invites another Staff member" do
-    given_the_service_is_open
+    given_the_support_service_is_open
     and_a_staff_member_exists
     and_i_am_logged_in_as_a_staff_member
     when_i_visit_the_staff_page

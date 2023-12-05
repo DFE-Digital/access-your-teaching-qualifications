@@ -1,13 +1,24 @@
 layout: support_layout
 parent_controller: "SupportInterface::SupportInterfaceController"
 feature_flags:
-  service_open:
+  check_service_open:
     author: Felix Clack
-    description: Remove the basic authentication when accessing the main
-      website. Keeps it in place for the support interface. This flag should
-      always be inactive on non-production deployments, to prevent accidental
-      access by members of the public. Once the service goes live, this flag
-      should always be active on production.
+    description: Remove the basic authentication when accessing Check a teacher's
+      record. This flag should always be inactive on non-production deployments,
+      to prevent accidental access by members of the public. Once the service
+      goes live, this flag should always be active on production.
+  qualifications_service_open:
+    author: Felix Clack
+    description: Remove the basic authentication when accessing AYTQ.
+      This flag should always be inactive on non-production deployments, to
+      prevent accidental access by members of the public. Once the service goes
+      live, this flag should always be active on production.
+  support_service_open:
+    author: Felix Clack
+    description: Remove the basic authentication when accessing the support
+      interface. This flag should always be inactive on non-production
+      deployments, to prevent accidental access by members of the public.
+      Once the service goes live, this flag should always be active on production.
   staff_http_basic_auth:
     author: Felix Clack
     description: Allow signing in as a staff user using HTTP Basic
