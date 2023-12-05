@@ -1,5 +1,6 @@
 module QualificationsApi
   class InvalidCertificateUrlError < StandardError; end
+  class ForbiddenError < StandardError; end
   class UnknownError < StandardError; end
 
   class Client
@@ -54,6 +55,8 @@ module QualificationsApi
         QualificationsApi::Teacher.new response.body
       when 404
         raise QualificationsApi::TeacherNotFoundError
+      when 403
+        raise QualificationsApi::ForbiddenError
       when 401
         raise QualificationsApi::InvalidTokenError
       else
