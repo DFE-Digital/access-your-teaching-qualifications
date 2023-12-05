@@ -4,7 +4,7 @@ RSpec.feature "Staff HTTP feature flag" do
   include CommonSteps
 
   scenario "Feature flag is disabled and no Staff accounts exist" do
-    given_the_support_service_is_open
+    given_the_service_is_open
 
     when_i_visit_the_support_interface
     then_i_am_unauthorized

@@ -8,7 +8,7 @@ RSpec.describe "TRN search", host: :check_records, type: :system do
 
   scenario "User tries to view a teacher with invalid TRN",
            test: %i[with_stubbed_auth with_fake_quals_api] do
-    given_the_check_service_is_open
+    given_the_service_is_open
     when_i_sign_in_via_dsi
     and_view_a_teacher_with_an_invalid_trn
     then_i_see_a_not_found_page

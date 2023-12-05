@@ -6,7 +6,7 @@ RSpec.feature "Feedback", host: :check_records, type: :system do
   include CheckRecords::AuthenticationSteps
 
   scenario "User gives feedback", test: :with_stubbed_auth do
-    given_the_check_service_is_open
+    given_the_service_is_open
     when_i_sign_in_via_dsi
     and_i_click_on_feedback
     then_i_see_the_feedback_form
