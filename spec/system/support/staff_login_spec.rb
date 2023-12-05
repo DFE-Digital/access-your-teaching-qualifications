@@ -4,7 +4,7 @@ RSpec.feature "Staff login" do
   include CommonSteps
 
   scenario "Staff user logs in" do
-    given_the_support_service_is_open
+    given_the_service_is_open
     and_a_staff_user_exists
     when_i_visit_the_support_interface
     then_i_see_the_staff_login_page

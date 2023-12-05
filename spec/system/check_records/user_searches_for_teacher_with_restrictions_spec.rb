@@ -8,7 +8,7 @@ RSpec.describe "Teacher search with restrictions",
 
   scenario "User searches with a last name and date of birth and finds a restricted record",
            test: %i[with_stubbed_auth with_fake_quals_api] do
-    given_the_check_service_is_open
+    given_the_service_is_open
     when_i_sign_in_via_dsi
     and_search_returns_a_restricted_record
     then_i_see_the_restriction_on_the_result

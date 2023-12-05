@@ -6,7 +6,7 @@ RSpec.describe "No matches", host: :check_records, type: :system do
 
   scenario "User searches with a last name and date of birth and finds no matches",
            test: %i[with_stubbed_auth with_fake_quals_api] do
-    given_the_check_service_is_open
+    given_the_service_is_open
     when_i_sign_in_via_dsi
     and_search_returns_no_records
     then_i_see_no_records

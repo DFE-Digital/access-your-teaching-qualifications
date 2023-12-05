@@ -8,7 +8,7 @@ RSpec.feature "Handling null data", type: :system do
     "User views qualifications with missing data",
     test: %i[with_stubbed_auth with_fake_quals_api]
   ) do
-    given_the_qualifications_service_is_open
+    given_the_service_is_open
     and_i_am_signed_in_via_identity_as_a_user_with_partial_quals_data
 
     when_i_visit_the_qualifications_page

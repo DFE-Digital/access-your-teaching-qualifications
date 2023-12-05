@@ -4,7 +4,7 @@ RSpec.feature "Staff support", type: :system do
   include CommonSteps
 
   scenario "Initial support user invites Staff" do
-    given_the_support_service_is_open
+    given_the_service_is_open
     and_staff_http_basic_is_active
 
     when_i_am_authorized_with_basic_auth

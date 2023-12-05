@@ -8,7 +8,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   scenario "User searches with a last name and date of birth and finds a record",
            test: %i[with_stubbed_auth with_fake_quals_api] do
-    given_the_check_service_is_open
+    given_the_service_is_open
     when_i_sign_in_via_dsi
     and_search_with_a_valid_name_and_dob
     then_i_see_a_teacher_record_in_the_results
