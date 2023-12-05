@@ -10,7 +10,8 @@ class User < ApplicationRecord
       family_name: auth_data.info.last_name,
       given_name: auth_data.info.first_name,
       name: auth_data.info.name,
-      trn: auth_data.extra.raw_info.trn
+      trn: auth_data.extra.raw_info.trn,
+      identity_uuid: auth_data.uid
     )
     user.tap(&:save!)
   end
