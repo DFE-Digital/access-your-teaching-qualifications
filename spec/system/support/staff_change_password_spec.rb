@@ -4,7 +4,7 @@ RSpec.feature "Staff support", type: :system do
   include CommonSteps
 
   scenario "Staff changes password" do
-    given_the_service_is_open
+    given_the_support_service_is_open
     and_a_staff_user_exists
 
     when_i_visit_the_staff_page

@@ -6,7 +6,7 @@ RSpec.feature "User views their certificates", type: :system do
 
   scenario "when a certificate is missing",
            test: %i[with_stubbed_auth with_fake_quals_api] do
-    given_the_service_is_open
+    given_the_qualifications_service_is_open
     and_i_am_signed_in_via_identity
 
     when_i_visit_the_qualifications_page
