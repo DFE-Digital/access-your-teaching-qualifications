@@ -1,6 +1,12 @@
 layout: support_layout
 parent_controller: "SupportInterface::SupportInterfaceController"
 feature_flags:
+  qualifications_service_open:
+    author: Felix Clack
+    description: Remove the basic authentication when accessing AYTQ.
+      This flag should always be inactive on non-production deployments, to
+      prevent accidental access by members of the public. Once the service goes
+      live, this flag should always be active on production.
   service_open:
     author: Felix Clack
     description: Remove the basic authentication when accessing the main
