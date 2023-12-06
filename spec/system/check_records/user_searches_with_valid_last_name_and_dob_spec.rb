@@ -12,6 +12,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     when_i_sign_in_via_dsi
     and_search_with_a_valid_name_and_dob
     then_i_see_a_teacher_record_in_the_results
+    then_i_see_previous_last_names
     and_my_search_is_logged
 
     when_i_click_on_the_teacher_record

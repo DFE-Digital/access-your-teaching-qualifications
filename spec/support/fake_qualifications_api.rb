@@ -95,6 +95,10 @@ class FakeQualificationsApi < Sinatra::Base
       firstName: "Terry",
       lastName: "Walsh",
       middleName: "John",
+      previousNames: [
+        { first_name: "Terry", last_name: "Jones", middle_name: "" },
+        { first_name: "Terry", last_name: "Smith", middle_name: "" }
+      ],
       sanctions: [],
       trn:
     }
@@ -106,6 +110,10 @@ class FakeQualificationsApi < Sinatra::Base
       firstName: "Teacher",
       lastName: "Restricted",
       middleName: "",
+      previousNames: [
+        { first_name: "Terry", last_name: "Jones", middle_name: "" },
+        { first_name: "Terry", last_name: "Smith", middle_name: "" }
+      ],
       sanctions: [
         {
           code: "G1",
