@@ -5,7 +5,7 @@ RSpec.feature "User views and updates their details" do
   include QualificationAuthenticationSteps
 
   scenario "User updates their details", test: %i[with_stubbed_auth with_fake_quals_api] do
-    given_the_service_is_open
+    given_the_qualifications_service_is_open
     and_i_am_signed_in_via_identity
     when_i_visit_view_and_update_details
     then_i_see_the_landing_page

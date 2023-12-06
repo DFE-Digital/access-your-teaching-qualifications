@@ -8,7 +8,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   scenario "User searches with invalid values and sees errors",
            test: %i[with_stubbed_auth with_fake_quals_api] do
-    given_the_service_is_open
+    given_the_check_service_is_open
     when_i_sign_in_via_dsi
     and_press_find_record
     then_i_see_the_error_summary
