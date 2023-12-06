@@ -14,7 +14,7 @@ module CheckRecords
 
     # Differentiate web requests sent to BigQuery via dfe-analytics
     def current_namespace
-      "check-the-record-of-a-teacher"
+      "check-a-teachers-record"
     end
   end
 end
