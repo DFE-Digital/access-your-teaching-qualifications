@@ -37,7 +37,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_a_teacher_record_in_the_results
-    expect(page).to have_content "Terry Walsh"
+    expect(page).to have_content "Terry John Walsh"
   end
 
   def then_the_trn_is_not_in_the_url
@@ -52,7 +52,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def when_i_click_on_the_teacher_record
-    click_on "Terry Walsh"
+    click_on "Terry John Walsh"
   end
 
   def then_i_see_induction_details

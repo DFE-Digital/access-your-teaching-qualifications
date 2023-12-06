@@ -7,7 +7,7 @@ module QualificationsApi
     end
 
     def name
-      ::NameOfPerson::PersonName.full("#{first_name} #{last_name}")
+      ::NameOfPerson::PersonName.full("#{first_name} #{middle_name} #{last_name}")
     end
 
     delegate :date_of_birth,
