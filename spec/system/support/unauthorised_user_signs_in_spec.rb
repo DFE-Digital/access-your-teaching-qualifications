@@ -20,6 +20,8 @@ RSpec.describe "DSI authentication" do
     expect(page).to have_link("sign out and start again", href: "/support/auth/staff/sign-out?id_token_hint=abc123")
 
     within(".govuk-header__content") do
+      expect(page).not_to have_link("Features")
+      expect(page).not_to have_link("Staff")
       expect(page).not_to have_link("Sign in")
       expect(page).not_to have_link("Sign out")
     end
