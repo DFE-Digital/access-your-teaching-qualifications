@@ -3,7 +3,7 @@ module ActivateFeaturesSteps
     FeatureFlags::FeatureFlag.activate(:service_open)
   end
 
-  def and_staff_http_basic_is_active
+  def given_staff_http_basic_is_active
     FeatureFlags::FeatureFlag.activate(:staff_http_basic_auth)
   end
 end

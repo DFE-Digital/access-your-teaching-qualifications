@@ -5,13 +5,16 @@ class DsiUser < ApplicationRecord
   has_many :search_logs
   has_many :dsi_user_sessions, dependent: :destroy
 
-  def self.create_or_update_from_dsi(dsi_payload, role: nil)
+  scope :staff, -> { where(staff: true) }
+
+  def self.create_or_update_from_dsi(dsi_payload, role: nil, staff: false)
     dsi_user = find_or_initialize_by(email: dsi_payload.info.fetch(:email))
 
     dsi_user.update!(
       first_name: dsi_payload.info.first_name,
       last_name: dsi_payload.info.last_name,
-      uid: dsi_payload.uid
+      uid: dsi_payload.uid,
+      staff:,
     )
 
     if role.present?
@@ -24,5 +27,9 @@ class DsiUser < ApplicationRecord
     end
 
     dsi_user
+  end
+
+  def last_sign_in_at
+    dsi_user_sessions.order(created_at: :desc).first&.created_at
   end
 end

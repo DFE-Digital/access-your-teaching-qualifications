@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.feature "DSI session expiry", host: :check_records, type: :system do
   include CommonSteps
-  include CheckRecords::AuthenticationSteps
+  include AuthenticationSteps
 
   after { travel_back }
 

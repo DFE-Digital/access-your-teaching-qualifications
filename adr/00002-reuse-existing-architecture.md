@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-Refer Serious Misconduct is a monolithic Rails application and should use a
+Access your teaching qualifications is a monolithic Rails application and should use a
 similar architecture to other monoliths, like [Access Your Teaching Profile](https://github.com/DFE-Digital/access-your-teaching-profile), [Find a lost TRN](https://github.com/DFE-Digital/find-a-lost-trn) and [Apply for Teacher Training](https://github.com/DFE-Digital/apply-for-teacher-training).
 
 ## Decision

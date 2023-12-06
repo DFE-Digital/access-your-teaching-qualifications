@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "DSI authentication", host: :check_records, type: :system do
+RSpec.describe "DSI authentication", type: :system do
   include AuthorizationSteps
   include AuthenticationSteps
 
@@ -11,7 +11,7 @@ RSpec.describe "DSI authentication", host: :check_records, type: :system do
     allow(Sentry).to receive(:capture_exception)
   end
 
-  scenario "User has oauth error when signing in", test: :with_stubbed_auth do
+  scenario "Staff user has oauth error when signing in", test: :with_stubbed_auth do
     given_dsi_auth_is_mocked_with_a_failure("invalid_credentials") do
       when_i_visit_the_sign_in_page
       and_click_the_dsi_sign_in_button
@@ -19,7 +19,7 @@ RSpec.describe "DSI authentication", host: :check_records, type: :system do
     end
   end
 
-  scenario "User has sessionexpiry oauth error", test: :with_stubbed_auth do
+  scenario "Staff user has sessionexpiry oauth error", test: :with_stubbed_auth do
     given_dsi_auth_is_mocked_with_a_failure("sessionexpired") do
       when_i_visit_the_sign_in_page
       and_click_the_dsi_sign_in_button
@@ -34,6 +34,6 @@ RSpec.describe "DSI authentication", host: :check_records, type: :system do
   end
 
   def then_i_am_redirected_to_sign_in
-    expect(page).to have_current_path(check_records_sign_in_path)
+    expect(page).to have_current_path(support_interface_sign_in_path)
   end
 end

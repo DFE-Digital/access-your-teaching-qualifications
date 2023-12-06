@@ -1,7 +1,7 @@
 module SupportInterface
   class StaffController < SupportInterfaceController
     def index
-      @staff = Staff.all
+      @staff = DsiUser.staff
     end
   end
 end

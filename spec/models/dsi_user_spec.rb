@@ -58,4 +58,13 @@ RSpec.describe DsiUser, type: :model do
       end
     end
   end
+
+  describe "last_sign_in_at" do
+    let(:dsi_user) { create(:dsi_user) }
+    let!(:dsi_user_session) { create(:dsi_user_session, dsi_user:) }
+
+    it "returns the last session creation date" do
+      expect(dsi_user.last_sign_in_at).to eq dsi_user_session.created_at
+    end
+  end
 end
