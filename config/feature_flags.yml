@@ -8,6 +8,12 @@ feature_flags:
       always be inactive on non-production deployments, to prevent accidental
       access by members of the public. Once the service goes live, this flag
       should always be active on production.
+  qualifications_service_open:
+    author: Graham Pengelly
+    description: Remove the basic authentication when accessing AYTQ.
+      This flag should always be inactive on non-production deployments, to
+      prevent accidental access by members of the public. Once the service goes
+      live, this flag should always be active on production.
   staff_http_basic_auth:
     author: Felix Clack
     description: Allow signing in as a staff user using HTTP Basic
