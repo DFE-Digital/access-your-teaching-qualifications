@@ -19,7 +19,7 @@ module QualificationsApi
              to: :api_data
 
     def previous_names
-      api_data.previous_names&.map(&:last_name)
+      api_data.previous_names&.map(&:last_name)&.select { |name| name != last_name }
     end
 
     def qualifications
