@@ -37,6 +37,7 @@ gem "rails", "~> 7.1.2"
 gem "rails_semantic_logger"
 gem "sentry-rails", "~> 5.15"
 gem "sidekiq", "~> 6"
+gem "sidekiq-cron"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
