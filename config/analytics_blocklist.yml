@@ -2,3 +2,9 @@
 :shared:
   :data_migrations:
     - version
+  :sessions:
+    - id
+    - session_id
+    - data
+    - created_at
+    - updated_at

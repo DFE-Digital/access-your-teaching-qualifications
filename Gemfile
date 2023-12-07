@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.2.1"
 
+gem "activerecord-session_store"
 gem "amazing_print"
 gem "audits1984"
 gem "bootsnap", require: false
