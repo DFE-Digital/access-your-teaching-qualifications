@@ -50,7 +50,7 @@
       <% footer.with_meta do %>
         <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
           <h2 class="govuk-heading-m">Get help</h2>
-          <p class="govuk-!-font-size-16">Email: <%= govuk_link_to(t('check_records_service.email'), t('check_records_service.email'), class: "govuk-footer__link") %><br>You’ll get a response within 5 working days.</p>
+          <p class="govuk-!-font-size-16">Email: <%= govuk_link_to(t('check_records_service.email'), "mailto:#{t('check_records_service.email')}", class: "govuk-footer__link") %><br>You’ll get a response within 5 working days.</p>
 
           <h2 class="govuk-visually-hidden">Footer links</h2>
 
