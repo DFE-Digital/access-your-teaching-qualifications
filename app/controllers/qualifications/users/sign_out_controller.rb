@@ -5,8 +5,7 @@ module Qualifications
 
       def new
         if user_signed_in?
-          session[:identity_user_id] = nil
-          session[:identity_user_token] = nil
+          reset_session
           redirect_to "/qualifications/users/auth/identity/logout"
         else
           redirect_to qualifications_start_path

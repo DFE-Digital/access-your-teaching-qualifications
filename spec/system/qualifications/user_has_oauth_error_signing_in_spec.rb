@@ -25,6 +25,6 @@ RSpec.describe "DSI authentication", type: :system do
   end
 
   def then_i_see_a_sign_in_error
-    expect(page).to have_content "There was a problem signing you in. Please try again."
+    expect(page).to have_content I18n.t("validation_errors.generic_oauth_failure")
   end
 end
