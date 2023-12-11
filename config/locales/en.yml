@@ -9,7 +9,6 @@ en:
     email: teaching.status@education.gov.uk
 
   validation_errors:
-    email_address_format: Enter an email address in the correct format, like name@example.com
     generic_oauth_failure: There was a problem with your previous request. Please try again.
 
   activemodel:
