@@ -59,6 +59,6 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_the_search_is_successful
-    expect(page).to have_content "Terry Walsh"
+    expect(page).to have_content "Terry John Walsh"
   end
 end

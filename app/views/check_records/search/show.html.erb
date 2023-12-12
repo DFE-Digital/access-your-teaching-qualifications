@@ -27,6 +27,13 @@
                 row.with_key { "Date of birth" }
                 row.with_value { Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
               end
+
+              if teacher.previous_names&.any?
+                summary_list.with_row do |row|
+                  row.with_key { "Previous last names" }
+                  row.with_value { teacher.previous_names&.join("<br />")&.html_safe }
+                end
+              end
             end %>
           </div>
         <% end %>
