@@ -47,12 +47,8 @@ accordance with the Public Sector Bodies (Websites and Mobile Applications)
 
 ## Compliance status
 
-We intend for this service to be fully compliant with the Web Content
-Accessibility Guidelines version 2.2 AA standard.
-
-The service has not yet been audited to confirm that it complies with the
-standard. We’ll update this page once the service has been audited.
+This service is fully compliant with the WCAG version 2.2 AA standard.
 
 ## Preparation of this accessibility statement
 
-This statement was prepared on 24 October 2023.
+This statement was prepared on 24 October 2023. It was last reviewed on 5 December 2023. This service was last tested on 30 November 2023. The test was carried out by the Digital Accessibility Centre.
