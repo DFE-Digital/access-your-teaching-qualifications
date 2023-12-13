@@ -2,13 +2,15 @@ module Qualifications
   class StartsController < QualificationsInterfaceController
     skip_before_action :authenticate_user!
     skip_before_action :handle_expired_token!
-    around_action :skip_omniauth_request_validation_phase, only: :show
+    #around_action :skip_omniauth_request_validation_phase, only: :show
 
     def show
-      @identity_service_response = Faraday.post(identity_service_auth_url)
-      redirect_to_identity_service and return if redirect_present?
-    rescue Faraday::Error
-      render :show
+      OmniAuth.config.allowed_request_methods = [:get, :post]
+      #@identity_service_response = Faraday.get(identity_service_auth_url)
+      #redirect_to_identity_service and return if redirect_present?
+      redirect_to identity_service_auth_url
+    #rescue Faraday::Error
+    #  render :show
     end
 
   private
