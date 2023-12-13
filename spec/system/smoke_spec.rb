@@ -20,7 +20,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
 
     it "AYTQ works as expected" do
       when_i_visit_the_aytq_service
-      then_i_see_the_aytq_service
+      then_i_am_redirected_to_the_id_auth_service
     end
 
     it "/health/all returns 200" do
@@ -66,5 +66,9 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
   def then_i_see_the_aytq_service
     expect(page).to have_content "Access your teaching qualifications"
     expect(page).to have_content "Start now"
+  end
+
+  def then_i_am_redirected_to_the_id_auth_service
+    expect(page).to have_content "Create a DfE Identity account"
   end
 end
