@@ -40,6 +40,6 @@ module QualificationAuthenticationSteps
   end
 
   def and_click_the_sign_in_button
-    click_button "Start now"
+    click_button "Sign in with DfE Identity"
   end
 end

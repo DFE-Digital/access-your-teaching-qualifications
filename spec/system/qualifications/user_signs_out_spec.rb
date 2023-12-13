@@ -16,7 +16,7 @@ RSpec.feature "Identity auth", type: :system do
   private
 
   def then_i_am_on_the_start_page
-    expect(page).to have_current_path(qualifications_start_path)
+    expect(page).to have_current_path(qualifications_sign_in_path)
   end
 
   def when_i_click_the_sign_out_link

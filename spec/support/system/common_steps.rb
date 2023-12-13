@@ -10,6 +10,10 @@ module CommonSteps
     visit root_path
   end
 
+  def when_i_visit_the_qualifications_service
+    visit qualifications_root_path
+  end
+
   def when_i_visit_the_support_interface
     visit support_interface_path
   end
