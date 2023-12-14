@@ -49,6 +49,7 @@ module QualificationsApi
         awarded_at: api_data.qts.awarded&.to_date,
         certificate_url: api_data.qts.certificate_url,
         name: "Qualified teacher status (QTS)",
+        status_description: api_data.qts.status_description,
         type: :qts
       )
     end
@@ -60,6 +61,7 @@ module QualificationsApi
         awarded_at: api_data.eyts.awarded&.to_date,
         certificate_url: api_data.eyts.certificate_url,
         name: "Early years teacher status (EYTS)",
+        status_description: api_data.qts.status_description,
         type: :eyts
       )
     end

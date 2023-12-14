@@ -61,7 +61,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
           }
         ],
         "qts" => {
-          "awarded" => "2015-11-01"
+          "awarded" => "2015-11-01",
+          "statusDescription" => "Qualified (trained in the UK)",
         },
         "eyts" => {
           "awarded" => "2015-11-02",
@@ -202,7 +203,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             }
           ],
           "qts" => {
-            "awarded" => "2013-01-28"
+            "awarded" => "2013-01-28",
           }
         }
       end
