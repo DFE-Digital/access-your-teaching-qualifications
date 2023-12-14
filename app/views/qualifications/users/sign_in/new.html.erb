@@ -1,7 +1,14 @@
-<%=
-  govuk_button_to(
-    "Sign in with Identity",
-    "/qualifications/users/auth/identity",
-    method: :post
-  )
-%>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Sign in to access your teaching qualifications</h1>
+    <p class="govuk-body">You’ll need a DfE Identity account to access your teaching qualifications.</p>
+    <p class="govuk-body">You can create an account if you do not have one already.</p>
+    <%=
+      govuk_button_to(
+        "Sign in with DfE Identity",
+        "/qualifications/users/auth/identity",
+        method: :post
+      )
+    %>
+  </div>
+</div>

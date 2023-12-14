@@ -26,4 +26,4 @@ scope via: :all do
   get '/500', to: 'qualifications/errors#internal_server_error'
 end
 
-root to: redirect("/qualifications/start"), as: :qualifications_root
+root to: redirect("/qualifications/sign-in"), as: :qualifications_root
