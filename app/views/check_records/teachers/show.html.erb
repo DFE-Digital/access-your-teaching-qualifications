@@ -29,7 +29,7 @@
           { key: { text: "Teacher reference number (TRN)" }, value: { text: @teacher.trn } },
           { key: { text: "Date of birth" }, value: { text: Date.parse(@teacher.date_of_birth).to_fs(:long_uk) } },
           { key: { text: "Previous last names" }, value: { text: @teacher.previous_names&.join("<br />").html_safe } },
-        ])
+        ].select { |row| row[:value][:text].present? })
       %>
     </div>
 
