@@ -42,6 +42,21 @@ class Search
       return
     end
 
+    if day.zero? && month.zero?
+      errors.add(:date_of_birth, t(:missing_day_and_month))
+      return
+    end
+
+    if day.zero? && year.zero?
+      errors.add(:date_of_birth, t(:missing_day_and_year))
+      return
+    end
+
+    if month.zero? && year.zero?
+      errors.add(:date_of_birth, t(:missing_month_and_year))
+      return
+    end
+
     if day.zero?
       errors.add(:date_of_birth, t(:missing_day))
       return
@@ -50,6 +65,11 @@ class Search
     if month.zero?
       errors.add(:date_of_birth, t(:missing_month))
       nil
+    end
+
+    if year.zero?
+      errors.add(:date_of_birth, t(:missing_year))
+      return
     end
 
     begin

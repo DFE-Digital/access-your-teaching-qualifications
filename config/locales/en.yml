@@ -20,9 +20,12 @@ en:
               blank: Enter a valid date of birth
               born_after_1900: Enter a year of birth later than 1900
               inclusion: People must be 16 or over to use this service
-              missing_day: Enter a day for the date of birth, formatted as a number
-              missing_month: Enter a month for the date of birth, formatted as a number
-              missing_year: Enter a year with 4 digits
+              missing_day: Date of birth must include a day
+              missing_month: Date of birth must include a month
+              missing_year: Year must include 4 digits
+              missing_day_and_month: Date of birth must include a day and month
+              missing_day_and_year: Date of birth must include a day and year
+              missing_month_and_year: Date of birth must include a month and year
               in_the_future: Date of birth must be in the past
             last_name:
               blank: Enter a last name
