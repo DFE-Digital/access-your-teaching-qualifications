@@ -6,16 +6,18 @@ module FakeQualificationsData
       firstName: "Terry",
       lastName: "Walsh",
       previousNames: [
-        { first_name: "Terry", last_name: "Jones", middle_name: "" }, 
+        { first_name: "Terry", last_name: "Jones", middle_name: "" },
         { first_name: "Terry", last_name: "Smith", middle_name: "" }
       ],
       eyts: {
         awarded: "2022-04-01",
-        certificateUrl: "/v3/certificates/eyts"
+        certificateUrl: "/v3/certificates/eyts",
+        statusDescription: "Qualified (trained in the UK)",
       },
       qts: {
         awarded: "2023-02-27",
-        certificateUrl: "/v3/certificates/qts"
+        certificateUrl: "/v3/certificates/qts",
+        statusDescription: "Qualified (trained in the UK)",
       },
       induction: {
         startDate: "2022-09-01",

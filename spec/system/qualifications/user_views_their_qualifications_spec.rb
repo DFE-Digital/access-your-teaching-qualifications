@@ -55,6 +55,7 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("Qualified teacher status (QTS)")
     expect(page).to have_content("Awarded")
     expect(page).to have_content("27 February 2023")
+    expect(page).to have_content("Qualified (trained in the UK)")
     expect(page).to have_content("Download QTS certificate")
   end
 

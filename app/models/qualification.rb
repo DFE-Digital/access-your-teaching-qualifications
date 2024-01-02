@@ -1,7 +1,7 @@
 class Qualification
   include ActiveModel::Model
 
-  attr_accessor :awarded_at, :certificate_url, :name, :type
+  attr_accessor :awarded_at, :certificate_url, :name, :status_description, :type
   attr_writer :details
 
   def certificate_type

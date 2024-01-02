@@ -42,6 +42,17 @@ class QualificationSummaryComponent < ViewComponent::Base
       }
     end
 
+    if qualification.status_description
+      @rows << {
+        key: {
+          text: "Status"
+        },
+        value: {
+          text: qualification.status_description
+        }
+      }
+    end
+
     if details.specialism
       @rows << {
         key: {

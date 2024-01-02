@@ -64,4 +64,37 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       expect(rows.text).not_to include("Course result")
     end
   end
+
+  describe "rendering QTS" do
+    let(:fake_quals_data) do
+      Hashie::Mash.new(
+        quals_data(trn: "1234567")
+          .deep_transform_keys(&:to_s)
+          .deep_transform_keys(&:underscore)
+      )
+    end
+    let(:qualification) do
+      Qualification.new(
+        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        name: "QTS",
+        status_description: "Qualified (trained in the UK)",
+        type: :qts,
+      )
+    end
+    let(:component) { described_class.new(qualification:) }
+    let(:rendered) { render_inline(component) }
+    let(:rows) { rendered.css(".govuk-summary-list__row") }
+
+    it "renders the qualification name" do
+      expect(rendered.css("h2").text).to eq(qualification.name)
+    end
+
+    it "renders the awarded at date" do
+      expect(rows[0].text).to include(qualification.awarded_at.to_fs(:long_uk))
+    end
+
+    it "renders the status description" do
+      expect(rows[1].text).to include(qualification.status_description)
+    end
+  end
 end

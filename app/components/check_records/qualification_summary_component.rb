@@ -13,6 +13,7 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
            :itt?,
            :mq?,
            :name,
+           :status_description,
            :type,
            to: :qualification
 
@@ -27,7 +28,10 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
       elsif induction?
         induction_rows if induction?
       else
-        [{ key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } }]
+        [
+          { key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+          { key: { text: "Status" }, value: { text: status_description } },
+        ]
       end
     )
     @rows.select { |row| row[:value][:text].present? }
