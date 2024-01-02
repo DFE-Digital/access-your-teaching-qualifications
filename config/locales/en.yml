@@ -6,7 +6,7 @@ en:
     url: https://access-your-teaching-qualifications.digital.education.gov.uk
   check_records_service:
     name: Check a teacher’s record
-    email: teaching.status@education.gov.uk
+    email: employer.access@education.gov.uk
 
   validation_errors:
     generic_oauth_failure: There was a problem with your previous request. Please try again.
