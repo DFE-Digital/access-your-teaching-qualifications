@@ -212,4 +212,73 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
     end
   end
+
+  describe "#name" do
+    let(:api_data) do
+      {
+        "firstName" => "Jane",
+        "middleName" => "Smith",
+        "lastName" => "Jones"
+      }
+    end
+    let(:teacher) { described_class.new(api_data) }
+
+    it "returns the full name" do
+      expect(teacher.name).to eq("Jane Smith Jones")
+    end
+  end
+
+  describe "#previous_names" do
+    let(:api_data) do
+      {
+        "firstName" => "Jane",
+        "middleName" => "Smith",
+        "lastName" => "Jones",
+        "previousNames" => [
+          {
+            "firstName" => "John",
+            "middleName" => "Smith",
+            "lastName" => "DOE",
+          },
+          {
+            "firstName" => "Johan",
+            "middleName" => "Smith",
+            "lastName" => "DoE",
+          },
+          {
+            "firstName" => "Johan",
+            "middleName" => "Smith",
+            "lastName" => "Johnson",
+          },
+          {
+            "firstName" => "Jim",
+            "middleName" => "Smith",
+            "lastName" => "JONES",
+          },
+        ]
+      }
+    end
+    let(:teacher) { described_class.new(api_data) }
+
+    it "returns an array of previous names" do
+      expect(teacher.previous_names).to eq(
+        %w[Doe Johnson]
+      )
+    end
+
+    context "when there are no previous names" do
+      let(:api_data) do
+        {
+          "firstName" => "Jane",
+          "middleName" => "Smith",
+          "lastName" => "Jones",
+          "previousNames" => []
+        }
+      end
+
+      it "returns an empty array" do
+        expect(teacher.previous_names).to eq([])
+      end
+    end
+  end
 end
