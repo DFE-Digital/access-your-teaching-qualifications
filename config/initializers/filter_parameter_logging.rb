@@ -13,4 +13,6 @@ Rails.application.config.filter_parameters += %i[
   certificate
   otp
   ssn
+  last_name
+  date_of_birth
 ]
