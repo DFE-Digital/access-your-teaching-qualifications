@@ -1,3 +1,5 @@
+require "dfe/analytics/filtered_request_event"
+
 class ApplicationController < ActionController::Base
   include DfE::Analytics::Requests
   default_form_builder(GOVUKDesignSystemFormBuilder::FormBuilder)
@@ -6,7 +8,7 @@ class ApplicationController < ActionController::Base
     return unless DfE::Analytics.enabled?
 
     request_event =
-      DfE::Analytics::Event
+      DfE::Analytics::FilteredRequestEvent
         .new
         .with_type("web_request")
         .with_request_details(request)
