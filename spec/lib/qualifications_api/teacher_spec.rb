@@ -66,7 +66,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         },
         "eyts" => {
           "awarded" => "2015-11-02",
-          "certificateUrl" => "https://example.com/certificate.pdf"
+          "certificateUrl" => "https://example.com/certificate.pdf",
+          "statusDescription" => "Qualified",
         },
         "mandatoryQualifications" => [
           { "awarded" => "2013-06-01", "specialism" => "Visual Impairment" }
