@@ -42,6 +42,8 @@ module DsiAuthenticatable
   end
 
   def path_prefix_from_namespace
+    return :support_interface if self.class.module_parent.name == "FeatureFlags"
+
     self.class.module_parent.name.underscore.to_sym
   end
 end
