@@ -1,9 +1,7 @@
 class SupportInterface::FeedbackController < SupportInterface::SupportInterfaceController
-  def index
-    @feedback = Feedback.order(created_at: :desc)
-  end
+  include Pagy::Backend
 
-  def show
-    @feedback = Feedback.find(params[:id])
+  def index
+    @pagy, @feedback = pagy(Feedback.order(created_at: :desc))
   end
 end
