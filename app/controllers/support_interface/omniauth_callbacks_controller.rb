@@ -22,7 +22,7 @@ class SupportInterface::OmniauthCallbacksController < ApplicationController
   private
 
   def auth
-    request.env["omniauth.auth"]
+    DfESignIn.bypass? ? bypass_auth : request.env["omniauth.auth"]
   end
 
   def add_auth_attributes_to_session
@@ -41,5 +41,16 @@ class SupportInterface::OmniauthCallbacksController < ApplicationController
     @dsi_user = DsiUser.create_or_update_from_dsi(auth, staff: true, role:)
     session[:dsi_user_id] = @dsi_user.id
     session[:dsi_user_session_expiry] = 2.hours.from_now.to_i
+  end
+
+  def bypass_auth
+    OmniAuth::AuthHash.new(
+      uid: "bypass-user-uid",
+      info: {
+        email: "bypass@example.com",
+        first_name: "Bypass",
+        last_name: "User",
+      },
+    )
   end
 end
