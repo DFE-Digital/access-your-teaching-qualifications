@@ -10,7 +10,6 @@ Rails.application.config.filter_parameters += %i[
   _key
   crypt
   salt
-  certificate
   otp
   ssn
   last_name
