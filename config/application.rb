@@ -32,7 +32,8 @@ module AccessYourTeachingQualifications
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/govuk/assets")
+    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
+    config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
 
     config.action_mailer.notify_settings = {
       api_key:
