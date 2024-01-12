@@ -58,7 +58,7 @@ class InductionSummaryComponent < ViewComponent::Base
           text: "Status"
         },
         value: {
-          text: details.status.to_s.humanize
+          text: details.status_description.to_s.humanize
         }
       },
       {

@@ -1,0 +1,31 @@
+<% content_for :page_title, 'Feedback' %>
+
+<h1 class="govuk-heading-l">Feedback</h1>
+
+<% @feedback.find_each do |feedback| %>
+  <h2 class="govuk-heading-m"><%= feedback.email %></h2>
+
+  <%= govuk_summary_list do |summary_list|
+    summary_list.with_row do |row|
+      row.with_key { "Satisfaction rating" }
+      row.with_value { feedback.satisfaction_rating.humanize }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Improvement suggestion" }
+      row.with_value { feedback.improvement_suggestion }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Contact permission given" }
+      row.with_value { feedback.contact_permission_given? ? "Yes" : "No" }
+    end
+
+    summary_list.with_row do |row|
+      row.with_key { "Submitted" }
+      row.with_value { feedback.created_at.to_s }
+    end
+  end %>
+<% end %>
+
+<%= govuk_pagination(pagy: @pagy) %>
