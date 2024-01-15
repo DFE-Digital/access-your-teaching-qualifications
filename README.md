@@ -55,6 +55,8 @@ Both services are monolithic Rails apps built with the GOVUK Design System.
 We keep track of architecture decisions in [Architecture Decision Records
 (ADRs)](/adr/).
 
+We create architecture views of the application using C4 diagramming method [here](docs/architecture.md)
+
 We use `rladr` to generate the boilerplate for new records:
 
 ```bash
