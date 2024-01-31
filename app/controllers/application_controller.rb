@@ -17,6 +17,7 @@ class ApplicationController < ActionController::Base
         .with_data(session_id: session[:session_id])
 
     request_event.with_user(current_user) if respond_to?(:current_user, true)
+    request_event.with_user(current_dsi_user) if respond_to?(:current_dsi_user, true)
     request_event.with_namespace(current_namespace) if respond_to?(:current_namespace, true)
 
     DfE::Analytics::SendEvents.do([request_event.as_json])
