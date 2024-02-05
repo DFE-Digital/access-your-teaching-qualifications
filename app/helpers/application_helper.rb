@@ -23,6 +23,12 @@ module ApplicationHelper
             text: "Staff",
             href: main_app.support_interface_staff_index_path
           )
+          header.with_navigation_item(
+            active: request.path.start_with?("/support/roles"),
+            text: "Check role codes",
+            href: main_app.support_interface_roles_path
+
+          )
           header.with_navigation_item(href: main_app.support_interface_sign_out_path, text: "Sign out")
         end
       when "qualifications"
