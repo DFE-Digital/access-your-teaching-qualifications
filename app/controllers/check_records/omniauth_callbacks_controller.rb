@@ -4,7 +4,7 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
   protect_from_forgery except: :dfe_bypass
   before_action :add_auth_attributes_to_session, only: :dfe
 
-  attr_reader :role
+  attr_reader :dsi_user, :role
 
   def dfe
     unless DfESignIn.bypass?
@@ -15,7 +15,7 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
 
     create_or_update_dsi_user
 
-    redirect_to check_records_root_path
+    redirect_to dsi_user&.internal? ? support_interface_root_path : check_records_root_path
   end
   alias_method :dfe_bypass, :dfe
 
