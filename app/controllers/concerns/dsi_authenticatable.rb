@@ -12,7 +12,7 @@ module DsiAuthenticatable
 
   def authenticate_dsi_user!
     if current_dsi_user.blank?
-      redirect_to dsi_sign_in_path
+      redirect_to check_records_sign_in_path
     end
   end
 
@@ -22,29 +22,13 @@ module DsiAuthenticatable
 
   def handle_expired_session!
     if session[:dsi_user_session_expiry].nil?
-      redirect_to dsi_sign_out_path
+      redirect_to check_records_sign_out_path
       return
     end
 
     if Time.zone.at(session[:dsi_user_session_expiry]).past?
-      redirect_to dsi_sign_out_path
+      redirect_to check_records_sign_out_path
     end
-  end
-
-  private
-
-  def dsi_sign_in_path
-    [path_prefix_from_namespace, :sign_in]
-  end
-
-  def dsi_sign_out_path
-    [path_prefix_from_namespace, :sign_out]
-  end
-
-  def path_prefix_from_namespace
-    return :support_interface if self.class.module_parent.name == "FeatureFlags"
-
-    self.class.module_parent.name.underscore.to_sym
   end
 end
 
