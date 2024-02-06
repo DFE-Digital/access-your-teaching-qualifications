@@ -1,13 +1,18 @@
 module AuthenticationSteps
-  def when_i_sign_in_via_dsi(authorised: true, orgs: [organisation])
-    given_dsi_auth_is_mocked(authorised:, orgs:)
+  def when_i_sign_in_via_dsi(authorised: true, internal: false, orgs: [organisation])
+    given_dsi_auth_is_mocked(authorised:, internal:, orgs:)
     when_i_visit_the_sign_in_page
     and_click_the_dsi_sign_in_button
   end
   alias_method :and_i_am_signed_in_via_dsi, :when_i_sign_in_via_dsi
 
-  def given_dsi_auth_is_mocked(authorised:, orgs: [organisation])
-    OmniAuth.config.mock_auth[mocked_auth_method] = OmniAuth::AuthHash.new(
+  def when_i_sign_in_as_staff_via_dsi
+    when_i_sign_in_via_dsi(authorised: true, internal: true)
+  end
+  alias_method :and_i_am_signed_in_as_staff_via_dsi, :when_i_sign_in_as_staff_via_dsi
+
+  def given_dsi_auth_is_mocked(authorised: true, internal: false, orgs: [organisation])
+    OmniAuth.config.mock_auth[:dfe] = OmniAuth::AuthHash.new(
       {
         provider: "dfe",
         uid: "123456",
@@ -42,13 +47,13 @@ module AuthenticationSteps
       "#{ENV.fetch("DFE_SIGN_IN_API_BASE_URL")}/services/checkrecordteacher/organisations/#{org_id}/users/123456",
     ).to_return_json(
       status: 200,
-      body: { "roles" => [{ "code" => (authorised ? role_code : "Unauthorised_Role") }] },
+      body: { "roles" => [{ "code" => (authorised ? role_code(internal:) : "Unauthorised_Role") }] },
     )
   end
 
   def given_dsi_auth_is_mocked_with_a_failure(message)
     allow(Sentry).to receive(:capture_exception)
-    OmniAuth.config.mock_auth[mocked_auth_method] = message.to_sym
+    OmniAuth.config.mock_auth[:dfe] = message.to_sym
 
     global_failure_handler = OmniAuth.config.on_failure
 
@@ -64,11 +69,7 @@ module AuthenticationSteps
   end
 
   def when_i_visit_the_sign_in_page
-    if dfe_omniauth?
-      visit check_records_sign_in_path
-    else
-      visit support_interface_sign_in_path
-    end
+    visit check_records_sign_in_path
   end
 
   def and_click_the_dsi_sign_in_button
@@ -79,17 +80,12 @@ module AuthenticationSteps
     "12345678-1234-1234-1234-123456789012"
   end
 
-  def role_code
-    env_key = dfe_omniauth? ? "DFE_SIGN_IN_API_ROLE_CODES" : "DFE_SIGN_IN_API_STAFF_ROLE_CODES"
-    ENV.fetch(env_key).split(",").first
-  end
-
-  def mocked_auth_method
-    dfe_omniauth? ? :dfe : :staff
-  end
-
-  def dfe_omniauth?
-    Capybara.app_host == "http://check_records.localhost"
+  def role_code(internal: false)
+    if internal
+      ENV.fetch("DFE_SIGN_IN_API_INTERNAL_USER_ROLE_CODE")
+    else
+      ENV.fetch("DFE_SIGN_IN_API_ROLE_CODES").split(",").first
+    end
   end
 
   def organisations_endpoint

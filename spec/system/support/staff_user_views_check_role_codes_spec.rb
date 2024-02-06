@@ -8,10 +8,10 @@ RSpec.describe "Viewing Check role codes" do
 
   before do
     when_i_am_authorized_with_basic_auth
-    when_i_sign_in_via_dsi
+    when_i_sign_in_as_staff_via_dsi
   end
 
-  scenario "Staff user views Check role codes", test: :with_stubbed_auth do
+  scenario "Staff user views Check role codes", host: :check_records, test: :with_stubbed_auth do
     given_roles_exist
     and_the_manage_roles_feature_is_active
     when_i_navigate_to_the_roles_section

@@ -6,9 +6,9 @@ RSpec.describe "Viewing feedback" do
   include AuthorizationSteps
   include AuthenticationSteps
 
-  scenario "Staff user views feedback", test: :with_stubbed_auth do
+  scenario "Staff user views feedback", host: :check_records, test: :with_stubbed_auth do
     when_i_am_authorized_with_basic_auth
-    when_i_sign_in_via_dsi
+    when_i_sign_in_as_staff_via_dsi
     and_feeback_submissions_exist
     when_i_visit_the_feedback_page
     then_i_see_the_feedback_submissions

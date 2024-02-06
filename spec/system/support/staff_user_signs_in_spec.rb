@@ -6,9 +6,9 @@ RSpec.describe "DSI authentication" do
   include AuthorizationSteps
   include AuthenticationSteps
 
-  scenario "Staff user signs in via DfE Sign In", test: :with_stubbed_auth do
+  scenario "Staff user signs in via DfE Sign In", host: :check_records, test: :with_stubbed_auth do
     when_i_am_authorized_with_basic_auth
-    when_i_sign_in_via_dsi
+    when_i_sign_in_as_staff_via_dsi
     then_i_am_signed_in
   end
 
