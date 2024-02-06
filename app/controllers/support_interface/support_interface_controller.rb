@@ -13,7 +13,10 @@ module SupportInterface
     layout "support_layout"
 
     def current_staff
-      @current_staff ||= DsiUser.staff.find(session[:dsi_user_id]) if session[:dsi_user_id]
+      @current_staff ||= if session[:dsi_user_id]
+        user = DsiUser.find(session[:dsi_user_id])
+        user if user.internal?
+      end
     end
     helper_method :current_staff
 
