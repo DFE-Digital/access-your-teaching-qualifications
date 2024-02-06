@@ -5,8 +5,16 @@ module ApplicationHelper
 
   def navigation
     govuk_header(service_name: t("service.name")) do |header|
-      case current_namespace
-      when "support"
+      if current_namespace == "qualifications"
+        if current_user
+          header.with_navigation_item(
+            active: current_page?(main_app.qualifications_identity_user_path),
+            href: main_app.qualifications_identity_user_path,
+            text: "Account"
+          )
+          header.with_navigation_item(href: main_app.qualifications_sign_out_path, text: "Sign out")
+        end
+      else
         if current_staff
           header.with_navigation_item(
             active: current_page?(main_app.support_interface_feature_flags_path),
@@ -31,16 +39,13 @@ module ApplicationHelper
 
             )
           end
-          header.with_navigation_item(href: main_app.support_interface_sign_out_path, text: "Sign out")
+          header.with_navigation_item(href: main_app.check_records_sign_out_path, text: "Sign out")
         end
-      when "qualifications"
-        if current_user
+        if current_staff || current_dsi_user
           header.with_navigation_item(
-            active: current_page?(main_app.qualifications_identity_user_path),
-            href: main_app.qualifications_identity_user_path,
-            text: "Account"
+            href: main_app.check_records_dsi_sign_out_path(id_token_hint: session[:id_token]),
+            text: "Sign out"
           )
-          header.with_navigation_item(href: main_app.qualifications_sign_out_path, text: "Sign out")
         end
       end
     end
