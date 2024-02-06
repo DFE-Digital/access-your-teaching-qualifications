@@ -108,7 +108,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_07_160711) do
     t.string "uid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "staff", default: false, null: false
     t.index ["email"], name: "index_dsi_users_on_email", unique: true
   end
 

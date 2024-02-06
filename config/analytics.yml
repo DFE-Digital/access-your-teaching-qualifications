@@ -29,7 +29,6 @@ shared:
     - uid
     - created_at
     - updated_at
-    - staff
   :dsi_user_sessions:
     - id
     - dsi_user_id
