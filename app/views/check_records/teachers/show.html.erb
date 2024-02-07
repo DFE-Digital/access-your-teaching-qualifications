@@ -33,10 +33,6 @@
       %>
     </div>
 
-    <% @other_qualifications.each do |qualification| %>
-      <%= render CheckRecords::QualificationSummaryComponent.new(qualification:) %>
-    <% end %>
-
     <% if @mqs.present? %>
       <%= render CheckRecords::MqSummaryComponent.new(mqs: @mqs) %>
     <% end %>
@@ -44,5 +40,10 @@
     <% if @npqs.present? %>
       <%= render CheckRecords::NpqSummaryComponent.new(npqs: @npqs) %>
     <% end %>
+
+    <% @other_qualifications.each do |qualification| %>
+      <%= render CheckRecords::QualificationSummaryComponent.new(qualification:) %>
+    <% end %>
+
   </div>
 </div>
