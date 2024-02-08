@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
     resources :feedback, only: %i[index]
     resources :staff, only: %i[index]
+    resources :roles, only: %i[index new create edit update]
 
     mount FeatureFlags::Engine => "/features"
     mount Audits1984::Engine => "/console"

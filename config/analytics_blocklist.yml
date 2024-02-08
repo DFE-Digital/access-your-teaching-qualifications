@@ -8,3 +8,9 @@
     - data
     - created_at
     - updated_at
+  :roles:
+    - id
+    - code
+    - enabled
+    - created_at
+    - updated_at

@@ -19,3 +19,8 @@ feature_flags:
       interface. This flag should always be inactive on non-production
       deployments, to prevent accidental access by members of the public.
       Once the service goes live, this flag should always be active on production.
+  manage_roles:
+    author: Malcolm Baig
+    description: Add a section to the Support interface that allows us to
+      manage DSI roles. These are used to authorise access to Check the record
+      of a teacher.

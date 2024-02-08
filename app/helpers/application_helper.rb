@@ -23,6 +23,14 @@ module ApplicationHelper
             text: "Staff",
             href: main_app.support_interface_staff_index_path
           )
+          if FeatureFlags::FeatureFlag.active?(:manage_roles)
+            header.with_navigation_item(
+              active: request.path.start_with?("/support/roles"),
+              text: "Check role codes",
+              href: main_app.support_interface_roles_path
+
+            )
+          end
           header.with_navigation_item(href: main_app.support_interface_sign_out_path, text: "Sign out")
         end
       when "qualifications"
