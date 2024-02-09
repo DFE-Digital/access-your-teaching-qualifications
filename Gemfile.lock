@@ -624,6 +624,7 @@ GEM
 PLATFORMS
   arm64-darwin-21
   arm64-darwin-22
+  arm64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
@@ -671,7 +672,7 @@ DEPENDENCIES
   rubocop-govuk
   sentry-rails (~> 5.16)
   shoulda-matchers
-  sidekiq (~> 6)
+  sidekiq (< 7)
   sidekiq-cron
   sinatra
   solargraph
