@@ -31,8 +31,10 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
   end
 
   def check_user_access_to_service
+    return if organisation_ids.exclude?(authenticated_organisation_id)
+
     @role = DfESignInApi::GetUserAccessToService.new(
-      org_id: auth.extra.raw_info.organisation.id,
+      org_id: authenticated_organisation_id,
       user_id: auth.uid,
     ).call
   end
@@ -41,5 +43,19 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
     @dsi_user = DsiUser.create_or_update_from_dsi(auth, role:)
     session[:dsi_user_id] = @dsi_user.id
     session[:dsi_user_session_expiry] = 2.hours.from_now.to_i
+  end
+
+  def organisations
+    @organisations ||= DfESignInApi::GetOrganisationsForUser.new(
+      user_id: auth.uid,
+    ).call
+  end
+
+  def organisation_ids
+    organisations&.map { |org| org["id"] }
+  end
+
+  def authenticated_organisation_id
+    auth.extra.raw_info.organisation.id
   end
 end
