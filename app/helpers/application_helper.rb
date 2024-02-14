@@ -15,7 +15,7 @@ module ApplicationHelper
           header.with_navigation_item(href: main_app.qualifications_sign_out_path, text: "Sign out")
         end
       else
-        if current_staff
+        if current_dsi_user.internal?
           header.with_navigation_item(
             active: current_page?(main_app.support_interface_feature_flags_path),
             href: main_app.support_interface_feature_flags_path,
@@ -41,7 +41,7 @@ module ApplicationHelper
           end
           header.with_navigation_item(href: main_app.check_records_sign_out_path, text: "Sign out")
         end
-        if current_staff || current_dsi_user
+        if current_dsi_user
           header.with_navigation_item(
             href: main_app.check_records_dsi_sign_out_path(id_token_hint: session[:id_token]),
             text: "Sign out"
