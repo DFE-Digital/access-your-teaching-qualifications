@@ -26,11 +26,6 @@ module ApplicationHelper
             text: "Feedback",
             href: main_app.support_interface_feedback_index_path
           )
-          header.with_navigation_item(
-            active: request.path.start_with?("/support/staff"),
-            text: "Staff",
-            href: main_app.support_interface_staff_index_path
-          )
           if FeatureFlags::FeatureFlag.active?(:manage_roles)
             header.with_navigation_item(
               active: request.path.start_with?("/support/roles"),

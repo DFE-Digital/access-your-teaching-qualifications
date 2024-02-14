@@ -17,7 +17,6 @@ RSpec.describe "DSI authentication" do
   def then_i_am_signed_in
     within("header") do
       expect(page).to have_link("Features")
-      expect(page).to have_link("Staff")
       expect(page).to have_content "Sign out"
     end
     expect(DsiUser.count).to eq 1

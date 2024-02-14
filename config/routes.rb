@@ -11,7 +11,6 @@ Rails.application.routes.draw do
     post "/auth/developer/callback" => "omniauth_callbacks#staff_bypass"
 
     resources :feedback, only: %i[index]
-    resources :staff, only: %i[index]
     resources :roles, only: %i[index new create edit update]
 
     mount FeatureFlags::Engine => "/features"
