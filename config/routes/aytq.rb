@@ -11,13 +11,11 @@ namespace :qualifications do
 
   resource :start, only: [:show]
 
-  devise_scope :user do
-    resources :certificates, only: [:show]
-    resource :identity_user, only: [:show]
-    resource :npq_certificate, only: [:show]
+  resources :certificates, only: [:show]
+  resource :identity_user, only: [:show]
+  resource :npq_certificate, only: [:show]
 
-    root to: "qualifications#show", as: :dashboard
-  end
+  root to: "qualifications#show", as: :dashboard
 end
 
 scope via: :all do
