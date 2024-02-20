@@ -21,7 +21,3 @@ Style/MethodCalledOnDoEndBlock:
 Style/NumericLiterals:
   Exclude:
     - db/schema.rb
-
-AllCops:
-  Exclude:
-    - config/initializers/devise.rb
