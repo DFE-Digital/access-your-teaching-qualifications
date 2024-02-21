@@ -34,7 +34,6 @@ module ApplicationHelper
 
             )
           end
-          header.with_navigation_item(href: main_app.check_records_sign_out_path, text: "Sign out")
         end
         if current_dsi_user
           header.with_navigation_item(
