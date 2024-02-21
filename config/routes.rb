@@ -7,17 +7,10 @@ Rails.application.routes.draw do
     get "/", to: "support_interface#index"
     root to: "support_interface#index"
 
-    get "/sign-in", to: "sign_in#new"
-    get "/not-authorised", to: "sign_in#not_authorised"
-    get "/sign-out", to: "sign_out#new"
-
-    get "/auth/staff/sign-out", to: "sign_out#new", as: :dsi_sign_out
-
     get "/auth/staff/callback", to: "omniauth_callbacks#staff"
     post "/auth/developer/callback" => "omniauth_callbacks#staff_bypass"
 
     resources :feedback, only: %i[index]
-    resources :staff, only: %i[index]
     resources :roles, only: %i[index new create edit update]
 
     mount FeatureFlags::Engine => "/features"

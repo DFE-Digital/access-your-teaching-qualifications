@@ -12,13 +12,10 @@ module SupportInterface
 
     layout "support_layout"
 
-    def current_staff
-      @current_staff ||= DsiUser.staff.find(session[:dsi_user_id]) if session[:dsi_user_id]
-    end
-    helper_method :current_staff
+    helper_method :current_dsi_user
 
     def find_current_auditor
-      current_staff.presence
+      current_dsi_user.presence
     end
 
     def http_basic_authenticate

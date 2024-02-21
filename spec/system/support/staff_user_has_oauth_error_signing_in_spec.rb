@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "DSI authentication", type: :system do
+RSpec.describe "DSI authentication", host: :check_records, type: :system do
   include AuthorizationSteps
   include AuthenticationSteps
 
@@ -34,6 +34,6 @@ RSpec.describe "DSI authentication", type: :system do
   end
 
   def then_i_am_redirected_to_sign_in
-    expect(page).to have_current_path(support_interface_sign_in_path)
+    expect(page).to have_current_path(check_records_sign_in_path)
   end
 end
