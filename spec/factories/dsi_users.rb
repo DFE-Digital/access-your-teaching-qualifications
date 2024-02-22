@@ -7,9 +7,5 @@ FactoryBot.define do
     first_name { "Steven" }
     last_name { "Toast" }
     uid { "123" }
-
-    trait :staff do
-      staff { true }
-    end
   end
 end
