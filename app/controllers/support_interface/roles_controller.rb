@@ -33,8 +33,9 @@ module SupportInterface
     private
 
     def role_params
-      params.require(:role).permit(:code, :enabled ).tap do |rp|
+      params.require(:role).permit(:code, :enabled, :internal).tap do |rp|
         rp[:enabled] = ActiveRecord::Type::Boolean.new.cast(rp[:enabled])
+        rp[:internal] = ActiveRecord::Type::Boolean.new.cast(rp[:internal])
       end
     end
   end
