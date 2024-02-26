@@ -10,8 +10,6 @@ gem "bootsnap", require: false
 gem "console1984"
 gem "cssbundling-rails"
 gem "data_migrate"
-gem "devise"
-gem "devise_invitable"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.11.7"
 gem "faraday"
 gem "govuk-components", "~> 5.2"

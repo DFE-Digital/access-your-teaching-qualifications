@@ -23,10 +23,6 @@ We adopt the following ADRs wholesale and agree to follow their decisions:
 - [6. Use Sidekiq and Redis](https://github.com/DFE-Digital/find-a-lost-trn/blob/main/adr/00006-sidekiq-and-redis.md)
 - [7. Use scheduled jobs with sidekiq_cron](https://github.com/DFE-Digital/find-a-lost-trn/blob/main/adr/00007-scheduled-jobs.md)
 
-### From "Apply for Teacher Training"
-
-- [2. Use Devise for authentication](https://github.com/DFE-Digital/apply-for-teacher-training/blob/main/adr/0002-use-devise-for-authentication.md)
-
 ### Clarifications
 
 - A decision around deployment approach will be deferred until later given that GOVUK PaaS has been sunsetted.
