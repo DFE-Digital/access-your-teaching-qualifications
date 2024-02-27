@@ -12,5 +12,6 @@
     - id
     - code
     - enabled
+    - internal
     - created_at
     - updated_at
