@@ -12,6 +12,13 @@ RSpec.describe "DSI authentication" do
     then_i_am_redirected_to_the_unauthorised_page
   end
 
+  scenario "External user attempts to access support pages", host: :check_records, test: :with_stubbed_auth do
+    when_i_am_authorized_with_basic_auth
+    when_i_sign_in_via_dsi(authorised: true, internal: false)
+    when_i_visit_the_support_interface
+    then_i_see_the_not_found_page
+  end
+
   private
 
   def then_i_am_redirected_to_the_unauthorised_page
@@ -25,5 +32,13 @@ RSpec.describe "DSI authentication" do
       expect(page).not_to have_link("Sign in")
       expect(page).not_to have_link("Sign out")
     end
+  end
+
+  def when_i_visit_the_support_interface
+    visit "/support"
+  end
+
+  def then_i_see_the_not_found_page
+    expect(page).to have_content("Page not found")
   end
 end
