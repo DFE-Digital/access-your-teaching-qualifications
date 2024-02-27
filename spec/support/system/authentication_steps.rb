@@ -81,11 +81,7 @@ module AuthenticationSteps
   end
 
   def role_code(internal: false)
-    if internal
-      ENV.fetch("DFE_SIGN_IN_API_INTERNAL_USER_ROLE_CODE")
-    else
-      ENV.fetch("DFE_SIGN_IN_API_ROLE_CODES").split(",").first
-    end
+    @role_code ||= internal ? create(:role, :enabled, :internal).code : create(:role, :enabled).code
   end
 
   def organisations_endpoint
