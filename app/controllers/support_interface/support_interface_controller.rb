@@ -33,7 +33,7 @@ module SupportInterface
     end
 
     def check_user_is_internal
-      render "check_records/errors/not_found", status: :not_found unless current_dsi_user.internal?
+      redirect_to "/404" unless current_dsi_user.internal?
     end
   end
 end
