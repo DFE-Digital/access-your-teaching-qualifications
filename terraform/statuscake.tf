@@ -22,7 +22,7 @@ resource "statuscake_uptime_check" "alert" {
 }
 
 resource "statuscake_ssl_check" "domain-alert" {
-  count = var.statuscake_ssl_contact_group != null ? 1 : 0
+  for_each = toset(var.statuscake_ssl_domains)
 
   check_interval   = 3600 # Check once per hour
   contact_groups   = [var.statuscake_ssl_contact_group]
@@ -38,6 +38,6 @@ resource "statuscake_ssl_check" "domain-alert" {
   }
 
   monitored_resource {
-    address = "https://${var.statuscake_domain}"
+    address = "https://${each.value}"
   }
 }
