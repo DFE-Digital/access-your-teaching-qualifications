@@ -2,7 +2,7 @@ resource "statuscake_uptime_check" "alert" {
   for_each = var.statuscake_alerts
 
   name           = each.value.website_name
-  contact_groups = each.value.contact_group
+  contact_groups = var.statuscake_contact_groups
   confirmation   = each.value.confirmations
   trigger_rate   = 0
   check_interval = 30
@@ -25,7 +25,7 @@ resource "statuscake_ssl_check" "domain-alert" {
   for_each = toset(var.statuscake_ssl_domains)
 
   check_interval   = 3600 # Check once per hour
-  contact_groups   = [var.statuscake_ssl_contact_group]
+  contact_groups   = var.statuscake_contact_groups
   follow_redirects = true
 
   alert_config {
