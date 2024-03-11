@@ -6,14 +6,19 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   include ActivateFeaturesSteps
   include AuthenticationSteps
 
+  after { travel_back }
+
   scenario "User searches with a last name and date of birth and finds a record",
            test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_check_service_is_open
+    and_time_is_frozen
+
     when_i_sign_in_via_dsi
     and_search_with_a_valid_name_and_dob
     then_i_see_a_teacher_record_in_the_results
     then_i_see_previous_last_names
     and_my_search_is_logged
+    and_a_search_timestamp_is_displayed
 
     when_i_click_on_the_teacher_record
     then_the_trn_is_not_in_the_url
@@ -27,6 +32,11 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   private
+
+  def and_time_is_frozen
+    @frozen_time = Time.zone.local(2020, 1, 1, 10, 21)
+    travel_to @frozen_time
+  end
 
   def and_search_with_a_valid_name_and_dob
     fill_in "Last name", with: "Walsh"
@@ -98,5 +108,9 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   def then_i_see_previous_last_names
     expect(page).to have_content("Previous last names")
     expect(page).to have_content("Jones\nSmith")
+  end
+
+  def and_a_search_timestamp_is_displayed
+    expect(page).to have_content "Searched at #{@frozen_time.strftime("%-I:%M%P on %-d %B %Y")}"
   end
 end

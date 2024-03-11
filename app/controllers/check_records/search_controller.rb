@@ -13,7 +13,11 @@ module CheckRecords
         params["search"]["date_of_birth(3i)"]
       ]
       @search =
-        Search.new(date_of_birth:, last_name: params[:search][:last_name])
+        Search.new(
+          date_of_birth:,
+          last_name: params[:search][:last_name],
+          searched_at: Time.zone.now
+        )
       if @search.invalid?
         render :new
       else

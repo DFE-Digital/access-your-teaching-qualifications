@@ -1,15 +1,26 @@
 <% content_for :page_title, "Search results (#{@total})" %>
-<% content_for :breadcrumbs, govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Search results" => nil }) %>
+<% content_for :breadcrumbs do %>
+  <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Search results" => nil }) %>
+
+  <span class="govuk-caption-m">
+    Searched at <%= @search.searched_at_to_s %>
+  </span>
+<% end %>
+
+
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
-    <h1 class="govuk-heading-l">Search results (<%= @total %>)</h1>
     <% if @total.zero? %>
+      <h1 class="govuk-heading-l">No records found</h1>
       <p class="govuk-body">
-        No teachers found.
-        <%= govuk_link_to("Try another search", check_records_search_path) %>.
+        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.strftime("%e %B %Y") %>
+      </p>
+      <p class="govuk-body">
+        <%= govuk_link_to("Search again", check_records_search_path) %>
       </p>
     <% else %>
+      <h1 class="govuk-heading-l">Search results (<%= @total %>)</h1>
       <div class="search-results">
         <% @teachers.each do |teacher| %>
           <div class="search-results__item">
