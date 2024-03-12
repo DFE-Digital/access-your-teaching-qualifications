@@ -26,7 +26,7 @@ class FakeQualificationsApi < Sinatra::Base
 
     case bearer_token
     when "token"
-      return { total: 0, results: [] }.to_json if params["lastName"] == "No match"
+      return { total: 0, results: [] }.to_json if params["lastName"] == "No-match-last-name"
 
       {
         total: 1,
