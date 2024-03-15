@@ -22,16 +22,6 @@
       <% end %>
     <% end %>
 
-    <div class="govuk-!-margin-bottom-9">
-      <h2 class="govuk-heading-m">Personal details</h2>
-      <%= govuk_summary_list(
-        rows: [
-          { key: { text: "Teacher reference number (TRN)" }, value: { text: @teacher.trn } },
-          { key: { text: "Date of birth" }, value: { text: Date.parse(@teacher.date_of_birth).to_fs(:long_uk) } },
-          { key: { text: "Previous last names" }, value: { text: @teacher.previous_names&.join("<br />").html_safe } },
-        ].select { |row| row[:value][:text].present? })
-      %>
-    </div>
 
     <% if @mqs.present? %>
       <%= render CheckRecords::MqSummaryComponent.new(mqs: @mqs) %>
@@ -44,6 +34,39 @@
     <% @other_qualifications.each do |qualification| %>
       <%= render CheckRecords::QualificationSummaryComponent.new(qualification:) %>
     <% end %>
+  </div>
 
+  <div class="govuk-grid-column-one-third">
+    <h2 class="govuk-heading-m">Personal details</h2>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <ul class="govuk-list govuk-!-font-size-16">
+      <% if @teacher.trn.present? %>
+        <li>
+          <h4>Teacher Reference number (TRN)</h4>
+        </li>
+        <li>
+          <p><%= @teacher.trn  %></p>
+        </li>
+      <% end %>
+
+      <% if @teacher.date_of_birth.present? %>
+          <li>
+            <h4>Date of birth</h4>
+          </li>
+          <li>
+            <p><%= Date.parse(@teacher.date_of_birth).to_fs(:long) %></p>
+          </li>
+      <% end %>
+
+      <% if @teacher.previous_names.present? %>
+          <li>
+            <h4>Previous last names</h4>
+          </li>
+          <% @teacher.previous_names.each do |name| %>
+            <li><%= name %></li>
+          <% end %>
+      <% end %>
+    </ul>
   </div>
 </div>
