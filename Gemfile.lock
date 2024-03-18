@@ -113,7 +113,7 @@ GEM
     backport (1.2.0)
     base64 (0.2.0)
     benchmark (0.3.0)
-    bigdecimal (3.1.6)
+    bigdecimal (3.1.7)
     bindata (2.4.15)
     bindex (0.8.1)
     bootsnap (1.18.3)
@@ -232,11 +232,10 @@ GEM
     html-attributes-utils (1.0.2)
       activesupport (>= 6.1.4.4)
     httpclient (2.8.3)
-    i18n (1.14.3)
+    i18n (1.14.4)
       concurrent-ruby (~> 1.0)
-      racc (~> 1.7)
     io-console (0.7.2)
-    irb (1.11.2)
+    irb (1.12.0)
       rdoc
       reline (>= 0.4.2)
     jaro_winkler (1.5.6)
@@ -281,7 +280,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.5)
-    minitest (5.22.2)
+    minitest (5.22.3)
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -500,10 +499,11 @@ GEM
     ruby2_keywords (0.0.5)
     semantic_logger (4.15.0)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.16.1)
+    sentry-rails (5.17.1)
       railties (>= 5.0)
-      sentry-ruby (~> 5.16.1)
-    sentry-ruby (5.16.1)
+      sentry-ruby (~> 5.17.1)
+    sentry-ruby (5.17.1)
+      bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (6.1.0)
       activesupport (>= 5.2.0)
@@ -657,7 +657,7 @@ DEPENDENCIES
   rspec
   rspec-rails
   rubocop-govuk
-  sentry-rails (~> 5.16)
+  sentry-rails (~> 5.17)
   shoulda-matchers
   sidekiq (< 7)
   sidekiq-cron
