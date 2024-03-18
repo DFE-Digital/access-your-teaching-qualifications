@@ -40,7 +40,15 @@ module QualificationsApi
     end
 
     def sanctions
-      api_data.sanctions.map { |sanction| Sanction.new(sanction) }
+      api_data.sanctions&.map { |sanction| Sanction.new(sanction) }
+    end
+
+    def qts_awarded?
+      api_data.qts&.awarded.present?
+    end
+
+    def passed_induction?
+      api_data.induction&.status_description == "Pass"
     end
 
     private

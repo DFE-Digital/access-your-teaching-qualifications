@@ -283,4 +283,52 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
     end
   end
+
+  describe "qts_awarded?" do
+    let(:teacher) { described_class.new(api_data) }
+
+    context "qts awarded timestamp is present" do
+      let(:api_data) { { "qts" => { "awarded" => "2013-01-28", } } }
+
+      it "returns true" do
+        expect(teacher.qts_awarded?).to eq true
+      end
+    end
+
+    context "qts awarded timestamp is blank" do
+      let(:api_data) { { "qts" => {} } }
+
+      it "returns false" do
+        expect(teacher.qts_awarded?).to eq false
+      end
+    end
+  end
+
+  describe "passed_induction?" do
+    let(:teacher) { described_class.new(api_data) }
+
+    context "induction status is 'Pass'" do
+      let(:api_data) { { "induction" => { "status_description" => "Pass", } } }
+
+      it "returns true" do
+        expect(teacher.passed_induction?).to eq true
+      end
+    end
+
+    context "induction status is anything other than 'Pass'" do
+      let(:api_data) { { "induction" => { "status_description" => "Fail", } } }
+
+      it "returns false" do
+        expect(teacher.passed_induction?).to eq false
+      end
+    end
+
+    context "induction status is blank" do
+      let(:api_data) { { "induction" => {} } }
+
+      it "returns false" do
+        expect(teacher.passed_induction?).to eq false
+      end
+    end
+  end
 end

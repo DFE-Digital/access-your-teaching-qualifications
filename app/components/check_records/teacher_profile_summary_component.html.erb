@@ -1,0 +1,14 @@
+<% unless tags.blank? %>
+  <h2 class="govuk-heading-m">Summary</h2>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+  <%= govuk_summary_list(borders: false) do |summary_list| %>
+    <%= tags.each do |tag| %>
+      <%= summary_list.with_row do |row| %>
+        <% row.with_key do %>
+          <%= govuk_tag(text: tag, colour: "green") %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

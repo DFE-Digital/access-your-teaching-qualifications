@@ -234,4 +234,12 @@ class Sanction
   def title
     SANCTIONS[code][:title] if SANCTIONS[code]
   end
+
+  def possible_match_on_childrens_barred_list?
+    code == "G3"
+  end
+
+  def guilty_but_not_prohibited?
+    code == "T6"
+  end
 end
