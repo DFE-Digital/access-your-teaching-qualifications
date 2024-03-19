@@ -24,3 +24,7 @@ feature_flags:
     description: Add a section to the Support interface that allows us to
       manage DSI roles. These are used to authorise access to Check the record
       of a teacher.
+  teacher_profile_tags:
+    author: Malcolm Baig
+    description: Add a profile summary to the teacher show page which contains
+      various tags summarising the profile.
