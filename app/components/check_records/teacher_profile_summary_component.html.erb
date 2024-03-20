@@ -1,14 +1,17 @@
 <% unless tags.blank? %>
-  <h2 class="govuk-heading-m">Summary</h2>
-  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  <div class="app-teacher-summary-panel">
 
-  <%= govuk_summary_list(borders: false) do |summary_list| %>
-    <%= tags.each do |tag| %>
-      <%= summary_list.with_row do |row| %>
-        <% row.with_key do %>
-          <%= govuk_tag(text: tag, colour: "green") %>
-        <% end %>
+    <h2 class="govuk-heading-m">Summary</h2>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+      <% tags.each do |tag| %>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key govuk-!-width-full">
+          <strong class="govuk-tag govuk-tag--green"><%= tag %></strong>
+          </dt>
+        </div>
       <% end %>
-    <% end %>
-  <% end %>
+    </dl>
+  </div>
 <% end %>
