@@ -1,7 +1,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <h1 class="govuk-heading-xl">You are now signed out</h1>
+    <h1 class="govuk-heading-xl">Are you sure you want to sign out?</h1>
 
-    <%= govuk_button_link_to "Back to GOV.UK", qualifications_root_path  %>
+    <%= govuk_button_to "Confirm", qualifications_confirm_sign_out_path, method: :post %>
   </div>
 </div>

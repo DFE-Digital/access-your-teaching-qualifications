@@ -6,8 +6,11 @@ namespace :qualifications do
 
   get "/users/auth/identity/callback", to: "users/omniauth_callbacks#identity"
   get "/sign-in", to: "users/sign_in#new"
-  get "/sign-out", to: "users/sign_out#new"
-  get "/users/auth/identity/logout", to: "users/sign_out#new"
+  get "/sign-out/new", to: "users/sign_out#new", as: :new_sign_out
+  post "/sign-out/confirm", to: "users/sign_out#create", as: :confirm_sign_out
+  get "/sign-out", to: "users/sign_out#complete"
+
+  get "/users/auth/identity/logout", to: "users/sign_out#complete"
 
   resource :start, only: [:show]
 

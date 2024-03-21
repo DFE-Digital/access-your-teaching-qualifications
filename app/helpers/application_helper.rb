@@ -12,7 +12,7 @@ module ApplicationHelper
             href: main_app.qualifications_identity_user_path,
             text: "Account"
           )
-          header.with_navigation_item(href: main_app.qualifications_sign_out_path, text: "Sign out")
+          header.with_navigation_item(href: main_app.qualifications_new_sign_out_path, text: "Sign out")
         end
       else
         if current_dsi_user.internal?

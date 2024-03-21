@@ -10,7 +10,10 @@ RSpec.feature "Identity auth", type: :system do
     and_identity_auth_is_mocked
     and_i_am_signed_in_via_identity
     when_i_click_the_sign_out_link
-    then_i_am_on_the_start_page
+    and_confirm_my_sign_out
+    then_i_see_the_confirmation_page
+    when_i_click_the_button_to_take_me_back_to_the_service
+    then_i_am_on_service_start_page
   end
 
   private
@@ -22,4 +25,21 @@ RSpec.feature "Identity auth", type: :system do
   def when_i_click_the_sign_out_link
     click_link "Sign out"
   end
+
+  def and_confirm_my_sign_out
+    click_button "Confirm"
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_content "You are now signed out"
+  end
+
+  def when_i_click_the_button_to_take_me_back_to_the_service
+   click_link "Back to GOV.UK"
+  end
+
+  def then_i_am_on_service_start_page
+    expect(page).to have_current_path qualifications_start_path
+  end
 end
+

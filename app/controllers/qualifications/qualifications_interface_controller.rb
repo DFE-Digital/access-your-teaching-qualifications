@@ -33,11 +33,11 @@ module Qualifications
     end
 
     def handle_expired_token!
-      redirect_to qualifications_sign_out_path unless session[:identity_user_token_expiry]
-
-      if Time.zone.at(session[:identity_user_token_expiry]).past?
+      token = session[:identity_user_token_expiry]
+      if token.blank? || Time.zone.at(token).past?
+        reset_session
         flash[:warning] = "Your session has expired. Please sign in again."
-        redirect_to qualifications_sign_out_path
+        redirect_to qualifications_sign_in_path
       end
     end
   end
