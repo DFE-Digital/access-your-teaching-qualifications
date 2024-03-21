@@ -1,0 +1,17 @@
+<% unless tags.blank? %>
+  <div class="app-teacher-summary-panel">
+
+    <h2 class="govuk-heading-m">Summary</h2>
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <dl class="govuk-summary-list govuk-summary-list--no-border">
+      <% tags.each do |tag| %>
+        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
+          <dt class="govuk-summary-list__key govuk-!-width-full">
+          <strong class="govuk-tag govuk-tag--green"><%= tag %></strong>
+          </dt>
+        </div>
+      <% end %>
+    </dl>
+  </div>
+<% end %>

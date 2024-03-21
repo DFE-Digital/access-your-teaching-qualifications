@@ -106,3 +106,9 @@ h1 .govuk-tag {
 .app-inset-text--red {
   border-color: govuk-colour("red");
 }
+
+.app-teacher-summary-panel {
+  .govuk-tag {
+    max-width: 100%;
+  }
+}
