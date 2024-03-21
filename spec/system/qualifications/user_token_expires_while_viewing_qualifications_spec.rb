@@ -33,6 +33,7 @@ RSpec.feature "Identity auth", type: :system do
   end
 
   def then_i_am_required_to_sign_in_again
-    expect(page).to have_content "You need to sign in to continue."
+    expect(page).to have_content "Your session has expired. Please sign in again."
+    expect(page).to have_current_path qualifications_sign_in_path
   end
 end
