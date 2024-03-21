@@ -4,6 +4,10 @@ module Qualifications
       skip_before_action :handle_expired_token!
       skip_before_action :authenticate_user!, only: :complete
 
+      rescue_from ActionController::InvalidAuthenticityToken do
+        redirect_to qualifications_start_path
+      end
+
       def new
       end
 
