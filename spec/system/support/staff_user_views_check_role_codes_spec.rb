@@ -44,6 +44,7 @@ RSpec.describe "Viewing Check role codes" do
   def when_i_add_a_role
     click_link "Add role"
     fill_in "Code", with: "AnotherCode"
+    check "Internal", visible: false
     click_button "Continue"
   end
 
@@ -53,6 +54,7 @@ RSpec.describe "Viewing Check role codes" do
 
     within last_row_of_roles_table do
       expect(page).to have_content "enabled"
+      expect(page).to have_content "internal"
     end
   end
 
@@ -62,6 +64,7 @@ RSpec.describe "Viewing Check role codes" do
     end
 
     fill_in "Code", with: "UpdatedCode"
+    uncheck "Internal", visible: false
     select "No", from: "Enabled"
     click_button "Continue"
   end
@@ -72,6 +75,7 @@ RSpec.describe "Viewing Check role codes" do
 
     within last_row_of_roles_table do
       expect(page).to have_content "not enabled"
+      expect(page).to have_content "external"
     end
   end
 
