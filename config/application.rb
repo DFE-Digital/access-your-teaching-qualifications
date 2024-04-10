@@ -14,6 +14,7 @@ require "action_view/railtie"
 require "action_cable/engine"
 require "rails/test_unit/railtie"
 require "./app/models/hosting_environment"
+require "grover"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -54,5 +55,6 @@ module AccessYourTeachingQualifications
     config.console1984 = { ask_for_username_if_empty: true }
 
     config.exceptions_app = routes
+    config.middleware.use Grover::Middleware
   end
 end
