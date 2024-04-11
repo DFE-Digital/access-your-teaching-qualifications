@@ -31,6 +31,10 @@ module Qualifications
         teacher.passed_induction?
       when :qts
         teacher.qts_awarded?
+      when :eyts
+        teacher.eyts_awarded?
+      when :npq
+        teacher.npq.present
       else
         qualification.awarded_at.present?
       end
