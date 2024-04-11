@@ -14,7 +14,9 @@ namespace :qualifications do
 
   resource :start, only: [:show]
 
-  resources :certificates, only: [:show]
+  resources :certificates, only: [:show],
+    constraints: ->(req) { req.env["Rack-Middleware-Grover"] == "true" }
+
   resource :identity_user, only: [:show]
   resource :npq_certificate, only: [:show]
 
