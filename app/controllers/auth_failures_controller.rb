@@ -7,6 +7,8 @@ class AuthFailuresController < ApplicationController
     case strategy
     when :identity
       handle_failure_then_redirect_to qualifications_root_path
+    when :onelogin
+      handle_failure_then_redirect_to qualifications_root_path
     when :dfe
       return redirect_to(
         check_records_dsi_sign_out_path(id_token_hint: session[:id_token])
