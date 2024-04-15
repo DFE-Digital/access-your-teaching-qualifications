@@ -7,6 +7,10 @@ feature_flags:
       record. This flag should always be inactive on non-production deployments,
       to prevent accidental access by members of the public. Once the service
       goes live, this flag should always be active on production.
+  one_login:
+    author: Steve Laing
+    description: Changes the AYTQ authentication service from Teacher Identity to GOVUK One Login.
+      This flag allows us to switch OAuth2 provider, this will impact how users authenticate with the service.
   qualifications_service_open:
     author: Graham Pengelly
     description: Remove the basic authentication when accessing AYTQ.
