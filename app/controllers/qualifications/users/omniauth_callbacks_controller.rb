@@ -8,23 +8,13 @@ module Qualifications
         "access-your-teaching-qualifications"
       end
 
-      def identity
+      def complete
         auth = request.env["omniauth.auth"]
+        provider = auth.provider
         @user = User.from_auth(auth)
-        session[:identity_user_id] = @user.id
-        session[:identity_user_token] = auth.credentials.token
-        session[:identity_user_token_expiry] = auth.credentials.expires_in.seconds.from_now.to_i
-
-        log_auth_credentials_in_development(auth)
-        redirect_to qualifications_dashboard_path
-      end
-
-      def onelogin
-        auth = request.env["omniauth.auth"]
-        @user = User.from_auth(auth)
-        session[:identity_user_id] = @user.id
-        session[:identity_user_token] = auth.credentials.token
-        session[:identity_user_token_expiry] = auth.credentials.expires_in.seconds.from_now.to_i
+        session[:"#{provider}_user_id"] = @user.id
+        session[:"#{provider}_user_token"] = auth.credentials.token
+        session[:"#{provider}_user_token_expiry"] = auth.credentials.expires_in.seconds.from_now.to_i
 
         log_auth_credentials_in_development(auth)
         redirect_to qualifications_dashboard_path

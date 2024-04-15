@@ -12,7 +12,7 @@ module Qualifications
     layout "qualifications_layout"
 
     def current_user
-      @current_user ||= User.find(session[:identity_user_id]) if session[:identity_user_id]
+      @current_user ||= User.find(session[user_id_session_key]) if session[user_id_session_key]
     end
     helper_method :current_user
 
@@ -33,11 +33,35 @@ module Qualifications
     end
 
     def handle_expired_token!
-      token = session[:identity_user_token_expiry]
+      token = session[user_token_expiry_session_key]
       if token.blank? || Time.zone.at(token).past?
         reset_session
         flash[:warning] = "Your session has expired. Please sign in again."
         redirect_to qualifications_sign_in_path
+      end
+    end
+
+    def user_id_session_key
+      if FeatureFlags::FeatureFlag.active?(:one_login)
+        :onelogin_user_id
+      else
+        :identity_user_id
+      end
+    end
+
+    def user_token_session_key
+      if FeatureFlags::FeatureFlag.active?(:one_login)
+        :onelogin_user_token
+      else
+        :identity_user_token
+      end
+    end
+
+    def user_token_expiry_session_key
+      if FeatureFlags::FeatureFlag.active?(:one_login)
+        :onelogin_user_token_expiry
+      else
+        :identity_user_token_expiry
       end
     end
   end
