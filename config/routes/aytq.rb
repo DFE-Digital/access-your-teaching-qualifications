@@ -5,6 +5,7 @@ namespace :qualifications do
   get "/cookies", to: "static#cookies"
 
   get "/users/auth/identity/callback", to: "users/omniauth_callbacks#identity"
+  get "/users/auth/onelogin/callback", to: "users/omniauth_callbacks#onelogin"
   get "/sign-in", to: "users/sign_in#new"
   get "/sign-out/new", to: "users/sign_out#new", as: :new_sign_out
   post "/sign-out/confirm", to: "users/sign_out#create", as: :confirm_sign_out

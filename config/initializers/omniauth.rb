@@ -61,3 +61,32 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            response_type: :code,
            scope: %w[email openid profile dqt:read]
 end
+
+Rails.application.config.middleware.use OmniAuth::Builder do
+  provider :openid_connect,
+           name: :onelogin,
+           allow_authorize_params: %i[session_id trn_token],
+           callback_path: "/qualifications/users/auth/onelogin/callback",
+           send_scope_to_token_endpoint: false,
+           client_options: {
+             authorization_endpoint: "/oauth2/authorize",
+             token_endpoint: "/oauth2/token",
+             userinfo_endpoint: "/oauth2/userinfo",
+             host: URI(ENV["ONELOGIN_API_DOMAIN"]).host,
+             identifier: ENV["ONELOGIN_CLIENT_ID"],
+             jwks_uri: ENV["ONELOGIN_JWKS_URI"],
+             port: 443,
+             redirect_uri:
+               "#{ENV["HOSTING_DOMAIN"]}/qualifications/users/auth/onelogin/callback",
+             scheme: "https",
+             secret: ENV["ONELOGIN_CLIENT_SECRET"]
+           },
+           discovery: true,
+           issuer: ENV["ONELOGIN_ISSUER"],
+           path_prefix: "/qualifications/users/auth",
+           pkce: true,
+           post_logout_redirect_uri:
+             "#{ENV["HOSTING_DOMAIN"]}/qualifications/sign-out",
+           response_type: :code,
+           scope: %w[email openid profile teaching_record]
+end
