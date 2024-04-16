@@ -5,7 +5,7 @@ RSpec.feature "GOVUK One Login auth", type: :system do
   include CommonSteps
   include QualificationAuthenticationSteps
 
-  scenario "User signs in via One Login", test: %i[with_stubbed_auth with_fake_quals_api] do
+  scenario "User signs in via One Login", test: %i[with_stubbed_auth with_fake_quals_api with_stubbed_session] do
     given_the_qualifications_service_is_open
     given_onelogin_authentication_is_active
     and_onelogin_auth_is_mocked

@@ -63,13 +63,14 @@ Rails.application.config.middleware.use OmniAuth::Builder do
 end
 
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :openid_connect,
+  provider :dfe_openid_connect,
            name: :onelogin,
            allow_authorize_params: %i[session_id trn_token],
            callback_path: "/qualifications/users/auth/onelogin/callback",
            send_scope_to_token_endpoint: false,
            client_options: {
              authorization_endpoint: "/oauth2/authorize",
+             end_session_endpoint: "/oauth2/logout",
              token_endpoint: "/oauth2/token",
              userinfo_endpoint: "/oauth2/userinfo",
              host: URI(ENV.fetch("ONELOGIN_API_DOMAIN", "not_set")).host,

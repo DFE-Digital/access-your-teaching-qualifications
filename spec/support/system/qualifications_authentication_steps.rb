@@ -10,6 +10,12 @@ module QualificationAuthenticationSteps
     and_click_the_sign_in_button
   end
 
+  def and_i_am_signed_in_via_onelogin
+    given_onelogin_auth_is_mocked
+    when_i_go_to_the_sign_in_page
+    and_click_the_onelogin_sign_in_button
+  end
+
   def given_auth_is_mocked_for(provider:)
     OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
       {
@@ -22,6 +28,7 @@ module QualificationAuthenticationSteps
         },
         credentials: {
           token: "token",
+          id_token: "id_token",
           expires_in: 1.hour.to_i
         },
         extra: {
