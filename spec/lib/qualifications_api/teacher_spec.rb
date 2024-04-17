@@ -253,6 +253,11 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "lastName" => "Johnson",
           },
           {
+            "firstName" => "Johan",
+            "middleName" => "Smith",
+            "lastName" => nil,
+          },
+          {
             "firstName" => "Jim",
             "middleName" => "Smith",
             "lastName" => "JONES",
