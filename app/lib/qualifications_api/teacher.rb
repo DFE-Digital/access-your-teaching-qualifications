@@ -21,7 +21,7 @@ module QualificationsApi
     def previous_names
       return [] unless api_data.previous_names&.any?
 
-      previous_last_names = api_data.previous_names.map(&:last_name).uniq(&:downcase)
+      previous_last_names = api_data.previous_names.map(&:last_name).compact.uniq(&:downcase)
       previous_last_names.reject { |name| name.downcase == last_name.downcase }.map(&:titleize)
     end
 
