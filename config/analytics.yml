@@ -54,7 +54,8 @@ shared:
     - family_name
     - trn
     - date_of_birth
-    - identity_uuid
+    - auth_uuid
+    - auth_provider
   :search_logs:
     - id
     - dsi_user_id

@@ -2,7 +2,7 @@ module Qualifications
   class QualificationsController < QualificationsInterfaceController
     def show
       begin
-        client = QualificationsApi::Client.new(token: session[:identity_user_token])
+        client = QualificationsApi::Client.new(token: session[user_token_session_key])
         @teacher = client.teacher
       rescue QualificationsApi::InvalidTokenError
         redirect_to qualifications_sign_out_path and return
@@ -22,15 +22,15 @@ module Qualifications
     end
 
     def send_additional_detail_to_sentry(exception)
-      api_token_payload = extract_payload(session[:identity_user_token])
+      api_token_payload = extract_payload(session[user_token_session_key])
       Sentry.with_scope do |scope|
         scope.set_user(id: current_user.id)
         scope.set_context(
-          'Identity session',
+          'Authentication session',
           {
             trn: current_user.trn,
-            identity_uuid: current_user.identity_uuid,
-            api_tkn_expiry: Time.zone.at(session[:identity_user_token_expiry]),
+            auth_uuid: current_user.auth_uuid,
+            api_tkn_expiry: Time.zone.at(session[user_token_expiry_session_key]),
             "payload.trn" => api_token_payload["trn"],
             "payload.scope" => api_token_payload["scope"],
             "payload.identity_exp" => api_token_payload["exp"],
@@ -40,6 +40,5 @@ module Qualifications
         Sentry.capture_exception(exception)
       end
     end
-
   end
 end

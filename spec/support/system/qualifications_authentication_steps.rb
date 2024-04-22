@@ -10,10 +10,10 @@ module QualificationAuthenticationSteps
     and_click_the_sign_in_button
   end
 
-  def given_identity_auth_is_mocked
-    OmniAuth.config.mock_auth[:identity] = OmniAuth::AuthHash.new(
+  def given_auth_is_mocked_for(provider:)
+    OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
       {
-        provider: "identity",
+        provider:,
         info: {
           email: "test@example.com",
           first_name: "User",
@@ -33,7 +33,17 @@ module QualificationAuthenticationSteps
       }
     )
   end
+
+  def given_identity_auth_is_mocked
+    given_auth_is_mocked_for(provider: :identity)
+  end
   alias_method :and_identity_auth_is_mocked, :given_identity_auth_is_mocked
+
+  def given_onelogin_auth_is_mocked
+    given_auth_is_mocked_for(provider: :onelogin)
+  end
+  alias_method :and_onelogin_auth_is_mocked, :given_onelogin_auth_is_mocked
+
 
   def when_i_go_to_the_sign_in_page
     visit qualifications_root_path
@@ -42,4 +52,9 @@ module QualificationAuthenticationSteps
   def and_click_the_sign_in_button
     click_button "Sign in with DfE Identity"
   end
+
+  def and_click_the_onelogin_sign_in_button
+    click_button "Sign in with GOVUK One Login"
+  end
+
 end

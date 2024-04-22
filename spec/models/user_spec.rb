@@ -1,9 +1,11 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  describe ".from_identity" do
+  describe ".from_auth" do
     let(:auth_data) do
       OpenStruct.new(
+        uid: "123-abc",
+        provider: "an-oauth2-provider",
         info:
           OpenStruct.new(
             email: "test@example.com",
@@ -16,7 +18,7 @@ RSpec.describe User, type: :model do
     end
 
     it "creates a new user with the auth data" do
-      user = described_class.from_identity(auth_data)
+      user = described_class.from_auth(auth_data)
 
       expect(user.email).to eq "test@example.com"
       expect(user.name).to eq "Test User"
@@ -24,13 +26,15 @@ RSpec.describe User, type: :model do
       expect(user.family_name).to eq "User"
       expect(user.trn).to eq "123456"
       expect(user.date_of_birth.to_s).to eq "1986-01-02"
+      expect(user.auth_uuid).to eq "123-abc"
+      expect(user.auth_provider).to eq "an-oauth2-provider"
     end
 
     context "a user exists" do
       let!(:user) { create(:user, email: "test@example.com", given_name: "Ray") }
 
       it "updates the user's details" do
-        described_class.from_identity(auth_data)
+        described_class.from_auth(auth_data)
         expect(user.reload.given_name).to eq "Test"
         expect(User.count).to eq 1
       end
