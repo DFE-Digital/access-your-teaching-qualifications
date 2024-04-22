@@ -72,7 +72,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
              authorization_endpoint: "/oauth2/authorize",
              token_endpoint: "/oauth2/token",
              userinfo_endpoint: "/oauth2/userinfo",
-             host: URI(ENV["ONELOGIN_API_DOMAIN"]).host,
+             host: URI(ENV.fetch("ONELOGIN_API_DOMAIN", "not_set")).host,
              identifier: ENV["ONELOGIN_CLIENT_ID"],
              jwks_uri: ENV["ONELOGIN_JWKS_URI"],
              port: 443,
