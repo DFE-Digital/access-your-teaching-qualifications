@@ -75,16 +75,6 @@ variable "redis_service_capacity" {
   default = 1
 }
 
-variable "application_insights_daily_data_cap_mb" {
-  type    = string
-  default = "0.033"
-}
-
-variable "application_insights_retention_days" {
-  type    = number
-  default = 30
-}
-
 variable "keyvault_logging_enabled" {
   type    = bool
   default = false
@@ -122,12 +112,12 @@ variable "statuscake_alerts" {
 }
 
 variable "domain" {
-  default = null
+  default     = null
   description = "The domain at which the AYTQ service can be accessed"
 }
 
 variable "check_domain" {
-  default = null
+  default     = null
   description = "The domain at which the Check service can be accessed"
 }
 
