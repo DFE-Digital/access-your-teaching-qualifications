@@ -20,6 +20,12 @@ namespace :qualifications do
   resource :npq_certificate, only: [:show]
 
   root to: "qualifications#show", as: :dashboard
+
+  scope "/feedback" do
+    get "/", to: "feedbacks#new", as: :feedbacks
+    post "/", to: "feedbacks#create"
+    get "/success", to: "feedbacks#success"
+  end
 end
 
 scope via: :all do

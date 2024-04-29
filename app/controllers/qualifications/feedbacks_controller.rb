@@ -1,7 +1,7 @@
-module CheckRecords
-  class FeedbacksController < CheckRecordsController
-    skip_before_action :authenticate_dsi_user!
-    skip_before_action :handle_expired_session!
+module Qualifications
+  class FeedbacksController < QualificationsInterfaceController
+    skip_before_action :authenticate_user!
+    skip_before_action :handle_expired_token!
 
     def new
       @feedback = Feedback.new
@@ -9,10 +9,10 @@ module CheckRecords
 
     def create
       @feedback = Feedback.new(feedback_params)
-      @feedback.service = :check
+      @feedback.service = :aytq
 
       if @feedback.save
-        redirect_to check_records_success_path
+        redirect_to qualifications_success_path
       else
         render :new
       end
