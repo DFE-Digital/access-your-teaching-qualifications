@@ -30,8 +30,11 @@
           Teacher Reference number (TRN)<br /> 
           <strong><%= @teacher.trn %></strong>
         </p>
-
-        <%= govuk_link_to "View and update details", qualifications_identity_user_path %>
+        <% if @teacher.pending_dob_change? %>
+          <strong class="govuk-tag govuk-tag--yellow">In review</strong>
+        <% else  %>
+          <%= govuk_link_to "View and update details", qualifications_identity_user_path %>
+        <% end %>
       </div>
     </div>
   </div>

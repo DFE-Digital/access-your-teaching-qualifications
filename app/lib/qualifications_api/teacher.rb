@@ -25,6 +25,10 @@ module QualificationsApi
       previous_last_names.reject { |name| name.downcase == last_name.downcase }.map(&:titleize)
     end
 
+    def pending_dob_change?
+      api_data.pending_dob_change
+    end
+
     def qualifications
       @qualifications = []
 
