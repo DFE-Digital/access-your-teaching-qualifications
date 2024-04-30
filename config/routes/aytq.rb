@@ -17,6 +17,7 @@ namespace :qualifications do
 
   resources :certificates, only: [:show]
   resource :identity_user, only: [:show]
+  resource :one_login_user, only: [:show]
   resource :npq_certificate, only: [:show]
 
   root to: "qualifications#show", as: :dashboard

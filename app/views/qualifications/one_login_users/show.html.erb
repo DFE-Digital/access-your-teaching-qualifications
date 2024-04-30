@@ -1,0 +1,82 @@
+<% content_for :back_link_url, qualifications_dashboard_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">
+      Change your details
+    </h1>
+
+    <p class="govuk-body">How you change your details depends on whether they’re:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>personal details which are part of your teaching record</li>
+      <li>personal details kept by GOV.UK One Login</li>
+      <li>security details used for signing in to GOV.UK One Login</li>
+    </ul>
+
+    <h2 class="govuk-heading-m">
+      Teaching record personal details
+    </h2>
+
+    <p class="govuk-body">You can change your preferred name and mobile phone number at any time.</p>
+    <p class="govuk-body">You’ll need to give evidence to change the name on your certificates or your date of birth.</p>
+
+    <%=
+      govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key { "Name on certificates" }
+          row.with_value { "_TODO" }
+          row.with_action(text: "Change", href: "#", visually_hidden_text: "Name on certificates")
+        end
+        summary_list.with_row do |row|
+          row.with_key { "Date of birth" }
+          row.with_value { "_TODO" }
+          row.with_action(text: "Change", href: "#", visually_hidden_text: "Date of birth")
+        end
+      end
+    %>
+
+    <h2 class="govuk-heading-m">
+      GOV.UK One Login personal details
+    </h2>
+
+    <p class="govuk-body">You use your GOV.UK One Login to sign in to a some government services. This includes signing in to access your teaching qualifications.</p>
+    <p class="govuk-body">You’ll need to ask for support to change these details.</p>
+
+    <%=
+      govuk_summary_list do |summary_list|
+        summary_list.with_row do |row|
+          row.with_key { "Name" }
+          row.with_value { "_TODO" }
+          row.with_action(text: "Change", href: "#", visually_hidden_text: "Name")
+        end
+        summary_list.with_row do |row|
+          row.with_key { "Date of birth" }
+          row.with_value { "_TODO" }
+          row.with_action(text: "Change", href: "#", visually_hidden_text: "Date of birth")
+        end
+      end
+    %>
+
+    <p class="govuk-body">
+      <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link">Find out how to contact GOV.UK One Login support</a>.
+    </p>
+
+    <h2 class="govuk-heading-m">
+      GOV.UK One Login security details
+    </h2>
+
+    <p class="govuk-body">You can change these details for your GOV.UK One Login:</p>
+
+    <ul class="govuk-list govuk-list--bullet">
+      <li>email address</li>
+      <li>password</li>
+      <li>how you get security codes to sign in</li>
+    </ul>
+
+    <p class="govuk-body">
+      <a href="https://home.account.gov.uk" class="govuk-link">Change your GOV.UK One login security details</a>.
+    </p>
+  </div>
+</div>

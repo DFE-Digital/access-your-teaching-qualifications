@@ -17,21 +17,25 @@
       <div class="govuk-grid-column-one-third app__details-menu">
         <h2 class="govuk-heading-m">Your details</h2>
         <p>
-          Name on certificates<br /> 
+          Name on certificates<br />
           <strong><%= [@teacher.first_name, @teacher.last_name].join(" ") %></strong>
         </p>
 
         <p>
-          Date of birth<br /> 
-          <strong><%= @user.date_of_birth&.to_fs(:long_uk) %></strong>  
+          Date of birth<br />
+          <strong><%= @user.date_of_birth&.to_fs(:long_uk) %></strong>
         </p>
 
         <p>
-          Teacher Reference number (TRN)<br /> 
+          Teacher Reference number (TRN)<br />
           <strong><%= @teacher.trn %></strong>
         </p>
 
-        <%= govuk_link_to "View and update details", qualifications_identity_user_path %>
+        <% if FeatureFlags::FeatureFlag.active?(:one_login) %>
+          <%= govuk_link_to "View and update details", qualifications_one_login_user_path %>
+        <% else %>
+          <%= govuk_link_to "View and update details", qualifications_identity_user_path %>
+        <% end %>
       </div>
     </div>
   </div>
