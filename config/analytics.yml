@@ -56,6 +56,8 @@ shared:
     - date_of_birth
     - auth_uuid
     - auth_provider
+    - one_login_verified_name
+    - one_login_verified_birth_date
   :search_logs:
     - id
     - dsi_user_id

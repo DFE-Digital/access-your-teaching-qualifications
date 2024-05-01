@@ -14,4 +14,5 @@ Rails.application.config.filter_parameters += %i[
   ssn
   last_name
   date_of_birth
+  birth_date
 ]
