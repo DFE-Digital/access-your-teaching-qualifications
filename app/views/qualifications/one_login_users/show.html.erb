@@ -37,31 +37,33 @@
       end
     %>
 
-    <h2 class="govuk-heading-m">
-      GOV.UK One Login personal details
-    </h2>
+    <% if current_user.verified_by_one_login? %>
+      <h2 class="govuk-heading-m">
+        GOV.UK One Login personal details
+      </h2>
 
-    <p class="govuk-body">You use your GOV.UK One Login to sign in to a some government services. This includes signing in to access your teaching qualifications.</p>
-    <p class="govuk-body">You’ll need to ask for support to change these details.</p>
+      <p class="govuk-body">You use your GOV.UK One Login to sign in to a some government services. This includes signing in to access your teaching qualifications.</p>
+      <p class="govuk-body">You’ll need to ask for support to change these details.</p>
 
-    <%=
-      govuk_summary_list do |summary_list|
-        summary_list.with_row do |row|
-          row.with_key { "Name" }
-          row.with_value { "_TODO" }
-          row.with_action(text: "Change", href: "#", visually_hidden_text: "Name")
+      <%=
+        govuk_summary_list do |summary_list|
+          summary_list.with_row do |row|
+            row.with_key { "Name" }
+            row.with_value { current_user.one_login_verified_name }
+            row.with_action(text: "Change", href: "#", visually_hidden_text: "Name")
+          end
+          summary_list.with_row do |row|
+            row.with_key { "Date of birth" }
+            row.with_value { current_user.one_login_verified_birth_date.to_fs(:long_uk) }
+            row.with_action(text: "Change", href: "#", visually_hidden_text: "Date of birth")
+          end
         end
-        summary_list.with_row do |row|
-          row.with_key { "Date of birth" }
-          row.with_value { "_TODO" }
-          row.with_action(text: "Change", href: "#", visually_hidden_text: "Date of birth")
-        end
-      end
-    %>
+      %>
 
-    <p class="govuk-body">
-      <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link">Find out how to contact GOV.UK One Login support</a>.
-    </p>
+      <p class="govuk-body">
+        <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link">Find out how to contact GOV.UK One Login support</a>.
+      </p>
+    <% end %>
 
     <h2 class="govuk-heading-m">
       GOV.UK One Login security details

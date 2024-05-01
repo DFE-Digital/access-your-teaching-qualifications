@@ -25,4 +25,8 @@ class User < ApplicationRecord
   def name
     ::NameOfPerson::PersonName.full(self[:name])
   end
+
+  def verified_by_one_login?
+    one_login_verified_name.present? & one_login_verified_birth_date.present?
+  end
 end
