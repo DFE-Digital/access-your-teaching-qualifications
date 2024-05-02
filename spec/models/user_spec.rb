@@ -13,7 +13,14 @@ RSpec.describe User, type: :model do
             first_name: "Test",
             last_name: "User"
           ),
-        extra: OpenStruct.new(raw_info: OpenStruct.new(birthdate: "1986-01-02", trn: "123456"))
+        extra: OpenStruct.new(
+          raw_info: OpenStruct.new(
+            birthdate: "1986-01-02",
+            trn: "123456",
+            onelogin_verified_names: [["Test User"]],
+            onelogin_verified_birthdates: ["1992-02-03"]
+          )
+        )
       )
     end
 
@@ -28,6 +35,8 @@ RSpec.describe User, type: :model do
       expect(user.date_of_birth.to_s).to eq "1986-01-02"
       expect(user.auth_uuid).to eq "123-abc"
       expect(user.auth_provider).to eq "an-oauth2-provider"
+      expect(user.one_login_verified_name).to eq "Test User"
+      expect(user.one_login_verified_birth_date.to_s).to eq "1992-02-03"
     end
 
     context "a user exists" do

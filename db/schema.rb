@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_22_123545) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_29_140623) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -168,6 +168,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_22_123545) do
     t.date "date_of_birth"
     t.string "auth_uuid"
     t.string "auth_provider"
+    t.string "one_login_verified_name"
+    t.date "one_login_verified_birth_date"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
