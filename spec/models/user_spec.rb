@@ -49,4 +49,28 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe "#verified_by_one_login?" do
+    let(:user) { build(:user) }
+    before do
+      user.one_login_verified_name = "Test User"
+      user.one_login_verified_birth_date = "1992-02-03".to_date
+    end
+
+    it "is true is both one login verified fields present" do
+      expect(user.verified_by_one_login?).to eq true
+    end
+
+    it "is false if one_login_verified_name is missing" do
+      user.one_login_verified_name = nil
+
+      expect(user.verified_by_one_login?).to eq false
+    end
+
+    it "is false if one_login_verified_birth_date is missing" do
+      user.one_login_verified_birth_date = nil
+
+      expect(user.verified_by_one_login?).to eq false
+    end
+  end
 end
