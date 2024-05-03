@@ -46,6 +46,7 @@ module QualificationsApi
               MandatoryQualifications
               Sanctions
               PreviousNames
+              PendingDetailChanges
             ].join(",")
           }
         )
