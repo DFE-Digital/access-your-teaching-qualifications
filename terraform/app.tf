@@ -1,6 +1,9 @@
 locals {
   aytq_env_vars = merge(try(local.infrastructure_secrets, null),
     {
+      AZURE_STORAGE_ACCOUNT_NAME            = azurerm_storage_account.evidence.name,
+      AZURE_STORAGE_ACCESS_KEY              = azurerm_storage_account.evidence.primary_access_key,
+      AZURE_STORAGE_CONTAINER               = azurerm_storage_container.uploads.name
       BIGQUERY_DATASET                      = "events_${var.environment_name}",
       BIGQUERY_PROJECT_ID                   = "teaching-qualifications",
       BIGQUERY_TABLE_NAME                   = "events",

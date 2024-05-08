@@ -147,6 +147,20 @@ variable "aytq_docker_image" {
   type = string
 }
 
+variable "evidence_container_retention_in_days" {
+  default = 7
+  type = number
+}
+
+variable "evidence_storage_account_name" {
+  default = null
+}
+
+variable "region_name" {
+  default = "west europe"
+  type = "string"
+}
+
 locals {
   hosting_environment          = var.environment_name
   aytq_web_app_name            = "${var.resource_prefix}-${var.environment_name}${var.app_suffix}-app"
