@@ -1,17 +1,17 @@
 locals {
   aytq_env_vars = merge(try(local.infrastructure_secrets, null),
     {
-      DOCKER_REGISTRY_SERVER_URL            = "https://ghcr.io",
-      DATABASE_URL                          = "postgres://postgres@${local.postgres_server_name}.postgres.database.azure.com:5432"
-      DATABASE_PASSWORD                     = local.infrastructure_secrets.POSTGRES_ADMIN_PASSWORD
-      HOSTING_DOMAIN                        = var.domain != null ? "https://${var.domain}" : "https://${local.aytq_web_app_name}.azurewebsites.net"
+      BIGQUERY_DATASET                      = "events_${var.environment_name}",
+      BIGQUERY_PROJECT_ID                   = "teaching-qualifications",
+      BIGQUERY_TABLE_NAME                   = "events",
       CHECK_RECORDS_DOMAIN                  = var.check_domain != null ? "https://${var.check_domain}" : "https://${local.aytq_web_app_name}.azurewebsites.net"
+      ConnectionStrings__Redis              = azurerm_redis_cache.redis.primary_connection_string
+      DATABASE_PASSWORD                     = local.infrastructure_secrets.POSTGRES_ADMIN_PASSWORD
+      DATABASE_URL                          = "postgres://postgres@${local.postgres_server_name}.postgres.database.azure.com:5432"
+      DOCKER_REGISTRY_SERVER_URL            = "https://ghcr.io",
+      HOSTING_DOMAIN                        = var.domain != null ? "https://${var.domain}" : "https://${local.aytq_web_app_name}.azurewebsites.net"
       HOSTING_ENVIRONMENT_NAME              = local.hosting_environment
       RAILS_SERVE_STATIC_FILES              = "true"
-      ConnectionStrings__Redis              = azurerm_redis_cache.redis.primary_connection_string
-      BIGQUERY_PROJECT_ID                   = "teaching-qualifications",
-      BIGQUERY_DATASET                      = "events_${var.environment_name}",
-      BIGQUERY_TABLE_NAME                   = "events",
       REDIS_URL                             = "rediss://:${azurerm_redis_cache.redis.primary_access_key}@${azurerm_redis_cache.redis.hostname}:${azurerm_redis_cache.redis.ssl_port}/0"
     }
   )
