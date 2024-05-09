@@ -6,6 +6,7 @@ ruby "3.3.0"
 gem "activerecord-session_store"
 gem "amazing_print"
 gem "audits1984"
+gem "azure-storage-blob"
 gem "bootsnap", require: false
 gem "console1984"
 gem "cssbundling-rails"
