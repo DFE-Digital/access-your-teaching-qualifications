@@ -47,8 +47,20 @@ module QualificationsApi
       api_data.qts&.awarded.present?
     end
 
+    def eyts_awarded?
+      api_data.eyts&.awarded.present?
+    end
+
+    def eyps_awarded?
+      api_data.eyps&.awarded.present?
+    end
+
     def passed_induction?
       api_data.induction&.status_description == "Pass"
+    end
+
+    def exempt_from_induction?
+      api_data.induction&.status == "Exempt"
     end
 
     private

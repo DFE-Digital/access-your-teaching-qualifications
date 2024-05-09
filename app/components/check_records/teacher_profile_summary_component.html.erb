@@ -8,7 +8,7 @@
       <% tags.each do |tag| %>
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions">
           <dt class="govuk-summary-list__key govuk-!-width-full">
-          <strong class="govuk-tag govuk-tag--green"><%= tag %></strong>
+          <strong class="govuk-tag govuk-tag--<%=tag[:colour]%>"><%= tag[:message] %></strong>
           </dt>
         </div>
       <% end %>
