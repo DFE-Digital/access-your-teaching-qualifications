@@ -1,0 +1,19 @@
+<% content_for :page_title, "Change your name on teaching certificates" %>
+<% content_for :back_link_url, qualifications_one_login_user_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">Change your name on teaching certificates</h1>
+
+    <%= form_with model: @name_change_form, url: qualifications_one_login_user_name_changes_path, method: :post do |form| %>
+      <%= form.govuk_text_field :first_name, label: { text: "First name" } %>
+      <%= form.govuk_text_field :middle_name, label: { text: "Middle name" }, hint_text: "Optional" %>
+      <%= form.govuk_text_field :last_name, label: { text: "Last name" } %>
+
+      <%= form.govuk_file_field :evidence, label: { text: "Upload evidence" } %>
+
+      <%= form.govuk_submit "Submit" %>
+    <% end %>
+  </div>
+</div>

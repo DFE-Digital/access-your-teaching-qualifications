@@ -26,7 +26,7 @@
         summary_list.with_row do |row|
           row.with_key { "Name on certificates" }
           row.with_value { @teacher.name }
-          row.with_action(text: "Change", href: edit_qualifications_one_login_user_teaching_record_name_path, visually_hidden_text: "Name on certificates")
+          row.with_action(text: "Change", href: new_qualifications_one_login_user_name_change_path, visually_hidden_text: "Name on certificates")
         end
         summary_list.with_row do |row|
           row.with_key { "Date of birth" }

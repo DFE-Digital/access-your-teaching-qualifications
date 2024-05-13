@@ -2,7 +2,7 @@ class User < ApplicationRecord
   encrypts :email, deterministic: true
   encrypts :family_name, :given_name, :name
 
-  has_many :evidence_uploads
+  has_many :name_changes
 
   def self.from_auth(auth_data)
     email = auth_data.info.email
