@@ -18,5 +18,7 @@
         row.with_action(text: "Change", href: edit_qualifications_one_login_user_name_change_path(@name_change), visually_hidden_text: "Name")
       end
     end %>
+
+    <%= govuk_button_to "Continue", confirm_qualifications_one_login_user_name_change_path(@name_change), method: :post %>
   </div>
 </div>

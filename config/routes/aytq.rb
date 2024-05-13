@@ -18,7 +18,13 @@ namespace :qualifications do
   resources :certificates, only: [:show]
   resource :identity_user, only: [:show]
   resource :one_login_user, only: [:show], path: "one-login-user" do
-    resources :name_changes, only: [:new, :create, :show, :edit, :update], path: "name-changes", module: "one_login_users"
+    resources :name_changes,
+      only: [:new, :create, :show, :edit, :update],
+      path: "name-changes",
+      module: "one_login_users" do
+      post "/confirm", on: :member, to: "name_changes#confirm"
+      get "/submitted", on: :member, to: "name_changes#submitted"
+    end
   end
   resource :npq_certificate, only: [:show]
 

@@ -34,6 +34,18 @@ module Qualifications
         @name_change = current_user.name_changes.find(params[:id])
       end
 
+      def confirm
+        @name_change = current_user.name_changes.find(params[:id])
+        reference_number = qualifications_api_client.send_name_change(name_change: @name_change)
+        @name_change.update!(reference_number:)
+
+        redirect_to submitted_qualifications_one_login_user_name_change_path(@name_change)
+      end
+
+      def submitted
+        @name_change = current_user.name_changes.find(params[:id])
+      end
+
       private
 
       def name_change_form_params

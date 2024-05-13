@@ -1,0 +1,20 @@
+<% content_for :page_title, "Change your name on teaching certificates" %>
+<%= govuk_back_link text: "Back to change your teaching qualifications", href: qualifications_one_login_user_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <%= govuk_panel(title_text: "Name change request submitted") do %>
+      Your reference number
+      <br />
+
+      <strong>
+        <%= @name_change.reference_number %>
+      </strong>
+    <% end %>
+
+    <p class="govuk-body">We have sent you a confirmation email.</p>
+    <h2 class="govuk-heading-m">What happens next</h2>
+    <p class="govuk-body">We’ll check the evidence you submitted. We’ll contact you if we need any more information.</p>
+  </div>
+</div>
