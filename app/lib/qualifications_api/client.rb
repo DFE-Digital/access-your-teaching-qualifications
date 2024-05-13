@@ -4,12 +4,32 @@ module QualificationsApi
   class UnknownError < StandardError; end
 
   class Client
-    TIMEOUT_IN_SECONDS = 5
+    TIMEOUT_IN_SECONDS = 30
 
     attr_reader :token
 
     def initialize(token:)
       @token = token
+    end
+
+    def send_name_change(name_change:)
+      client.headers["X-Api-Version"] = "20240416"
+      endpoint = "v3/teacher/name-changes"
+
+      body = {
+        email: name_change.user.email,
+        firstName: name_change.first_name,
+        middleName: name_change.middle_name,
+        lastName: name_change.last_name,
+        evidenceFileName: name_change.evidence_filename,
+        evidenceFileUrl: name_change.expiring_evidence_url,
+      }.to_json
+
+      response = client.post(endpoint) do |req|
+        req.body = body
+      end
+
+      response.body.fetch "caseNumber"
     end
 
     def certificate(name:, type:, url:)
