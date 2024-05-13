@@ -10,10 +10,10 @@ module Qualifications
       validates :middle_name, length: { maximum: 100 }
       validates :last_name, presence: true, length: { maximum: 100 }
 
-      # TODO: implement evidence validations
-      # validates :evidence,
-      #   file_size: { less_than: 3.megabytes },
-      #   file_content_type: { allow: ['image/jpeg', 'application/pdf'] }
+      validates :evidence, presence: true
+
+      validate :validate_file_size
+      validate :validate_content_type
 
       def self.initialize_with(name_change:)
         new(
@@ -47,6 +47,22 @@ module Qualifications
         )
         name_change.evidence.attach evidence
         name_change
+      end
+
+      private
+
+      def validate_file_size
+        max_size = 3.megabytes
+        if evidence && evidence.size > max_size
+          errors.add(:evidence, "The selected file must be smaller than 3MB")
+        end
+      end
+
+      def validate_content_type
+        allowed_types = ["image/jpeg", "image/png", "application/pdf"]
+        if evidence && !allowed_types.include?(evidence.content_type)
+          errors.add(:evidence, "The selected file must be an image or a PDF")
+        end
       end
     end
   end
