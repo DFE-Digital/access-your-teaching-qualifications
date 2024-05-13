@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_09_132418) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_10_140419) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -111,13 +111,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_09_132418) do
     t.index ["email"], name: "index_dsi_users_on_email", unique: true
   end
 
-  create_table "evidence_uploads", force: :cascade do |t|
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_evidence_uploads_on_user_id"
-  end
-
   create_table "feature_flags_features", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "active", default: false, null: false
@@ -134,6 +127,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_09_132418) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "service", null: false
+  end
+
+  create_table "name_changes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.index ["user_id"], name: "index_name_changes_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
