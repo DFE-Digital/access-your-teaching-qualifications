@@ -15,4 +15,6 @@ Rails.application.config.filter_parameters += %i[
   last_name
   date_of_birth
   birth_date
+  first_name
+  middle_name
 ]
