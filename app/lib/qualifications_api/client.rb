@@ -29,6 +29,11 @@ module QualificationsApi
         req.body = body
       end
 
+      # TODO: the client has no API version set by default. Consider setting
+      # a default version for all requests handled by this client, updating the
+      # FakeQualificationsApi and any tests if required.
+      client.headers["X-Api-Version"] = nil
+
       response.body.fetch "caseNumber"
     end
 
