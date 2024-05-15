@@ -38,6 +38,11 @@ shared:
     - organisation_name
     - created_at
     - updated_at
+  :evidence_uploads:
+    - id
+    - user_id
+    - created_at
+    - updated_at
   :feature_flags_features:
     - id
     - name

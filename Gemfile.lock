@@ -16,6 +16,20 @@ GIT
     govuk_feature_flags (0.1.0)
       rails (>= 7.0.4)
 
+GIT
+  remote: https://github.com/honeyankit/azure-storage-ruby.git
+  revision: b16261c95adf055055fe0a0416cd2dfbc0518176
+  specs:
+    azure-storage-blob (2.0.3)
+      azure-storage-common (~> 2.0)
+      nokogiri (~> 1, >= 1.10.8)
+    azure-storage-common (2.0.4)
+      faraday (~> 2.0)
+      faraday-follow_redirects (~> 0.3.0)
+      faraday-net_http_persistent (~> 2.0)
+      net-http-persistent (~> 4.0)
+      nokogiri (~> 1, >= 1.10.8)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -173,6 +187,9 @@ GEM
       faraday (>= 1, < 3)
     faraday-net_http (3.1.0)
       net-http
+    faraday-net_http_persistent (2.1.0)
+      faraday (~> 2.5)
+      net-http-persistent (~> 4.0)
     ferrum (0.14)
       addressable (~> 2.5)
       concurrent-ruby (~> 1.1)
@@ -247,13 +264,12 @@ GEM
     jaro_winkler (1.5.6)
     jsbundling-rails (1.3.0)
       railties (>= 6.0.0)
-    json (2.7.2)
-    json-jwt (1.16.3)
+    json (2.7.1)
+    json-jwt (1.15.3.1)
       activesupport (>= 4.2)
       aes_key_wrap
       bindata
-      faraday (~> 2.0)
-      faraday-follow_redirects
+      httpclient
     jwt (2.8.1)
       base64
     kramdown (2.4.0)
@@ -300,6 +316,8 @@ GEM
     net-imap (0.4.11)
       date
       net-protocol
+    net-http-persistent (4.0.2)
+      connection_pool (~> 2.2)
     net-pop (0.1.2)
       net-protocol
     net-protocol (0.2.2)
@@ -331,22 +349,20 @@ GEM
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    omniauth_openid_connect (0.7.1)
+    omniauth_openid_connect (0.6.1)
       omniauth (>= 1.9, < 3)
-      openid_connect (~> 2.2)
-    openid_connect (2.2.0)
+      openid_connect (~> 1.1)
+    openid_connect (1.4.2)
       activemodel
       attr_required (>= 1.0.0)
-      faraday (~> 2.0)
-      faraday-follow_redirects
-      json-jwt (>= 1.16)
+      json-jwt (>= 1.15.0)
       net-smtp
-      rack-oauth2 (~> 2.2)
-      swd (~> 2.0)
+      rack-oauth2 (~> 1.21)
+      swd (~> 1.3)
       tzinfo
       validate_email
       validate_url
-      webfinger (~> 2.0)
+      webfinger (~> 1.2)
     os (1.1.4)
     pagy (6.5.0)
     parallel (1.24.0)
@@ -373,11 +389,10 @@ GEM
     raabro (1.4.0)
     racc (1.8.0)
     rack (2.2.9)
-    rack-oauth2 (2.2.0)
+    rack-oauth2 (1.21.3)
       activesupport
       attr_required
-      faraday (~> 2.0)
-      faraday-follow_redirects
+      httpclient
       json-jwt (>= 1.11.0)
       rack (>= 2.1.0)
     rack-protection (3.2.0)
@@ -559,11 +574,10 @@ GEM
       solargraph
     stringio (3.1.0)
     strscan (3.1.0)
-    swd (2.0.2)
+    swd (1.3.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
-      faraday (~> 2.0)
-      faraday-follow_redirects
+      httpclient (>= 2.4)
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
     syntax_tree-haml (4.0.3)
@@ -604,10 +618,9 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webfinger (2.1.2)
+    webfinger (1.2.0)
       activesupport
-      faraday (~> 2.0)
-      faraday-follow_redirects
+      httpclient (>= 2.4)
     webmock (3.23.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -631,6 +644,7 @@ DEPENDENCIES
   activerecord-session_store
   amazing_print
   audits1984
+  azure-storage-blob!
   bootsnap
   capybara
   console1984
