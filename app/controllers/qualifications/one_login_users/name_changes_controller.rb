@@ -8,6 +8,7 @@ module Qualifications
       def create
         @name_change_form = NameChangeForm.new(name_change_form_params)
         name_change = @name_change_form.save
+
         if name_change
           redirect_to qualifications_one_login_user_name_change_path(name_change)
         else
