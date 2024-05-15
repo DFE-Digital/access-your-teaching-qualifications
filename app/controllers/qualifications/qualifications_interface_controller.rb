@@ -2,6 +2,7 @@ module Qualifications
   class QualificationsInterfaceController < ApplicationController
     before_action :authenticate_user!
     before_action :handle_expired_token!
+    before_action :set_active_storage_url_options
 
     http_basic_authenticate_with(
       name: ENV.fetch("SUPPORT_USERNAME", nil),
@@ -62,6 +63,12 @@ module Qualifications
         :onelogin_user_token_expiry
       else
         :identity_user_token_expiry
+      end
+    end
+
+    def set_active_storage_url_options
+      if Rails.env.test?
+        ActiveStorage::Current.url_options = { host: 'localhost', port: 3000, protocol: 'http' }
       end
     end
   end
