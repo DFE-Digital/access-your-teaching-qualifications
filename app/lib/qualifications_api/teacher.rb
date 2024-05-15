@@ -63,6 +63,10 @@ module QualificationsApi
       api_data.induction&.status == "Exempt"
     end
 
+    def pending_name_change?
+      api_data.pending_name_change == true
+    end
+
     private
 
     def add_qts
