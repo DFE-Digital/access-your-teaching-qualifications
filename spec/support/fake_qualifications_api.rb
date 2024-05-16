@@ -89,6 +89,12 @@ class FakeQualificationsApi < Sinatra::Base
     { caseNumber: "CASE-TEST-123" }.to_json
   end
 
+  post "/v3/teacher/date-of-birth-changes" do
+    content_type :json
+
+    { caseNumber: "CASE-TEST-123" }.to_json
+  end
+
   private
 
   def teacher_data(sanctions: false, trn: "1234567")

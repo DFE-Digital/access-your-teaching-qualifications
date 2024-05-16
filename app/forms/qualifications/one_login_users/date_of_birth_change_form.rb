@@ -14,10 +14,14 @@ module Qualifications
       validate :validate_file_size
       validate :validate_content_type
 
-      def date_of_birth
-        Date.new(year.to_i, month.to_i, day.to_i)
-      rescue StandardError
-        InvalidDate.new(day:, month:, year:)
+      def self.initialize_with(date_of_birth_change:)
+        new(
+          day: date_of_birth_change.date_of_birth.day,
+          month: date_of_birth_change.date_of_birth.month,
+          year: date_of_birth_change.date_of_birth.year,
+          evidence: date_of_birth_change.evidence,
+          user: date_of_birth_change.user,
+        )
       end
 
       def save
@@ -26,6 +30,22 @@ module Qualifications
         date_of_birth_change = user.date_of_birth_changes.create!(date_of_birth:)
         date_of_birth_change.evidence.attach evidence
         date_of_birth_change
+      end
+
+      def update(date_of_birth_change)
+        return false unless valid?
+
+        date_of_birth_change.update!(
+          date_of_birth:
+        )
+        date_of_birth_change.evidence.attach evidence
+        date_of_birth_change
+      end
+
+      def date_of_birth
+        Date.new(year.to_i, month.to_i, day.to_i)
+      rescue StandardError
+        InvalidDate.new(day:, month:, year:)
       end
 
       private

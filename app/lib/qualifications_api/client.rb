@@ -37,6 +37,29 @@ module QualificationsApi
       response.body.fetch "caseNumber"
     end
 
+    def send_date_of_birth_change(date_of_birth_change:)
+      client.headers["X-Api-Version"] = "20240416"
+      endpoint = "v3/teacher/date-of-birth-changes"
+
+      body = {
+        email: date_of_birth_change.user.email,
+        dateOfBirth: date_of_birth_change.date_of_birth.to_s,
+        evidenceFileName: date_of_birth_change.evidence_filename,
+        evidenceFileUrl: date_of_birth_change.expiring_evidence_url,
+      }.to_json
+
+      response = client.post(endpoint) do |req|
+        req.body = body
+      end
+
+      # TODO: the client has no API version set by default. Consider setting
+      # a default version for all requests handled by this client, updating the
+      # FakeQualificationsApi and any tests if required.
+      client.headers["X-Api-Version"] = nil
+
+      response.body.fetch "caseNumber"
+    end
+
     def certificate(name:, type:, url:)
       unless valid_certificate_path?(url)
         raise QualificationsApi::InvalidCertificateUrlError

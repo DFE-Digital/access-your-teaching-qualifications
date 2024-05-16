@@ -27,6 +27,7 @@ shared:
     - date_of_birth
     - created_at
     - updated_at
+    - reference_number
   :dsi_users:
     - id
     - email

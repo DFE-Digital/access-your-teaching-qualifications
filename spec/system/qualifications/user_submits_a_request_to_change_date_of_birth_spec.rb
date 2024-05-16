@@ -20,12 +20,12 @@ RSpec.feature "Account page", type: :system do
     and_i_submit_the_form
     then_i_see_the_confirmation_page
 
-    # when_i_edit_the_date_of_birth
-    # and_i_submit_the_form
-    # and_i_confirm_my_changes
+    when_i_edit_the_date_of_birth
+    and_i_submit_the_form
+    and_i_confirm_my_changes
 
-    # then_my_request_is_submitted
-    # and_my_evidence_is_uploaded
+    then_my_request_is_submitted
+    and_my_evidence_is_uploaded
   end
 
   private
@@ -72,5 +72,28 @@ RSpec.feature "Account page", type: :system do
     expect(page).to have_content "Confirm change"
     expect(page).to have_content "5 December 1990"
     expect(page).to have_content "test-upload.pdf"
+  end
+
+  def when_i_edit_the_date_of_birth
+    change_links = all('a', text: 'Change')
+    change_links[0].click
+    fill_in "Month", with: 3
+
+    attach_file "Upload evidence", Rails.root.join("spec/fixtures/test-upload.pdf")
+  end
+
+  def and_i_confirm_my_changes
+    click_button "Continue"
+  end
+
+  def then_my_request_is_submitted
+    expect(page).to have_content "Date of birth change request submitted"
+    expect(page).to have_content "CASE-TEST-123"
+    expect(DateOfBirthChange.last.date_of_birth.to_s).to eq "1990-03-05"
+    expect(DateOfBirthChange.last.reference_number).to eq "CASE-TEST-123"
+  end
+
+  def and_my_evidence_is_uploaded
+    expect(DateOfBirthChange.last.evidence.attached?).to be true
   end
 end

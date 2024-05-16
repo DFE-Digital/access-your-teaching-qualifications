@@ -24,14 +24,42 @@ module Qualifications
         end
       end
 
+      def edit
+        @date_of_birth_change = current_user.date_of_birth_changes.find(params[:id])
+        @date_of_birth_change_form = DateOfBirthChangeForm.initialize_with(date_of_birth_change: @date_of_birth_change)
+      end
+
+      def update
+        @date_of_birth_change = current_user.date_of_birth_changes.find(params[:id])
+        @date_of_birth_change_form = DateOfBirthChangeForm.new(date_of_birth_change_form_params)
+        if @date_of_birth_change_form.update(@date_of_birth_change)
+          redirect_to qualifications_one_login_user_date_of_birth_change_path(@date_of_birth_change)
+        else
+          render :edit
+        end
+      end
+
       def show
+        @date_of_birth_change = current_user.date_of_birth_changes.find(params[:id])
+      end
+
+      def confirm
+        @date_of_birth_change = current_user.date_of_birth_changes.find(params[:id])
+        reference_number = qualifications_api_client.send_date_of_birth_change(
+          date_of_birth_change: @date_of_birth_change
+        )
+        @date_of_birth_change.update!(reference_number:)
+
+        redirect_to submitted_qualifications_one_login_user_date_of_birth_change_path(@date_of_birth_change)
+      end
+
+      def submitted
         @date_of_birth_change = current_user.date_of_birth_changes.find(params[:id])
       end
 
       private
 
       def date_of_birth_change_form_params
-
         params
           .require(:qualifications_one_login_users_date_of_birth_change_form)
           .permit(:evidence, *DOB_CONVERSION.keys)
@@ -39,6 +67,10 @@ module Qualifications
           .transform_keys do |key|
             DOB_CONVERSION.keys.include?(key) ? DOB_CONVERSION[key] : key
           end
+      end
+
+      def qualifications_api_client
+        @qualifications_api_client ||= QualificationsApi::Client.new(token: session[user_token_session_key])
       end
     end
   end
