@@ -4,6 +4,8 @@
     - filename
   :active_storage_attachments:
     - name
+  :date_of_birth_changes:
+    - date_of_birth
   :dsi_users:
     - email
     - first_name

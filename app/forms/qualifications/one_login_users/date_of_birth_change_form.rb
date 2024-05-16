@@ -22,6 +22,10 @@ module Qualifications
 
       def save
         return false unless valid?
+
+        date_of_birth_change = user.date_of_birth_changes.create!(date_of_birth:)
+        date_of_birth_change.evidence.attach evidence
+        date_of_birth_change
       end
 
       private

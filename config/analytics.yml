@@ -21,6 +21,12 @@ shared:
     - record_id
     - blob_id
     - created_at
+  :date_of_birth_changes:
+    - id
+    - user_id
+    - date_of_birth
+    - created_at
+    - updated_at
   :dsi_users:
     - id
     - email

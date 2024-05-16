@@ -16,9 +16,9 @@ RSpec.feature "Account page", type: :system do
     when_i_submit_the_form
     then_i_see_validation_errors
 
-    # when_i_complete_the_form
-    # and_i_submit_the_form
-    # then_i_see_the_confirmation_page
+    when_i_complete_the_form
+    and_i_submit_the_form
+    then_i_see_the_confirmation_page
 
     # when_i_edit_the_date_of_birth
     # and_i_submit_the_form
@@ -58,5 +58,19 @@ RSpec.feature "Account page", type: :system do
   def then_i_see_validation_errors
     expect(page).to have_content "Date of birth must include a day and month"
     expect(page).to have_content "Select a file"
+  end
+
+  def when_i_complete_the_form
+    fill_in("Day", with: 5)
+    fill_in("Month", with: 12)
+    fill_in("Year", with: 1990)
+
+    attach_file "Upload evidence", Rails.root.join("spec/fixtures/test-upload.pdf")
+  end
+
+  def then_i_see_the_confirmation_page
+    expect(page).to have_content "Confirm change"
+    expect(page).to have_content "5 December 1990"
+    expect(page).to have_content "test-upload.pdf"
   end
 end

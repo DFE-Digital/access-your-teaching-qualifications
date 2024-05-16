@@ -24,6 +24,10 @@ module Qualifications
         end
       end
 
+      def show
+        @date_of_birth_change = current_user.date_of_birth_changes.find(params[:id])
+      end
+
       private
 
       def date_of_birth_change_form_params
