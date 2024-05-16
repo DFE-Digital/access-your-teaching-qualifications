@@ -25,6 +25,14 @@ namespace :qualifications do
       post "/confirm", on: :member, to: "name_changes#confirm"
       get "/submitted", on: :member, to: "name_changes#submitted"
     end
+
+    resources :date_of_birth_changes,
+      only: [:new, :create, :show, :edit, :update],
+      path: "date-of-birth-changes",
+      module: "one_login_users" do
+      post "/confirm", on: :member, to: "date_of_birth_changes#confirm"
+      get "/submitted", on: :member, to: "date_of_birth_changes#submitted"
+    end
   end
   resource :npq_certificate, only: [:show]
 

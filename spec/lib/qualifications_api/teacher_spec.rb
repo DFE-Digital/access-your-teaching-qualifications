@@ -336,4 +336,44 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
     end
   end
+
+  describe "#pending_name_change?" do
+    let(:teacher) { described_class.new(api_data) }
+
+    context "pendingNameChange field is false" do
+      let(:api_data) { { "pendingNameChange" => false } }
+
+      it "returns false" do
+        expect(teacher.pending_name_change?).to eq false
+      end
+    end
+
+    context "pendingNameChange field is true" do
+      let(:api_data) { { "pendingNameChange" => true } }
+
+      it "returns true" do
+        expect(teacher.pending_name_change?).to eq true
+      end
+    end
+  end
+
+  describe "#pending_date_of_birth_change?" do
+    let(:teacher) { described_class.new(api_data) }
+
+    context "pendingDateOfBirthChange field is false" do
+      let(:api_data) { { "pendingDateOfBirthChange" => false } }
+
+      it "returns false" do
+        expect(teacher.pending_date_of_birth_change?).to eq false
+      end
+    end
+
+    context "pendingDateOfBirthChange field is true" do
+      let(:api_data) { { "pendingDateOfBirthChange" => true } }
+
+      it "returns true" do
+        expect(teacher.pending_date_of_birth_change?).to eq true
+      end
+    end
+  end
 end

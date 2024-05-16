@@ -71,5 +71,11 @@ module Qualifications
         ActiveStorage::Current.url_options = { host: 'localhost', port: 3000, protocol: 'http' }
       end
     end
+
+    def redirect_to_root_unless_one_login_enabled
+      unless FeatureFlags::FeatureFlag.active?(:one_login)
+        redirect_to qualifications_root_path
+      end
+    end
   end
 end

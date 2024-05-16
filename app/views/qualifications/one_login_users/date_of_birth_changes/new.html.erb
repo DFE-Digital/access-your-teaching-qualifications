@@ -1,0 +1,17 @@
+<% content_for :page_title, "Change your date of birth" %>
+<% content_for :back_link_url, qualifications_one_login_user_path %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-l">Change your date of birth</h1>
+
+    <%= form_with model: @date_of_birth_change_form, url: qualifications_one_login_user_date_of_birth_changes_path, method: :post do |form| %>
+      <%= form.govuk_date_field :date_of_birth, date_of_birth: true, legend: nil %>
+
+      <%= form.govuk_file_field :evidence, label: { text: "Upload evidence" } %>
+
+      <%= form.govuk_submit "Continue" %>
+    <% end %>
+  </div>
+</div>
