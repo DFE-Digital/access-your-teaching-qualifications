@@ -156,10 +156,6 @@ variable "evidence_storage_account_name" {
   default = null
 }
 
-variable "region_name" {
-  default = "west europe"
-  type = "string"
-}
 
 locals {
   hosting_environment          = var.environment_name
