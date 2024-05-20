@@ -2,6 +2,8 @@ class User < ApplicationRecord
   encrypts :email, deterministic: true
   encrypts :family_name, :given_name, :name
 
+  has_many :name_changes
+
   def self.from_auth(auth_data)
     email = auth_data.info.email
     user = find_or_initialize_by(email:)
@@ -27,6 +29,6 @@ class User < ApplicationRecord
   end
 
   def verified_by_one_login?
-    one_login_verified_name.present? & one_login_verified_birth_date.present?
+    one_login_verified_name.present? && one_login_verified_birth_date.present?
   end
 end

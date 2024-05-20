@@ -8,6 +8,10 @@
     - email
     - first_name
     - last_name
+  :name_changes:
+    - first_name
+    - middle_name
+    - last_name
   :users:
     - date_of_birth
     - email

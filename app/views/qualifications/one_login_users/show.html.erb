@@ -19,23 +19,41 @@
       Teaching record personal details
     </h2>
 
-    <p class="govuk-body">You can change your preferred name and mobile phone number at any time.</p>
     <p class="govuk-body">You’ll need to give evidence to change the name on your certificates or your date of birth.</p>
 
-    <%=
-      govuk_summary_list do |summary_list|
-        summary_list.with_row do |row|
-          row.with_key { "Name on certificates" }
-          row.with_value { "_TODO" }
-          row.with_action(text: "Change", href: "#", visually_hidden_text: "Name on certificates")
-        end
-        summary_list.with_row do |row|
-          row.with_key { "Date of birth" }
-          row.with_value { "_TODO" }
-          row.with_action(text: "Change", href: "#", visually_hidden_text: "Date of birth")
-        end
-      end
-    %>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        Name on certificates
+        </dt>
+        <dd class="govuk-summary-list__value">
+        <%= @teacher.name %>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+        <% if @teacher.pending_name_change? %>
+          <%= govuk_tag(text: "In review", colour: "yellow") %>
+        <% else %>
+          <ul class="govuk-summary-list__actions-list">
+            <%= govuk_link_to "Change", new_qualifications_one_login_user_name_change_path, visually_hidden_text: "Name on certificates" %>
+          </ul>
+        <% end %>
+        </dd>
+      </div>
+
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+        Date of birth
+        </dt>
+        <dd class="govuk-summary-list__value">
+        <p class="govuk-body">_TODO</p>
+        </dd>
+        <dd class="govuk-summary-list__actions">
+          <ul class="govuk-summary-list__actions-list">
+            <%= govuk_link_to "Change", "#", visually_hidden_text: "Date of birth" %>
+          </ul>
+        </dd>
+      </div>
+    </dl>
 
     <% if current_user.verified_by_one_login? %>
       <h2 class="govuk-heading-m">
@@ -50,12 +68,10 @@
           summary_list.with_row do |row|
             row.with_key { "Name" }
             row.with_value { current_user.one_login_verified_name }
-            row.with_action(text: "Change", href: "#", visually_hidden_text: "Name")
           end
           summary_list.with_row do |row|
             row.with_key { "Date of birth" }
             row.with_value { current_user.one_login_verified_birth_date.to_fs(:long_uk) }
-            row.with_action(text: "Change", href: "#", visually_hidden_text: "Date of birth")
           end
         end
       %>

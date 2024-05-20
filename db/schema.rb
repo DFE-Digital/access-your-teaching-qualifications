@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_29_140623) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_13_122026) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -127,6 +127,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_29_140623) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "service", null: false
+  end
+
+  create_table "name_changes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "first_name"
+    t.string "middle_name"
+    t.string "last_name"
+    t.string "reference_number"
+    t.index ["user_id"], name: "index_name_changes_on_user_id"
   end
 
   create_table "roles", force: :cascade do |t|
