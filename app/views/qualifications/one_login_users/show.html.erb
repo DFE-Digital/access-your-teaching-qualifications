@@ -45,12 +45,16 @@
         Date of birth
         </dt>
         <dd class="govuk-summary-list__value">
-        <p class="govuk-body">_TODO</p>
+        <p class="govuk-body"><%= @teacher.date_of_birth.to_date.to_fs(:long_uk) %></p>
         </dd>
         <dd class="govuk-summary-list__actions">
+        <% if @teacher.pending_date_of_birth_change? %>
+          <%= govuk_tag(text: "In review", colour: "yellow") %>
+        <% else %>
           <ul class="govuk-summary-list__actions-list">
-            <%= govuk_link_to "Change", "#", visually_hidden_text: "Date of birth" %>
+            <%= govuk_link_to "Change", new_qualifications_one_login_user_date_of_birth_change_path, visually_hidden_text: "Name on certificates" %>
           </ul>
+        <% end %>
         </dd>
       </div>
     </dl>
@@ -76,25 +80,25 @@
         end
       %>
 
-      <p class="govuk-body">
-        <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link">Find out how to contact GOV.UK One Login support</a>.
-      </p>
-    <% end %>
-
-    <h2 class="govuk-heading-m">
-      GOV.UK One Login security details
-    </h2>
-
-    <p class="govuk-body">You can change these details for your GOV.UK One Login:</p>
-
-    <ul class="govuk-list govuk-list--bullet">
-      <li>email address</li>
-      <li>password</li>
-      <li>how you get security codes to sign in</li>
-    </ul>
-
     <p class="govuk-body">
-      <a href="https://home.account.gov.uk" class="govuk-link">Change your GOV.UK One login security details</a>.
+      <a href="https://home.account.gov.uk/contact-gov-uk-one-login" class="govuk-link">Find out how to contact GOV.UK One Login support</a>.
     </p>
+  <% end %>
+
+  <h2 class="govuk-heading-m">
+    GOV.UK One Login security details
+  </h2>
+
+  <p class="govuk-body">You can change these details for your GOV.UK One Login:</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>email address</li>
+    <li>password</li>
+    <li>how you get security codes to sign in</li>
+  </ul>
+
+  <p class="govuk-body">
+    <a href="https://home.account.gov.uk" class="govuk-link">Change your GOV.UK One login security details</a>.
+  </p>
   </div>
 </div>

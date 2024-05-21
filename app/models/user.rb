@@ -3,6 +3,7 @@ class User < ApplicationRecord
   encrypts :family_name, :given_name, :name
 
   has_many :name_changes
+  has_many :date_of_birth_changes
 
   def self.from_auth(auth_data)
     email = auth_data.info.email

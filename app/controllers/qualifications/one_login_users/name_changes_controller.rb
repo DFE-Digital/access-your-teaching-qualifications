@@ -1,6 +1,8 @@
 module Qualifications
   module OneLoginUsers
     class NameChangesController < QualificationsInterfaceController
+      before_action :redirect_to_root_unless_one_login_enabled
+
       def new
         @name_change_form = NameChangeForm.new
       end

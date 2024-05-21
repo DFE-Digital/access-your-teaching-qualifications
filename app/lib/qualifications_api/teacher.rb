@@ -67,6 +67,10 @@ module QualificationsApi
       api_data.pending_name_change == true
     end
 
+    def pending_date_of_birth_change?
+      api_data.pending_date_of_birth_change == true
+    end
+
     private
 
     def add_qts
