@@ -65,6 +65,6 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
 
   def then_i_see_the_aytq_service
     expect(page).to have_content "Access your teaching qualifications"
-    expect(page).to have_content "Sign in with DfE Identity"
+    expect(page).to have_content "Sign in"
   end
 end
