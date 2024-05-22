@@ -1,0 +1,13 @@
+<%= form.govuk_date_field :date_of_birth, date_of_birth: true, legend: nil %>
+
+<h2 class="govuk-heading-s">Upload evidence</h2>
+<%= govuk_details(summary_text: "Documents we accept") do %>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>birth certificate</li>
+    <li>passport</li>
+    <li>driving license</li>
+  </ul>
+<% end %>
+
+<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true } %>
+<%= form.govuk_submit "Continue" %>

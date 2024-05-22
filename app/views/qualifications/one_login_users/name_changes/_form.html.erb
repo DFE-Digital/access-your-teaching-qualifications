@@ -1,0 +1,19 @@
+<%= form.govuk_text_field :first_name, label: { text: "First name" } %>
+<%= form.govuk_text_field :middle_name, label: { text: "Middle name" }, hint_text: "Optional" %>
+<%= form.govuk_text_field :last_name, label: { text: "Last name" } %>
+
+<h2 class="govuk-heading-s">Upload evidence</h2>
+
+<%= govuk_details(summary_text: "Documents we accept") do %>
+  <ul class="govuk-list govuk-list--bullet">
+    <li> marriage certificate </li>
+    <li> civil partnership certificate </li>
+    <li> decree absolute and birth certificate </li>
+    <li> statutory declaration </li>
+    <li> deed poll </li>
+  </ul>
+<% end %>
+
+<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true } %>
+
+<%= form.govuk_submit "Continue" %>
