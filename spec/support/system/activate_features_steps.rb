@@ -7,6 +7,10 @@ module ActivateFeaturesSteps
     FeatureFlags::FeatureFlag.activate(:qualifications_service_open)
   end
 
+  def given_the_terms_and_conditions_feature_flag_is_enabled
+    FeatureFlags::FeatureFlag.activate(:terms_and_conditions)
+  end
+
   def given_the_support_service_is_open
     FeatureFlags::FeatureFlag.activate(:support_service_open)
   end

@@ -117,6 +117,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_20_134804) do
     t.string "uid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "terms_and_conditions_version_accepted"
+    t.datetime "terms_and_conditions_timestamp"
     t.index ["email"], name: "index_dsi_users_on_email", unique: true
   end
 
