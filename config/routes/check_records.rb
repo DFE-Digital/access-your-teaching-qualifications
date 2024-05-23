@@ -18,6 +18,9 @@ namespace :check_records, path: "check-records" do
   get "/trn-search", to: "search#trn_search"
   get "/trn-result", to: "search#trn_result"
 
+  get "/terms-and-conditions", to: "terms_and_conditions#show"
+  patch "/terms-and-conditions" => "terms_and_conditions#update"
+
   resources :teachers, only: %i[show]
 
   scope "/feedback" do
