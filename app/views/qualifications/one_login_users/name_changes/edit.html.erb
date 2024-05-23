@@ -7,13 +7,7 @@
     <h1 class="govuk-heading-l">Change your name on teaching certificates</h1>
 
     <%= form_with model: @name_change_form, url: qualifications_one_login_user_name_change_path(@name_change), method: :patch do |form| %>
-      <%= form.govuk_text_field :first_name, label: { text: "First name" } %>
-      <%= form.govuk_text_field :middle_name, label: { text: "Middle name" }, hint_text: "Optional" %>
-      <%= form.govuk_text_field :last_name, label: { text: "Last name" } %>
-
-      <%= form.govuk_file_field :evidence, label: { text: "Upload evidence" } %>
-
-      <%= form.govuk_submit "Continue" %>
+      <%= render "form", form: form %>
     <% end %>
   </div>
 </div>

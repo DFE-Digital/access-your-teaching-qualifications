@@ -11,6 +11,7 @@ RSpec.feature "Account page", type: :system do
     when_i_click_through_to_update_my_details
     and_click_change_name
     then_i_am_on_the_name_change_form
+    and_i_can_see_a_list_of_valid_evidence
     when_i_submit_the_form
     then_i_see_validation_errors
 
@@ -46,6 +47,12 @@ RSpec.feature "Account page", type: :system do
 
   def then_i_am_on_the_name_change_form
     expect(page).to have_content "Change your name on teaching certificates"
+  end
+
+  def and_i_can_see_a_list_of_valid_evidence
+    within(".govuk-details") do
+      expect(page).to have_selector(:css, "li", text: "deed poll", visible: :all)
+    end
   end
 
   def when_i_submit_the_form
