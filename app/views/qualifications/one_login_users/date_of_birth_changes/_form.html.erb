@@ -9,5 +9,5 @@
   </ul>
 <% end %>
 
-<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true } %>
+<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true }, hint: { text: "File must be a PDF, JPG, JPEG or PNG" } %>
 <%= form.govuk_submit "Continue" %>

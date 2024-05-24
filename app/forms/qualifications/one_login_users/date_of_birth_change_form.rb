@@ -60,7 +60,7 @@ module Qualifications
       def validate_content_type
         allowed_types = ["image/jpeg", "image/png", "application/pdf"]
         if evidence && !allowed_types.include?(evidence.content_type)
-          errors.add(:evidence, "The selected file must be an image or a PDF")
+          errors.add(:evidence, "The selected file must be a PDF, JPG, JPEG or PNG")
         end
       end
     end
