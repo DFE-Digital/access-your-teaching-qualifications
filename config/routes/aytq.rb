@@ -12,6 +12,7 @@ namespace :qualifications do
   get "/sign-out", to: "users/sign_out#complete"
 
   get "/users/auth/identity/logout", to: "users/sign_out#complete"
+  get "/users/auth/onelogin/logout", to: "users/sign_out#complete"
 
   resource :start, only: [:show]
 
