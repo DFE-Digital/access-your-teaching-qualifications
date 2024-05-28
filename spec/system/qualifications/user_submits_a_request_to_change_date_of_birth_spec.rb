@@ -63,7 +63,7 @@ RSpec.feature "Account page", type: :system do
   alias_method :and_i_submit_the_form, :when_i_submit_the_form
 
   def then_i_see_validation_errors
-    expect(page).to have_content "Date of birth must include a day and month"
+    expect(page).to have_content "Enter a date of birth"
     expect(page).to have_content "Select a file"
   end
 

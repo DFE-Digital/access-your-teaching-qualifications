@@ -103,6 +103,20 @@ RSpec.describe DayMonthYearValidator do
       end
     end
 
+    context "when date is missing all parts" do
+      let(:attributes) { { day: nil, month: nil, year: nil} }
+
+      it "fails validation" do
+        expect(validatable).to be_invalid
+      end
+
+      it "adds an error message" do
+        validatable.valid?
+
+        expect(validatable.errors[:date_attribute].first).to include("blank")
+      end
+    end
+
     context "when day is missing" do
       let(:attributes) { { day: nil, month: "6", year: "1990" } }
 

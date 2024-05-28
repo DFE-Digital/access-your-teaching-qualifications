@@ -33,4 +33,8 @@ tmp/pids/*
 .terraform.lock.hcl
 fetch_config.rb
 
+# Active Storage folder
 storage/
+
+# Redis snapshots
+dump.rdb

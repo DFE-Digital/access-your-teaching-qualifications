@@ -55,6 +55,11 @@ class DayMonthYearValidator
   end
 
   def validate_date_parts_presence
+    if record.day.blank? && record.month.blank? && record.year.blank?
+      record.errors.add(attribute, :blank)
+      return
+    end
+
     if record.day.blank? && record.month.blank?
       record.errors.add(attribute, :missing_day_and_month)
       return
@@ -71,7 +76,7 @@ class DayMonthYearValidator
     end
 
     if record.day.blank?
-      record.errors.add(attribute, :missing_day) 
+      record.errors.add(attribute, :missing_day)
       return
     end
 
