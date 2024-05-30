@@ -2,11 +2,11 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Sign in to access your teaching qualifications</h1>
     <% if FeatureFlags::FeatureFlag.active?(:one_login) %>
-      <p class="govuk-body">You’ll need a GOVUK One Login account to access your teaching qualifications.</p>
+      <p class="govuk-body">You’ll need a GOV.UK One Login account to access your teaching qualifications.</p>
       <p class="govuk-body">You can create an account if you do not have one already.</p>
       <%=
         govuk_button_to(
-          "Sign in with GOVUK One Login",
+          "Sign in with GOV.UK One Login",
           "/qualifications/users/auth/onelogin",
           method: :post
         )
