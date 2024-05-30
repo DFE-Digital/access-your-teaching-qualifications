@@ -119,7 +119,7 @@ GEM
     aes_key_wrap (1.1.0)
     amazing_print (1.6.0)
     ast (2.4.2)
-    attr_required (1.0.1)
+    attr_required (1.0.2)
     audits1984 (0.1.6)
       console1984
       rinku
@@ -129,7 +129,7 @@ GEM
     base64 (0.2.0)
     benchmark (0.3.0)
     bigdecimal (3.1.8)
-    bindata (2.4.15)
+    bindata (2.5.0)
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
@@ -173,6 +173,8 @@ GEM
       railties (>= 6.1)
     drb (2.2.1)
     e2mmap (0.1.0)
+    email_validator (2.2.4)
+      activemodel
     erubi (1.12.0)
     et-orbi (1.2.7)
       tzinfo
@@ -265,11 +267,13 @@ GEM
     jsbundling-rails (1.3.0)
       railties (>= 6.0.0)
     json (2.7.1)
-    json-jwt (1.15.3.1)
+    json-jwt (1.16.6)
       activesupport (>= 4.2)
       aes_key_wrap
+      base64
       bindata
-      httpclient
+      faraday (~> 2.0)
+      faraday-follow_redirects
     jwt (2.8.1)
       base64
     kramdown (2.4.0)
@@ -349,20 +353,22 @@ GEM
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    omniauth_openid_connect (0.6.1)
+    omniauth_openid_connect (0.7.1)
       omniauth (>= 1.9, < 3)
-      openid_connect (~> 1.1)
-    openid_connect (1.4.2)
+      openid_connect (~> 2.2)
+    openid_connect (2.3.0)
       activemodel
       attr_required (>= 1.0.0)
-      json-jwt (>= 1.15.0)
-      net-smtp
-      rack-oauth2 (~> 1.21)
-      swd (~> 1.3)
+      email_validator
+      faraday (~> 2.0)
+      faraday-follow_redirects
+      json-jwt (>= 1.16)
+      mail
+      rack-oauth2 (~> 2.2)
+      swd (~> 2.0)
       tzinfo
-      validate_email
       validate_url
-      webfinger (~> 1.2)
+      webfinger (~> 2.0)
     os (1.1.4)
     pagy (6.5.0)
     parallel (1.24.0)
@@ -389,10 +395,11 @@ GEM
     raabro (1.4.0)
     racc (1.8.0)
     rack (2.2.9)
-    rack-oauth2 (1.21.3)
+    rack-oauth2 (2.2.1)
       activesupport
       attr_required
-      httpclient
+      faraday (~> 2.0)
+      faraday-follow_redirects
       json-jwt (>= 1.11.0)
       rack (>= 2.1.0)
     rack-protection (3.2.0)
@@ -574,10 +581,11 @@ GEM
       solargraph
     stringio (3.1.0)
     strscan (3.1.0)
-    swd (1.3.0)
+    swd (2.0.3)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
-      httpclient (>= 2.4)
+      faraday (~> 2.0)
+      faraday-follow_redirects
     syntax_tree (6.2.0)
       prettier_print (>= 1.2.0)
     syntax_tree-haml (4.0.3)
@@ -602,9 +610,6 @@ GEM
     uber (0.1.0)
     unicode-display_width (2.5.0)
     uri (0.13.0)
-    validate_email (0.1.6)
-      activemodel (>= 3.0)
-      mail (>= 2.2.5)
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
@@ -618,9 +623,10 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webfinger (1.2.0)
+    webfinger (2.1.3)
       activesupport
-      httpclient (>= 2.4)
+      faraday (~> 2.0)
+      faraday-follow_redirects
     webmock (3.23.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
