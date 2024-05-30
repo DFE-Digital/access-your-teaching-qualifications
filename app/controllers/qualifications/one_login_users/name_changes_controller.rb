@@ -2,6 +2,7 @@ module Qualifications
   module OneLoginUsers
     class NameChangesController < QualificationsInterfaceController
       before_action :redirect_to_root_unless_one_login_enabled
+      before_action :redirect_if_change_pending, only: [:create, :update]
 
       def new
         @name_change_form = NameChangeForm.new
@@ -60,6 +61,16 @@ module Qualifications
 
       def qualifications_api_client
         @qualifications_api_client ||= QualificationsApi::Client.new(token: session[user_token_session_key])
+      end
+
+      def redirect_if_change_pending
+        teacher = qualifications_api_client.teacher
+        if teacher.pending_name_change?
+          flash[:warning] =
+            "You have a name change request pending. \
+          Please wait until that is complete before submitting another."
+          redirect_to qualifications_one_login_user_path
+        end
       end
     end
   end
