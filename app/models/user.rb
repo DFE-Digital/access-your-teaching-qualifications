@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   encrypts :email, deterministic: true
   encrypts :family_name, :given_name, :name
+  encrypts :one_login_verified_name
 
   has_many :name_changes
   has_many :date_of_birth_changes
