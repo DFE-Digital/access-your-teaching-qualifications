@@ -8,6 +8,7 @@ module Qualifications
       }.freeze
 
       before_action :redirect_to_root_unless_one_login_enabled
+      before_action :redirect_if_change_pending, only: [:create, :update]
 
       def new
         @date_of_birth_change_form = DateOfBirthChangeForm.new
@@ -71,6 +72,16 @@ module Qualifications
 
       def qualifications_api_client
         @qualifications_api_client ||= QualificationsApi::Client.new(token: session[user_token_session_key])
+      end
+
+      def redirect_if_change_pending
+        teacher = qualifications_api_client.teacher
+        if teacher.pending_date_of_birth_change?
+          flash[:warning] =
+            "You have a date of birth change request pending. \
+          Please wait until that is complete before submitting another."
+          redirect_to qualifications_one_login_user_path
+        end
       end
     end
   end
