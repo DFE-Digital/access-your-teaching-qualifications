@@ -61,6 +61,6 @@ module QualificationAuthenticationSteps
   end
 
   def and_click_the_onelogin_sign_in_button
-    click_button "Sign in with GOVUK One Login"
+    click_button "Sign in with GOV.UK One Login"
   end
 end
