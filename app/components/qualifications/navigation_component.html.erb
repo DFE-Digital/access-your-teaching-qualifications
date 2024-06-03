@@ -1,0 +1,20 @@
+<%=
+  govuk_header(service_name: t("service.name"), service_url: qualifications_root_path) do |header|
+    if current_user
+      if FeatureFlags::FeatureFlag.active?(:one_login)
+        header.with_navigation_item(
+          active: current_page?(qualifications_identity_user_path),
+          href: qualifications_one_login_user_path,
+          text: "Account"
+        )
+      else
+        header.with_navigation_item(
+          active: current_page?(qualifications_identity_user_path),
+          href: qualifications_identity_user_path,
+          text: "Account"
+        )
+      end
+      header.with_navigation_item(href: qualifications_new_sign_out_path, text: "Sign out")
+    end
+  end
+%>
