@@ -10,7 +10,10 @@ module CheckRecords
         qualification.npq? || qualification.mq?
       end
     rescue QualificationsApi::TeacherNotFoundError
-      render "not_found"
+      respond_to do |format|
+        format.html { render "not_found" }
+        format.any { head :not_found }
+      end
     end
   end
 end
