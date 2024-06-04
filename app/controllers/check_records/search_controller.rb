@@ -7,6 +7,13 @@ module CheckRecords
     end
 
     def show
+      unless params["search"] &&
+        params["search"].key?("date_of_birth(1i)") &&
+        params["search"].key?("date_of_birth(2i)") &&
+        params["search"].key?("date_of_birth(3i)")
+        redirect_to check_records_search_path, notice: "Please enter a date of birth"
+        return
+      end
       date_of_birth = [
         params["search"]["date_of_birth(1i)"],
         params["search"]["date_of_birth(2i)"],
