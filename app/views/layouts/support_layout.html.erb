@@ -2,4 +2,8 @@
   <%= yield %>
 <% end %>
 
+<% content_for :navigation do %>
+  <%= support_navigation %>
+<% end %>
+
 <%= render template: 'layouts/base' %>
