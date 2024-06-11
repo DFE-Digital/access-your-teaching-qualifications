@@ -2,7 +2,7 @@ module Qualifications
   module OneLoginUsers
     class NameChangesController < QualificationsInterfaceController
       before_action :redirect_to_root_unless_one_login_enabled
-      before_action :redirect_if_change_pending
+      before_action :redirect_if_change_pending, except: [:submitted]
 
       def new
         @name_change_form = NameChangeForm.new
