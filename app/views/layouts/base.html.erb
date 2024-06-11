@@ -25,7 +25,7 @@
 
     <%= govuk_skip_link %>
 
-    <%= navigation %>
+    <%= yield :navigation %>
 
     <div class="govuk-width-container">
       <%= govuk_phase_banner(tag: { text: "Beta" }) do %>
