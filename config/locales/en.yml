@@ -58,6 +58,10 @@ en:
               under_16: Date of birth must be at least 16 years ago
             evidence:
               blank: Select a file
+        trn_search:
+          attributes:
+            trn:
+              blank: Enter a valid TRN
 
   activerecord:
     errors:

@@ -1,0 +1,17 @@
+<% content_for :page_title, "Find teacher record" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= form_with model: @trn_search, url: check_records_trn_result_path, method: :get do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <h1 class="govuk-heading-l">Multiple results found</h1>
+
+      <p>Enter a teacher reference number (TRN) to find the record you need.</p>
+
+      <%= f.govuk_text_field :trn, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "TRN" }, required: true %>
+
+      <%= f.govuk_submit "Find record" %>
+    <% end %>
+  </div>
+</div>

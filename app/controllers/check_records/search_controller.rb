@@ -22,6 +22,24 @@ module CheckRecords
           date_of_birth: @search.date_of_birth.to_s,
           result_count: @total
         )
+
+        if @total > 1
+          redirect_to check_records_trn_search_path(personal_details_search_params) and return
+        end
+      end
+    end
+
+    def trn_search
+      @trn_search = TrnSearch.new
+    end
+
+    def trn_result
+      @trn_search = TrnSearch.new(trn: trn_search_params[:trn], searched_at: Time.zone.now)
+
+      if @trn_search.invalid?
+        render :trn_search and return
+      else
+        @teacher = search_qualifications_api_with_trn(@trn_search.trn)
       end
     end
 
@@ -52,16 +70,33 @@ module CheckRecords
     end
 
     def search_qualifications_api_with_personal_details(search)
-      QualificationsApi::Client.new(
-        token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"]
-      ).teachers(
+      qualifications_api_client.teachers(
         date_of_birth: search.date_of_birth,
         last_name: search.last_name
       )
     end
 
-    def search_params
+    def search_qualifications_api_with_trn(trn)
+      qualifications_api_client.teacher(trn:)
+    end
+
+    def qualifications_api_client
+      QualificationsApi::Client.new(
+        token: ENV["QUALIFICATIONS_API_FIXED_TOKEN"]
+      )
+    end
+
+    def personal_details_search_params
       params.require(:search).permit(:last_name, :date_of_birth)
     end
+
+    def trn_search_params
+      params.require(:trn_search).permit(:trn)
+    end
+
+    def skipped?
+      params[:skipped] == 't'
+    end
+    helper_method :skipped?
   end
 end

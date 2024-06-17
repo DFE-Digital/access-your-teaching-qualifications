@@ -26,12 +26,18 @@ class FakeQualificationsApi < Sinatra::Base
 
     case bearer_token
     when "token"
-      if params["lastName"] == "No-match-last-name"
+      case params["lastName"]
+      when "No_match_last_name"
         { total: 0, results: [] }.to_json
-      elsif params["lastName"] == "Restricted"
+      when "Restricted"
         {
           total: 1,
           results: [teacher_data(sanctions: true)]
+        }.to_json
+      when "Multiple_results"
+        {
+          total: 2,
+          results: [teacher_data, additional_teacher]
         }.to_json
       else
         {
@@ -120,6 +126,20 @@ class FakeQualificationsApi < Sinatra::Base
       ],
       sanctions: [],
       trn:
+    }
+  end
+
+  def additional_teacher
+    {
+      dateOfBirth: "1985-01-01",
+      firstName: "Steven",
+      lastName: "Toast",
+      middleName: "Gonville",
+      previousNames: [
+        { first_name: "Stephen", last_name: "Toast", middle_name: "" },
+      ],
+      sanctions: [],
+      trn: "987654321"
     }
   end
 

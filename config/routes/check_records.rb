@@ -15,6 +15,8 @@ namespace :check_records, path: "check-records" do
 
   get "/search", to: "search#new"
   get "/result", to: "search#show"
+  get "/trn-search", to: "search#trn_search"
+  get "/trn-result", to: "search#trn_result"
 
   resources :teachers, only: %i[show]
 
