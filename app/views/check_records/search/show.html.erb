@@ -14,39 +14,12 @@
       <p class="govuk-body">
         No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.strftime("%e %B %Y") %>
       </p>
-      <p class="govuk-body">
-        <%= govuk_link_to("Search again", check_records_search_path) %>
-      </p>
     <% else %>
-      <h1 class="govuk-heading-l">Search results (<%= @total %>)</h1>
-      <div class="search-results">
-        <% @teachers.each do |teacher| %>
-          <div class="search-results__item">
-            <h2 class="govuk-heading-s">
-              <%= link_to teacher.name, check_records_teacher_path(SecureIdentifier.encode(teacher.trn)), class: "govuk-link--no-visited-state" %>
-            </h2>
-
-            <%= govuk_summary_list borders: false, classes: ['app-summary-list--compact'] do |summary_list|
-              summary_list.with_row do |row|
-                row.with_key { "TRN" }
-                row.with_value { teacher.trn }
-              end
-
-              summary_list.with_row do |row|
-                row.with_key { "Date of birth" }
-                row.with_value { Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
-              end
-
-              if teacher.previous_names&.any?
-                summary_list.with_row do |row|
-                  row.with_key { "Previous last names" }
-                  row.with_value { teacher.previous_names&.join("<br />")&.html_safe }
-                end
-              end
-            end %>
-          </div>
-        <% end %>
-      </div>
+      <h1 class="govuk-heading-l">1 record found</h1>
+      <%= render partial: "single_result", locals: { teacher: @teachers.first } %>
     <% end %>
+    <p class="govuk-body">
+      <%= govuk_link_to("Search again", check_records_search_path) %>
+    </p>
   </div>
 </div>

@@ -1,17 +1,25 @@
 <% content_for :page_title, "Find teacher record" %>
+<% content_for :breadcrumbs do %>
+  <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Search results" => nil }) %>
+<% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= form_with model: @trn_search, url: check_records_trn_result_path, method: :get do |f| %>
+    <%= form_with model: @trn_search, scope: :search, url: check_records_trn_result_path, method: :get do |f| %>
       <%= f.govuk_error_summary %>
 
       <h1 class="govuk-heading-l">Multiple results found</h1>
-
       <p>Enter a teacher reference number (TRN) to find the record you need.</p>
 
-      <%= f.govuk_text_field :trn, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "TRN" }, required: true %>
+      <%= f.hidden_field :last_name, value: search_params["last_name"] %>
+      <%= f.hidden_field "date_of_birth(1i)", value: search_params["date_of_birth(1i)"] %>
+      <%= f.hidden_field "date_of_birth(2i)", value: search_params["date_of_birth(2i)"] %>
+      <%= f.hidden_field "date_of_birth(3i)", value: search_params["date_of_birth(3i)"] %>
 
+      <%= f.govuk_text_field :trn, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "TRN" }, required: true %>
       <%= f.govuk_submit "Find record" %>
     <% end %>
+
+    <%= govuk_link_to "Skip", check_records_trn_result_path(search: search_params, skipped: 't') %>
   </div>
 </div>

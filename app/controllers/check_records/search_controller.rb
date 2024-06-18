@@ -24,7 +24,7 @@ module CheckRecords
         )
 
         if @total > 1
-          redirect_to check_records_trn_search_path(personal_details_search_params) and return
+          redirect_to check_records_trn_search_path(search: search_params) and return
         end
       end
     end
@@ -34,7 +34,14 @@ module CheckRecords
     end
 
     def trn_result
-      @trn_search = TrnSearch.new(trn: trn_search_params[:trn], searched_at: Time.zone.now)
+      @searched_at = Time.zone.now.strftime("%-I:%M%P on %-d %B %Y")
+
+      if skipped?
+        @total, @teachers = search_qualifications_api_with_personal_details(build_personal_details_search)
+        return
+      end
+
+      @trn_search = TrnSearch.new(trn: search_params[:trn])
 
       if @trn_search.invalid?
         render :trn_search and return
@@ -86,13 +93,15 @@ module CheckRecords
       )
     end
 
-    def personal_details_search_params
-      params.require(:search).permit(:last_name, :date_of_birth)
+    # To make passing of params easier within the search flow, we use the same
+    # params method in both personal details and TRN-based searches. This is
+    # achieved by using the `scope` option in the @trn_search form, so that its
+    # submitted parameters sit under a :search top-level key (as opposed to
+    # :trn_search).
+    def search_params
+      params.require(:search).permit(:last_name, :date_of_birth, :trn)
     end
-
-    def trn_search_params
-      params.require(:trn_search).permit(:trn)
-    end
+    helper_method :search_params
 
     def skipped?
       params[:skipped] == 't'

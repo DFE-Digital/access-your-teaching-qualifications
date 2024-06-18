@@ -3,47 +3,23 @@
   <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Search results" => nil }) %>
 
   <span class="govuk-caption-m">
-    Searched at <%= @trn_search.searched_at_to_s %>
+    Searched at <%= @searched_at %>
   </span>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <% if skipped? %>
-      <p>TODO: multiple results</p>
+      <h1 class="govuk-heading-l"><%= @total %> records found</h1>
+      <%= govuk_warning_text(text: "To follow data privacy rules, you must only view the teacher record you need. Read our terms and conditions to find out more.") %>
+      <%= render partial: "multiple_results", locals: { teachers: @teachers } %>
     <% else %>
       <h1 class="govuk-heading-l">1 record found</h1>
-      <div class="search-results">
-        <div class="search-results__item">
-          <h2 class="govuk-heading-s">
-            <%= link_to @teacher.name, check_records_teacher_path(SecureIdentifier.encode(@teacher.trn)), class: "govuk-link--no-visited-state" %>
-          </h2>
+      <%= render partial: "single_result", locals: { teacher: @teacher } %>
 
-          <%= govuk_summary_list borders: false, classes: ['app-summary-list--compact'] do |summary_list|
-            summary_list.with_row do |row|
-              row.with_key { "TRN" }
-              row.with_value { @teacher.trn }
-            end
-
-            summary_list.with_row do |row|
-              row.with_key { "Date of birth" }
-              row.with_value { Date.parse(@teacher.date_of_birth).to_fs(:long_uk) }
-            end
-
-            if @teacher.previous_names&.any?
-              summary_list.with_row do |row|
-                row.with_key { "Previous last names" }
-                row.with_value { @teacher.previous_names&.join("<br />")&.html_safe }
-              end
-            end
-          end %>
-
-        </div>
-      </div>
+      <p class="govuk-body">
+        <%= govuk_link_to("Search again", check_records_search_path) %>
+      </p>
     <% end %>
-
-    <p class="govuk-body">
-      <%= govuk_link_to("Search again", check_records_search_path) %>
-    </p>
   </div>
 </div>
