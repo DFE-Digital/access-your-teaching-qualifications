@@ -1,22 +1,31 @@
-<% content_for :page_title, "Sign in" %>
+<% content_for :page_title, "Sign in to Check a teacher’s record" %>
+
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-xl">Check a teacher’s record</h1>
+  </div>
+</div>
 
-    <h1 class="govuk-heading-l">Sign in to check a teacher’s record</h1>
-
-    <p class="govuk-body">
-      You can search for a teacher’s record using their last name and date of birth.
-    </p>
-    <p class="govuk-body">
-      A teacher’s record includes their qualifications and also tells you if they:
-    </p>
-
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <p>A teacher’s record includes their qualifications and also tells you if they:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li>failed their induction or probation</li>
+      <li>passed their induction</li>
       <li>are prevented from teaching by a prohibition order</li>
       <li>were sanctioned by the General Teaching Council for England (GTCE)</li>
     </ul>
+    <p>You can search for a teacher’s record using their last name and date of birth.</p>
+    <p>You should <a href="https://www.gov.uk/government/publications/dbs-identity-checking-guidelines">confirm the teacher’s identity</a> before you check their record.</p>
+
+    <h2 class="govuk-heading-m">Before you start</h2>
+    <p>You need a DfE Sign-in account. If you do not have one then you can:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>ask your organisation’s approver to create an account for you</li>
+      <li>use the <a href="https://help.signin.education.gov.uk/contact-us">contact form</a> to request an account if you do not have an approver</li>
+      <li>email <a href="mailto:teaching.status@education.gov.uk">teaching.status@education.gov.uk</a> if you work for a teacher supply agency – you should normally receive a response within 5 working days</li>
+    </ul>
+    <p>If you need to check a teacher’s record while you wait for your DfE Sign-in account, email <a href="mailto:employer.access@education.gov.uk">employer.access@education.gov.uk</a> and say ‘urgent query’ in the subject line.</p>
 
     <% if DfESignIn.bypass? %>
       <%= form_tag("/check-records/auth/developer/callback") do %>
@@ -29,7 +38,7 @@
     <% else %>
       <%=
         govuk_start_button(
-          text: "Sign in",
+          text: "Start now",
           href: "/check-records/auth/dfe",
           as_button: true
         )
@@ -37,13 +46,24 @@
     <% end %>
 
     <h2 class="govuk-heading-m">Qualified teacher learning and skills (QTLS) status</h2>
-    <p class="govuk-body">
-      This service will not tell you if a teacher has QTLS. You need to check the <a href="https://set.et-foundation.co.uk/your-career/professional-status-register">Society for Education and Training professional register</a>.
-    </p>
+    <p>A teacher’s record will not tell you if they have QTLS. You need to check the <a href="https://set.et-foundation.co.uk/your-career/professional-status-register">Society for Education and Training professional register</a>.</p>
 
     <h2 class="govuk-heading-m">School managers and governors</h2>
-    <p class="govuk-body">
-      There’s a separate <a href="https://www.gov.uk/government/collections/individuals-prohibited-from-managing-or-governing-schools">list of people who are not allowed to manage or govern schools</a>. This is sometimes called the section 128 list.
-    </p>
+    <p>There’s a separate <a href="https://www.gov.uk/government/collections/individuals-prohibited-from-managing-or-governing-schools">list of people who are not allowed to manage or govern schools</a>. This is called the section 128 list.</p>
+  </div>
+
+  <div class="govuk-grid-column-one-third">
+    <div>
+      <nav role="navigation" aria-labelledby="related-navigation-related-content">
+        <h2 class="govuk-heading-m" id="related-navigation-related-content">
+          Help and guidance
+        </h2>
+        <ul class="govuk-list">
+          <li>
+            <a href="#">Check a teacher's record: guidance</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>
