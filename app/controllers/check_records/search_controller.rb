@@ -48,6 +48,10 @@ module CheckRecords
       else
         @teacher = search_qualifications_api_with_trn(@trn_search.trn)
       end
+
+    rescue QualificationsApi::TeacherNotFoundError
+      @search = build_personal_details_search
+      @teacher = nil
     end
 
     private

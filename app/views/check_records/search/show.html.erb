@@ -18,8 +18,7 @@
       <h1 class="govuk-heading-l">1 record found</h1>
       <%= render partial: "single_result", locals: { teacher: @teachers.first } %>
     <% end %>
-    <p class="govuk-body">
-      <%= govuk_link_to("Search again", check_records_search_path) %>
-    </p>
+
+    <%= render partial: "search_again_link" %>
   </div>
 </div>

@@ -13,13 +13,16 @@
       <h1 class="govuk-heading-l"><%= @total %> records found</h1>
       <%= govuk_warning_text(text: "To follow data privacy rules, you must only view the teacher record you need. Read our terms and conditions to find out more.") %>
       <%= render partial: "multiple_results", locals: { teachers: @teachers } %>
+    <% elsif @teacher.blank? %>
+      <h1 class="govuk-heading-l">No records found</h1>
+      <p class="govuk-body">
+        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.strftime("%e %B %Y") %> with TRN <%= @trn_search.trn %>.
+      </p>
+      <%= render partial: "search_again_link" %>
     <% else %>
       <h1 class="govuk-heading-l">1 record found</h1>
       <%= render partial: "single_result", locals: { teacher: @teacher } %>
-
-      <p class="govuk-body">
-        <%= govuk_link_to("Search again", check_records_search_path) %>
-      </p>
+      <%= render partial: "search_again_link" %>
     <% end %>
   </div>
 </div>
