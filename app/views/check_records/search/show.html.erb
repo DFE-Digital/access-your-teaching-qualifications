@@ -15,8 +15,13 @@
         No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.strftime("%e %B %Y") %>
       </p>
     <% else %>
-      <h1 class="govuk-heading-l">1 record found</h1>
-      <%= render partial: "single_result", locals: { teacher: @teachers.first } %>
+      <% if FeatureFlags::FeatureFlag.active?(:trn_search) %>
+        <h1 class="govuk-heading-l">1 record found</h1>
+        <%= render partial: "single_result", locals: { teacher: @teachers.first } %>
+      <% else %>
+        <h1 class="govuk-heading-l"><%= "#{@total} #{'record'.pluralize(@total)}" %> found</h1>
+        <%= render partial: "multiple_results", locals: { teachers: @teachers } %>
+      <% end %>
     <% end %>
 
     <%= render partial: "search_again_link" %>

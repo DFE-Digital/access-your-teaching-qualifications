@@ -32,3 +32,7 @@ feature_flags:
     author: Malcolm Baig
     description: Add a profile summary to the teacher show page which contains
       various tags summarising the profile.
+  trn_search:
+    author: Malcolm Baig
+    description: Reduce number of search results shown to users of CTR by prompting
+      them for a TRN when last name and date of birth return multiple results.

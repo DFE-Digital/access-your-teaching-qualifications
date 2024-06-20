@@ -9,6 +9,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   scenario "User searches and skips TRN page",
            test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_check_service_is_open
+    given_the_trn_search_feature_is_active
     when_i_sign_in_via_dsi
     and_search_with_a_valid_name_and_dob
     then_i_am_prompted_to_enter_trn
@@ -18,6 +19,18 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   private
+
+  def given_the_trn_search_feature_is_active
+    FeatureFlags::FeatureFlag.activate(:trn_search)
+  end
+
+  def and_search_with_a_valid_name_and_dob
+    fill_in "Last name", with: "Multiple_results"
+    fill_in "Day", with: "5"
+    fill_in "Month", with: "April"
+    fill_in "Year", with: "1992"
+    click_button "Find record"
+  end
 
   def and_search_with_a_valid_name_and_dob
     fill_in "Last name", with: "Multiple_results"

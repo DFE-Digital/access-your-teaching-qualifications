@@ -2,6 +2,8 @@
 
 module CheckRecords
   class SearchController < CheckRecordsController
+    before_action :redirect_to_root_unless_trn_search_enabled, only: [:trn_search, :trn_result]
+
     def new
       @search = Search.new
     end
@@ -23,7 +25,7 @@ module CheckRecords
           result_count: @total
         )
 
-        if @total > 1
+        if @total > 1 && FeatureFlags::FeatureFlag.active?(:trn_search)
           redirect_to check_records_trn_search_path(search: search_params) and return
         end
       end
@@ -111,5 +113,11 @@ module CheckRecords
       params[:skipped] == 't'
     end
     helper_method :skipped?
+
+    def redirect_to_root_unless_trn_search_enabled
+      unless FeatureFlags::FeatureFlag.active?(:trn_search)
+        redirect_to check_records_root_path
+      end
+    end
   end
 end
