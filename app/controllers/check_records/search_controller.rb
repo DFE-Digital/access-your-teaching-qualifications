@@ -4,18 +4,18 @@ module CheckRecords
   class SearchController < CheckRecordsController
     before_action :redirect_to_root_unless_trn_search_enabled, only: [:trn_search, :trn_result]
 
-    def new
+    def personal_details_search
       @search = Search.new
     end
 
-    def show
+    def personal_details_result
       unless all_date_params_present?
         redirect_to(check_records_search_path, notice: "Please enter a date of birth") and return
       end
 
       @search = build_personal_details_search
       if @search.invalid?
-        render :new
+        render :personal_details_search
       else
         @total, @teachers = search_qualifications_api_with_personal_details(@search)
         SearchLog.create!(
