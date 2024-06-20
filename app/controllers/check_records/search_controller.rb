@@ -22,7 +22,8 @@ module CheckRecords
           dsi_user: current_dsi_user,
           last_name: @search.last_name,
           date_of_birth: @search.date_of_birth.to_s,
-          result_count: @total
+          result_count: @total,
+          search_type: :personal_details
         )
 
         if @total > 1 && FeatureFlags::FeatureFlag.active?(:trn_search)
@@ -37,9 +38,17 @@ module CheckRecords
 
     def trn_result
       @searched_at = Time.zone.now.strftime("%-I:%M%P on %-d %B %Y")
+      personal_details_search = build_personal_details_search
 
       if skipped?
-        @total, @teachers = search_qualifications_api_with_personal_details(build_personal_details_search)
+        @total, @teachers = search_qualifications_api_with_personal_details(personal_details_search)
+        SearchLog.create!(
+          dsi_user: current_dsi_user,
+          last_name: personal_details_search.last_name,
+          date_of_birth: personal_details_search.date_of_birth.to_s,
+          result_count: @total,
+          search_type: :skip_trn_use_personal_details
+        )
         return
       end
 
@@ -49,9 +58,23 @@ module CheckRecords
         render :trn_search and return
       else
         @teacher = search_qualifications_api_with_trn(@trn_search.trn)
+        SearchLog.create!(
+          dsi_user: current_dsi_user,
+          last_name: personal_details_search.last_name,
+          date_of_birth: personal_details_search.date_of_birth.to_s,
+          result_count: 1,
+          search_type: :trn
+        )
       end
 
     rescue QualificationsApi::TeacherNotFoundError
+      SearchLog.create!(
+        dsi_user: current_dsi_user,
+        last_name: personal_details_search.last_name,
+        date_of_birth: personal_details_search.date_of_birth.to_s,
+        result_count: 0,
+        search_type: :trn
+      )
       @search = build_personal_details_search
       @teacher = nil
     end

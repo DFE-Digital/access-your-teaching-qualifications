@@ -16,6 +16,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
     when_i_enter_an_invalid_trn
     then_i_see_no_records
+    and_search_logs_are_created
   end
 
   private
@@ -45,5 +46,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   def then_i_see_no_records
     expect(page).to have_content("No record found for Multiple_results born on 5 April 1992 with TRN bad-trn")
     expect(page).to have_link("Search again")
+  end
+
+  def and_search_logs_are_created
+    expect(SearchLog.order(created_at: :asc).pluck(:search_type)).to eq %w[personal_details trn]
+    expect(SearchLog.last.result_count).to eq 0
   end
 end
