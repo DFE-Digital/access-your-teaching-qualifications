@@ -1,5 +1,5 @@
 <div class="search-results">
-  <% teachers.each do |teacher| %>
+  <% Array(teachers).each do |teacher| %>
     <div class="search-results__item">
       <h2 class="govuk-heading-s">
         <%= link_to teacher.name, check_records_teacher_path(SecureIdentifier.encode(teacher.trn)), class: "govuk-link--no-visited-state" %>
