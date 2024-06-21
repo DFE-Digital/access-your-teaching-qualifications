@@ -19,7 +19,7 @@
         <h1 class="govuk-heading-l">1 record found</h1>
         <%= render partial: "results", locals: { teachers: @teachers } %>
       <% else %>
-        <h1 class="govuk-heading-l"><%= "#{@total} #{'record'.pluralize(@total)}" %> found</h1>
+        <h1 class="govuk-heading-l"><%= pluralize(@total, 'record') %> found</h1>
         <%= render partial: "results", locals: { teachers: @teachers } %>
       <% end %>
     <% end %>
