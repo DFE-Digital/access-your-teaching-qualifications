@@ -15,7 +15,7 @@ RSpec.describe "No matches", host: :check_records, type: :system do
   private
 
   def and_search_returns_no_records
-    fill_in "Last name", with: "No-match-last-name"
+    fill_in "Last name", with: "No_match_last_name"
     fill_in "Day", with: "1"
     fill_in "Month", with: "1"
     fill_in "Year", with: "1990"
@@ -23,7 +23,7 @@ RSpec.describe "No matches", host: :check_records, type: :system do
   end
 
   def then_i_see_no_records
-    expect(page).to have_content("No record found for No-match-last-name born on 1 January 1990")
+    expect(page).to have_content("No record found for No_match_last_name born on 1 January 1990")
     expect(page).to have_link("Search again")
   end
 end

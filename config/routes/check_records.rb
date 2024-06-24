@@ -13,8 +13,10 @@ namespace :check_records, path: "check-records" do
   get "/auth/dfe/callback", to: "omniauth_callbacks#dfe"
   post "/auth/developer/callback" => "omniauth_callbacks#dfe_bypass"
 
-  get "/search", to: "search#new"
-  get "/result", to: "search#show"
+  get "/search", to: "search#personal_details_search"
+  get "/result", to: "search#personal_details_result"
+  get "/trn-search", to: "search#trn_search"
+  get "/trn-result", to: "search#trn_result"
 
   resources :teachers, only: %i[show]
 

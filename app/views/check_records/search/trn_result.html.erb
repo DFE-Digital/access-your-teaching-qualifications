@@ -1,0 +1,31 @@
+<% content_for :page_title, "Search results" %>
+<% content_for :breadcrumbs do %>
+  <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Search results" => nil }) %>
+
+  <span class="govuk-caption-m">
+    Searched at <%= @searched_at %>
+  </span>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds-from-desktop">
+    <% if skipped? %>
+      <h1 class="govuk-heading-l"><%= @total %> records found</h1>
+      <%= govuk_warning_text(text: "To follow data privacy rules, you must only view the teacher record you need. Read our terms and conditions to find out more.") %>
+      <%= render partial: "results", locals: { teachers: @teachers } %>
+      <p>
+        Due to multiple search results, we recommend you <%= govuk_link_to "search using a Teacher Reference Number (TRN)", check_records_trn_search_path(search: search_params) %> or <%= govuk_link_to("search again", check_records_search_path) %>
+      </p>
+    <% elsif @teacher.blank? %>
+      <h1 class="govuk-heading-l">No records found</h1>
+      <p class="govuk-body">
+        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.strftime("%e %B %Y") %> with TRN <%= @trn_search.trn %>.
+      </p>
+      <%= render partial: "search_again_link" %>
+    <% else %>
+      <h1 class="govuk-heading-l">1 record found</h1>
+      <%= render partial: "results", locals: { teachers: @teacher } %>
+      <%= render partial: "search_again_link" %>
+    <% end %>
+  </div>
+</div>
