@@ -80,6 +80,7 @@ shared:
     - last_name
     - date_of_birth
     - result_count
+    - search_type
     - created_at
     - updated_at
   :console1984_users:

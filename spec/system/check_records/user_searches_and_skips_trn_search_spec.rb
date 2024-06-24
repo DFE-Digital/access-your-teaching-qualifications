@@ -16,6 +16,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
     when_i_skip_the_trn_search
     then_i_see_multiple_search_results
+    and_search_logs_are_created
   end
 
   private
@@ -52,5 +53,11 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   def then_i_see_multiple_search_results
     expect(page).to have_content "2 records found"
     expect(page).to have_content "you must only view the teacher record you need"
+  end
+
+  def and_search_logs_are_created
+    expect(SearchLog.order(created_at: :asc).pluck(:search_type)).to eq(
+      %w[personal_details skip_trn_use_personal_details]
+    )
   end
 end

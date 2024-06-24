@@ -23,6 +23,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
     when_i_click_on_the_teacher_record
     then_i_see_this_teachers_details
+    and_search_logs_are_created
   end
 
   private
@@ -70,5 +71,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     expect(page).to have_content "1234567"
     expect(page).to have_content "January 01, 2000"
     expect(page).to have_content "QTS"
+  end
+
+  def and_search_logs_are_created
+    expect(SearchLog.order(created_at: :asc).pluck(:search_type)).to eq %w[personal_details trn]
+    expect(SearchLog.last.result_count).to eq 1
   end
 end

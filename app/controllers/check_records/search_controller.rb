@@ -18,12 +18,7 @@ module CheckRecords
         render :personal_details_search
       else
         @total, @teachers = search_qualifications_api_with_personal_details(@search)
-        SearchLog.create!(
-          dsi_user: current_dsi_user,
-          last_name: @search.last_name,
-          date_of_birth: @search.date_of_birth.to_s,
-          result_count: @total
-        )
+        log_search(:personal_details, @search.last_name, @search.date_of_birth, @total)
 
         if @total > 1 && FeatureFlags::FeatureFlag.active?(:trn_search)
           redirect_to check_records_trn_search_path(search: search_params) and return
@@ -37,9 +32,16 @@ module CheckRecords
 
     def trn_result
       @searched_at = Time.zone.now.strftime("%-I:%M%P on %-d %B %Y")
+      personal_details_search = build_personal_details_search
 
       if skipped?
-        @total, @teachers = search_qualifications_api_with_personal_details(build_personal_details_search)
+        @total, @teachers = search_qualifications_api_with_personal_details(personal_details_search)
+        log_search(
+          :skip_trn_use_personal_details,
+          personal_details_search.last_name,
+          personal_details_search.date_of_birth,
+          @total
+        )
         return
       end
 
@@ -49,10 +51,12 @@ module CheckRecords
         render :trn_search and return
       else
         @teacher = search_qualifications_api_with_trn(@trn_search.trn)
+        log_search(:trn, personal_details_search.last_name, personal_details_search.date_of_birth, 1)
       end
 
     rescue QualificationsApi::TeacherNotFoundError
-      @search = build_personal_details_search
+      log_search(:trn, personal_details_search.last_name, personal_details_search.date_of_birth, 0)
+      @search = personal_details_search
       @teacher = nil
     end
 
@@ -118,6 +122,16 @@ module CheckRecords
       unless FeatureFlags::FeatureFlag.active?(:trn_search)
         redirect_to check_records_root_path
       end
+    end
+
+    def log_search(type, last_name, date_of_birth, total)
+      SearchLog.create!(
+        dsi_user: current_dsi_user,
+        last_name:,
+        date_of_birth: date_of_birth.to_s,
+        result_count: total,
+        search_type: type,
+      )
     end
   end
 end
