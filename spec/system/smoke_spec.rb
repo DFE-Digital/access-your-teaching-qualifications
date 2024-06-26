@@ -60,7 +60,7 @@ RSpec.describe "Smoke test", type: :system, js: true, smoke_test: true do
 
   def then_i_see_the_check_service
     expect(page).to have_content "Check a teacher’s record"
-    expect(page).to have_content "Sign in"
+    expect(page).to have_content "Start now"
   end
 
   def then_i_see_the_aytq_service
