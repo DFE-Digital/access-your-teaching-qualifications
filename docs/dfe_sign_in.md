@@ -23,7 +23,9 @@ The DSI team is responsible for setup of this authorisation data.
 The [`auth`](https://github.com/DFE-Digital/access-your-teaching-qualifications/blob/b670911dff04bb857680260ce8ec9e63bec5ab4f/app/controllers/check_records/omniauth_callbacks_controller.rb#L25) object we get back from successful authentication contains information about the user's roles for their organisations.
 The application then checks for the appropriate role in a subsequent [DSI API call](https://github.com/DFE-Digital/login.dfe.public-api#get-user-access-to-service).
 
-Check roles are currently stored in the `DFE_SIGN_IN_API_ROLE_CODES` environment variable, and Support roles are stored in the `DFE_SIGN_IN_API_STAFF_ROLE_CODES` variable. In both cases the environment variable needs to match at least one of the user's authorised organisational roles for authorisation to succeed.
+When giving users access to Check, you'll need to add them to an organisation type that has access to the service (see Policies in DSI Manage) and give them one of the roles that is enabled.
+
+Check roles are stored in the database and managed via the Support console. When a user signs in, they will need at least one of their role codes to match an enabled role in the Check database.
 
 ## Configuring sign out from DSI
 
@@ -49,9 +51,13 @@ In the application, `config/initializers/omniauth.rb` should also be configured 
 
 By default, a bypass mode for DSI is enabled in development (via the BYPASS_DSI environment variable). To test the actual auth flow locally, do the following:
 
-1. Ensure you've been added to the service via the Manage console on the DSI dev environment (https://dev-manage.signin.education.gov.uk/). Speak to a colleague if you don't have access.
-2. Obtain the secret for the Check service from the Manage console.
-3. Set DFE_SIGN_IN_SECRET to this value in your .env.development.local file.
-4. Set BYPASS_DSI to false in your .env.development.local file.
-5. Navigate to the Check sign in page and click "Sign in". Use http://check.localhost:3000 to ensure redirects works as expected.
-6. Go through the DSI sign in process, after which you'll be redirected back to your locally running instance of the Check service.
+1. Ensure you've been added to the service via the Manage console on the DSI dev environment (https://dev-manage.signin.education.gov.uk/). Speak to a colleague if you don't have access. You'll need to be added to an organisation of the correct type, and be assigned a valid role. See the Policies section in Manage for an idea of which types and roles have access to Check.
+2. You'll also need to be added as an internal user to the Teaching Qualifications organisation for access to the AYTQ/CTR Support console.
+3. Update your .env.development.local file such that `DFE_SIGN_IN_API_ROLE_CODES` is set with the role code you've been assigned in step 1.
+4. Set `DFE_SIGN_IN_API_INTERNAL_USER_ROLE_CODE` to the internal user role code assigned in step 2.
+5. Run `rake db:seed_role_codes`. This will copy the env var values into the database, matching how roles are set up in production.
+6. Obtain the secret for the Check service from the Manage console.
+7. Set `DFE_SIGN_IN_SECRET` to this value in your .env.development.local file.
+8. Set `BYPASS_DSI` to false in your .env.development.local file.
+9. Navigate to the Check sign in page and click "Sign in". Use http://check.localhost:3000 to ensure redirects works as expected.
+10. Go through the DSI sign in process, after which you'll be redirected back to your locally running instance of the Check service.
