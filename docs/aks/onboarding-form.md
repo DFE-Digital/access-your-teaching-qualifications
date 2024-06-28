@@ -10,7 +10,7 @@ two different domains, and are currently deployed to (non-AKS) Azure.
   - access-your-teaching-qualifications.teacherservices.cloud
   - check-a-teachers-record.teacherservices.cloud
   - test._ and preprod._ variants of the above.
-- Service short name? aytqctr
+- Service short name? aytq
 - Repository? https://github.com/DFE-Digital/access-your-teaching-qualifications/
 - Environments? e.g. develoment, staging, production
   - test
@@ -34,7 +34,9 @@ two different domains, and are currently deployed to (non-AKS) Azure.
 - Github repos / Docker registry type: Open (public) by default, or indicate any requirement to make them private
   - Open
 - Namespaces e.g. bat-qa (test cluster), bat-staging (test cluster), bat-production (production cluster)
-  - n/a
+  - tra-development (for review)
+  - tra-test (for test/preprod)
+  - tra-production (for production)
 - Technical requirements
   - Ruby on rails webapp
   - postgres
