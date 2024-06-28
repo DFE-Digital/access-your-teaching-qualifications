@@ -20,25 +20,9 @@ module CheckRecords
     end
 
     def enforce_terms_and_conditions_acceptance!
-      return if request.path == check_records_terms_and_conditions_path
-      return if request.path == check_records_sign_in_path
-      return if request.path == check_records_sign_out_path
-
-      if current_dsi_user && (FeatureFlags::FeatureFlag.active?("terms_and_conditions") && acceptance_required?)
+      if current_dsi_user&.acceptance_required?
         redirect_to check_records_terms_and_conditions_path
       end
-    end
-
-    def acceptance_required?
-      !current_version_accepted || acceptance_expired
-    end
-
-    def current_version_accepted
-      current_dsi_user.terms_and_conditions_version_accepted == CURRENT_TERMS_AND_CONDITIONS_VERSION
-    end
-
-    def acceptance_expired
-      current_dsi_user.terms_and_conditions_timestamp < 12.months.ago
     end
   end
 end

@@ -36,6 +36,3 @@ feature_flags:
     author: Malcolm Baig
     description: Reduce number of search results shown to users of CTR by prompting
       them for a TRN when last name and date of birth return multiple results.
-  terms_and_conditions:
-    author: Richard Pattinson
-    description: Check whether a user has accepted the latest version of the terms and conditions.

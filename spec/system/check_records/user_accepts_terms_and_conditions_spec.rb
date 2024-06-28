@@ -9,10 +9,17 @@ RSpec.describe "Terms and conditions acceptance", host: :check_records do
 
   scenario "User accepts terms and conditions", test: :with_stubbed_auth do
     given_the_check_service_is_open
-    given_the_terms_and_conditions_feature_flag_is_enabled
-    when_i_sign_in_via_dsi
+    when_i_sign_in_via_dsi(accept_terms_and_conditions: false)
     then_i_am_signed_in
     and_i_am_redirected_to_the_terms_and_conditions_page
+
+    when_i_sign_out
+    then_i_am_redirected_to_the_sign_in_page
+    when_i_sign_in_via_dsi(accept_terms_and_conditions: false)
+    then_i_am_redirected_to_the_terms_and_conditions_page
+
+    when_i_go_to_the_root
+    then_i_am_redirected_to_the_terms_and_conditions_page
 
     when_i_click_accept
     then_i_am_taken_to_the_root
@@ -21,12 +28,11 @@ RSpec.describe "Terms and conditions acceptance", host: :check_records do
 
     when_13_months_has_passed
     when_i_go_to_the_root
-    when_i_sign_in_via_dsi
+    when_i_sign_in_via_dsi(accept_terms_and_conditions: false)
     then_i_am_redirected_to_the_terms_and_conditions_page
     when_i_click_accept
     then_i_am_taken_to_the_root
     and_i_see_the_successful_notification
-    and_the_dsi_user_has_been_updated
   end
 
   private
@@ -59,7 +65,7 @@ RSpec.describe "Terms and conditions acceptance", host: :check_records do
 
   def and_the_dsi_user_has_been_updated
     expect(DsiUser.first.terms_and_conditions_version_accepted).to eq("1.0")
-    expect(DsiUser.first.terms_and_conditions_timestamp).to_not be(nil)
+    expect(DsiUser.first.terms_and_conditions_accepted_at).to_not be(nil)
   end
 
   def when_13_months_has_passed
@@ -68,5 +74,13 @@ RSpec.describe "Terms and conditions acceptance", host: :check_records do
 
   def when_i_go_to_the_root
     visit check_records_root_path
+  end
+
+  def when_i_sign_out
+    click_on "Sign out"
+  end
+
+  def then_i_am_redirected_to_the_sign_in_page
+    expect(page).to have_current_path(check_records_sign_in_path)
   end
 end
