@@ -2,8 +2,7 @@ module CheckRecords
   class CheckRecordsController < ApplicationController
     include DsiAuthenticatable
 
-    before_action :enforce_terms_and_conditions_acceptance!, unless: -> {
-request.path == check_records_terms_and_conditions_path}
+    before_action :enforce_terms_and_conditions_acceptance!
 
     http_basic_authenticate_with(
       name: ENV.fetch("SUPPORT_USERNAME", nil),
@@ -21,10 +20,13 @@ request.path == check_records_terms_and_conditions_path}
     end
 
     def enforce_terms_and_conditions_acceptance!
-      if current_dsi_user &&
-        (FeatureFlags::FeatureFlag.active?("terms_and_conditions") && acceptance_required?)
-          redirect_to check_records_terms_and_conditions_path
-        end
+      return if request.path == check_records_terms_and_conditions_path
+      return if request.path == check_records_sign_in_path
+      return if request.path == check_records_sign_out_path
+
+      if current_dsi_user && (FeatureFlags::FeatureFlag.active?("terms_and_conditions") && acceptance_required?)
+        redirect_to check_records_terms_and_conditions_path
+      end
     end
 
     def acceptance_required?
@@ -36,7 +38,7 @@ request.path == check_records_terms_and_conditions_path}
     end
 
     def acceptance_expired
-      current_dsi_user.terms_and_conditions_timestamp > 12.months.ago
+      current_dsi_user.terms_and_conditions_timestamp < 12.months.ago
     end
   end
 end
