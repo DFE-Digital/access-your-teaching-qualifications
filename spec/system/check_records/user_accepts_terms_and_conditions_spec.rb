@@ -13,14 +13,17 @@ RSpec.describe "Terms and conditions acceptance", host: :check_records do
     when_i_sign_in_via_dsi
     then_i_am_signed_in
     and_i_am_redirected_to_the_terms_and_conditions_page
-    then_i_click_accept
+
+    when_i_click_accept
     then_i_am_taken_to_the_root
     and_i_see_the_successful_notification
     and_the_dsi_user_has_been_updated
+
     when_13_months_has_passed
     when_i_go_to_the_root
-    and_i_am_redirected_to_the_terms_and_conditions_page
-    then_i_click_accept
+    when_i_sign_in_via_dsi
+    then_i_am_redirected_to_the_terms_and_conditions_page
+    when_i_click_accept
     then_i_am_taken_to_the_root
     and_i_see_the_successful_notification
     and_the_dsi_user_has_been_updated
@@ -37,8 +40,12 @@ RSpec.describe "Terms and conditions acceptance", host: :check_records do
   def and_i_am_redirected_to_the_terms_and_conditions_page
     expect(page).to have_current_path("/check-records/terms-and-conditions")
   end
+  alias_method(
+    :then_i_am_redirected_to_the_terms_and_conditions_page,
+    :and_i_am_redirected_to_the_terms_and_conditions_page,
+  )
 
-  def then_i_click_accept
+  def when_i_click_accept
     click_on "Accept"
   end
 
