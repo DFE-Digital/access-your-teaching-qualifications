@@ -6,6 +6,8 @@ module DsiAuthenticatable
     before_action :handle_expired_session!
   end
 
+  CURRENT_TERMS_AND_CONDITIONS_VERSION = "1.0".freeze
+
   def current_dsi_user
     @current_dsi_user ||= DsiUser.find(session[:dsi_user_id]) if session[:dsi_user_id]
   end
