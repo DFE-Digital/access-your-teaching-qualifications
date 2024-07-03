@@ -7,6 +7,10 @@ RSpec.feature "Feedback", type: :system do
 
   scenario "User gives feedback", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
+    and_i_visit_the_start_page
+    and_i_click_on_feedback
+    then_i_am_prompted_to_sign_in
+
     and_i_am_signed_in_via_identity
     and_i_click_on_feedback
     then_i_see_the_feedback_form
@@ -23,12 +27,16 @@ RSpec.feature "Feedback", type: :system do
 
   private
 
-  def and_i_visit_the_search_page
-    visit search_path
+  def and_i_visit_the_start_page
+    visit qualifications_root_path
   end
 
   def and_i_click_on_feedback
     click_on "feedback"
+  end
+
+  def then_i_am_prompted_to_sign_in
+    expect(page).to have_content "You need to sign in to continue"
   end
 
   def then_i_see_the_feedback_form

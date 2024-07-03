@@ -12,6 +12,7 @@ module DsiAuthenticatable
 
   def authenticate_dsi_user!
     if current_dsi_user.blank?
+      flash[:warning] = "You need to sign in to continue."
       redirect_to check_records_sign_in_path
     end
   end
@@ -21,12 +22,8 @@ module DsiAuthenticatable
   end
 
   def handle_expired_session!
-    if session[:dsi_user_session_expiry].nil?
-      redirect_to check_records_sign_out_path
-      return
-    end
-
-    if Time.zone.at(session[:dsi_user_session_expiry]).past?
+    if Time.zone.at(session.fetch(:dsi_user_session_expiry, 1.minute.ago)).past?
+      flash[:warning] = "Your session has expired. Please sign in again."
       redirect_to check_records_sign_out_path
     end
   end

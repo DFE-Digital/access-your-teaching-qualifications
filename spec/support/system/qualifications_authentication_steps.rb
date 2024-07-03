@@ -4,11 +4,13 @@ module QualificationAuthenticationSteps
     sign_in(@user)
   end
 
-  def and_i_am_signed_in_via_identity
+  def given_i_am_signed_in_via_identity
     given_identity_auth_is_mocked
     when_i_go_to_the_sign_in_page
     and_click_the_sign_in_button
   end
+  alias_method :and_i_am_signed_in_via_identity, :given_i_am_signed_in_via_identity
+
 
   def and_i_am_signed_in_via_onelogin
     given_onelogin_auth_is_mocked
