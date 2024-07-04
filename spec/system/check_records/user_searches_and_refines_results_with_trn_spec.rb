@@ -59,11 +59,11 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_a_teacher_record_in_the_results
-    expect(page).to have_content "Terry Walsh"
+    expect(page).to have_content "Terry John Walsh"
   end
 
   def when_i_click_on_the_teacher_record
-    click_on "Terry Walsh"
+    click_on "Terry John Walsh"
   end
 
   def then_i_see_this_teachers_details

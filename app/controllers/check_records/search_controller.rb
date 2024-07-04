@@ -32,10 +32,13 @@ module CheckRecords
 
     def trn_result
       @searched_at = Time.zone.now.strftime("%-I:%M%P on %-d %B %Y")
+      @trn_search = TrnSearch.new(trn: search_params[:trn])
+      render :trn_search and return if(@trn_search.invalid? && !skipped?)
+
       personal_details_search = build_personal_details_search
+      @total, @teachers = search_qualifications_api_with_personal_details(personal_details_search)
 
       if skipped?
-        @total, @teachers = search_qualifications_api_with_personal_details(personal_details_search)
         log_search(
           :skip_trn_use_personal_details,
           personal_details_search.last_name,
@@ -45,19 +48,13 @@ module CheckRecords
         return
       end
 
-      @trn_search = TrnSearch.new(trn: search_params[:trn])
-
-      if @trn_search.invalid?
-        render :trn_search and return
-      else
-        @teacher = search_qualifications_api_with_trn(@trn_search.trn)
+      @teacher = @trn_search.find_teacher(teachers: @teachers)
+      if @teacher
         log_search(:trn, personal_details_search.last_name, personal_details_search.date_of_birth, 1)
+      else
+        log_search(:trn, personal_details_search.last_name, personal_details_search.date_of_birth, 0)
+        @search = personal_details_search
       end
-
-    rescue QualificationsApi::TeacherNotFoundError
-      log_search(:trn, personal_details_search.last_name, personal_details_search.date_of_birth, 0)
-      @search = personal_details_search
-      @teacher = nil
     end
 
     private
