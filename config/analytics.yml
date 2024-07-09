@@ -28,6 +28,7 @@ shared:
     - created_at
     - updated_at
     - reference_number
+    - malware_scan_result
   :dsi_users:
     - id
     - email
@@ -62,6 +63,7 @@ shared:
     - middle_name
     - last_name
     - reference_number
+    - malware_scan_result
   :users:
     - id
     - email

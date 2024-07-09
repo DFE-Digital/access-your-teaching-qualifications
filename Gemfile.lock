@@ -337,6 +337,8 @@ GEM
     nio4r (2.7.3)
     nokogiri (1.16.6-arm64-darwin)
       racc (~> 1.4)
+    nokogiri (1.16.6-x86_64-darwin)
+      racc (~> 1.4)
     nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
     notifications-ruby-client (6.0.0)
@@ -645,6 +647,7 @@ PLATFORMS
   arm64-darwin-22
   arm64-darwin-23
   arm64-darwin-24
+  x86_64-darwin-23
   x86_64-linux
 
 DEPENDENCIES
