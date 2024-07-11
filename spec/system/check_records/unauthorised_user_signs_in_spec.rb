@@ -8,7 +8,7 @@ RSpec.describe "DSI authentication", host: :check_records do
 
   scenario "Unauthorised user signs in via DfE Sign In", test: :with_stubbed_auth do
     when_i_am_authorized_with_basic_auth
-    when_i_sign_in_via_dsi(authorised: false, accept_terms_and_conditions: false)
+    when_i_sign_in_via_dsi(authorised: false)
     then_i_am_redirected_to_the_unauthorised_page
   end
 
