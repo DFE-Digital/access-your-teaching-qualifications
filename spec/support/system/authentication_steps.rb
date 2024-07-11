@@ -1,14 +1,13 @@
 module AuthenticationSteps
-  def when_i_sign_in_via_dsi(authorised: true, internal: false, orgs: [organisation], accept_terms_and_conditions: true)
-    given_dsi_auth_is_mocked(authorised:, internal:, orgs:,)
+  def when_i_sign_in_via_dsi(authorised: true, internal: false, orgs: [organisation])
+    given_dsi_auth_is_mocked(authorised:, internal:, orgs:)
     when_i_visit_the_sign_in_page
     and_click_the_dsi_sign_in_button
-    and_i_accept_the_terms_and_conditions(accept_terms_and_conditions)
   end
   alias_method :and_i_am_signed_in_via_dsi, :when_i_sign_in_via_dsi
 
   def when_i_sign_in_as_staff_via_dsi
-    when_i_sign_in_via_dsi(authorised: true, internal: true, accept_terms_and_conditions: false)
+    when_i_sign_in_via_dsi(authorised: true, internal: true)
   end
   alias_method :and_i_am_signed_in_as_staff_via_dsi, :when_i_sign_in_as_staff_via_dsi
 
@@ -95,11 +94,5 @@ module AuthenticationSteps
       "name" => "Test School",
       "status" => { "id" => 1, "name" => status },
     }
-  end
-
-  def and_i_accept_the_terms_and_conditions(accept)
-    if accept
-      click_on "Accept"
-    end
   end
 end
