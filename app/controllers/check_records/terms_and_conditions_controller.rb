@@ -2,6 +2,8 @@
 
 module CheckRecords
   class TermsAndConditionsController < CheckRecordsController
+    skip_before_action :authenticate_dsi_user!
+    skip_before_action :handle_expired_session!
     skip_before_action :enforce_terms_and_conditions_acceptance!
 
     def show
