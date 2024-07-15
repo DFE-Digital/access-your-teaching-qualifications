@@ -2,6 +2,8 @@ module CheckRecords
   class SignInController < CheckRecordsController
     skip_before_action :authenticate_dsi_user!
     skip_before_action :handle_expired_session!
+    skip_before_action :enforce_terms_and_conditions_acceptance!
+    before_action :reset_session, except: :not_authorised
     before_action :handle_failed_sign_in, only: :new, if: -> { params[:oauth_failure] == "true" }
 
     def new
