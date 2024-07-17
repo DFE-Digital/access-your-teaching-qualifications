@@ -1,8 +1,5 @@
 module CheckRecords
   class FeedbacksController < CheckRecordsController
-    skip_before_action :authenticate_dsi_user!
-    skip_before_action :handle_expired_session!
-
     def new
       @feedback = Feedback.new
     end
@@ -27,6 +24,10 @@ module CheckRecords
         :contact_permission_given,
         :email
       )
+    end
+
+    def failed_sign_in_message
+      I18n.t("validation_errors.feedback_auth_failure")
     end
   end
 end
