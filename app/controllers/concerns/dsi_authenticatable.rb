@@ -12,6 +12,7 @@ module DsiAuthenticatable
 
   def authenticate_dsi_user!
     if current_dsi_user.blank?
+      flash[:warning] = failed_sign_in_message
       redirect_to check_records_sign_in_path
     end
   end
@@ -29,6 +30,10 @@ module DsiAuthenticatable
     if Time.zone.at(session[:dsi_user_session_expiry]).past?
       redirect_to check_records_sign_out_path
     end
+  end
+
+  def failed_sign_in_message
+    I18n.t("validation_errors.generic_sign_in_failure")
   end
 end
 

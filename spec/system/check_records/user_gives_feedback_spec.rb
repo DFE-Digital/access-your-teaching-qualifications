@@ -7,6 +7,9 @@ RSpec.feature "Feedback", host: :check_records, type: :system do
 
   scenario "User gives feedback", test: :with_stubbed_auth do
     given_the_check_service_is_open
+    when_i_visit_the_sign_in_page
+    and_i_click_on_feedback
+    then_i_am_prompted_to_sign_in
     when_i_sign_in_via_dsi
     and_i_click_on_feedback
     then_i_see_the_feedback_form
@@ -31,6 +34,11 @@ RSpec.feature "Feedback", host: :check_records, type: :system do
 
   def and_i_click_on_feedback
     click_on "feedback"
+  end
+
+  def then_i_am_prompted_to_sign_in
+    expect(page).to have_current_path("/check-records/sign-in")
+    expect(page).to have_content("You must be signed in to give feedback.")
   end
 
   def then_i_see_the_feedback_form

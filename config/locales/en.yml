@@ -10,6 +10,8 @@ en:
 
   validation_errors:
     generic_oauth_failure: There was a problem with your previous request. Please try again.
+    generic_sign_in_failure: You need to sign in to continue.
+    feedback_auth_failure: You must be signed in to give feedback.
 
   activemodel:
     errors:
