@@ -22,14 +22,10 @@ module DsiAuthenticatable
   end
 
   def handle_expired_session!
-    if session[:dsi_user_session_expiry].nil?
-      redirect_to check_records_sign_out_path
-      return
-    end
+    return unless Time.zone.at(session.fetch(:dsi_user_session_expiry, 1.minute.ago)).past?
 
-    if Time.zone.at(session[:dsi_user_session_expiry]).past?
-      redirect_to check_records_sign_out_path
-    end
+    flash[:warning] = I18n.t("validation_errors.session_expired")
+    redirect_to check_records_sign_out_path
   end
 
   def failed_sign_in_message

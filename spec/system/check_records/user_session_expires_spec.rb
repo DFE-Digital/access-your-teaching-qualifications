@@ -22,6 +22,7 @@ RSpec.feature "DSI session expiry", host: :check_records, type: :system do
 
   def then_i_am_required_to_sign_in_again
     expect(page).to have_current_path check_records_sign_in_path
+    expect(page).to have_content("Your session has expired. Please sign in again.")
   end
 
   def when_i_refresh_the_page
