@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/DFE-Digital/dfe-analytics.git
-  revision: fd56ad1f2c54a8cb917aa8b88a961c256cd55967
-  tag: v1.12.8
+  revision: b2ea063f7c3616b034118589efe48cea30134b4c
+  tag: v1.13.0
   specs:
-    dfe-analytics (1.12.8)
+    dfe-analytics (1.13.0)
       google-cloud-bigquery (~> 1.38)
       httparty (~> 0.21)
       multi_xml (~> 0.6.0)
@@ -216,10 +216,10 @@ GEM
       representable (~> 3.0)
       retriable (>= 2.0, < 4.a)
       rexml
-    google-cloud-bigquery (1.49.1)
+    google-cloud-bigquery (1.50.0)
       bigdecimal (~> 3.0)
       concurrent-ruby (~> 1.0)
-      google-apis-bigquery_v2 (~> 0.62)
+      google-apis-bigquery_v2 (~> 0.71)
       google-apis-core (~> 0.13)
       google-cloud-core (~> 1.6)
       googleauth (~> 1.9)
@@ -470,7 +470,7 @@ GEM
     retriable (3.1.2)
     reverse_markdown (2.1.1)
       nokogiri
-    rexml (3.3.1)
+    rexml (3.3.2)
       strscan
     rinku (2.0.6)
     rladr (1.2.0)
