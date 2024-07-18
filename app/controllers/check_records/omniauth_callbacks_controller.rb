@@ -15,7 +15,8 @@ class CheckRecords::OmniauthCallbacksController < ApplicationController
 
     create_or_update_dsi_user
 
-    redirect_to dsi_user&.internal? ? support_interface_root_path : check_records_root_path
+    redirect_location = session.delete(:return_to) || check_records_root_path
+    redirect_to dsi_user&.internal? ? support_interface_root_path : redirect_location
   end
   alias_method :dfe_bypass, :dfe
 

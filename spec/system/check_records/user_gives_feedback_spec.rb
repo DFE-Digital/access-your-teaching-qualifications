@@ -7,11 +7,11 @@ RSpec.feature "Feedback", host: :check_records, type: :system do
 
   scenario "User gives feedback", test: :with_stubbed_auth do
     given_the_check_service_is_open
+    and_i_am_an_existing_dsi_user
     when_i_visit_the_sign_in_page
     and_i_click_on_feedback
     then_i_am_prompted_to_sign_in
-    when_i_sign_in_via_dsi
-    and_i_click_on_feedback
+    when_i_sign_in_via_dsi(accept_terms_and_conditions: false)
     then_i_see_the_feedback_form
     when_i_press_send_feedback
     then_i_see_validation_errors
@@ -27,6 +27,15 @@ RSpec.feature "Feedback", host: :check_records, type: :system do
   end
 
   private
+
+  def and_i_am_an_existing_dsi_user
+    create(
+      :dsi_user, 
+      email: "test@example.com", 
+      terms_and_conditions_accepted_at: Date.yesterday, 
+      terms_and_conditions_version_accepted: '1.0'
+    )
+  end
 
   def and_i_visit_the_search_page
     visit search_path
