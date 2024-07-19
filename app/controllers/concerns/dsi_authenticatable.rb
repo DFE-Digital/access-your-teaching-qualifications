@@ -13,6 +13,7 @@ module DsiAuthenticatable
   def authenticate_dsi_user!
     if current_dsi_user.blank?
       flash[:warning] = failed_sign_in_message
+      session[:return_to] = request.fullpath
       redirect_to check_records_sign_in_path
     end
   end
