@@ -2,6 +2,7 @@ module QualificationsApi
   class InvalidCertificateUrlError < StandardError; end
   class ForbiddenError < StandardError; end
   class UnknownError < StandardError; end
+  class ApiError < StandardError; end
 
   class Client
     TIMEOUT_IN_SECONDS = 30
@@ -65,7 +66,7 @@ module QualificationsApi
         raise QualificationsApi::InvalidCertificateUrlError
       end
 
-      response = client.get(url)
+      response = get(url)
 
       case response.status
       when 200
@@ -84,7 +85,7 @@ module QualificationsApi
       # If TRN is blank, the token needs to come from an authenticated Identity user.
       endpoint = (trn ? "v3/teachers/#{trn}" : "v3/teacher")
       response =
-        client.get(
+        get(
           endpoint,
           {
             include: %w[
@@ -115,7 +116,7 @@ module QualificationsApi
 
     def teachers(date_of_birth:, last_name:)
       response =
-        client.get(
+        get(
           "v3/teachers",
           {
             dateOfBirth: date_of_birth.to_s,
@@ -150,6 +151,12 @@ module QualificationsApi
     end
 
     private
+
+    def get(endpoint, options = {})
+      client.get(endpoint, options)
+    rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
+      raise QualificationsApi::ApiError, "API connection failed: #{e.message}"
+    end
 
     def valid_certificate_path?(path)
       path.start_with?("/v3/certificates")

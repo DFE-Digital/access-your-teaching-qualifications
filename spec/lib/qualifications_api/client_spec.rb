@@ -49,6 +49,18 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
         end
       end
     end
+
+    context "when the API times out" do
+      before do
+        stub_request(:get, %r{.*}).to_timeout
+      end
+
+      it "raises an error" do
+        client = described_class.new(token: "token")
+
+        expect { client.teacher }.to raise_error(QualificationsApi::ApiError)
+      end
+    end
   end
 
   describe "#certificate" do
