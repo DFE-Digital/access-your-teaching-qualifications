@@ -4,10 +4,12 @@ require "rails_helper"
 RSpec.feature "Account page", type: :system do
   include CommonSteps
   include QualificationAuthenticationSteps
+  include MalwareScanHelpers
 
   scenario "User submits a request to change date of birth", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
     given_i_am_signed_in_via_one_login
+    given_malware_scanning_is_enabled
     when_i_click_through_to_update_my_details
 
     and_click_change_date_of_birth
@@ -27,6 +29,9 @@ RSpec.feature "Account page", type: :system do
 
     then_my_request_is_submitted
     and_my_evidence_is_uploaded
+
+    when_the_pending_scan_result_is_fetched_after_a_delay
+    then_the_evidence_is_updated
   end
 
   private
@@ -102,5 +107,15 @@ RSpec.feature "Account page", type: :system do
 
   def and_my_evidence_is_uploaded
     expect(DateOfBirthChange.last.evidence.attached?).to be true
+    expect(DateOfBirthChange.last.malware_scan_result).to eq "pending"
+  end
+
+  def when_the_pending_scan_result_is_fetched_after_a_delay
+    time = Time.zone.now + 1.minute
+    travel_to(time) { perform_enqueued_jobs(only: FetchMalwareScanResultJob) }
+  end
+
+  def then_the_evidence_is_updated
+    expect(DateOfBirthChange.last.malware_scan_result).to eq "clean"
   end
 end

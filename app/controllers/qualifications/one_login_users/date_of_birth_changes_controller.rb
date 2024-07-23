@@ -50,6 +50,7 @@ module Qualifications
           date_of_birth_change: @date_of_birth_change
         )
         @date_of_birth_change.update!(reference_number:)
+        @date_of_birth_change.malware_scan
 
         redirect_to submitted_qualifications_one_login_user_date_of_birth_change_path(@date_of_birth_change)
       end
