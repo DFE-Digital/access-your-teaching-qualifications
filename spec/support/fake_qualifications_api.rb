@@ -39,6 +39,11 @@ class FakeQualificationsApi < Sinatra::Base
           total: 2,
           results: [teacher_data, additional_teacher]
         }.to_json
+      when "No_data"
+        {
+          total: 1,
+          results: [no_data]
+        }.to_json
       else
         {
           total: 1,
@@ -56,10 +61,13 @@ class FakeQualificationsApi < Sinatra::Base
     trn = params[:trn]
     case bearer_token
     when "token"
-      if trn == "1234567"
+      case trn
+      when "1234567"
         quals_data(trn: "1234567").to_json
-      elsif trn == "987654321"
+      when "987654321"
         quals_data(trn:).to_json
+      when "1212121"
+        no_data.to_json
       else
         halt 404
       end
@@ -112,6 +120,10 @@ class FakeQualificationsApi < Sinatra::Base
 
   def teacher_data(sanctions: false, trn: "1234567")
     sanctions ? sanctions_data : no_sanctions_data(trn:)
+  end
+
+  def no_data
+    no_sanctions_data(trn: "1212121")
   end
 
   def no_sanctions_data(trn:)

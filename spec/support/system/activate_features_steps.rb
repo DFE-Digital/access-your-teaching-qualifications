@@ -14,4 +14,8 @@ module ActivateFeaturesSteps
   def given_onelogin_authentication_is_active
     FeatureFlags::FeatureFlag.activate(:one_login)
   end
+
+  def given_the_trn_search_feature_is_active
+    FeatureFlags::FeatureFlag.activate(:trn_search)
+  end
 end

@@ -28,10 +28,6 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   private
 
-  def given_the_trn_search_feature_is_active
-    FeatureFlags::FeatureFlag.activate(:trn_search)
-  end
-
   def and_search_with_a_valid_name_and_dob
     fill_in "Last name", with: "Multiple_results"
     fill_in "Day", with: "5"

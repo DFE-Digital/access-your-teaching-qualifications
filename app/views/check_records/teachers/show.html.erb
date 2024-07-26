@@ -27,7 +27,9 @@
       <% end %>
     <% end %>
 
-
+    <% if @teacher.no_details? %>
+      <%= govuk_warning_text(text: "We have no details of this person's qualifications, teacher status or induction status. Please contact them directly for this information.") %>
+    <% end %>
     <% if @mqs.present? %>
       <%= render CheckRecords::MqSummaryComponent.new(mqs: @mqs) %>
     <% end %>
