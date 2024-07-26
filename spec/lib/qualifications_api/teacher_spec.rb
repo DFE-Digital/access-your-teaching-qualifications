@@ -213,6 +213,42 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         expect(qualifications.map(&:type)).to eq(%i[qts itt])
       end
     end
+
+    context "when programmeType is an Integer" do
+      let(:api_data) do
+        {
+          "initialTeacherTraining" => [
+            {
+              "qualification" => {
+                "name" => "BA"
+              },
+              "startDate" => "2012-02-28",
+              "endDate" => "2013-01-28",
+              "programmeType" => 1,
+              "programmeTypeDescription" => "Higher Education Institution",
+              "result" => "Pass",
+              "ageRange" => {
+                "description" => "10 to 16 years"
+              },
+              "provider" => {
+                "name" => "Earl Spencer Primary School",
+                "ukprn" => nil
+              },
+              "subjects" => [
+                { "code" => "100079", "name" => "business studies" }
+              ]
+            }
+          ],
+          "qts" => {
+            "awarded" => "2013-01-28",
+          }
+        }
+      end
+
+      it "the QTS gets priority in the sort order" do
+        expect(qualifications.map(&:type)).to eq(%i[qts itt])
+      end
+    end
   end
 
   describe "#name" do
