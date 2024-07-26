@@ -39,6 +39,12 @@
     <% @other_qualifications.each do |qualification| %>
       <%= render CheckRecords::QualificationSummaryComponent.new(qualification:) %>
     <% end %>
+
+    <%= govuk_inset_text classes: "govuk-!-padding-bottom-2 govuk-!-padding-top-3 govuk-!-margin-bottom- govuk-!-margin-top-0 app__no-print" do %>
+      <div class="govuk-!-margin-bottom-1">
+        You should review the terms and conditions before printing this page. You should dispose of the offline records you maintain once they have served their purpose.
+      </div>
+    <% end %>
   </div>
 
   <div class="govuk-grid-column-one-third">
@@ -60,12 +66,12 @@
       <% end %>
 
       <% if @teacher.date_of_birth.present? %>
-          <li>
-            <h4>Date of birth</h4>
-          </li>
-          <li>
-            <p><%= Date.parse(@teacher.date_of_birth).to_fs(:long) %></p>
-          </li>
+        <li>
+          <h4>Date of birth</h4>
+        </li>
+        <li>
+          <p><%= Date.parse(@teacher.date_of_birth).to_fs(:long) %></p>
+        </li>
       <% end %>
 
       <% if @teacher.previous_names.present? %>

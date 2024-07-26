@@ -30,6 +30,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     then_i_see_mq_details
     then_i_see_previous_last_names
     and_a_viewed_timestamp_is_displayed
+    and_a_print_warning_is_displayed
   end
 
   private
@@ -117,5 +118,9 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def and_a_viewed_timestamp_is_displayed
     expect(page).to have_content "Viewed at #{@frozen_time.strftime("%-I:%M%P on %-d %B %Y")}"
+  end
+
+  def and_a_print_warning_is_displayed
+    expect(page).to have_content "You should dispose of the offline records"
   end
 end

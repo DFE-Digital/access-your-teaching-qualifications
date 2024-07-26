@@ -112,3 +112,9 @@ h1 .govuk-tag {
     max-width: 100%;
   }
 }
+
+@media print {
+  .app__no-print {
+    display: none;
+  }
+}
