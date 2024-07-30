@@ -39,3 +39,6 @@ feature_flags:
   malware_scan:
     author: Richard Pattinson
     description: Enable malware scanning
+  bulk_search:
+    author: Felix Clack
+    description: Enable bulk search in Check the record
