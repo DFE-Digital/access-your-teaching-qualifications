@@ -71,6 +71,14 @@ module QualificationsApi
       api_data.pending_date_of_birth_change == true
     end
 
+    def no_details?
+      qualifications.empty? && 
+        api_data.induction.blank? && 
+        api_data.eyps.blank? && 
+        api_data.qts.blank? && 
+        api_data.eyts.blank?
+    end
+
     private
 
     def add_qts

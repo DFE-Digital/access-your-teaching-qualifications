@@ -88,4 +88,21 @@ module FakeQualificationsData
       sanctions: trn == "987654321" ? [ { code: "G1", startDate: "2020-10-25" } ] : []
     }
   end
+
+  def no_data(trn:)
+    {
+      trn:,
+      dateOfBirth: "2000-01-01",
+      firstName: "Terry",
+      lastName: "Walsh",
+      previousNames: [],
+      eyts: nil,
+      qts: nil,
+      induction: nil,
+      initialTeacherTraining: nil,
+      mandatoryQualifications: [],
+      npqQualifications: [],
+      sanctions: []
+    }
+  end
 end
