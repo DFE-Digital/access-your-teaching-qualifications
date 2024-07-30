@@ -22,6 +22,7 @@ namespace :check_records, path: "check-records" do
   patch "/terms-and-conditions" => "terms_and_conditions#update"
 
   resources :teachers, only: %i[show]
+  resources :bulk_searches, only: %i[new create], path: 'bulk-searches'
 
   scope "/feedback" do
     get "/", to: "feedbacks#new", as: :feedbacks

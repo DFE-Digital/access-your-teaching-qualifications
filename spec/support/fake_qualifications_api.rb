@@ -64,7 +64,7 @@ class FakeQualificationsApi < Sinatra::Base
       case trn
       when "1234567"
         quals_data(trn: "1234567").to_json
-      when "987654321"
+      when "9876543"
         quals_data(trn:).to_json
       when "1212121"
         no_data.to_json

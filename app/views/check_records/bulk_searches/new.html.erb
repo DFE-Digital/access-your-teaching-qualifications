@@ -1,0 +1,18 @@
+<% content_for :page_title, "Bulk search a teacher record" %>
+<% content_for :breadcrumbs do %>
+  <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Bulk search" => nil }) %>
+<% end %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Find multiple teacher records</h1>
+
+    <%= form_with model: [:check_records, @bulk_search] do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= f.govuk_file_field :file, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "CSV" }, required: true %>
+
+      <%= f.govuk_submit "Find records" %>
+    <% end %>
+  </div>
+</div>
