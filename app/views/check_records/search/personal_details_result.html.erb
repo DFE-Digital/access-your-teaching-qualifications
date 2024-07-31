@@ -10,7 +10,7 @@
     <% if @total.zero? %>
       <h1 class="govuk-heading-l">No records found</h1>
       <p class="govuk-body">
-        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.to_fs(:long_uk) %>
+        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.to_fs(:long_uk) %>.
       </p>
     <% else %>
       <h1 class="govuk-heading-l"><%= pluralize(@total, 'record') %> found</h1>

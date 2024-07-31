@@ -51,7 +51,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_multiple_search_results
-    expect(page).to have_content "2 records found"
+    expect(page).to have_content "Multiple records found"
     expect(page).to have_content "you must only view the teacher record you need"
   end
 
