@@ -122,7 +122,7 @@ module QualificationsApi
 
     def add_itt(qts: true)
       all_itt_data = api_data.fetch("initial_teacher_training", [])
-      eyts_itt_data, qts_itt_data = all_itt_data.partition { |itt| itt.programme_type&.starts_with?("EYITT") }
+      eyts_itt_data, qts_itt_data = all_itt_data.partition { |itt| itt.programme_type.to_s&.starts_with?("EYITT") }
       itt_data = qts ? qts_itt_data : eyts_itt_data
 
       @qualifications << itt_data
