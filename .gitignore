@@ -32,6 +32,8 @@ tmp/pids/*
 .terraform/
 .terraform.lock.hcl
 fetch_config.rb
+terraform/application/vendor
+bin/terrafile
 
 # Active Storage folder
 storage/
