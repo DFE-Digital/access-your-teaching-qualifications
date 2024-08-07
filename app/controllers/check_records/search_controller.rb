@@ -31,7 +31,6 @@ module CheckRecords
     end
 
     def trn_result
-      @searched_at = Time.zone.now.strftime("%-I:%M%P on %-d %B %Y")
       @trn_search = TrnSearch.new(trn: search_params[:trn])
       render :trn_search and return if(@trn_search.invalid? && !skipped?)
 
@@ -78,8 +77,7 @@ module CheckRecords
     def build_personal_details_search
       Search.new(
         date_of_birth: date_of_birth_params_to_array,
-        last_name: params[:search][:last_name],
-        searched_at: Time.zone.now
+        last_name: params[:search][:last_name]
       )
     end
 

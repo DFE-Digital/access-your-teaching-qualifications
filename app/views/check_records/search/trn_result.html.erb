@@ -2,9 +2,7 @@
 <% content_for :breadcrumbs do %>
   <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Search results" => nil }) %>
 
-  <span class="govuk-caption-m">
-    Searched at <%= @searched_at %>
-  </span>
+  <%= render ActionAtComponent.new(action: "Searched") %>
 <% end %>
 
 <div class="govuk-grid-row">
@@ -19,7 +17,7 @@
     <% elsif @teacher.blank? %>
       <h1 class="govuk-heading-l">No records found</h1>
       <p class="govuk-body">
-        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.strftime("%e %B %Y") %> with TRN <%= @trn_search.trn %>.
+        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.to_fs(:long_uk) %> with TRN <%= @trn_search.trn %>.
       </p>
       <%= render partial: "search_again_link" %>
     <% else %>

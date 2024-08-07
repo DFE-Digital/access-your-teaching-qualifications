@@ -10,10 +10,7 @@
     </div>
   </div>
 
-  <span class="govuk-caption-m">
-    Viewed at <%= Time.current.strftime("%-I:%M%P on %-d %B %Y") %>
-  </span>
-
+  <%= render ActionAtComponent.new(action: "Viewed") %>
 <% end %>
 
 <div class="govuk-grid-row">

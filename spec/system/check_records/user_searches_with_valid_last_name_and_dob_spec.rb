@@ -113,11 +113,11 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def and_a_search_timestamp_is_displayed
-    expect(page).to have_content "Searched at #{@frozen_time.strftime("%-I:%M%P on %-d %B %Y")}"
+    expect(page).to have_content "Searched at 10:21am on 1 January 2020"
   end
 
   def and_a_viewed_timestamp_is_displayed
-    expect(page).to have_content "Viewed at #{@frozen_time.strftime("%-I:%M%P on %-d %B %Y")}"
+    expect(page).to have_content "Viewed at 10:21am on 1 January 2020"
   end
 
   def and_a_print_warning_is_displayed
