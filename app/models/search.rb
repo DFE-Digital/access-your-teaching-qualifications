@@ -11,7 +11,6 @@ class Search
   attr_accessor :last_name, :searched_at
   attr_reader :date_of_birth
 
-
   validates :last_name, presence: true
   validate :date_of_birth_is_valid
 
@@ -24,10 +23,6 @@ class Search
     date_fields[1] = word_to_month_number(date_fields[1]) if month_is_a_word
 
     @date_of_birth = DateOfBirth.new(*date_fields)
-  end
-
-  def searched_at_to_s
-    searched_at.strftime("%-I:%M%P on %-d %B %Y")
   end
 
   private
