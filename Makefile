@@ -1,6 +1,7 @@
 .DEFAULT_GOAL		:=help
 SHELL				:=/bin/bash
 
+### AKS ###
 TERRAFILE_VERSION=0.8
 ARM_TEMPLATE_TAG=1.1.10
 RG_TAGS={"Product" : "Access Your Teaching Qualifications"}
@@ -8,10 +9,13 @@ REGION=UK South
 SERVICE_NAME=access-your-teaching-qualifications
 SERVICE_SHORT=aytq
 DOCKER_REPOSITORY=ghcr.io/dfe-digital/access-your-teaching-qualifications
+### AKS ###
 
 .PHONY: help
 help: ## Show this help
 	@grep -E '^[a-zA-Z\.\-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+### START: Legacy infrastructure - delete after AKS migration ###
 
 ##@ Set environment and corresponding configuration
 .PHONY: dev
@@ -84,11 +88,6 @@ domain:
 	$(eval RESOURCE_NAME_PREFIX=s165p01)
 	$(eval ENV_SHORT=pd)
 	$(eval ENV_TAG=prod)
-
-ci:	## Run in automation environment
-	$(eval DISABLE_PASSCODE=true)
-	$(eval AUTO_APPROVE=-auto-approve)
-	$(eval SP_AUTH=true)
 
 set-azure-resource-group-tags: ##Tags that will be added to resource group on it's creation in ARM template
 	$(eval RG_TAGS=$(shell echo '{"Portfolio": "Early Years and Schools Group", "Parent Business":"Teaching Regulation Agency", "Product" : "Access Your Teaching Qualifications", "Service Line": "Teaching Workforce", "Service": "Teacher Training and Qualifications", "Service Offering": "Access Your Teaching Qualifications", "Environment" : "${ENV_TAG}"}' | jq . ))
@@ -168,16 +167,25 @@ az-console: set-azure-account
 		--name=${RESOURCE_NAME_PREFIX}-aytq-${NAME_ENV}-wkr-cg \
 		--resource-group=${RESOURCE_NAME_PREFIX}-aytq-${RESOURCE_ENV}-rg \
 		--exec-command="bundle exec rails c ${CONSOLE_OPTIONS}"
+### END: Legacy infrastructure - delete after AKS migration ###
 
-# AKS
+ci:	## Run in automation environment
+	$(eval DISABLE_PASSCODE=true)
+	$(eval AUTO_APPROVE=-auto-approve)
+	$(eval SP_AUTH=true)
+
+### AKS ###
+# Note: AKS-specific files are found at the following locations, and do not conflict
+# with the existing Azure deployment files:
+# ./global_config/
+# ./terraform/application
 set-azure-account:
 	[ "${SKIP_AZURE_LOGIN}" != "true" ] && az account set -s ${AZURE_SUBSCRIPTION} || true
 
-.PHONY: review-aks
-review-aks: test-cluster
+.PHONY: aks-review
+aks-review: test-cluster
 	$(if ${PR_NUMBER},,$(error Missing PR_NUMBER))
-	$(eval ENVIRONMENT=review-${PR_NUMBER})
-	$(eval export TF_VAR_environment=${ENVIRONMENT})
+	$(eval ENVIRONMENT=pr-${PR_NUMBER})
 	$(eval include global_config/review.sh)
 
 composed-variables:
@@ -185,6 +193,37 @@ composed-variables:
 	$(eval KEYVAULT_NAMES='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")')
 	$(eval STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}${CONFIG_SHORT}tfsa)
 	$(eval LOG_ANALYTICS_WORKSPACE_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-log)
+
+bin/terrafile: ## Install terrafile to manage terraform modules
+	curl -sL https://github.com/coretech/terrafile/releases/download/v${TERRAFILE_VERSION}/terrafile_${TERRAFILE_VERSION}_$$(uname)_x86_64.tar.gz \
+		| tar xz -C ./bin terrafile
+
+aks-terraform-init: composed-variables bin/terrafile set-azure-account
+	$(if ${DOCKER_IMAGE_TAG}, , $(eval DOCKER_IMAGE_TAG=main))
+
+	./bin/terrafile -p terraform/application/vendor/modules -f terraform/application/config/$(CONFIG)_Terrafile
+	terraform -chdir=terraform/application init -upgrade -reconfigure \
+		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
+		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
+		-backend-config=key=${ENVIRONMENT}_kubernetes.tfstate
+
+	$(eval export TF_VAR_environment=${ENVIRONMENT})
+	$(eval export TF_VAR_azure_resource_prefix=${AZURE_RESOURCE_PREFIX})
+	$(eval export TF_VAR_config=${CONFIG})
+	$(eval export TF_VAR_config_short=${CONFIG_SHORT})
+	$(eval export TF_VAR_service_name=${SERVICE_NAME})
+	$(eval export TF_VAR_service_short=${SERVICE_SHORT})
+	$(eval export TF_VAR_docker_image=${DOCKER_REPOSITORY}:${DOCKER_IMAGE_TAG})
+	$(eval export TF_VAR_resource_group_name=${RESOURCE_GROUP_NAME})
+
+aks-terraform-plan: aks-terraform-init
+	terraform -chdir=terraform/application plan -var-file "config/${CONFIG}.tfvars.json"
+
+aks-terraform-apply: aks-terraform-init
+	terraform -chdir=terraform/application apply -var-file "config/${CONFIG}.tfvars.json"
+
+aks-terraform-destroy: aks-terraform-init
+	terraform -chdir=terraform/application destroy -var-file "config/${CONFIG}.tfvars.json"
 
 test-cluster:
 	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)
@@ -213,3 +252,7 @@ arm-deployment: composed-variables set-azure-account
 deploy-arm-resources: arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
 
 validate-arm-resources: set-what-if arm-deployment ## Validate ARM resource deployment. Usage: make domains validate-arm-resources
+
+get-cluster-credentials: set-azure-account
+	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
+	kubelogin convert-kubeconfig -l $(if ${GITHUB_ACTIONS},spn,azurecli)
