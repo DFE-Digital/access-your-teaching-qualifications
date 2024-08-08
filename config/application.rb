@@ -31,6 +31,7 @@ module AccessYourTeachingQualifications
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.time_zone = "London"
 
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/images")
     config.assets.paths << Rails.root.join("node_modules/govuk-frontend/dist/govuk/assets/fonts")
