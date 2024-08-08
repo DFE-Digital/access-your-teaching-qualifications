@@ -44,7 +44,8 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_no_records
-    expect(page).to have_content("No record found for Multiple_results born on 5 April 1992 with TRN bad-trn")
+    expect(page).to have_content("No record found for Multiple_results born on 5 April 1992")
+    expect(page).to have_content("with Teacher reference number (TRN) bad-trn")
     expect(page).to have_link("Search again")
   end
 

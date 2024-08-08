@@ -13,7 +13,7 @@
 
         summary_list.with_row do |row|
           row.with_key { "Date of birth" }
-          row.with_value { Date.parse(teacher.date_of_birth).to_fs(:long_uk) }
+          row.with_value { Date.parse(teacher.date_of_birth).to_fs("%-d %B %Y") }
         end
 
         if teacher.previous_names&.any?

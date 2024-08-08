@@ -8,16 +8,16 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds-from-desktop">
     <% if skipped? %>
-      <h1 class="govuk-heading-l"><%= @total %> records found</h1>
+      <h1 class="govuk-heading-l">Multiple records found</h1>
       <%= govuk_warning_text(text: "To follow data privacy rules, you must only view the teacher record you need. Read our terms and conditions to find out more.") %>
       <%= render partial: "results", locals: { teachers: @teachers } %>
       <p>
-        Due to multiple search results, we recommend you <%= govuk_link_to "search using a Teacher Reference Number (TRN)", check_records_trn_search_path(search: search_params) %> or <%= govuk_link_to("search again", check_records_search_path) %>
+        Due to multiple search results, we recommend you <%= govuk_link_to "search using a TRN", check_records_trn_search_path(search: search_params) %> or <%= govuk_link_to("search again", check_records_search_path) %> for more accurate results.
       </p>
     <% elsif @teacher.blank? %>
       <h1 class="govuk-heading-l">No records found</h1>
       <p class="govuk-body">
-        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.to_fs(:long_uk) %> with TRN <%= @trn_search.trn %>.
+        No record found for <%= @search.last_name %> born on <%= @search.date_of_birth.to_s.to_date.to_fs(:long_uk) %> with Teacher reference number (TRN) <%= @trn_search.trn %>.
       </p>
       <%= render partial: "search_again_link" %>
     <% else %>
