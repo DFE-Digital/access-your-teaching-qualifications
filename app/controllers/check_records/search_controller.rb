@@ -6,6 +6,7 @@ module CheckRecords
 
     def personal_details_search
       @search = Search.new
+      @organisation_name = current_dsi_user.dsi_user_sessions.last&.organisation_name
     end
 
     def personal_details_result
