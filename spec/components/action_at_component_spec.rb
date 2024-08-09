@@ -10,7 +10,7 @@ RSpec.describe ActionAtComponent, type: :component do
 
   it "renders the timestamp" do
     travel_to(frozen_time) do
-      expect(rendered_component).to include("Viewed at #{frozen_time.to_fs(:time_and_date)}")
+      expect(rendered_component).to include("Viewed at 10:21am on 1 June 2020")
     end
   end
 
@@ -35,9 +35,9 @@ RSpec.describe ActionAtComponent, type: :component do
       Time.zone = "UTC"
     end
 
-    it "renders the timestamp in the correct timezone" do
+    it "renders the timestamp in the London timezone" do
       travel_to(frozen_time) do
-        expect(rendered_component).to include("Viewed at 6:21am on 1 June 2020")
+        expect(rendered_component).to include("Viewed at 11:21am on 1 June 2020")
       end
     end
   end
