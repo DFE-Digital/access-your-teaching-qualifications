@@ -13,7 +13,7 @@ gem "cssbundling-rails"
 gem "data_migrate"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.0"
 gem "faraday"
-gem "govuk-components", "~> 5.4"
+gem "govuk-components", "~> 5.5"
 gem "govuk_design_system_formbuilder", "~> 5.4"
 gem "govuk_feature_flags",
     git: "https://github.com/DFE-Digital/govuk_feature_flags.git",
