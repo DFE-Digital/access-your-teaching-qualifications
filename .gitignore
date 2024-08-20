@@ -30,7 +30,6 @@ tmp/pids/*
 .env.production.local
 
 .terraform/
-.terraform.lock.hcl
 fetch_config.rb
 terraform/application/vendor
 bin/terrafile
