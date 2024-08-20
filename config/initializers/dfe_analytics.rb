@@ -10,6 +10,4 @@ DfE::Analytics.configure do |config|
       disabled_by_default = Rails.env.development?
       ENV.fetch("BIGQUERY_DISABLE", disabled_by_default.to_s) != "true"
     end
-
-  config.bigquery_maintenance_window = "08-09-2024 18:00..08-09-2024 19:00"
 end
