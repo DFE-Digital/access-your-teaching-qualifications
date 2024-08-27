@@ -5,8 +5,8 @@ inputs:
   environment:
     description: The name of the environment
     required: true
-  docker-image:
-    description: The Docker image to deploy
+  image-tag:
+    description: The image tag to deploy
     required: true
   azure-credentials:
     description: JSON object containing a service principal that can read from Azure Key Vault
@@ -33,7 +33,7 @@ runs:
             run: |
               make ci ${{ inputs.environment }} aks-terraform-apply
             env:
-              DOCKER_IMAGE_TAG: ${{ inputs.docker-image }}
+              DOCKER_IMAGE_TAG: ${{ inputs.image-tag }}
               PR_NUMBER: ${{ inputs.pull-request-number }}
 
           - name: Extract Terraform outputs
