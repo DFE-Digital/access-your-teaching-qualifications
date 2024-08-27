@@ -76,7 +76,7 @@ jobs:
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     needs: [build_image]
     environment:
-      name: review
+      name: aks-review
 
     steps:
       - uses: actions/checkout@v4
