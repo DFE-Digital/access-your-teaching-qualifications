@@ -82,7 +82,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Deploy to AKS
-        uses: ./.github/actions/deploy-environment
+        uses: ./.github/actions/deploy-environment-aks
         id: deploy_aks
         with:
           environment: review
