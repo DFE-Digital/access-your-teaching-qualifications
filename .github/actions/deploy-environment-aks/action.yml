@@ -1,0 +1,76 @@
+name: Deploy environment to AKS
+description: Deploys an application environment to AKS
+
+inputs:
+  environment:
+    description: The name of the environment
+    required: true
+  docker-image:
+    description: The Docker image to deploy
+    required: true
+  azure-credentials:
+    description: JSON object containing a service principal that can read from Azure Key Vault
+    required: true
+  pull-request-number:
+    description: The pull request number which triggered this deploy.
+    required: false
+
+runs:
+  using: composite
+
+  steps:
+          - uses: hashicorp/setup-terraform@v3
+            with:
+              terraform_version: 1.6.4
+              terraform_wrapper: false
+
+          - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+            with:
+              azure-credentials: ${{ inputs.azure-credentials }}
+
+          - name: Terraform Apply
+            shell: bash
+            run: |
+              make ci ${{ inputs.environment }} aks-terraform-apply
+            env:
+              DOCKER_IMAGE_TAG: ${{ inputs.docker-image }}
+              PR_NUMBER: ${{ inputs.pull-request-number }}
+
+          - name: Extract Terraform outputs
+            shell: bash
+            id: set_outputs
+            run: |
+              output=$(terraform -chdir=terraform/application output -json ingress_hostnames)
+              echo "HOSTNAMES=$output" >> $GITHUB_ENV
+
+          # # Check new site is up
+          # - run: |
+          #     echo "Checking new site is up"
+          #     attempt_counter=0
+          #     max_attempts=$RETRIES
+
+          #     HEALTH_URL="${{ env.app_fqdn }}/health/all.json"
+          #     HEALTH_RESPONSE=$(curl $HEALTH_URL --silent)
+          #     APP_SHA=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .version.message) catch $line' | grep -Po "Version: \K\w*")
+          #     APP_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .default.success) catch $line')
+          #     APP_DATABASE_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .database.success) catch $line')
+          #     echo "sha: $APP_SHA; app_status: $APP_STATUS; app_database_status: $APP_DATABASE_STATUS"
+          #     until [[ "$EXPECTED_SHA" == "$APP_SHA" && "$APP_STATUS" == "true" && "$APP_DATABASE_STATUS" == "true" ]]; do
+          #       if [ ${attempt_counter} -eq ${max_attempts} ];then
+          #         echo "Max attempts reached"
+          #         exit 1
+          #       fi
+          #       echo "Attempt $attempt_counter: new site not up, retrying in 5 seconds ..."
+          #       sleep 5
+          #       attempt_counter=$(($attempt_counter+1))
+
+          #       HEALTH_RESPONSE=$(curl $HEALTH_URL --silent)
+          #       APP_SHA=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .version.message) catch $line' | grep -Po "Version: \K\w*")
+          #       APP_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .default.success) catch $line')
+          #       APP_DATABASE_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .database.success) catch $line')
+          #       echo "sha: $APP_SHA; app_status: $APP_STATUS; app_database_status: $APP_DATABASE_STATUS"
+          #     done
+          #   shell: bash
+          #   env:
+          #     EXPECTED_SHA: ${{ inputs.image_tag }}
+          #     RETRIES: ${{ inputs.site_up_retries }}
