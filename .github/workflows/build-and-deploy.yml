@@ -97,10 +97,10 @@ jobs:
           message: |
             ### Deployments
 
-            | App               | URL                                                                                                            |
-            | ----------------- | ---------------------------------------------------------------------------------------------------------------|
-            | Track & Pay       | <https://access-your-teaching-qualifications-${{ github.event.number }}.test.teacherservices.cloud>            |
-            | School Placements | <https://check-a-teachers-record-${{ github.event.number }}.test.teacherservices.cloud>                        |
+            | App               | URL                                                                                                                                       |
+            | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------|
+            | Access Your Teaching Qualifications       | <https://access-your-teaching-qualifications-pr-${{ github.event.number }}.test.teacherservices.cloud>            |
+            | Check A Teacher's Record                  | <https://check-a-teachers-record-pr-${{ github.event.number }}.test.teacherservices.cloud>                        |
 
   set_matrix:
     name: Set deployment matrix
