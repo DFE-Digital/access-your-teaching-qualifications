@@ -225,7 +225,7 @@ aks-terraform-apply: aks-terraform-init ## Apply terraform changes for AKS
 	terraform -chdir=terraform/application apply -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
 
 aks-terraform-destroy: aks-terraform-init ## Destroy terraform resources for AKS
-	terraform -chdir=terraform/application destroy -var-file "config/${CONFIG}.tfvars.json"
+	terraform -chdir=terraform/application destroy -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
 
 test-cluster: ## Set up the test cluster variables for AKS
 	$(eval CLUSTER_RESOURCE_GROUP_NAME=s189t01-tsc-ts-rg)
