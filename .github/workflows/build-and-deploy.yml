@@ -85,7 +85,7 @@ jobs:
         uses: ./.github/actions/deploy-environment-aks
         id: deploy_aks
         with:
-          environment: review
+          environment: aks-review
           docker-image: ${{ needs.build_image.outputs.image_name_tag }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.number }}
