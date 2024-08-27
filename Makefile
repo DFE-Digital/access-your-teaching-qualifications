@@ -222,7 +222,7 @@ aks-terraform-plan: aks-terraform-init ## Plan terraform changes for AKS
 	terraform -chdir=terraform/application plan -var-file "config/${CONFIG}.tfvars.json"
 
 aks-terraform-apply: aks-terraform-init ## Apply terraform changes for AKS
-	terraform -chdir=terraform/application apply -var-file "config/${CONFIG}.tfvars.json"
+	terraform -chdir=terraform/application apply -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
 
 aks-terraform-destroy: aks-terraform-init ## Destroy terraform resources for AKS
 	terraform -chdir=terraform/application destroy -var-file "config/${CONFIG}.tfvars.json"
