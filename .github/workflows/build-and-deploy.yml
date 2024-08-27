@@ -44,7 +44,7 @@ jobs:
   deploy_review_app:
     name: Deploy to review environment
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'deploy-aks')
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     needs: [build_image]
     environment:
@@ -53,10 +53,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Deploy environment (standard)
-        uses: ./.github/actions/deploy-environment
+      - uses: ./.github/actions/deploy-environment
         id: deploy
-        if: contains(github.event.pull_request.labels.*.name, 'deploy')
         with:
           environment_name: review
           image_name_tag: ${{ needs.build_image.outputs.image_name_tag }}
@@ -65,19 +63,36 @@ jobs:
           site_up_retries: 150
           startup_command: "sh /app/bin/start-review-app.sh"
 
-      - name: Deploy to AKS
-        uses: ./.github/actions/deploy-environment
-        id: deploy_aks
-        if: contains(github.event.pull_request.labels.*.name, 'deploy-aks')
+      - name: Post URL to Pull Request comment
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
-          environment: review
+          message: |
+            Review app deployed to <${{ steps.deploy.outputs.environment_url }}>
+
+  deploy_review_app_aks:
+    name: Deploy to review environment for AKS
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'deploy-aks')
+    concurrency: deploy_review_${{ github.event.pull_request.number }}
+    needs: [build_image]
+    environment:
+      name: aks-review
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to AKS
+        uses: ./.github/actions/deploy-environment-aks
+        id: deploy_aks
+        with:
+          environment: aks-review
           docker-image: ${{ needs.build_image.outputs.image_name_tag }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.number }}
 
       - name: Post URL to Pull Request comment
         uses: marocchino/sticky-pull-request-comment@v2
-        if: success() && (contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'deploy-aks'))
+        if: success()
         with:
           message: |
             Review app deployed to <${{ steps.deploy.outputs.environment_url }}>
