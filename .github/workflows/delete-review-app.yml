@@ -1,43 +1,78 @@
-name: Delete Review App on AKS
+name: Delete review app on AKS
 
 on:
   pull_request:
     branches:
-      - main
+    - main
     types:
-      - closed
+    - closed
 
 jobs:
   delete-review-app:
     name: Delete Review App ${{ github.event.pull_request.number }}
-    concurrency: deploy-review-${{ github.event.pull_request.number }}
+    concurrency: deploy_review_${{ github.event.pull_request.number }}
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') || contains(github.event.pull_request.labels.*.name, 'deploy-aks') }}
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     environment: review
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform-version: 1.6.4
-          terraform-wrapper: false
+    - uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.6.4
+        terraform_wrapper: false
 
-      - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-        with:
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Terraform Destroy
-        run: |
-          make ci review terraform-destroy
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+    - name: Terraform Destroy
+      run: |
+        make ci review terraform-destroy
+      env:
+        PR_NUMBER: ${{ github.event.pull_request.number }}
 
-      - name: Post Pull Request Comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: aks
-          message: |
-            Review app track and pay deployed to <https://track-and-pay-${{ github.event.pull_request.number }}.test.teacherservices.cloud> was deleted.
-            Review app school placements deployed to <https://manage-school-placements-${{ github.event.pull_request.number }}.test.teacherservices.cloud> was deleted.
+    - name: Post Pull Request Comment
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: aks
+        message: |
+                Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+                Review app  school placements deployed to <https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+
+
+  delete-review-app-aks:
+    name: Delete Review App ${{ github.event.pull_request.number }}
+    concurrency: deploy_review_${{ github.event.pull_request.number }}
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy-aks') }}
+    environment: aks-review
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.6.4
+        terraform_wrapper: false
+
+    - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
+      with:
+        azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Terraform Destroy
+      run: |
+        make ci aks-review aks-terraform-destroy
+      env:
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+
+    - name: Post Pull Request Comment ${{ github.event.number }}
+      if: ${{ github.event_name == 'pull_request' }}
+      uses: marocchino/sticky-pull-request-comment@v2
+      with:
+        header: aks
+        message: |
+                Review app Access Your Teaching Qualifications deployed to <https://access-your-teaching-qualifications-pr-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+                Review app Check A Teacher's Record deployed to <https://check-a-teachers-record-pr-${{ github.event.number }}.test.teacherservices.cloud> was deleted
