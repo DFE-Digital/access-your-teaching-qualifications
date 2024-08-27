@@ -63,11 +63,18 @@ jobs:
           site_up_retries: 150
           startup_command: "sh /app/bin/start-review-app.sh"
 
-      - name: Post URL to Pull Request comment
+      - name: Post comment to Pull Request ${{ github.event.number }}
+        if: ${{ github.event_name == 'pull_request' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
+          header: aks
           message: |
-            Review app deployed to <${{ steps.deploy.outputs.environment_url }}>
+            ### Deployments
+
+            | App               | URL                                                                                                            |
+            | ----------------- | ---------------------------------------------------------------------------------------------------------------|
+            | Track & Pay       | <https://access-your-teaching-qualifications-${{ github.event.number }}.test.teacherservices.cloud>            |
+            | School Placements | <https://check-a-teachers-record-${{ github.event.number }}.test.teacherservices.cloud>                        |
 
   deploy_review_app_aks:
     name: Deploy to review environment for AKS
