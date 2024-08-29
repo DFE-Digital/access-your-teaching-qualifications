@@ -1,4 +1,5 @@
 import { initAll } from "govuk-frontend";
+import BulkSearchController from "./controllers/bulk_search_controller";
 
 initAll();
 
@@ -13,3 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     printButton.addEventListener("click", printPage);
   }
 });
+
+bulkSearch = new BulkSearchController();
+bulkSearch.start();

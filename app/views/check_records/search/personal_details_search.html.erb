@@ -2,11 +2,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <% if @organisation_name %>
-      <div class="govuk-caption-m govuk-!-margin-bottom-4">
-        You're signed in as <%= @organisation_name %>
-      </div>
-    <% end %>
+    <%= render 'check_records/organisation_name' %>
 
     <%= form_with model: @search, url: check_records_result_path, method: :get do |f| %>
       <%= f.govuk_error_summary %>

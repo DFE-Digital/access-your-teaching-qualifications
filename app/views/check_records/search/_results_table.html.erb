@@ -1,0 +1,29 @@
+<div class="search-results--table">
+  <% if teachers.any? %>
+    <%= govuk_table do |table|
+      table.with_caption(size: 'm', text: 'Records found')
+
+      table.with_head do |head|
+        head.with_row do |row|
+          row.with_cell(text: 'Full name')
+          row.with_cell(text: 'TRN')
+          row.with_cell(text: 'Restrictions')
+          row.with_cell(text: 'QTS')
+          row.with_cell(text: 'Induction status')
+        end
+      end
+
+      table.with_body do |body|
+        teachers.each do |teacher|
+          body.with_row do |row|
+            row.with_cell(text: govuk_link_to(teacher.name, check_records_teacher_path(SecureIdentifier.encode(teacher.trn)), class: 'govuk-link--no-visited-state govuk-!-font-weight-bold'))
+            row.with_cell(text: teacher.trn)
+            row.with_cell(text: teacher.restriction_status)
+            row.with_cell(text: teacher.teaching_status)
+            row.with_cell(text: teacher.induction_status)
+          end
+        end
+      end
+    end %>
+  <% end %>
+</div>

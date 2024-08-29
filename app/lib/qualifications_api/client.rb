@@ -135,6 +135,13 @@ module QualificationsApi
       [response.body["total"], results]
     end
 
+    def bulk_teachers(queries: [])
+      response = client.post("v3/persons/find", { persons: queries }) do |request|
+        request.headers["X-Api-Version"] = "20240814"
+      end
+      response.body
+    end
+
     def client
       @client ||=
         Faraday.new(

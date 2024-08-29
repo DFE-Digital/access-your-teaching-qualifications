@@ -137,8 +137,8 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component do
 
     describe 'restrictions statuses' do
       describe "No restrictions tag" do
-        context "teacher#sanctions is blank" do
-          before { allow(teacher).to receive(:sanctions).and_return nil }
+        context "teacher#no_restrictions is true" do
+          before { allow(teacher).to receive(:no_restrictions?).and_return(true) }
 
           it "adds the No restrictions tag" do
             render_inline described_class.new(teacher)
@@ -147,63 +147,29 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component do
           end
         end
 
-        context "teacher#sanctions returns a possible match on the childrens barred list " do
+        context "teacher#no_restrictions returns false " do
           before do
-            allow(teacher).to receive(:sanctions).and_return(
-              [
-                instance_double(Sanction, possible_match_on_childrens_barred_list?: true),
-                instance_double(Sanction, possible_match_on_childrens_barred_list?: false)
-              ]
-            )
+            allow(teacher).to receive(:no_restrictions?).and_return(false)
+            allow(teacher).to receive(:possible_restrictions?).and_return(true)
           end
 
-          it "does not add the No restrictions tag" do
+          it "adds the possible restriction tag" do
             render_inline described_class.new(teacher)
 
-            expect(page).not_to have_text("No restrictions")
             expect(page).to have_text("Possible restriction")
           end
         end
 
-        context "teacher#sanctions returns guilty but not prohibited sanctions only" do
+        context "teacher has a restriction" do
           before do
-            allow(teacher).to receive(:sanctions).and_return(
-              [
-                instance_double(
-                  Sanction, possible_match_on_childrens_barred_list?: false, guilty_but_not_prohibited?: true
-                ),
-                instance_double(
-                  Sanction, possible_match_on_childrens_barred_list?: false, guilty_but_not_prohibited?: true
-                )
-              ]
-            )
+            allow(teacher).to receive(:no_restrictions?).and_return(false)
+            allow(teacher).to receive(:possible_restrictions?).and_return(false)
           end
 
-          it "adds the No restrictions tag" do
+          it "adds the restriction tag" do
             render_inline described_class.new(teacher)
 
-            expect(page).to have_text("No restrictions")
-          end
-        end
-
-        context "teacher#sanctions returns any other kind of sanction" do
-          before do
-            allow(teacher).to receive(:sanctions).and_return(
-              [
-                instance_double(
-                  Sanction, possible_match_on_childrens_barred_list?: false, guilty_but_not_prohibited?: true
-                ),
-                instance_double(
-                  Sanction, possible_match_on_childrens_barred_list?: false, guilty_but_not_prohibited?: false
-                )
-              ]
-            )
-          end
-
-          it "does not add the No restrictions tag" do
-            render_inline described_class.new(teacher)
-
-            expect(page).not_to have_text("No restrictions")
+            expect(page).to have_text("Restriction")
           end
         end
       end

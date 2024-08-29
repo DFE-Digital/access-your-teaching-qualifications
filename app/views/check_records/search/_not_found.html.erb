@@ -1,0 +1,21 @@
+<div class="no-results--table">
+  <%= govuk_table do |table|
+    table.with_caption(size: 'm', text: 'No records found')
+
+    table.with_head do |head|
+      head.with_row do |row|
+        row.with_cell(text: 'TRN')
+        row.with_cell(text: 'Date of birth')
+      end
+    end
+
+    table.with_body do |body|
+      not_found.each do |record|
+        body.with_row do |row|
+          row.with_cell(text: record.trn)
+          row.with_cell(text: record.date_of_birth.to_fs(:long_uk))
+        end
+      end
+    end
+  end %>
+</div>
