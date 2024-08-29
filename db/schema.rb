@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_22_092519) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_29_103510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,16 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_092519) do
     t.datetime "updated_at", null: false
     t.index ["auditor_id"], name: "index_audits1984_audits_on_auditor_id"
     t.index ["session_id"], name: "index_audits1984_audits_on_session_id"
+  end
+
+  create_table "bulk_search_logs", force: :cascade do |t|
+    t.bigint "dsi_user_id", null: false
+    t.integer "query_count"
+    t.integer "result_count"
+    t.text "csv"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dsi_user_id"], name: "index_bulk_search_logs_on_dsi_user_id"
   end
 
   create_table "console1984_commands", force: :cascade do |t|
@@ -200,6 +210,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_22_092519) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bulk_search_logs", "dsi_users"
   add_foreign_key "date_of_birth_changes", "users"
   add_foreign_key "search_logs", "dsi_users"
 end
