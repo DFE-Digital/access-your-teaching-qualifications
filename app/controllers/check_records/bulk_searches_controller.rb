@@ -9,6 +9,7 @@ module CheckRecords
       @bulk_search = BulkSearch.new(file: bulk_search_params[:file])
       @total, @results, @not_found = @bulk_search.call
       unless @results
+        send_error_analytics_event
         render :new
       end
     end
@@ -17,6 +18,17 @@ module CheckRecords
 
     def bulk_search_params
       params.require(:bulk_search).permit(:file)
+    end
+
+    def send_error_analytics_event
+      event = DfE::Analytics::Event.new
+        .with_type(:bulk_search_validation_error)
+        .with_user(current_dsi_user)
+        .with_request_details(request)
+        .with_namespace(current_namespace)
+        .with_data(errors: @bulk_search.errors.to_hash)
+
+      DfE::Analytics::SendEvents.do([event])
     end
   end
 end
