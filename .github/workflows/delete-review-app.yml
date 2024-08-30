@@ -37,10 +37,9 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:
-          header: aks
           message: |
-            Review app  track and pay deployed to <https://track-and-pay-${{ github.event.number }}.test.teacherservices.cloud> was deleted
-            Review app  school placements deployed to <https://manage-school-placements-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+            Review app Access Your Teaching Qualifications deployed to <https://access-your-teaching-qualifications-pr-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+            Review app Check A Teacher's Record deployed to <https://check-a-teachers-record-pr-${{ github.event.number }}.test.teacherservices.cloud> was deleted
 
   delete-review-app-aks:
     name: Delete Review App ${{ github.event.pull_request.number }}
