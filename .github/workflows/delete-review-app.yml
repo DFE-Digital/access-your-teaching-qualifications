@@ -66,6 +66,13 @@ jobs:
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
 
+      - name: Delete tf state file
+        if: env.TF_STATE_EXISTS == 'true'
+        run: |
+          az storage blob delete -c ${{ env.tf_state_container }} --name ${{ env.TF_STATE_FILE }} \
+          --account-key ${{ env.TFSTATE_CONTAINER_ACCESS_KEY }} \
+          --account-name ${{ env.storage_account_name }}
+
       - name: Post Pull Request Comment ${{ github.event.number }}
         if: ${{ github.event_name == 'pull_request' }}
         uses: marocchino/sticky-pull-request-comment@v2
