@@ -64,7 +64,7 @@ class FakeQualificationsApi < Sinatra::Base
       case trn
       when "1234567"
         quals_data(trn: "1234567").to_json
-      when "987654321"
+      when "9876543"
         quals_data(trn:).to_json
       when "1212121"
         no_data.to_json
@@ -74,6 +74,15 @@ class FakeQualificationsApi < Sinatra::Base
     when "invalid-token"
       halt 401
     end
+  end
+
+  post "/v3/persons/find" do
+    content_type :json
+
+    {
+      results: [quals_data(trn: "9876543")],
+      total: 1
+    }.to_json
   end
 
   get "/v3/certificates/npq/:id" do
@@ -175,7 +184,7 @@ class FakeQualificationsApi < Sinatra::Base
           startDate: "2018-9-20"
         }
       ],
-      trn: "987654321"
+      trn: "9876543"
     }
   end
 

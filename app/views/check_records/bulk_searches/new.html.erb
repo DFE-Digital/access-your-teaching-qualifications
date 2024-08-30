@@ -1,0 +1,42 @@
+<% content_for :page_title, "Find multiple records" %>
+
+<div class="govuk-grid-row" id="bulk_search">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render 'check_records/organisation_name' %>
+
+    <h1 class="govuk-heading-l">Find multiple teacher records</h1>
+
+    <%= form_with model: [:check_records, @bulk_search] do |f| %>
+      <%= f.govuk_error_summary %>
+
+      <%= govuk_list spaced: true, type: :number do %>
+        <li>
+          <h3>Download the CSV template.</h3>
+          <p class="govuk-body"><%= govuk_link_to "Download CSV template file", asset_path("multiple_records.csv") %></p>
+        </li>
+        <li>
+          <h3>Add each person's details</h3>
+          <p class="govuk-body">
+            Open the CSV file and add the teacher reference number (TRN) and date of birth for each 
+            person you want to find a record for.
+          </p>
+          <p class="govuk-body">
+            The TRN must be 7 digits and the date of birth 
+            must be in DD/MM/YYYY format. 
+          </p>
+          <p class="govuk-body">
+            You can add a maximum of 20 people.
+          </p>
+        </li>
+        <li>
+          <h3>Upload file</h3>
+          <p class="govuk-body">We'll tell you if we find any teacher records.</p>
+        </li>
+      <% end %>
+
+      <%= f.govuk_file_field :file, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "Upload file" }, hint: { text: "File type must be a CSV" }, required: true %>
+
+      <%= f.govuk_submit "Find records" %>
+    <% end %>
+  </div>
+</div>

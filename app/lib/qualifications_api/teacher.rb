@@ -39,8 +39,33 @@ module QualificationsApi
       @qualifications.flatten!
     end
 
+    def restriction_status
+      return 'No restrictions' if no_restrictions?
+      return 'Possible restrictions' if possible_restrictions?
+
+      'Restriction'
+    end
+
+    def no_restrictions?
+      return true if sanctions.blank? || sanctions.all?(&:guilty_but_not_prohibited?)
+
+      false
+    end
+
+    def possible_restrictions?
+      sanctions.any?(&:possible_match_on_childrens_barred_list?)
+    end
+
     def sanctions
       api_data.sanctions&.map { |sanction| Sanction.new(sanction) }
+    end
+
+    def teaching_status
+      return 'QTS' if qts_awarded?
+      return 'EYTS' if eyts_awarded?
+      return 'EYPS' if eyps_awarded?
+
+      'No QTS or EYTS'
     end
 
     def qts_awarded?
@@ -53,6 +78,13 @@ module QualificationsApi
 
     def eyps_awarded?
       api_data.eyps&.awarded.present?
+    end
+
+    def induction_status
+    return 'Passed induction' if passed_induction?
+    return 'Exempt from induction' if exempt_from_induction?
+    
+    'No induction'
     end
 
     def passed_induction?

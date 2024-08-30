@@ -18,4 +18,8 @@ module ActivateFeaturesSteps
   def given_the_trn_search_feature_is_active
     FeatureFlags::FeatureFlag.activate(:trn_search)
   end
+
+  def and_bulk_search_is_enabled
+    FeatureFlags::FeatureFlag.activate(:bulk_search)
+  end
 end

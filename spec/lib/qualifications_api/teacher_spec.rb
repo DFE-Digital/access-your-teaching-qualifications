@@ -1,97 +1,98 @@
 require "rails_helper"
 
 RSpec.describe QualificationsApi::Teacher, type: :model do
+  let(:api_data) do
+    {
+      "induction" => {
+        "startDate" => "2015-01-01",
+        "endDate" => "2015-07-01",
+        "statusDescription" => "Complete",
+        "certificateUrl" => "https",
+        "periods" => [
+          {
+            "startDate" => "string",
+            "endDate" => "string",
+            "terms" => "integer",
+            "appropriateBody" => {
+              "name" => "string"
+            }
+          }
+        ]
+      },
+      "initialTeacherTraining" => [
+        {
+          "qualification" => {
+            "name" => "PGCE"
+          },
+          "startDate" => "2011-01-17",
+          "endDate" => "2012-02-2",
+          "programmeType" => "EYITTSchoolDirectEarlyYears",
+          "programmeTypeDescription" => "Early Years Initial Teacher Training (School Direct)",
+          "result" => "Pass",
+          "ageRange" => {
+            "description" => "3 to 7 years"
+          },
+          "provider" => {
+            "name" => "Earl Spencer Primary School",
+            "ukprn" => nil
+          },
+          "subjects" => [{ "code" => "100079", "name" => "business studies" }]
+        },
+        {
+          "qualification" => {
+            "name" => "BA"
+          },
+          "startDate" => "2012-02-28",
+          "endDate" => "2013-01-28",
+          "programmeType" => "HEI",
+          "programmeTypeDescription" => "Higher Education Institution",
+          "result" => "Pass",
+          "ageRange" => {
+            "description" => "10 to 16 years"
+          },
+          "provider" => {
+            "name" => "Earl Spencer Primary School",
+            "ukprn" => nil
+          },
+          "subjects" => [{ "code" => "100079", "name" => "business studies" }]
+        }
+      ],
+      "qts" => {
+        "awarded" => "2015-11-01",
+        "statusDescription" => "Qualified (trained in the UK)",
+      },
+      "eyts" => {
+        "awarded" => "2015-11-02",
+        "certificateUrl" => "https://example.com/certificate.pdf",
+        "statusDescription" => "Qualified",
+      },
+      "mandatoryQualifications" => [
+        { "awarded" => "2013-06-01", "specialism" => "Visual Impairment" }
+      ],
+      "npqQualifications" => [
+        {
+          "type" => {
+            "code" => "NPQML",
+            "name" => "NPQ for Middle Leadership"
+          },
+          "awarded" => "2015-11-03",
+          "certificateUrl" => "https://example.com/v3/certificates/456"
+        },
+        {
+          "type" => {
+            "code" => "NPQSL",
+            "name" => "NPQ for Senior Leadership"
+          },
+          "awarded" => "2015-11-04",
+          "certificateUrl" => "https://example.com/v3/certificates/123"
+        }
+      ]
+    }
+  end
+
   describe "#qualifications" do
     subject(:qualifications) { teacher.qualifications }
 
-    let(:api_data) do
-      {
-        "induction" => {
-          "startDate" => "2015-01-01",
-          "endDate" => "2015-07-01",
-          "statusDescription" => "Complete",
-          "certificateUrl" => "https",
-          "periods" => [
-            {
-              "startDate" => "string",
-              "endDate" => "string",
-              "terms" => "integer",
-              "appropriateBody" => {
-                "name" => "string"
-              }
-            }
-          ]
-        },
-        "initialTeacherTraining" => [
-          {
-            "qualification" => {
-              "name" => "PGCE"
-            },
-            "startDate" => "2011-01-17",
-            "endDate" => "2012-02-2",
-            "programmeType" => "EYITTSchoolDirectEarlyYears",
-            "programmeTypeDescription" => "Early Years Initial Teacher Training (School Direct)",
-            "result" => "Pass",
-            "ageRange" => {
-              "description" => "3 to 7 years"
-            },
-            "provider" => {
-              "name" => "Earl Spencer Primary School",
-              "ukprn" => nil
-            },
-            "subjects" => [{ "code" => "100079", "name" => "business studies" }]
-          },
-          {
-            "qualification" => {
-              "name" => "BA"
-            },
-            "startDate" => "2012-02-28",
-            "endDate" => "2013-01-28",
-            "programmeType" => "HEI",
-            "programmeTypeDescription" => "Higher Education Institution",
-            "result" => "Pass",
-            "ageRange" => {
-              "description" => "10 to 16 years"
-            },
-            "provider" => {
-              "name" => "Earl Spencer Primary School",
-              "ukprn" => nil
-            },
-            "subjects" => [{ "code" => "100079", "name" => "business studies" }]
-          }
-        ],
-        "qts" => {
-          "awarded" => "2015-11-01",
-          "statusDescription" => "Qualified (trained in the UK)",
-        },
-        "eyts" => {
-          "awarded" => "2015-11-02",
-          "certificateUrl" => "https://example.com/certificate.pdf",
-          "statusDescription" => "Qualified",
-        },
-        "mandatoryQualifications" => [
-          { "awarded" => "2013-06-01", "specialism" => "Visual Impairment" }
-        ],
-        "npqQualifications" => [
-          {
-            "type" => {
-              "code" => "NPQML",
-              "name" => "NPQ for Middle Leadership"
-            },
-            "awarded" => "2015-11-03",
-            "certificateUrl" => "https://example.com/v3/certificates/456"
-          },
-          {
-            "type" => {
-              "code" => "NPQSL",
-              "name" => "NPQ for Senior Leadership"
-            },
-            "awarded" => "2015-11-04",
-            "certificateUrl" => "https://example.com/v3/certificates/123"
-          }
-        ]
-      }
-    end
     let(:teacher) { described_class.new(api_data) }
 
     it "sorts the qualifications in reverse chronological order by date of award" do
@@ -410,6 +411,39 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       it "returns true" do
         expect(teacher.pending_date_of_birth_change?).to eq true
       end
+    end
+  end
+
+  describe '#no_restrictions?' do
+    subject(:no_restrictions) { teacher.no_restrictions? }
+
+    let(:teacher) { described_class.new(api_data) }
+
+    it { is_expected.to be_truthy }
+
+    context 'when there are possible restrictions' do
+      let(:api_data) do
+        {
+          "sanctions" => [
+            { "guiltyButNotProhibited" => true },
+            { "possibleMatchOnChildrensBarredList" => true }
+          ]
+        }
+      end
+
+      it { is_expected.to be_falsey }
+    end
+
+    context "when there are sanctions" do
+      let(:api_data) do
+        {
+          "sanctions" => [
+            { "guiltyButNotProhibited" => true },
+          ]
+        }
+      end
+
+      it { is_expected.to be_falsey }
     end
   end
 end
