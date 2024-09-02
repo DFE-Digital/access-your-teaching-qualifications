@@ -379,7 +379,7 @@ GEM
       validate_url
       webfinger (~> 2.0)
     os (1.1.4)
-    pagy (8.6.3)
+    pagy (9.0.8)
     parallel (1.25.1)
     parser (3.3.4.0)
       ast (~> 2.4.1)
