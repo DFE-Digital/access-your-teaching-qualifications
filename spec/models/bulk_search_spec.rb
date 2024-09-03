@@ -79,5 +79,20 @@ RSpec.describe BulkSearch, type: :model do
 
       it { is_expected.to be_falsey }
     end
+
+    context 'when the search returns an error' do
+      before do
+        allow_any_instance_of(QualificationsApi::Client).to receive(:bulk_teachers).and_return(nil)
+      end
+
+      it "returns no results" do
+        is_expected.to eq([0, [], 
+          [
+            { "trn" => "3001403", "date_of_birth" => Date.parse("01/01/1990") },
+            { "date_of_birth" => Date.parse("1/1/2000"), "trn" => "9876543" }
+          ]
+        ])
+      end
+    end
   end
 end

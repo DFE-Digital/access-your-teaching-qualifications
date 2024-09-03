@@ -24,13 +24,13 @@ class BulkSearch
   end
 
   def results
-    @results ||= response["results"].map do |teacher|
+    @results ||= response.fetch("results", []).map do |teacher|
       QualificationsApi::Teacher.new(teacher)
     end
   end
 
   def total
-    @total ||= response["total"]
+    @total ||= response.fetch("total", 0)
   end
 
   private
@@ -68,7 +68,7 @@ class BulkSearch
   end
 
   def find_all(queries)
-    search_client.bulk_teachers(queries:)
+    search_client.bulk_teachers(queries:) || {}
   end
 
   def response
