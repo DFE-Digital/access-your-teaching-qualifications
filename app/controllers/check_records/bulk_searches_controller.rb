@@ -8,10 +8,18 @@ module CheckRecords
     def create
       @bulk_search = BulkSearch.new(file: bulk_search_params[:file])
       @total, @results, @not_found = @bulk_search.call
-      unless @results
+      if @results
+        BulkSearchLog.create!(
+          csv: @bulk_search.csv,
+          dsi_user_id: current_dsi_user.id,
+          query_count: @bulk_search.csv.count,
+          result_count: @total
+        )
+      else
         send_error_analytics_event
         render :new
       end
+
     end
 
     private

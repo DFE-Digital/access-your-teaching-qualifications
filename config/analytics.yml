@@ -128,3 +128,11 @@ shared:
     - created_at
     - updated_at
     - service
+  :bulk_search_logs:
+    - id
+    - csv
+    - dsi_user_id
+    - query_count
+    - result_count
+    - created_at
+    - updated_at
