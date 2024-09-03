@@ -33,6 +33,10 @@ class BulkSearch
     @total ||= response["total"]
   end
 
+  def csv
+    @csv ||= CSV.parse(file.read, headers: true)
+  end
+
   private
 
   def all_rows_have_data
@@ -54,10 +58,6 @@ class BulkSearch
         errors.add(:file, "The selected file does not have a TRN in row #{index + 1}")
       end
     end
-  end
-
-  def csv
-    @csv ||= CSV.parse(file.read, headers: true)
   end
 
   def header_row_present?

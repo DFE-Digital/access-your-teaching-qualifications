@@ -10,6 +10,7 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
     when_i_sign_in_via_dsi
     and_search_with_a_valid_csv
     then_i_see_the_results_summary
+    and_my_search_is_logged
   end
 
   private
@@ -22,5 +23,12 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
 
   def then_i_see_the_results_summary
     expect(page).to have_content "1 teacher record found"
+  end
+
+  def and_my_search_is_logged
+    search_log = BulkSearchLog.last
+    expect(search_log.csv).to eq "TRN,Date of birth\n3001403,1990-01-01\n9876543,2000-01-01\n"
+    expect(search_log.query_count).to eq 2
+    expect(search_log.result_count).to eq 1
   end
 end
