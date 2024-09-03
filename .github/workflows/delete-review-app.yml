@@ -6,12 +6,12 @@ on:
       - main
     types:
       - closed
-  workflow_dispatch:
-    inputs:
-      pr_number:
-        description: PR number of review app to delete
-        required: false
-        type: string
+  # workflow_dispatch:
+  #   inputs:
+  #     pr_number:
+  #       description: PR number of review app to delete
+  #       required: false
+  #       type: string
 
 jobs:
   delete-review-app:
