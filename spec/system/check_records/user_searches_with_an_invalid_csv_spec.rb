@@ -13,6 +13,7 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
 
     when_i_search_with_a_csv_missing_a_value
     then_i_see_the_missing_value_error_message
+    and_i_see_the_analytics_event
   end
 
   private
@@ -34,6 +35,10 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
 
   def then_i_see_the_missing_value_error_message
     expect(page).to have_content "The selected file does not have a TRN in row 1"
+  end
+
+  def and_i_see_the_analytics_event
+    expect(:bulk_search_validation_error).to have_been_enqueued_as_analytics_events
   end
 end
 
