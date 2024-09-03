@@ -163,7 +163,7 @@ jobs:
 
       - name: Terraform Destroy
         run: |
-          make ci review terraform-destroy
+          make ci aks-review terraform-destroy
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}
 
