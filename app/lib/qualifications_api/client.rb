@@ -139,6 +139,18 @@ module QualificationsApi
       response = client.post("v3/persons/find", { persons: queries }) do |request|
         request.headers["X-Api-Version"] = "20240814"
       end
+      case response.status
+      when 200
+        response.body
+      when 403
+        raise QualificationsApi::ForbiddenError
+      when 401
+        raise QualificationsApi::InvalidTokenError
+      else
+        raise QualificationsApi::UnknownError, "API returned unhandled status #{response.status}"
+      end
+    rescue QualificationsApi::UnknownError => e
+      Sentry.capture_exception(e)
       response.body
     end
 

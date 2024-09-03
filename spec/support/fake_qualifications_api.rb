@@ -79,10 +79,19 @@ class FakeQualificationsApi < Sinatra::Base
   post "/v3/persons/find" do
     content_type :json
 
-    {
-      results: [quals_data(trn: "9876543")],
-      total: 1
-    }.to_json
+    case bearer_token
+    when "token"
+      {
+        results: [quals_data(trn: "9876543")],
+        total: 1
+      }.to_json
+    when "invalid-token"
+      halt 401
+    when "forbidden"
+      halt 403
+    when "api-error"
+      halt 500
+    end
   end
 
   get "/v3/certificates/npq/:id" do

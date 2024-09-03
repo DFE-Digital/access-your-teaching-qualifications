@@ -100,4 +100,50 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
       end
     end
   end
+
+  describe "#bulk_teachers" do
+    subject(:bulk_teachers) do
+      described_class.new(token:).bulk_teachers(queries:)
+    end
+
+    let(:token) { "token" }
+    let(:queries) { [] }
+    
+    it "returns the total count of records found" do
+      expect(bulk_teachers["total"]).to eq(1)
+    end
+
+    it "returns the records found" do
+      expect(bulk_teachers.dig("results", 0, "trn")).to eq("9876543")
+    end
+
+    context "when the API returns a 401" do
+      let(:token) { "invalid-token" }
+
+      it "raises an error" do
+        expect { bulk_teachers }.to raise_error(
+          QualificationsApi::InvalidTokenError
+        )
+      end
+    end
+
+    context "when the API returns a 403" do
+      let(:token) { "forbidden" }
+
+      it "raises an error" do
+        expect { bulk_teachers }.to raise_error(
+          QualificationsApi::ForbiddenError
+        )
+      end
+    end
+
+    context "when the API returns a 500" do
+      let(:token) { "api-error" }
+
+      it "captures the error in Sentry" do
+        expect(Sentry).to receive(:capture_exception)
+        bulk_teachers
+      end
+    end
+  end
 end
