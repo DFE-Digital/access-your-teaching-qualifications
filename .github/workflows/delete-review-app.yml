@@ -164,13 +164,13 @@ jobs:
             exit 1
           fi
 
-          RESOURCE_PREFIX=$(jq -r '.resource_prefix' $TFVARS)
-          APP_RESOURCE_GROUP_NAME=$RESOURCE_PREFIX-review-pr-$PR_NUMBER-rg
+          . global_config/review.sh
+
+          APP_RESOURCE_GROUP_NAME=$AZURE_RESOURCE_PREFIX-review-pr-$PR_NUMBER-rg
           STORAGE_ACCOUNT_NAME=$(jq -r '.storage_account_name' $TFVARS)
           TERRAFORM_VERSION=$(awk '/{/{f=/^terraform/;next}f' terraform.tf | grep -o [0-9\.]*)
           DEV_TFVARS=workspace_variables/dev.tfvars.json
           TF_RESOURCE_GROUP_NAME=$(jq -r '.resource_group_name' $DEV_TFVARS)
-          TF_STATE_CONTAINER=$(awk '/{/{f=/backend/;next}f' terraform.tf | grep -o "\"[a-z\-]*\"" | tr -d \")
 
           if [ -z "$APP_RESOURCE_GROUP_NAME" ]; then
             echo "::error ::Failed to extract app_resource_group_name from $TFVARS"
@@ -192,21 +192,15 @@ jobs:
             exit 1
           fi
 
-          if [ -z "$TF_STATE_CONTAINER" ]; then
-            echo "::error ::Failed to extract tf_state_container from terraform.tf"
-            exit 1
-          fi
-
           echo "app_resource_group_name=$APP_RESOURCE_GROUP_NAME" >> $GITHUB_ENV
           echo "pr_number=$PR_NUMBER" >> $GITHUB_ENV
           echo "storage_account_name=$STORAGE_ACCOUNT_NAME" >> $GITHUB_ENV
           echo "terraform_version=$TERRAFORM_VERSION" >> $GITHUB_ENV
-          echo "tf_resource_group_name=$TF_RESOURCE_GROUP_NAME" >> $GITHUB_ENV
-          echo "tf_state_container=$TF_STATE_CONTAINER" >> $GITHUB_ENV
+          echo "tf_resource_group_name=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
         shell: bash
         env:
-          TFVARS: workspace_variables/review.tfvars.json
-        working-directory: terraform
+          TFVARS: config/review.tfvars.json
+        working-directory: terraform/application
 
       - uses: Azure/login@v1
         with:
@@ -236,7 +230,7 @@ jobs:
           TF_STATE_FILE=review/review-pr-${{ env.pr_number }}.tfstate
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
 
-          pr_state_file=$(az storage blob list -c ${{ env.tf_state_container }} \
+          pr_state_file=$(az storage blob list -c terraform-state \
             --account-key ${{ env.TFSTATE_CONTAINER_ACCESS_KEY }} \
             --account-name ${{ env.storage_account_name }} \
             --prefix $TF_STATE_FILE --query "[].name" -o tsv)
