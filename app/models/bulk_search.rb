@@ -73,7 +73,7 @@ class BulkSearch
 
   def response
     @response ||= begin
-      queries = csv.map { |row| { trn: row["TRN"], dateOfBirth: row["Date of birth"] } }.compact
+      queries = csv.map { |row| { trn: row["TRN"], dateOfBirth: Date.parse(row["Date of birth"]) } }.compact
       find_all(queries)
     end
   end
