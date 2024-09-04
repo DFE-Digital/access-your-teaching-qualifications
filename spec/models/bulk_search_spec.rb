@@ -74,6 +74,20 @@ RSpec.describe BulkSearch, type: :model do
       expect(call.third).to eq(["trn" => '3001403', "date_of_birth" => Date.parse('01/01/1990')])
     end
 
+    it 'parses the date of birth correctly in the queries' do
+      expect_any_instance_of(QualificationsApi::Client).to receive(:bulk_teachers) do |_, queries:|
+        expect(queries).to include(
+          hash_including(
+            trn: '3001403',
+            dateOfBirth: Date.parse('01/01/1990')
+          )
+        )
+        { "results" => [], "total" => 0 }
+      end
+
+      call
+    end
+
     context 'when the bulk search is not valid' do
       let(:file) { nil }
 
@@ -94,5 +108,7 @@ RSpec.describe BulkSearch, type: :model do
         ])
       end
     end
+
+
   end
 end
