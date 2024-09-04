@@ -160,6 +160,7 @@ jobs:
             PR_NUMBER=${{ github.event.pull_request.number }}
           fi
 
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
           echo "STORAGE_ACCOUNT_NAME=s189t01aytqrvtfsa" >> $GITHUB_ENV
           echo "TF_RESOURCE_GROUP_NAME=s189t01-aytq-rv-rg" >> $GITHUB_ENV
         shell: bash
@@ -199,6 +200,8 @@ jobs:
       - name: Terraform Destroy
         run: |
           make ci aks-review aks-terraform-destroy
+        env:
+          PR_NUMBER: ${{ env.PR_NUMBER }}
 
       - name: Delete tf state file
         if: env.TF_STATE_EXISTS == 'true'
