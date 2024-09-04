@@ -33,9 +33,9 @@ GIT
 
 GIT
   remote: https://github.com/ilyakatz/data-migrate.git
-  revision: 5b66f54d10ac221a53ee74b69acdaeb498b49b0a
+  revision: a46eb862fbc9c2ade4db178692ea86a454919905
   specs:
-    data_migrate (11.0.0.rc3)
+    data_migrate (11.0.0)
       activerecord (>= 6.1)
       railties (>= 6.1)
 
