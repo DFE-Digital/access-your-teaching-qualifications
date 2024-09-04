@@ -160,14 +160,9 @@ jobs:
             PR_NUMBER=${{ github.event.pull_request.number }}
           fi
 
-          . global_config/review.sh
-
           echo "STORAGE_ACCOUNT_NAME=s189t01aytqrvtfsa" >> $GITHUB_ENV
           echo "TF_RESOURCE_GROUP_NAME=s189t01-aytq-rv-rg" >> $GITHUB_ENV
         shell: bash
-        env:
-          TFVARS: config/review.tfvars.json
-        working-directory: terraform/application
 
       - uses: Azure/login@v1
         with:
