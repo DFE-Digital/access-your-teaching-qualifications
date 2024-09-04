@@ -216,5 +216,7 @@ jobs:
         with:
           header: aks
           message: |
-            Review app Access Your Teaching Qualifications deployed to <https://access-your-teaching-qualifications-pr-${{ github.event.number }}.test.teacherservices.cloud> was deleted
-            Review app Check A Teacher's Record deployed to <https://check-a-teachers-record-pr-${{ github.event.number }}.test.teacherservices.cloud> was deleted
+            The review apps Access Your Teaching Qualifications & Check A Teacher's Record have been deleted.
+            The following domains are not available anymore:
+            - <https://access-your-teaching-qualifications-pr-${{ github.event.number }}.test.teacherservices.cloud>
+            - <https://check-a-teachers-record-pr-${{ github.event.number }}.test.teacherservices.cloud>
