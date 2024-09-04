@@ -182,7 +182,7 @@ jobs:
 
       - name: Set Environment variables
         run: |
-          TF_STATE_FILE=review/review-pr-${{ env.PR_NUMBER }}.tfstate
+          TF_STATE_FILE=pr-${{ env.PR_NUMBER }}_kubernetes.tfstate
           echo "TF_STATE_FILE=$TF_STATE_FILE" >> $GITHUB_ENV
 
           pr_state_file=$(az storage blob list -c terraform-state \
