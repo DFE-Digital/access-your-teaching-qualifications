@@ -134,7 +134,6 @@ jobs:
           --account-key ${{ env.TFSTATE_CONTAINER_ACCESS_KEY }} \
           --account-name ${{ env.storage_account_name }}
 
-
   delete-review-app-aks:
     name: Delete Review App ${{ github.event.pull_request.number }}
     concurrency: deploy_review_${{ github.event.pull_request.number }}
