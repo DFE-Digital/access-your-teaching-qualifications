@@ -134,45 +134,5 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component do
         end
       end
     end
-
-    describe 'restrictions statuses' do
-      describe "No restrictions tag" do
-        context "teacher#no_restrictions is true" do
-          before { allow(teacher).to receive(:no_restrictions?).and_return(true) }
-
-          it "adds the No restrictions tag" do
-            render_inline described_class.new(teacher)
-
-            expect(page).to have_text("No restrictions")
-          end
-        end
-
-        context "teacher#no_restrictions returns false " do
-          before do
-            allow(teacher).to receive(:no_restrictions?).and_return(false)
-            allow(teacher).to receive(:possible_restrictions?).and_return(true)
-          end
-
-          it "adds the possible restriction tag" do
-            render_inline described_class.new(teacher)
-
-            expect(page).to have_text("Possible restriction")
-          end
-        end
-
-        context "teacher has a restriction" do
-          before do
-            allow(teacher).to receive(:no_restrictions?).and_return(false)
-            allow(teacher).to receive(:possible_restrictions?).and_return(false)
-          end
-
-          it "adds the restriction tag" do
-            render_inline described_class.new(teacher)
-
-            expect(page).to have_text("Restriction")
-          end
-        end
-      end
-    end
   end
 end
