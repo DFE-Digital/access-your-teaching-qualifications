@@ -190,6 +190,14 @@ aks-review: test-cluster ## Setup review environment for AKS
 	$(eval ENVIRONMENT=pr-${PR_NUMBER})
 	$(eval include global_config/review.sh)
 
+.PHONY: aks-test
+aks-test: test-cluster
+	$(eval include global_config/test.sh)
+
+.PHONY: aks-preprod
+aks-preprod: test-cluster
+	$(eval include global_config/preprod.sh)
+
 composed-variables: ## Compose variables needed for deployments
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
 	$(eval KEYVAULT_NAMES='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")')
