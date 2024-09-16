@@ -11,7 +11,7 @@ gem "bootsnap", require: false
 gem "console1984"
 gem "cssbundling-rails"
 gem "data_migrate", github: "ilyakatz/data-migrate"
-gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.1"
+gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
 gem "faraday"
 gem "govuk-components", "~> 5.6"
 gem "govuk_design_system_formbuilder", "~> 5.6"

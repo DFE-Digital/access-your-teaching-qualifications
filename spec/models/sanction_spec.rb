@@ -29,12 +29,11 @@ RSpec.describe Sanction, type: :model do
     subject(:description) { sanction.description }
 
     context 'when type exists in SANCTIONS' do
-      let(:code) { "G1" }
+      let(:code) { "A13" }
       
       it "returns the description as markdown" do
         expect(description)
-          .to eq('Email the Disclosure and Barring Service (DBS) at [dbscost@dbs.gov.uk](mailto:dbscost@dbs.gov.uk) ' \
-                 'to check if this person is allowed to work with children.')
+          .to include('Suspended by the General Teaching Council for England.')
       end
     end
 

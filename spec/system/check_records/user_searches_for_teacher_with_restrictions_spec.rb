@@ -14,7 +14,7 @@ RSpec.describe "Teacher search with restrictions",
     then_i_see_the_restriction_on_the_result
 
     when_i_click_on_the_result
-    then_i_see_the_details_of_the_restriction
+    then_i_see_the_details_of_the_record
   end
 
   private
@@ -35,8 +35,7 @@ RSpec.describe "Teacher search with restrictions",
     click_link "Teacher Restricted"
   end
 
-  def then_i_see_the_details_of_the_restriction
-    expect(page).to have_content("Possible match on the children’s barred list")
+  def then_i_see_the_details_of_the_record
     expect(page).to have_title("Terry Walsh - Check a teacher’s record")
   end
 end

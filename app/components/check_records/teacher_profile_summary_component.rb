@@ -12,7 +12,6 @@ class CheckRecords::TeacherProfileSummaryComponent < ViewComponent::Base
   end
 
   def build_tags
-    append_restriction_tag
     append_teaching_status_tag
     append_induction_tag
   end
@@ -20,16 +19,6 @@ class CheckRecords::TeacherProfileSummaryComponent < ViewComponent::Base
   private
 
   delegate :no_restrictions?, :possible_restrictions?, to: :teacher
-
-  def append_restriction_tag
-    tags << if no_restrictions?
-      { message: 'No restrictions', colour: 'green'}
-    elsif possible_restrictions?
-      { message: 'Possible restrictions', colour: 'blue'}
-    else
-      { message: 'Restriction', colour: 'red'}
-    end
-  end
 
   def append_teaching_status_tag
     tags << if teacher.qts_awarded?
