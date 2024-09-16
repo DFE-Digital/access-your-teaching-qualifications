@@ -41,6 +41,7 @@ module QualificationsApi
 
     def restriction_status
       return 'No restrictions' if no_restrictions?
+      return 'Possible restrictions' if possible_restrictions?
 
       'Restriction'
     end
@@ -49,6 +50,10 @@ module QualificationsApi
       return true if sanctions.blank? || sanctions.all?(&:guilty_but_not_prohibited?)
 
       false
+    end
+
+    def possible_restrictions?
+      sanctions.any?(&:possible_match_on_childrens_barred_list?)
     end
 
     def sanctions

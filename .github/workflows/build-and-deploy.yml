@@ -90,21 +90,6 @@ jobs:
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.number }}
 
-      - uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Set kubelogin environment
-        uses: DFE-Digital/github-actions/set-kubelogin-environment@master
-        with:
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Seed role codes
-        shell: bash
-        run: |
-          make ci aks-review get-cluster-credentials PR_NUMBER=123
-          kubectl exec -n tra-development deployment/access-your-teaching-qualifications-pr-${{ github.event.number }} -- /bin/sh -c "cd /app && bundle exec rake db:seed_role_codes"
-
       - name: Post comment to Pull Request ${{ github.event.number }}
         uses: marocchino/sticky-pull-request-comment@v2
         with:

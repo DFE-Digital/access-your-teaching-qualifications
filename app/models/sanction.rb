@@ -165,6 +165,12 @@ class Sanction
         Call the Teaching Regulation Agency (TRA) on 0207 593 5393 for more information.
       DESCRIPTION
     },
+    "G1" => {
+      title: "Possible match on the children’s barred list",
+      description: <<~DESCRIPTION.chomp
+        Email the Disclosure and Barring Service (DBS) at [dbscost@dbs.gov.uk](mailto:dbscost@dbs.gov.uk) to check if this person is allowed to work with children.
+      DESCRIPTION
+    },
     "T1" => {
       title: "Prohibition order",
       description: <<~DESCRIPTION.chomp
@@ -227,6 +233,10 @@ class Sanction
 
   def title
     SANCTIONS[code][:title] if SANCTIONS[code]
+  end
+
+  def possible_match_on_childrens_barred_list?
+    code == "G3"
   end
 
   def guilty_but_not_prohibited?
