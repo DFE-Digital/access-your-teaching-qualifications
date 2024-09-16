@@ -13,7 +13,7 @@
       not_found.each do |record|
         body.with_row do |row|
           row.with_cell(text: record.trn)
-          row.with_cell(text: record.date_of_birth.to_fs(:long_uk))
+          row.with_cell(text: record.date_of_birth.to_date.to_fs(:long_uk))
         end
       end
     end

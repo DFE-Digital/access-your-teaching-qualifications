@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def current_namespace
     request.path.split("/").second
   end
