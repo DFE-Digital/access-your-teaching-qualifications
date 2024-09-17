@@ -162,7 +162,7 @@ runs:
         max_attempts=$RETRIES
 
         HEALTH_URL="${{ env.app_fqdn }}/health/all.json"
-        HEALTH_RESPONSE=$(curl $HEALTH_URL --silent)
+        HEALTH_RESPONSE=$(curl $HEALTH_URL --silent --connect-timeout 600)
         APP_SHA=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .version.message) catch $line' | grep -Po "Version: \K\w*")
         APP_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .default.success) catch $line')
         APP_DATABASE_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .database.success) catch $line')
@@ -176,7 +176,7 @@ runs:
           sleep 5
           attempt_counter=$(($attempt_counter+1))
 
-          HEALTH_RESPONSE=$(curl $HEALTH_URL --silent)
+          HEALTH_RESPONSE=$(curl $HEALTH_URL --silent --connect-timeout 600)
           APP_SHA=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .version.message) catch $line' | grep -Po "Version: \K\w*")
           APP_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .default.success) catch $line')
           APP_DATABASE_STATUS=$(echo $HEALTH_RESPONSE | jq -R '. as $line | try (fromjson | .database.success) catch $line')
