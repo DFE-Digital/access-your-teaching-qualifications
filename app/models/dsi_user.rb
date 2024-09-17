@@ -4,6 +4,7 @@ class DsiUser < ApplicationRecord
 
   has_many :search_logs
   has_many :dsi_user_sessions, dependent: :destroy
+  has_many :bulk_search_responses
 
   CURRENT_TERMS_AND_CONDITIONS_VERSION = "1.0".freeze
 

@@ -10,6 +10,8 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
     when_i_sign_in_via_dsi
     and_search_with_a_valid_csv
     then_i_see_the_results_summary
+    when_i_click_find_records
+    then_i_see_results
     and_my_search_is_logged
   end
 
@@ -22,7 +24,18 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
   end
 
   def then_i_see_the_results_summary
+    expect(page).to have_content "Your CSV file includes the details of 1 person"
+  end
+
+  def when_i_click_find_records
+    click_link "Find records"
+  end
+
+  def then_i_see_results
     expect(page).to have_content "1 teacher record found"
+    expect(page).to have_content "Terry Walsh"
+    expect(page).to have_content "Restriction"
+    expect(page).to have_content "No induction"
   end
 
   def and_my_search_is_logged

@@ -15,3 +15,11 @@
     - internal
     - created_at
     - updated_at
+  :bulk_search_responses:
+    - id
+    - body
+    - expires_at
+    - dsi_user_id
+    - total
+    - created_at
+    - updated_at

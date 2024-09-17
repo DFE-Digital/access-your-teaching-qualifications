@@ -2,25 +2,15 @@
 <% content_for :breadcrumbs do %>
   <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Find multiple records" => new_check_records_bulk_search_path, "Results" => nil }) %>
 
-  <%= render ActionAtComponent.new(action: "searched") %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l"><%= pluralize(@total, 'teacher record') %> found</h1>
-    <%= govuk_tabs do |tabs|
-      if @results.any?
-        tabs.with_tab(label: "Records found", id: "records-found") do %>
-          <%= render "check_records/search/results_table", teachers: @results %>
-        <% end %>
-      <% end %>
-      <% if @not_found.any? %>
-        <% tabs.with_tab(label: "Not found", id: "records-not-found") do %>
-          <%= render "check_records/search/not_found", not_found: @not_found %>
-        <% end %>
-      <% end %>
-    <% end %>
+    <h1 class="govuk-heading-l">File summary</h1>
+    <p class="govuk-body">
+      Your CSV file includes the details of <%= pluralize(@total, 'person') %>:
+    </p>
 
-    <%= govuk_link_to "Search again", new_check_records_bulk_search_path %>
+    <%= govuk_link_to "Find records", check_records_bulk_search_path(@bulk_search_response), class: "govuk-button" %>
   </div>
 </div>
