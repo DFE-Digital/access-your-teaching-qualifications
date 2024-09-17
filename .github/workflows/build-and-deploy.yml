@@ -157,7 +157,12 @@ jobs:
           image_name_tag: ${{ needs.build_image.outputs.image_name_tag }}
           image_tag: ${{ github.sha }}
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
-          site_up_retries: 120
+          site_up_retries: 240
+
+      - run: |
+          echo Sleeping...
+          sleep 600
+          Finished sleeping
 
       - uses: ./.github/actions/smoke-test
         id: smoke-test
