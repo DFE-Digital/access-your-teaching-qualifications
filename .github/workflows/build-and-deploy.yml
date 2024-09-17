@@ -162,7 +162,7 @@ jobs:
       - run: |
           echo Sleeping...
           sleep 600
-          Finished sleeping
+          echo Finished sleeping
 
       - uses: ./.github/actions/smoke-test
         id: smoke-test
