@@ -44,7 +44,7 @@ module CheckRecords
         QualificationsApi::Teacher.new(teacher['api_data'])
       end
       @not_found = data['not_found'].map {|record| Hashie::Mash.new(record) }
-      @pagy, @results = pagy_array(@results, limit: 4)
+      @pagy, @results = pagy_array(@results)
     end
 
     private
