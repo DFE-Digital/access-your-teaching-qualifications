@@ -59,7 +59,7 @@ module CheckRecords
         .with_user(current_dsi_user)
         .with_request_details(request)
         .with_namespace(current_namespace)
-        .with_data(errors: @bulk_search.errors.to_hash)
+        .with_data(data: { errors: @bulk_search.errors.to_hash })
 
       DfE::Analytics::SendEvents.do([event])
     end
