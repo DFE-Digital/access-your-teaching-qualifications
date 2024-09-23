@@ -33,7 +33,7 @@ GIT
 
 GIT
   remote: https://github.com/ilyakatz/data-migrate.git
-  revision: a46eb862fbc9c2ade4db178692ea86a454919905
+  revision: ecd0cd55cdc5aaab35de43f1f41ab0dc3c2aa2dd
   specs:
     data_migrate (11.0.0)
       activerecord (>= 6.1)
