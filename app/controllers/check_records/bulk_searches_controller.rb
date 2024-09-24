@@ -45,6 +45,8 @@ module CheckRecords
       end
       @not_found = data['not_found'].map {|record| Hashie::Mash.new(record) }
       @pagy, @results = pagy_array(@results)
+
+      @bulk_search_response.update!(expires_at: 30.minutes.from_now)
     end
 
     private
