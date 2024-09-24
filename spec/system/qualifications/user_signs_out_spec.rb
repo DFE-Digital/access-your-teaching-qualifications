@@ -11,9 +11,7 @@ RSpec.feature "Identity auth", type: :system do
     and_i_am_signed_in_via_identity
     when_i_click_the_sign_out_link
     and_confirm_my_sign_out
-    then_i_see_the_confirmation_page
-    when_i_click_the_button_to_take_me_back_to_the_service
-    then_i_am_on_service_start_page
+    then_i_am_on_service_sign_in_page
   end
 
   private
@@ -30,8 +28,8 @@ RSpec.feature "Identity auth", type: :system do
     click_button "Confirm"
   end
 
-  def then_i_see_the_confirmation_page
-    expect(page).to have_content "You are now signed out"
+  def then_i_am_on_service_sign_in_page
+    expect(page).to have_current_path qualifications_sign_in_path
   end
 
   def when_i_click_the_button_to_take_me_back_to_the_service
