@@ -117,6 +117,31 @@ jobs:
             | Access Your Teaching Qualifications       | <https://access-your-teaching-qualifications-pr-${{ github.event.number }}.test.teacherservices.cloud>            |
             | Check A Teacher's Record                  | <https://check-a-teachers-record-pr-${{ github.event.number }}.test.teacherservices.cloud>                        |
 
+  deploy_aks:
+    name: Deploy to ${{ matrix.environment }} environment for AKS
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    concurrency: deploy_${{ matrix.environment }}
+    needs: [build_image]
+    strategy:
+      max-parallel: 1
+      matrix:
+        environment: [aks-test, aks-preprod]
+    environment:
+      name: ${{ matrix.environment }}
+      url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to AKS
+        uses: ./.github/actions/deploy-environment-aks
+        id: deploy
+        with:
+          environment: ${{ matrix.environment }}
+          image-tag: ${{ github.sha }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
   set_matrix:
     name: Set deployment matrix
     runs-on: ubuntu-latest
