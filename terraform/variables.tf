@@ -149,7 +149,7 @@ variable "aytq_docker_image" {
 
 variable "evidence_container_retention_in_days" {
   default = 7
-  type = number
+  type    = number
 }
 
 variable "evidence_storage_account_name" {

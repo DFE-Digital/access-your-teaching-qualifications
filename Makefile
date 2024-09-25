@@ -198,6 +198,10 @@ aks-test: test-cluster
 aks-preprod: test-cluster
 	$(eval include global_config/preprod.sh)
 
+.PHONY: aks-production
+aks-production: production-cluster
+	$(eval include global_config/production.sh)
+
 composed-variables: ## Compose variables needed for deployments
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
 	$(eval KEYVAULT_NAMES='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")')

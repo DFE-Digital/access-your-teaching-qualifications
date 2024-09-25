@@ -142,6 +142,26 @@ jobs:
           image-tag: ${{ github.sha }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
+  deploy_production_aks:
+    name: Deploy to production environment for AKS
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: [build_image, deploy_aks]
+    environment:
+      name: aks-production
+      url: ${{ steps.deploy.outputs.environment_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to AKS
+        uses: ./.github/actions/deploy-environment-aks
+        id: deploy
+        with:
+          environment: aks-production
+          image-tag: ${{ github.sha }}
+          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
   set_matrix:
     name: Set deployment matrix
     runs-on: ubuntu-latest
