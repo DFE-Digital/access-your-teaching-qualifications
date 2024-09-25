@@ -13,6 +13,8 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
     when_i_click_find_records
     then_i_see_results
     and_my_search_is_logged
+    when_i_wait_for_the_search_to_expire
+    then_i_see_the_expired_search_message
   end
 
   private
@@ -44,4 +46,19 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
     expect(search_log.query_count).to eq 2
     expect(search_log.result_count).to eq 1
   end
+
+  def when_i_wait_for_the_search_to_expire
+    travel 29.minutes
+    page.refresh
+    travel 2.minutes
+    page.refresh
+    expect(page).not_to have_content "Bulk search expired"
+    travel 31.minutes
+    page.refresh
+  end
+
+  def then_i_see_the_expired_search_message
+    expect(page).to have_content "Bulk search expired"
+    travel_back
+  end 
 end

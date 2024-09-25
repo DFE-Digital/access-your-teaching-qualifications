@@ -44,7 +44,11 @@ module CheckRecords
         QualificationsApi::Teacher.new(teacher['api_data'])
       end
       @not_found = data['not_found'].map {|record| Hashie::Mash.new(record) }
-      @pagy, @results = pagy_array(@results)
+      @pagy, @results = pagy_array(@results, limit: 10)
+      @pagy_not_found, @not_found = 
+        pagy_array(@not_found, limit: 10, page_param: :page_not_found, anchor_string: '#records-not-found')
+
+      @bulk_search_response.update!(expires_at: 30.minutes.from_now)
     end
 
     private
