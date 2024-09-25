@@ -28,6 +28,7 @@ module Qualifications
       end
 
       def complete
+        redirect_to qualifications_root_path
       end
     end
   end
