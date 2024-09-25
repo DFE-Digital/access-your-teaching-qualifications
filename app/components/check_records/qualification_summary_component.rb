@@ -60,6 +60,14 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
       { key: { text: "Age range" }, value: { text: details.age_range&.description } },
       {
         key: {
+          text: "Course start date"
+        },
+        value: {
+          text: details.start_date&.to_date&.to_fs(:long_uk)
+        }
+      },
+      {
+        key: {
           text: "Course end date"
         },
         value: {
