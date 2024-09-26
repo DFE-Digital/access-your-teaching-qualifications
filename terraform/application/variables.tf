@@ -59,12 +59,12 @@ variable "send_traffic_to_maintenance_page" {
 
 variable "account_replication_type" {
   description = "Replication LRS (across AZs) or GRS (across regions)"
-  default = "LRS"
+  default     = "LRS"
 }
 variable "evidence_container_retention_in_days" {
   description = "For how long can the container be recovered if it's deleted"
-  default = 7
-  type = number
+  default     = 7
+  type        = number
 }
 
 locals {
@@ -81,6 +81,6 @@ locals {
   azure_resource_prefix_short = substr(var.azure_resource_prefix, 0, 5)
   # If there are multiple environments per config (as in review apps), we need the environment name, but no hyphens
   # s189paytqevidpdsa vs s189daytqevidpr12345sa
-  storage_account_environment = var.config == var.environment ? var.config_short : replace(var.environment, "-", "")
+  storage_account_environment   = var.config == var.environment ? var.config_short : replace(var.environment, "-", "")
   evidence_storage_account_name = "${local.azure_resource_prefix_short}aytqevid${local.storage_account_environment}sa"
 }

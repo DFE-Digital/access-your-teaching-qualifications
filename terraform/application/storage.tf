@@ -22,14 +22,14 @@ resource "azurerm_storage_account" "evidence" {
   }
 
   lifecycle {
-    ignore_changes = [ tags ]
+    ignore_changes = [tags]
   }
 }
 
 resource "azurerm_storage_encryption_scope" "evidence-encryption" {
-  name               = "microsoftmanaged"
-  storage_account_id = azurerm_storage_account.evidence.id
-  source             = "Microsoft.Storage"
+  name                               = "microsoftmanaged"
+  storage_account_id                 = azurerm_storage_account.evidence.id
+  source                             = "Microsoft.Storage"
   infrastructure_encryption_required = true
 }
 
