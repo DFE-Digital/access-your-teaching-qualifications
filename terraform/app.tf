@@ -110,20 +110,6 @@ resource "azurerm_linux_web_app" "aytq-app" {
     http2_enabled       = true
     minimum_tls_version = "1.2"
     health_check_path   = "/health"
-    ip_restriction = var.domain != null ? [{
-      name     = "FrontDoor"
-      action   = "Allow"
-      priority = 1
-      headers = [{
-        x_azure_fdid      = try([local.infrastructure_secrets.FRONTDOOR_ID], [])
-        x_fd_health_probe = []
-        x_forwarded_for   = []
-        x_forwarded_host  = []
-      }]
-      service_tag               = "AzureFrontDoor.Backend"
-      ip_address                = null
-      virtual_network_subnet_id = null
-    }] : []
   }
 
   app_settings = local.aytq_env_vars
