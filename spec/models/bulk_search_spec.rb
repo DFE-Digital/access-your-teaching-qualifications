@@ -109,6 +109,15 @@ RSpec.describe BulkSearch, type: :model do
       end
     end
 
+    context 'when the file has more than 100 rows' do
+      let(:bulk_search) { described_class.new(file:) }
+      let(:file) { fixture_file_upload('spec/fixtures/valid_bulk_search_101_rows.csv') }
 
+      it 'adds an error' do
+        bulk_search.valid?
+
+        expect(bulk_search.errors[:file]).to include('The selected file must have 100 or fewer rows')
+      end
+    end
   end
 end

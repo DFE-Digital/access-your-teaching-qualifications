@@ -8,6 +8,7 @@ class BulkSearch
   validates :file, presence: true
   validate :header_row_present?, if: -> { file.present? }
   validate :all_rows_have_data, if: -> { file.present? }
+  validate :row_limit_not_exceeded, if: -> { file.present? }
 
   def call
     return false if invalid?
@@ -76,6 +77,12 @@ class BulkSearch
       queries = csv.map { |row| { trn: row["TRN"], dateOfBirth: Date.parse(row["Date of birth"]) } }.compact
       find_all(queries)
     end
+  end
+
+  def row_limit_not_exceeded
+    return if csv.count <= 100
+
+    errors.add(:file, "The selected file must have 100 or fewer rows")
   end
 
   def search_client
