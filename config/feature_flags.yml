@@ -42,3 +42,6 @@ feature_flags:
   bulk_search:
     author: Felix Clack
     description: Enable bulk search in Check the record
+  downtime_banner:
+    author: Richard Pattinson
+    description: Display banner informing users of service downtime
