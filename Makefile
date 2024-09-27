@@ -202,6 +202,10 @@ aks-preprod: test-cluster
 aks-production: production-cluster
 	$(eval include global_config/production.sh)
 
+.PHONY: domains
+domains:
+	$(eval include global_config/domains.sh)
+
 composed-variables: ## Compose variables needed for deployments
 	$(eval RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg)
 	$(eval KEYVAULT_NAMES='("${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-app-kv", "${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv")')
@@ -270,3 +274,31 @@ validate-arm-resources: set-what-if arm-deployment ## Validate ARM resource depl
 get-cluster-credentials: set-azure-account ## Get AKS cluster credentials
 	az aks get-credentials --overwrite-existing -g ${CLUSTER_RESOURCE_GROUP_NAME} -n ${CLUSTER_NAME}
 	kubelogin convert-kubeconfig -l $(if ${GITHUB_ACTIONS},spn,azurecli)
+
+domains-infra-init: bin/terrafile domains composed-variables set-azure-account
+	./bin/terrafile -p terraform/domains/infrastructure/vendor/modules -f terraform/domains/infrastructure/config/zones_Terrafile
+
+	terraform -chdir=terraform/domains/infrastructure init -reconfigure -upgrade \
+		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
+		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
+		-backend-config=key=domains_infrastructure.tfstate
+
+domains-infra-plan: domains domains-infra-init  ## Terraform plan for DNS infrastructure (DNS zone and front door). Usage: make domains-infra-plan
+	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
+
+domains-infra-apply: domains domains-infra-init  ## Terraform apply for DNS infrastructure (DNS zone and front door). Usage: make domains-infra-apply
+	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
+
+domains-init: bin/terrafile domains composed-variables set-azure-account
+	./bin/terrafile -p terraform/domains/environment_domains/vendor/modules -f terraform/domains/environment_domains/config/${CONFIG}_Terrafile
+
+	terraform -chdir=terraform/domains/environment_domains init -upgrade -reconfigure \
+		-backend-config=resource_group_name=${RESOURCE_GROUP_NAME} \
+		-backend-config=storage_account_name=${STORAGE_ACCOUNT_NAME} \
+		-backend-config=key=${ENVIRONMENT}.tfstate
+
+domains-plan: domains-init  ## Terraform plan for DNS environment domains. Usage: make development domains-plan
+	terraform -chdir=terraform/domains/environment_domains plan -var-file config/${CONFIG}.tfvars.json
+
+domains-apply: domains-init ## Terraform apply for DNS environment domains. Usage: make development domains-apply
+	terraform -chdir=terraform/domains/environment_domains apply -var-file config/${CONFIG}.tfvars.json ${AUTO_APPROVE}
