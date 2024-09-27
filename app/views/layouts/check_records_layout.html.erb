@@ -35,7 +35,7 @@
       <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <% if FeatureFlags::FeatureFlag.active?(:downtime_banner) %>
-          <%= govuk_notification_banner title: "Planned downtime", text: "The service will be unavailable on Monday 30th September between 6pm and 7pm while we carry out essential maintenance" %>
+          <%= govuk_notification_banner title_text: "Planned downtime", text: "The service will be unavailable on Monday 30th September between 6pm and 7pm while we carry out essential maintenance" %>
         <% end %>
         <%= render(FlashMessageComponent.new(flash: flash)) %>
 
