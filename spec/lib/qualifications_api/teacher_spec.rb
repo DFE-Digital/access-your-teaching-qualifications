@@ -425,7 +425,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       let(:api_data) do
         {
           "sanctions" => [
-            { "guiltyButNotProhibited" => true },
+            { "code" => "T6", "start_date" => "2024-01-01" },
             { "possibleMatchOnChildrensBarredList" => true }
           ]
         }
@@ -434,11 +434,35 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       it { is_expected.to be_falsey }
     end
 
-    context "when there are sanctions" do
+    context "when there are sanctions that are not prohibited" do
       let(:api_data) do
         {
           "sanctions" => [
-            { "guiltyButNotProhibited" => true },
+            { "code" => "T6", "start_date" => "2024-01-01" },
+          ]
+        }
+      end
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when there are sanctions not listed in the Sanction model" do
+      let(:api_data) do
+        {
+          "sanctions" => [
+            { "code" => "T7", "start_date" => "2024-01-01" },
+          ]
+        }
+      end
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when there are sanctions that are prohibited" do
+      let(:api_data) do
+        {
+          "sanctions" => [
+            { "code" => "A13", "start_date" => "2024-01-01" },
           ]
         }
       end
