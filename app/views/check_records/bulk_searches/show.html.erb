@@ -1,14 +1,14 @@
 <% content_for :page_title, "Bulk Search Results" %>
 <% content_for :breadcrumbs do %>
   <%= govuk_breadcrumbs(breadcrumbs: { "Home" => check_records_search_path, "Find multiple records" => new_check_records_bulk_search_path, "Results" => nil }) %>
+  <%= render ActionAtComponent.new(action: "searched") %>
 <% end %>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <%= render ActionAtComponent.new(action: "searched") %>
     <h1 class="govuk-heading-l"><%= pluralize(@total, 'teacher record') %> found</h1>
     <p class="govuk-body govuk-!-margin-bottom-6">
-      We found <%= pluralize(@total, 'teacher record') %> out of the <%= pluralize(@results.count + @not_found.count, 'entry') %> you uploaded.
+      We found <%= pluralize(@total, 'teacher record') %> out of the <%= pluralize(@total_results + @total_not_found, 'entry') %> you uploaded.
     </p>
     <%= govuk_tabs do |tabs|
       if @results.any?

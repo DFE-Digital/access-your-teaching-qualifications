@@ -40,6 +40,8 @@ module CheckRecords
 
       data = @bulk_search_response.body
       @total = @bulk_search_response.total
+      @total_not_found = data['not_found'].count
+      @total_results = data['results'].count
       @results ||= data.fetch("results", []).map do |teacher|
         QualificationsApi::Teacher.new(teacher['api_data'])
       end

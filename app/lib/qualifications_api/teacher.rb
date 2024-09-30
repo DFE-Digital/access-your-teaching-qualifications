@@ -46,7 +46,9 @@ module QualificationsApi
     end
 
     def no_restrictions?
-      return true if sanctions.blank? || sanctions.all?(&:guilty_but_not_prohibited?)
+      return true if sanctions.blank? || 
+        sanctions.all?(&:guilty_but_not_prohibited?) || 
+        sanctions.map(&:title).join.blank?
 
       false
     end
