@@ -47,7 +47,7 @@ module QualificationsApi
 
     def no_restrictions?
       return true if sanctions.blank? || 
-        sanctions.all?(&:guilty_but_not_prohibited?) || 
+      sanctions.all?(&:guilty_but_not_prohibited?) || 
         sanctions.map(&:title).join.blank?
 
       false
@@ -63,6 +63,10 @@ module QualificationsApi
       return 'EYPS' if eyps_awarded?
 
       'No QTS or EYTS'
+    end
+
+    def no_qts_or_eyts?
+      !qts_awarded? && !eyts_awarded? && !eyps_awarded?
     end
 
     def qts_awarded?
@@ -90,6 +94,10 @@ module QualificationsApi
 
     def exempt_from_induction?
       api_data.induction&.status == "Exempt"
+    end
+
+    def no_induction?
+      !passed_induction? && !exempt_from_induction?
     end
 
     def pending_name_change?
