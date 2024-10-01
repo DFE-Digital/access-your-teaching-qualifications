@@ -45,12 +45,16 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       expect(rows[4].text).to include(qualification.details.age_range&.description)
     end
 
+    it "renders the qualification status" do
+      expect(rows[5].text).to include(Date.parse(qualification.details.start_date).to_fs(:long_uk))
+    end
+
     it "renders the qualification course end date" do
-      expect(rows[5].text).to include(Date.parse(qualification.details.end_date).to_fs(:long_uk))
+      expect(rows[6].text).to include(Date.parse(qualification.details.end_date).to_fs(:long_uk))
     end
 
     it "renders the qualification status" do
-      expect(rows[6].text).to include(qualification.details.result)
+      expect(rows[7].text).to include(qualification.details.result)
     end
 
     it "omits rows with no value" do
