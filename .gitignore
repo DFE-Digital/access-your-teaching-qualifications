@@ -41,3 +41,5 @@ storage/
 
 # Redis snapshots
 dump.rdb
+
+bin/konduit.sh
