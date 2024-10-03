@@ -35,7 +35,7 @@ gem "propshaft"
 gem "puma", "~> 6.4"
 gem "rails", "~> 7.2.0"
 gem "rails_semantic_logger"
-gem "sentry-rails", "~> 5.19"
+gem "sentry-rails", "~> 5.20"
 gem "sidekiq", "< 7" #7 requires Redis >6.2 which isn't available on Azure currently
 gem "sidekiq-cron"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
