@@ -20,6 +20,6 @@ RSpec.describe "DSI authentication", host: :check_records do
   end
 
   def then_i_am_redirected_to_the_sign_in_page
-    expect(page).to have_current_path(check_records_sign_in_path)
+    expect(page).to have_current_path(ENV.fetch("CHECK_RECORDS_GUIDANCE_URL"))
   end
 end

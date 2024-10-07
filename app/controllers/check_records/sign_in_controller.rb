@@ -6,6 +6,11 @@ module CheckRecords
     before_action :handle_failed_sign_in, only: :new, if: -> { params[:oauth_failure] == "true" }
 
     def new
+      if DfESignIn.bypass?
+        redirect_post "/check-records/auth/developer/callback", options: { authenticity_token: :auto }
+      else
+        redirect_post "/check-records/auth/dfe", options: { authenticity_token: :auto }
+      end
     end
 
     def not_authorised
