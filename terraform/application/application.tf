@@ -40,9 +40,30 @@ module "web_application" {
   kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
   kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
 
+  replicas     = var.app_replicas
   docker_image = var.docker_image
+  enable_logit = true
 
   send_traffic_to_maintenance_page = var.send_traffic_to_maintenance_page
 
   web_external_hostnames = [local.check_domain]
+}
+
+module "worker_application" {
+  source = "./vendor/modules/aks//aks/application"
+
+  name    = "worker"
+  is_web  = false
+  command = ["bundle", "exec", "sidekiq", "-C", "./config/sidekiq.yml"]
+
+  namespace    = var.namespace
+  environment  = var.environment
+  service_name = var.service_name
+
+  cluster_configuration_map  = module.cluster_data.configuration_map
+  kubernetes_config_map_name = module.application_configuration.kubernetes_config_map_name
+  kubernetes_secret_name     = module.application_configuration.kubernetes_secret_name
+  replicas                   = var.worker_replicas
+  docker_image               = var.docker_image
+  enable_logit               = true
 }

@@ -66,6 +66,20 @@ variable "evidence_container_retention_in_days" {
   default     = 7
   type        = number
 }
+variable "postgres_flexible_server_sku" {
+  default = "B_Standard_B1ms"
+}
+variable "app_replicas" {
+  description = "number of replicas of the web app"
+  default     = 1
+}
+variable "worker_replicas" {
+  description = "number of replicas of the workers"
+  default     = 1
+}
+variable "postgres_enable_high_availability" {
+  default = false
+}
 
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
