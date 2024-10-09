@@ -48,6 +48,14 @@ variable "statuscake_contact_groups" {
   default     = []
   description = "ID of the contact group in statuscake web UI"
 }
+variable "statuscake_alerts" {
+  type = object({
+    website_url    = optional(list(string), [])
+    ssl_url        = optional(list(string), [])
+    contact_groups = optional(list(number), [])
+  })
+  default = {}
+}
 variable "enable_monitoring" {
   default     = false
   description = "Enable monitoring and alerting"
