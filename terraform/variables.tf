@@ -132,17 +132,15 @@ variable "create_env_resource_group" {
 }
 
 variable "statuscake_contact_groups" {
+  type        = list(string)
   default     = []
-  description = "ID of the contact group in statuscake web UI"
+  description = "IDs of the StatusCake contact groups"
 }
 
-variable "statuscake_alerts" {
-  type = object({
-    website_url    = optional(list(string), [])
-    ssl_url        = optional(list(string), [])
-    contact_groups = optional(list(number), [])
-  })
-  default = {}
+variable "statuscake_ssl_domains" {
+  type        = list(string)
+  default     = []
+  description = "Domains/urls for statuscake ssl check. If empty, SSL check is not enabled"
 }
 
 variable "aytq_docker_image" {
