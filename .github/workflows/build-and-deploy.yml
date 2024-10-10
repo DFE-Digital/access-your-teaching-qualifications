@@ -38,14 +38,14 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
 
-  deploy_review_app_aks:
+  deploy_review_app:
     name: Deploy to review environment
     runs-on: ubuntu-latest
     if: contains(github.event.pull_request.labels.*.name, 'deploy-aks')
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     needs: [build_image]
     environment:
-      name: review
+      name: aks-review
 
     steps:
       - uses: actions/checkout@v4
@@ -111,7 +111,7 @@ jobs:
           image-tag: ${{ github.sha }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
 
-  deploy_production_aks:
+  deploy_production:
     name: Deploy to production environment
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
