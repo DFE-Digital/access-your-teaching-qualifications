@@ -174,6 +174,7 @@ ci: ## Run in automation environment
 	$(eval DISABLE_PASSCODE=true)
 	$(eval AUTO_APPROVE=-auto-approve)
 	$(eval SP_AUTH=true)
+	$(eval SKIP_AZURE_LOGIN=true)
 
 ### AKS ###
 # Note: AKS-specific files are found at the following locations, and do not conflict
