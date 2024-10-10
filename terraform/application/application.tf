@@ -11,7 +11,7 @@ module "application_configuration" {
   is_rails_application = true
 
   config_variables = {
-    ENVIRONMENT_NAME           = var.environment
+    HOSTING_ENVIRONMENT_NAME   = var.config
     PGSSLMODE                  = local.postgres_ssl_mode
     HOSTING_DOMAIN             = "https://${local.access_external_domain}"
     CHECK_RECORDS_DOMAIN       = "https://${local.check_external_domain}"
