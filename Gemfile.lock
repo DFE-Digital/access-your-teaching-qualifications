@@ -465,6 +465,7 @@ GEM
     regexp_parser (2.9.2)
     reline (0.5.10)
       io-console (~> 0.5)
+    repost (0.4.2)
     representable (3.2.0)
       declarative (< 0.1.0)
       trailblazer-option (>= 0.1.1, < 0.2.0)
@@ -692,6 +693,7 @@ DEPENDENCIES
   puma (~> 6.4)
   rails (~> 7.2.0)
   rails_semantic_logger
+  repost
   rladr
   rspec
   rspec-rails

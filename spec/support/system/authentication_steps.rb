@@ -2,8 +2,9 @@ module AuthenticationSteps
   def when_i_sign_in_via_dsi(authorised: true, internal: false, orgs: [organisation], accept_terms_and_conditions: true)
     given_dsi_auth_is_mocked(authorised:, internal:, orgs:,)
     when_i_visit_the_sign_in_page
-    and_click_the_dsi_sign_in_button
+    and_wait_for_the_page_to_load
     and_i_accept_the_terms_and_conditions(accept_terms_and_conditions)
+    and_wait_for_the_page_to_load
   end
   alias_method :and_i_am_signed_in_via_dsi, :when_i_sign_in_via_dsi
 
@@ -73,10 +74,6 @@ module AuthenticationSteps
     visit check_records_sign_in_path
   end
 
-  def and_click_the_dsi_sign_in_button
-    click_button "Start now"
-  end
-
   def org_id
     "12345678-1234-1234-1234-123456789012"
   end
@@ -101,5 +98,9 @@ module AuthenticationSteps
     if accept
       click_on "Accept"
     end
+  end
+
+  def and_wait_for_the_page_to_load
+    page.driver.refresh
   end
 end

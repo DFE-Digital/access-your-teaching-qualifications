@@ -5,7 +5,8 @@ module CheckRecords
 
     def new
       session.delete(:dsi_user_id)
-      redirect_to check_records_sign_in_path
+      redirect_to ENV.fetch("CHECK_RECORDS_GUIDANCE_URL", "https://www.gov.uk/guidance/check-a-teachers-record"),
+                  allow_other_host: true
     end
   end
 end
