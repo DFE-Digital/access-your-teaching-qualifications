@@ -18,6 +18,10 @@ module "application_configuration" {
     DFE_SIGN_IN_REDIRECT_URL   = "https://${local.check_external_domain}/check-records/auth/dfe/callback"
     AZURE_STORAGE_ACCOUNT_NAME = local.evidence_storage_account_name
     AZURE_STORAGE_CONTAINER    = azurerm_storage_container.uploads.name
+    BIGQUERY_DATASET           = "events_${var.environment}"
+    BIGQUERY_PROJECT_ID        = "teaching-qualifications"
+    BIGQUERY_TABLE_NAME        = "events"
+    RAILS_SERVE_STATIC_FILES   = "true"
   }
   secret_variables = {
     DATABASE_URL             = module.postgres.url
