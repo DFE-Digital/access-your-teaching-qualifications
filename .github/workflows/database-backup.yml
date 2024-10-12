@@ -83,6 +83,11 @@ jobs:
           echo '  STORAGE ACCOUNT: ${{ env.STORAGE_ACCOUNT_NAME }}' >> $GITHUB_STEP_SUMMARY
           echo '  FILENAME: ${{ env.BACKUP_FILE }}.sql.gz' >> $GITHUB_STEP_SUMMARY
 
+      - uses: azure/login@v2
+        if: failure()
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Get Slack webhook
         uses: Azure/get-keyvault-secrets@v1
         if: failure()
