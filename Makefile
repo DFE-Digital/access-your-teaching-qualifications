@@ -207,6 +207,17 @@ aks-production: production-cluster
 domains:
 	$(eval include global_config/domains.sh)
 
+# make qa railsc
+.PHONY: railsc
+railsc: get-cluster-credentials
+	$(eval CONFIG_FILE=terraform/application/config/$(CONFIG).tfvars.json)
+	$(if $(wildcard $(CONFIG_FILE)),,$(error Config file $(CONFIG_FILE) not found))
+	$(eval NAMESPACE=$(shell jq -r '.namespace // empty' $(CONFIG_FILE)))
+	$(if $(NAMESPACE),,$(error Namespace not found in $(CONFIG_FILE)))
+	@echo "Using namespace: $(NAMESPACE)"
+	@echo "Environment: $(CONFIG)"
+	kubectl -n $(NAMESPACE) exec -ti deployment/access-your-teaching-qualifications-$(ENVIRONMENT) -- rails c
+
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh

@@ -6,7 +6,6 @@ We store evidence uploads in Azure Storage. Each environment has a storage accou
 
 | Environment | Storage account name  |
 | ----------- | --------------------- |
-| Dev         | s165d01aytqevidencedv |
 | Test        | s165d01aytqevidencets |
 | Preprod     | s165d01aytqevidencepp |
 | Production  | s165p01aytqevidencepd |
