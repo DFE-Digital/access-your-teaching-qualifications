@@ -11,21 +11,19 @@ This repo is home to two services:
 
 #### AYTQ
 
-| Name       | URL          |
-| ---------- | ------------ |
-| Production | not deployed |
-| Preprod    | not deployed |
-| Test       | not deployed |
-| Dev        | in testing   |
+| Name       | URL      |
+| ---------- | -------- |
+| Production | Deployed |
+| Preprod    | Deployed |
+| Test       | Deployed |
 
 #### Check
 
-| Name       | URL          |
-| ---------- | ------------ |
-| Production | not deployed |
-| Preprod    | not deployed |
-| Test       | not deployed |
-| Dev        | in testing   |
+| Name       | URL      |
+| ---------- | -------- |
+| Production | Deployed |
+| Preprod    | Deployed |
+| Test       | Deployed |
 
 All environments have continuous deployment, the state of which can be inspected in Github Actions.
 
@@ -36,7 +34,6 @@ All environments have continuous deployment, the state of which can be inspected
 | Production | Public site                                   |
 | Preprod    | For internal use by DfE to test deploys       |
 | Test       | For external use by 3rd parties to run audits |
-| Dev        | For internal use by DfE for testing           |
 
 ## Dependencies
 
@@ -219,25 +216,23 @@ We have a helpful command you can run that will connect you to the right Azure r
 You will need the [Azure CLI](https://docs.microsoft.com/en-gb/cli) installed and a [PIM (Privileged Identity Management) request](docs/privileged-identity-management-requests.md) for `production`, `preprod` and `test`.
 
 ```bash
-make dev az-console
-make test az-console
-make preprod az-console
-make production az-console
-make review pr_id=<ID> az-console
+make aks-test railsc
+make aks-preprod railsc
+make aks-production railsc
+make aks-review railsc PR_NUMBER=<PR_NUMBER>
 ```
 
-The review app needs to be deployed first. You can do this manually by tagging a PR with the `deploy` label.
+The review app needs to be deployed first. You can do this manually by tagging a PR with the `aks-deploy` label.
 
 ### Updating keyvault secrets
 
-Make sure `jq` is [installed](#local-development-dependencies).
+Updating keyvault secrets is a manual process which will require elevated permissions via PIM for production access to Azure resources, the resource can be found in:
 
-```bash
-make dev edit-keyvault-secret
-make test edit-keyvault-secret
-make preprod edit-keyvault-secret
-make production edit-keyvault-secret
-make review pr_id=<ID> edit-keyvault-secret
+```
+Review: s189t01-aytq-rv-app-kv
+Test: s189t01-aytq-ts-app-kv
+Preproduction: s189t01-aytq-pp-inf-kv
+Production: s189p01-aytq-pd-app-kv
 ```
 
 ## Licence

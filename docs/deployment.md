@@ -4,7 +4,6 @@ The services are automatically deployed via a [Github action](https://github.com
 
 We deploy across four environments:
 
-- dev
 - test
 - preprod
 - production
