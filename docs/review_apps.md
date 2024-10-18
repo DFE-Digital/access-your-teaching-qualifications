@@ -6,14 +6,11 @@ Both services are accessible at the single URL. By default, the base path will r
 
 ## Deployment
 
-Pending a migration to AKS, the current process for provisioning a review app can be lengthy and somewhat unstable. The build and deploy action can fail for a number of reasons, as can the deployed app. This includes:
+In order to deploy a review app you can either use the make target or raise a pull request and label the deployment with 'deploy-aks' and this will trigger the GHA workflow to deploy the review app based on the branch name.
 
-- The slot swap that happens as part of the deployment can fail because the new service fails to respond to a ping
-- The new service may not have its database created properly, resulting in missing table errors in the running app
+This will then create a URL for testing and to destroy the review app when you close the pull request which will trigger the delete workflow. Further details for this can be found in the github workflow build-and-deploy.yml as well as the deploy-environment/action.yml.
 
-Retrying the Github action usually resolves these issues, and subsequent deploys of the review app are generally faster and more reliable.
-
-For troubleshooting, logs are available in both Github Actions and Logit.
+Note that review apps have container based Postgres and Redis volumes. The data will not persist once the review app has been destroyed.
 
 ## Authentication
 
