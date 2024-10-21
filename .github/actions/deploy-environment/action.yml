@@ -17,8 +17,8 @@ inputs:
 
 outputs:
   environment_url:
-    description: The base URL for the deployed environment
-    value: ${{ steps.set_outputs.outputs.ACCESS_URL }}
+    description: The base external URL for the deployed environment
+    value: ${{ steps.set_outputs.outputs.EXTERNAL_ACCESS_URL }}
 
 runs:
   using: composite
@@ -47,15 +47,46 @@ runs:
       run: |
         access_url=$(terraform -chdir=terraform/application output -json urls | jq -r '.[0]')
         echo "ACCESS_URL=$access_url" >> $GITHUB_OUTPUT
+        check_url=$(terraform -chdir=terraform/application output -json urls | jq -r '.[1]')
+        echo "CHECK_URL=$check_url" >> $GITHUB_OUTPUT
+
+        external_urls=$(terraform -chdir=terraform/application output -json external_urls)
+        external_access_url=$(echo $external_urls | jq -r '.[0]')
+        external_check_url=$(echo $external_urls | jq -r '.[1]')
+        echo "EXTERNAL_ACCESS_URL=$external_access_url" >> $GITHUB_OUTPUT
+        echo "EXTERNAL_CHECK_URL=$external_check_url" >> $GITHUB_OUTPUT
 
     - name: Run smoke tests
       shell: bash
       run: |
-        # Parse the JSON array of URLs into a Bash array
-        urls=$(echo "$HOSTNAMES" | jq -r '.[]')
+        # Parse the JSON array of internal URLs into a Bash array
+        internal_urls=$(terraform -chdir=terraform/application output -json urls | jq -r '.[]')
 
-        # Loop over each URL and perform the curl check on the /health/all.json endpoint
-        for url in $urls; do
+        # Get the external URLs
+        external_access_url="${{ steps.set_outputs.outputs.EXTERNAL_ACCESS_URL }}"
+        external_check_url="${{ steps.set_outputs.outputs.EXTERNAL_CHECK_URL }}"
+
+        echo "Internal URLs:"
+        echo "$internal_urls"
+
+        # Function to perform health check
+        perform_health_check() {
+          local url="$1"
           echo "Check health for $url/health/all.json..."
-          curl -sS --fail "$url/health/all.json" > /dev/null && echo "Health check passed for $url" || echo "Health check failed for $url"
+          curl -sS --fail "$url/health/all.json" > /dev/null && echo "Health check passed for $url/health/all.json" || echo "Health check failed for $url/health/all.json"
+        }
+
+        # Loop over each internal URL and perform the health checks
+        for url in $internal_urls; do
+          perform_health_check "$url"
         done
+
+        # Perform health checks on external URLs if they exist
+        if [ -n "$external_access_url" ] && [ -n "$external_check_url" ]; then
+          echo "External Access URL: $external_access_url"
+          echo "External Check URL: $external_check_url"
+          perform_health_check "$external_access_url"
+          perform_health_check "$external_check_url"
+        else
+          echo "External URLs not available. Skipping external health checks."
+        fi
