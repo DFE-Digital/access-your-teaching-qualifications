@@ -26,13 +26,13 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component do
     end
 
     context "when teacher has passed induction" do
-      let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status_description' => 'Pass' }}) }
+      let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status' => 'Pass' }}) }
 
       it { is_expected.to have_text("Passed induction") }
     end
 
     context "when teacher has failed induction" do
-      let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status_description' => 'Fail' }}) }
+      let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status' => 'Fail' }}) }
 
       it { is_expected.not_to have_text("Passed induction") }
     end
