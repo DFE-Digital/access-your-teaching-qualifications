@@ -350,7 +350,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     let(:teacher) { described_class.new(api_data) }
 
     context "induction status is 'Pass'" do
-      let(:api_data) { { "induction" => { "status_description" => "Pass", } } }
+      let(:api_data) { { "induction" => { "status" => "Pass", } } }
 
       it "returns true" do
         expect(teacher.passed_induction?).to eq true

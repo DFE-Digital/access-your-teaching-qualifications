@@ -89,11 +89,11 @@ module QualificationsApi
     end
 
     def passed_induction?
-      api_data.induction&.status_description == "Pass"
+      api_data.induction&.status == "Pass" || api_data.induction_status&.status == "Pass"
     end
 
     def exempt_from_induction?
-      api_data.induction&.status == "Exempt"
+      api_data.induction&.status == "Exempt" || api_data.induction_status&.status == "Exempt"
     end
 
     def no_induction?
