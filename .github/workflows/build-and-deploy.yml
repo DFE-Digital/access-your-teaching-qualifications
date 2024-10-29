@@ -41,11 +41,11 @@ jobs:
   deploy_review_app:
     name: Deploy to review environment
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'deploy-aks')
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
     concurrency: deploy_review_${{ github.event.pull_request.number }}
     needs: [build_image]
     environment:
-      name: aks-review
+      name: review
 
     steps:
       - uses: actions/checkout@v4
@@ -54,7 +54,7 @@ jobs:
         uses: ./.github/actions/deploy-environment
         id: deploy
         with:
-          environment: aks-review
+          environment: review
           image-tag: ${{ github.sha }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
           pull-request-number: ${{ github.event.number }}
@@ -71,7 +71,7 @@ jobs:
       - name: Seed role codes
         shell: bash
         run: |
-          make ci aks-review get-cluster-credentials PR_NUMBER=123
+          make ci review get-cluster-credentials PR_NUMBER=123
           kubectl exec -n tra-development deployment/access-your-teaching-qualifications-pr-${{ github.event.number }} -- /bin/sh -c "cd /app && bundle exec rake db:seed_role_codes"
 
       - name: Post comment to Pull Request ${{ github.event.number }}
@@ -95,7 +95,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        environment: [aks-test, aks-preprod]
+        environment: [test, preprod]
     environment:
       name: ${{ matrix.environment }}
       url: ${{ steps.deploy.outputs.environment_url }}
@@ -117,7 +117,7 @@ jobs:
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: [build_image, deploy]
     environment:
-      name: aks-production
+      name: production
       url: ${{ steps.deploy.outputs.environment_url }}
 
     steps:
@@ -127,6 +127,6 @@ jobs:
         uses: ./.github/actions/deploy-environment
         id: deploy
         with:
-          environment: aks-production
+          environment: production
           image-tag: ${{ github.sha }}
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
