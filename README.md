@@ -216,13 +216,13 @@ We have a helpful command you can run that will connect you to the right Azure r
 You will need the [Azure CLI](https://docs.microsoft.com/en-gb/cli) installed and a [PIM (Privileged Identity Management) request](docs/privileged-identity-management-requests.md) for `production`, `preprod` and `test`.
 
 ```bash
-make aks-test railsc
-make aks-preprod railsc
-make aks-production railsc
-make aks-review railsc PR_NUMBER=<PR_NUMBER>
+make test railsc
+make preprod railsc
+make production railsc
+make review railsc PR_NUMBER=<PR_NUMBER>
 ```
 
-The review app needs to be deployed first. You can do this manually by tagging a PR with the `aks-deploy` label.
+The review app needs to be deployed first. You can do this manually by tagging a PR with the `deploy` label.
 
 ### Updating keyvault secrets
 

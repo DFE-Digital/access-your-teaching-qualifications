@@ -34,7 +34,7 @@ jobs:
     name: Backup database
     runs-on: ubuntu-latest
     environment:
-      name: aks-${{ inputs.environment || 'production' }}
+      name: ${{ inputs.environment || 'production' }}
     env:
       DEPLOY_ENV: ${{ inputs.environment || 'production'  }}
       BACKUP_FILE: ${{ inputs.backup-file || 'schedule'  }}

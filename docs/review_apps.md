@@ -6,7 +6,7 @@ Both services are accessible at the single URL. By default, the base path will r
 
 ## Deployment
 
-In order to deploy a review app you can either use the make target or raise a pull request and label the deployment with 'deploy-aks' and this will trigger the GHA workflow to deploy the review app based on the branch name.
+In order to deploy a review app you can either use the make target or raise a pull request and label the deployment with 'deploy' and this will trigger the GHA workflow to deploy the review app based on the branch name.
 
 This will then create a URL for testing and to destroy the review app when you close the pull request which will trigger the delete workflow. Further details for this can be found in the github workflow build-and-deploy.yml as well as the deploy-environment/action.yml.
 
