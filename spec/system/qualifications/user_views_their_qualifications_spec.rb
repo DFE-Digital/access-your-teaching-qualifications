@@ -47,7 +47,7 @@ RSpec.feature "User views their qualifications", type: :system do
       "attachment"
     )
     expect(page.response_headers["Content-Disposition"]).to include(
-      "filename=\"Test User_induction_certificate.pdf\""
+      "filename=\"Terry Walsh_induction_certificate.pdf\""
     )
   end
 
@@ -73,7 +73,7 @@ RSpec.feature "User views their qualifications", type: :system do
       "attachment"
     )
     expect(page.response_headers["Content-Disposition"]).to include(
-      "filename=\"Test User_qts_certificate.pdf\";"
+      "filename=\"Terry Walsh_qts_certificate.pdf\";"
     )
   end
 
@@ -84,7 +84,7 @@ RSpec.feature "User views their qualifications", type: :system do
       "attachment"
     )
     expect(page.response_headers["Content-Disposition"]).to include(
-      "filename=\"Test User_eyts_certificate.pdf\";"
+      "filename=\"Terry Walsh_eyts_certificate.pdf\";"
     )
   end
 
@@ -114,7 +114,7 @@ RSpec.feature "User views their qualifications", type: :system do
       "attachment"
     )
     expect(page.response_headers["Content-Disposition"]).to include(
-      "filename=\"Test User_npq_certificate.pdf\";"
+      "filename=\"Terry Walsh_npqh_certificate.pdf\";"
     )
   end
 

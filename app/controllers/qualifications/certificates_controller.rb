@@ -6,7 +6,17 @@ module Qualifications
       unless render_certificate?
         redirect_to qualifications_dashboard_path,
                     alert: "Certificate not found"
+        return
       end
+      Rails.logger.debug @qualification.certificate_type.downcase
+      html = render_to_string(template: "qualifications/certificates/_#{@qualification.certificate_type.downcase}",
+                              formats: [:html],
+                              locals: { teacher: @teacher, qualification: @qualification },
+                              layout: "layouts/certificate")
+      grover = Grover.new(html, format: 'A4', display_url: request.base_url)
+      pdf = grover.to_pdf
+      send_data pdf, filename: "#{@teacher.name}_#{@qualification.type.downcase}_certificate.pdf", 
+type: 'application/pdf', disposition: 'attachment'
     end
 
     private
@@ -26,15 +36,15 @@ module Qualifications
     def render_certificate?
       return if qualification.blank?
 
-      case certificate_type.to_sym
+      case qualification.type.to_sym
       when :induction
         teacher.passed_induction?
       when :qts
         teacher.qts_awarded?
       when :eyts
         teacher.eyts_awarded?
-      when :npq
-        teacher.npq.present
+      when :NPQEL,:NPQLTD,:NPQLT,:NPQH,:NPQML,:NPQLL,:NPQEYL,:NPQSL,:NPQLBC
+        teacher.npq_awarded?
       else
         qualification.awarded_at.present?
       end
