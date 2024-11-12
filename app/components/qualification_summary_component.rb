@@ -32,7 +32,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text:
             link_to(
               "Download #{type.to_s.upcase} certificate",
-              qualifications_certificate_path(certificate_type, format: :pdf),
+              qualifications_certificate_path(type, format: :pdf),
               class: "govuk-link"
             )
         }
