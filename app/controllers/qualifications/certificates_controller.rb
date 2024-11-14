@@ -13,7 +13,7 @@ module Qualifications
                               formats: [:html],
                               locals: { teacher: @teacher, qualification: @qualification },
                               layout: "layouts/certificate")
-      grover = Grover.new(html, format: 'A4', display_url: request.base_url)
+      grover = Grover.new(html, format: 'A4', display_url: ENV["HOSTING_DOMAIN"])
       pdf = grover.to_pdf
       send_data pdf, filename: "#{@teacher.name}_#{@qualification.type.downcase}_certificate.pdf", 
 type: 'application/pdf', disposition: 'attachment'

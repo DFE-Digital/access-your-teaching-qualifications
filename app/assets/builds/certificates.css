@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .container {
   position: absolute;
   top: 0px;
@@ -10,44 +11,52 @@ body {
   padding: 0;
   width: 100%;
 }
+
 .content {
   position: absolute;
   top: 350px;
   left: 100px;
   width: 100%;
 }
+
 .header-image {
   position: absolute;
   top: 0px;
   left: 0px;
   width: 100%;
 }
+
 .heading {
   font-size: 82px;
   font-family: Helvetica;
   color: #063961;
 }
+
 .text {
   font-size: 18px;
   font-family: Helvetica;
   color: #231f20;
 }
+
 .content-npq {
   position: absolute;
   top: 350px;
   left: 85px;
   width: 100%;
 }
+
 .text-npq {
   font-size: 32px;
   font-family: Arial;
   color: #231f20;
 }
+
 .heading-npq {
   font-size: 48px;
   font-family: Arial;
   color: #231f20;
 }
+
 .name-heading-npq {
   max-width: 70%;
   text-align: left;

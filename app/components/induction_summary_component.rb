@@ -71,7 +71,7 @@ class InductionSummaryComponent < ViewComponent::Base
       }
     ]
 
-    if details.respond_to?(:certificate_url) && details.certificate_url.present?
+    if details.status == "Pass"
       @rows << {
         key: {
           text: "Certificate"

@@ -6,7 +6,8 @@ Grover.configure do |config|
       bottom: "0",
       left: "0",
       right: "0"
-    }
+    },
+  launch_args: ["--no-sandbox", "--disable-setuid-sandbox"],
   }
   config.use_jpeg_middleware = false
   config.use_png_middleware = false
