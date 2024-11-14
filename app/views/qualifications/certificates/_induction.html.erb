@@ -1,7 +1,7 @@
 <img src="/induction-certificate.jpg" class="header-image" alt="Department for Education" />
 
 <div class="content">
-  <h2 class="heading">Induction</h2>
+  <h1 class="heading">Induction</h1>
   <p class="text">This is to certify that: <strong><%= teacher.name %></strong></p>
   <p class="text">Teacher Reference Number: <strong><%= teacher.trn %></strong></p>
   <p>&#160;</p>
@@ -11,9 +11,9 @@
     institution. The holder of this certificate is a qualified teacher and has obtained the required<br/>
     qualifications and completed the necessary training for the profession of school teacher in England.</p>
   <p>&#160;</p>
-  <p class="text">Date Induction Completed:&#160;<strong><%= qualification.awarded_at.to_fs(:long_uk) %></strong></p>
+  <p class="text">Date Induction Completed:&#160;<strong><%= qualification.details.end_date.to_date.to_fs(:long_uk) %></strong></p>
   <p>&#160;</p>
   <p class="text">Congratulations and best wishes for your future career.</p>
   <p>&#160;</p>
-  <p class="text">Any potential employer can independently confirm your teacher status online at:<br/>https://teacherservices.education.gov.uk</p>
+  <p class="text">Any potential employer can independently confirm your teacher status online at:<br/><a>https://www.gov.uk/guidance/check-a-teachers-record</a></p>
 </div>
