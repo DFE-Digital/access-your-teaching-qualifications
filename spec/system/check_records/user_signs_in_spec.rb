@@ -15,7 +15,7 @@ RSpec.describe "DSI authentication", host: :check_records do
   private
 
   def then_i_am_signed_in
-    within("header") { expect(page).to have_content "Sign out" }
+    within("#navigation") { expect(page).to have_content "Sign out" }
     expect(DsiUser.count).to eq 1
     expect(DsiUserSession.count).to eq 1
   end
