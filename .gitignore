@@ -34,7 +34,6 @@ fetch_config.rb
 terraform/application/vendor
 terraform/domains/infrastructure/vendor
 terraform/domains/environment_domains/vendor
-bin/terrafile
 
 # Active Storage folder
 storage/
