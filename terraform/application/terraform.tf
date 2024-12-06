@@ -10,8 +10,8 @@ terraform {
       version = "2.32.0"
     }
     statuscake = {
-     source  = "StatusCakeDev/statuscake"
-     version = "2.2.2"
+      source  = "StatusCakeDev/statuscake"
+      version = "2.2.2"
     }
   }
   backend "azurerm" {
@@ -42,5 +42,5 @@ provider "kubernetes" {
 }
 
 provider "statuscake" {
- api_token = module.infrastructure_secrets.map.STATUSCAKE-API-TOKEN
+  api_token = module.infrastructure_secrets.map.STATUSCAKE-API-TOKEN
 }

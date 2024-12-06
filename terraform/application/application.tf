@@ -23,11 +23,11 @@ module "application_configuration" {
     BIGQUERY_TABLE_NAME        = "events"
     RAILS_SERVE_STATIC_FILES   = "true"
   }
-  secret_variables = {
+  secret_variables = merge({
     DATABASE_URL             = module.postgres.url
     REDIS_URL                = module.redis-cache.url
     AZURE_STORAGE_ACCESS_KEY = azurerm_storage_account.evidence.primary_access_key
-  }
+  }, local.federated_auth_secrets)
 }
 
 module "web_application" {
@@ -70,4 +70,5 @@ module "worker_application" {
   replicas                   = var.worker_replicas
   docker_image               = var.docker_image
   enable_logit               = true
+  enable_gcp_wif             = var.enable_dfe_analytics_federated_auth
 }

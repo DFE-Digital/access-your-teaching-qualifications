@@ -20,6 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
     environment: review
+    permissions:
+      pull-requests: write
+      id-token: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -68,6 +72,11 @@ jobs:
       - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
         with:
           azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - uses: google-github-actions/auth@v2
+        with:
+          project_id: teaching-qualifications
+          workload_identity_provider: projects/708780292301/locations/global/workloadIdentityPools/access-your-teaching-qualificati/providers/access-your-teaching-qualificati
 
       - name: Terraform Destroy
         run: |

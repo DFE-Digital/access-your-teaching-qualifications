@@ -33,6 +33,11 @@ runs:
       with:
         azure-credentials: ${{ inputs.azure-credentials }}
 
+    - uses: google-github-actions/auth@v2
+      with:
+        project_id: teaching-qualifications
+        workload_identity_provider: projects/708780292301/locations/global/workloadIdentityPools/access-your-teaching-qualificati/providers/access-your-teaching-qualificati
+
     - name: Terraform Apply
       shell: bash
       run: |

@@ -89,6 +89,11 @@ variable "postgres_enable_high_availability" {
   default = false
 }
 
+variable "enable_dfe_analytics_federated_auth" {
+  description = "Create the resources in Google cloud for federated authentication and enable in application"
+  default     = false
+}
+
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 
@@ -105,4 +110,8 @@ locals {
   # s189paytqevidpdsa vs s189daytqevidpr12345sa
   storage_account_environment   = var.config == var.environment ? var.config_short : replace(var.environment, "-", "")
   evidence_storage_account_name = "${local.azure_resource_prefix_short}aytqevid${local.storage_account_environment}sa"
+
+  federated_auth_secrets = var.enable_dfe_analytics_federated_auth ? {
+    GOOGLE_CLOUD_CREDENTIALS = module.dfe_analytics[0].google_cloud_credentials
+  } : {}
 }
