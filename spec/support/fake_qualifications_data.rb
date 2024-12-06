@@ -22,7 +22,7 @@ module FakeQualificationsData
       induction: {
         startDate: "2022-09-01",
         endDate: "2022-10-01",
-        status: "pass",
+        status: "Pass",
         statusDescription: "Passed Induction",
         certificateUrl: "/v3/certificates/induction",
         periods: [
