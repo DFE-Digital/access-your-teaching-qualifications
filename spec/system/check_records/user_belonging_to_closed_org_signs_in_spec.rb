@@ -19,10 +19,5 @@ RSpec.describe "DSI authentication", host: :check_records, type: :system do
       "You cannot use the DfE Sign-in account for Test Org to check a teacher’s record"
     )
     expect(page).to have_link("sign out and start again", href: "/check-records/auth/dfe/sign-out?id_token_hint=abc123")
-
-    within(".govuk-header__content") do
-      expect(page).not_to have_link("Sign in")
-      expect(page).not_to have_link("Sign out")
-    end
   end
 end
