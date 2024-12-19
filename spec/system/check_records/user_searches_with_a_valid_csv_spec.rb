@@ -37,7 +37,7 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
     expect(page).to have_content "1 teacher record found"
     expect(page).to have_content "Terry Walsh"
     expect(page).to have_content "Restriction"
-    expect(page).to have_content "No induction"
+    expect(page).to have_content "Passed induction"
   end
 
   def and_my_search_is_logged

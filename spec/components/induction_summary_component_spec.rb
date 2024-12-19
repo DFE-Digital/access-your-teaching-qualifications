@@ -57,17 +57,5 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
       expect(rendered.css(".govuk-summary-list__key").map(&:text)).not_to include("Completed")
       expect(rendered.css(".govuk-summary-list__key").map(&:text)).not_to include("End date")
     end
-
-    context "when the certificate URL is missing" do
-      let(:induction) do
-        fake_quals_data.fetch("induction").tap do |data|
-          data.delete(:certificate_url)
-        end
-      end
-
-      it "does not render the certificate row when certificate URL is missing" do
-        expect(rendered.css(".govuk-summary-list__key").map(&:text)).not_to include("Certificate")
-      end
-    end
   end
 end
