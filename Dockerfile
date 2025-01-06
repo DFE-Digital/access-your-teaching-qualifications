@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.3.0-alpine as builder
+FROM ruby:3.3.0-alpine AS builder
 
 # RUN apk -U upgrade && \
 #     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
@@ -62,17 +62,12 @@ RUN rm -rf node_modules log/* tmp/* /tmp && \
     find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.3.0-alpine as production
+FROM ruby:3.3.0-alpine AS production
 
 # The application runs from /app
 WORKDIR /app
 
 ENV RAILS_ENV=production
-
-# Add the commit sha to the env
-ARG GIT_SHA
-ENV GIT_SHA=$GIT_SHA
-ENV SHA=$GIT_SHA
 
 # Add the timezone (prod image) as it's not configured by default in Alpine
 RUN apk add --update --no-cache tzdata && \
@@ -86,16 +81,10 @@ RUN apk add --no-cache libpq
 COPY --from=builder /app /app
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 
-# SSH access specific to Azure
-# Install OpenSSH and set the password for root to "Docker!".
-RUN apk add --no-cache openssh && echo "root:Docker!" | chpasswd
-
-# Copy the Azure specific sshd_config file to the /etc/ssh/ directory
-RUN ssh-keygen -A && mkdir -p /var/run/sshd
-COPY azure/.sshd_config /etc/ssh/sshd_config
-
-# Open port 2222 for Azure SSH access
-EXPOSE 2222
+# Add the commit sha to the env
+ARG COMMIT_SHA
+ENV GIT_SHA=$COMMIT_SHA
+ENV SHA=$GIT_SHA
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails data:migrate:ignore_concurrent_migration_exceptions && \
