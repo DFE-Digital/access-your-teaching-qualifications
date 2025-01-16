@@ -53,7 +53,7 @@ RUN DATABASE_PASSWORD=required-to-run-but-not-used \
     bundle exec rails assets:precompile
 
 # Cleanup to save space in the production image
-RUN rm -rf node_modules log/* tmp/* /tmp && \
+RUN rm -rf log/* tmp/* /tmp && \
     rm -rf /usr/local/bundle/cache && \
     rm -rf .env && \
     find /usr/local/bundle/gems -name "*.c" -delete && \
@@ -85,6 +85,17 @@ COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 ARG COMMIT_SHA
 ENV GIT_SHA=$COMMIT_SHA
 ENV SHA=$GIT_SHA
+# Set up puppeteer (for PDF generation)
+# https://pptr.dev/troubleshooting#running-on-alpine
+RUN apk add --no-cache \
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    nodejs
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
     bundle exec rails data:migrate:ignore_concurrent_migration_exceptions && \

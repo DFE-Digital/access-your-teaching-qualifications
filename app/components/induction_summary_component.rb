@@ -5,7 +5,7 @@ class InductionSummaryComponent < ViewComponent::Base
 
   attr_accessor :qualification
 
-  delegate :awarded_at, :certificate_type, :details, :name, to: :qualification
+  delegate :awarded_at, :type, :details, :name, to: :qualification
 
   def detail_classes
     "app__induction-details"
@@ -71,7 +71,7 @@ class InductionSummaryComponent < ViewComponent::Base
       }
     ]
 
-    if details.respond_to?(:certificate_url) && details.certificate_url.present?
+    if details.status == "Pass"
       @rows << {
         key: {
           text: "Certificate"
@@ -80,10 +80,7 @@ class InductionSummaryComponent < ViewComponent::Base
           text:
             link_to(
               "Download Induction certificate",
-              qualifications_certificate_path(
-                certificate_type,
-                certificate_url: details.certificate_url
-              ),
+              qualifications_certificate_path(:induction, format: :pdf),
               class: "govuk-link"
             )
         }

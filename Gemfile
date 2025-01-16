@@ -19,6 +19,7 @@ gem "govuk_feature_flags",
     git: "https://github.com/DFE-Digital/govuk_feature_flags.git",
     tag: "v1.0.1"
 gem "govuk_markdown"
+gem "grover"
 gem "hashie"
 gem "jsbundling-rails"
 gem "jwt"

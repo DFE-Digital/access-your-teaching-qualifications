@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  url: <%= ENV.fetch('DATABASE_URL', 'postgres://postgres@localhost:5432') %>
+  url: <%= ENV.fetch('DATABASE_URL', 'postgres://postgres@localhost:5434') %>
 
 development:
   <<: *default

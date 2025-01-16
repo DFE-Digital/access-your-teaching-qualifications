@@ -77,6 +77,10 @@ module QualificationsApi
       api_data.eyts&.awarded.present?
     end
 
+    def npq_awarded?
+      api_data.npq_qualifications.first&.awarded.present?
+    end
+
     def eyps_awarded?
       api_data.eyps&.awarded.present?
     end
