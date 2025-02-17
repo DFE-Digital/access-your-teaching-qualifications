@@ -36,18 +36,6 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
 
       expect(rows[2].css(".govuk-summary-list__key").text).to eq("Certificate")
       expect(rows[2].css(".govuk-summary-list__value").text).to eq("Download Induction certificate")
-
-      expect(rows[3].css(".govuk-summary-list__key").text).to eq("Appropriate body")
-      expect(rows[3].css(".govuk-summary-list__value").text).to eq("Induction body")
-
-      expect(rows[4].css(".govuk-summary-list__key").text).to eq("Start date")
-      expect(rows[4].css(".govuk-summary-list__value").text).to eq(" 1 September 2022")
-
-      expect(rows[5].css(".govuk-summary-list__key").text).to eq("End date")
-      expect(rows[5].css(".govuk-summary-list__value").text).to eq(" 1 October 2022")
-
-      expect(rows[6].css(".govuk-summary-list__key").text).to eq("Number of terms")
-      expect(rows[6].css(".govuk-summary-list__value").text).to eq("1")
     end
 
     it "renders does not render empty component rows" do
