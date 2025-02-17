@@ -69,6 +69,10 @@ module QualificationsApi
       !qts_awarded? && !eyts_awarded? && !eyps_awarded?
     end
 
+    def qtls_awarded?
+      api_data.qtls_status.present?
+    end
+
     def qts_awarded?
       api_data.qts&.awarded.present?
     end
@@ -147,16 +151,17 @@ module QualificationsApi
     end
 
     def add_npq
-      api_data
-        .fetch("npq_qualifications", [])
-        .sort_by { |npq| npq.awarded&.to_date }
+      npq_data = Hashie::Mash.new(NPQQualificationsApi::GetQualificationsForTeacher.new(trn: trn).call)
+
+      npq_data
+        .sort_by { |npq| npq.award_date&.to_date }
         .reverse
         .each do |npq|
           @qualifications << Qualification.new(
-            awarded_at: npq.awarded&.to_date,
-            certificate_url: npq.certificate_url,
-            name: npq.type&.name,
-            type: npq.type&.code&.to_sym
+            awarded_at: npq.award_date&.to_date,
+            certificate_url: "present",
+            name: npq.npq_type,
+            type: npq.npq_type&.to_sym
           )
         end
     end
