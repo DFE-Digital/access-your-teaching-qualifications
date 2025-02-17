@@ -4,8 +4,5 @@
   </div>
   <div class="govuk-summary-card__content">
     <%= render GovukComponent::SummaryListComponent.new(rows:) if rows.any? %>
-    <%= render GovukComponent::DetailsComponent.new(classes: detail_classes, summary_text: "Induction history") do %>
-      <%= render GovukComponent::SummaryListComponent.new(classes: list_classes, rows: history) if history.any? %>
-    <% end %>
   </div>
 </div>
