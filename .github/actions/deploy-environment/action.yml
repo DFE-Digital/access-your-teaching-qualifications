@@ -8,8 +8,14 @@ inputs:
   image-tag:
     description: The image tag to deploy
     required: true
-  azure-credentials:
-    description: JSON object containing a service principal that can read from Azure Key Vault
+  azure-client-id:
+    description: Azure Client ID for authentication
+    required: true
+  azure-tenant-id:
+    description: Azure Tenant ID for authentication
+    required: true
+  azure-subscription-id:
+    description: Azure Subscription ID for authentication
     required: true
   pull-request-number:
     description: The pull request number which triggered this deploy.
@@ -31,7 +37,9 @@ runs:
 
     - uses: DFE-Digital/github-actions/set-kubelogin-environment@master
       with:
-        azure-credentials: ${{ inputs.azure-credentials }}
+        azure-client-id: ${{ inputs.azure-client-id }}
+        azure-tenant-id: ${{ inputs.azure-tenant-id }}
+        azure-subscription-id: ${{ inputs.azure-subscription-id }}
 
     - uses: google-github-actions/auth@v2
       with:
