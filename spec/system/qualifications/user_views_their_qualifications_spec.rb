@@ -97,7 +97,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def then_i_see_my_npq_details
-    expect(page).to have_content("NPQ headteacher")
+    expect(page).to have_content("National Professional Qualification (NPQ) for Headship")
     expect(page).to have_content("Awarded")
     expect(page).to have_content("27 February 2023")
     expect(page).to have_content("Download NPQH certificate")

@@ -17,5 +17,6 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym "DfE"
+  # inflect.acronym "NPQ"
   inflect.uncountable %w[staff]
 end
