@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe QualificationsApi::Teacher, type: :model do
   let(:api_data) do
     {
+      "trn" => "1111111",
       "induction" => {
         "startDate" => "2015-01-01",
         "endDate" => "2015-07-01",
@@ -69,24 +70,6 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       "mandatoryQualifications" => [
         { "awarded" => "2013-06-01", "specialism" => "Visual Impairment" }
       ],
-      "npqQualifications" => [
-        {
-          "type" => {
-            "code" => "NPQML",
-            "name" => "NPQ for Middle Leadership"
-          },
-          "awarded" => "2015-11-03",
-          "certificateUrl" => "https://example.com/v3/certificates/456"
-        },
-        {
-          "type" => {
-            "code" => "NPQSL",
-            "name" => "NPQ for Senior Leadership"
-          },
-          "awarded" => "2015-11-04",
-          "certificateUrl" => "https://example.com/v3/certificates/123"
-        }
-      ]
     }
   end
 
@@ -131,6 +114,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     context "when a qualification has no awarded date" do
       let(:api_data) do
         {
+          "trn" => "111112",
           "initial_teacher_training" => [
             {
               "qualification" => {

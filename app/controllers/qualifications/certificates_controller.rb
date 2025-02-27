@@ -48,7 +48,7 @@ type: 'application/pdf', disposition: 'attachment'
         teacher.qts_awarded?
       when :eyts
         teacher.eyts_awarded?
-      when :NPQEL,:NPQLTD,:NPQLT,:NPQH,:NPQML,:NPQLL,:NPQEYL,:NPQSL,:NPQLBC
+      when :NPQEL,:NPQLTD,:NPQLT,:NPQH,:NPQML,:NPQLL,:NPQEYL,:NPQSL,:NPQLBC,:NPQSENCO, :NPQLPM
         teacher.npq_awarded?
       else
         qualification.awarded_at.present?

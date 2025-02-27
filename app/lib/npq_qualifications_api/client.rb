@@ -1,4 +1,4 @@
-module NPQQualificationsApi
+module NpqQualificationsApi
   class InvalidCertificateUrlError < StandardError; end
   class ForbiddenError < StandardError; end
   class UnknownError < StandardError; end
@@ -9,7 +9,7 @@ module NPQQualificationsApi
 
     attr_reader :token
 
-    def initialize(token:)
+    def initialize(token: ENV["NPQ_QUALIFICATIONS_API_FIXED_TOKEN"])
       @token = token
     end
 
@@ -28,12 +28,10 @@ module NPQQualificationsApi
         end
     end
 
-    private
-
     def get(endpoint, options = {})
       client.get(endpoint, options)
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
-      raise NPQQualificationsApi::ApiError, "API connection failed: #{e.message}"
+      raise NpqQualificationsApi::ApiError, "API connection failed: #{e.message}"
     end
   end
 end
