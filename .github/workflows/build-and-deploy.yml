@@ -28,6 +28,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       docker-image-tag: ${{ steps.build-image.outputs.tag }}
+    permissions:
+      packages: write
+      pull-requests: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -62,17 +66,23 @@ jobs:
         with:
           environment: review
           image-tag: ${{ needs.build_image.outputs.docker-image-tag }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           pull-request-number: ${{ github.event.number }}
 
       - uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Set kubelogin environment
         uses: DFE-Digital/github-actions/set-kubelogin-environment@master
         with:
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Seed role codes
         shell: bash
@@ -117,7 +127,9 @@ jobs:
         with:
           environment: ${{ matrix.environment }}
           image-tag: ${{ needs.build_image.outputs.docker-image-tag }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
   deploy_production:
     name: Deploy to production environment
@@ -139,4 +151,6 @@ jobs:
         with:
           environment: production
           image-tag: ${{ needs.build_image.outputs.docker-image-tag }}
-          azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+          azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
