@@ -78,6 +78,9 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
   config.before(:each, type: :system) { driven_by(:cuprite) }
   config.before { Sidekiq::Worker.clear_all }
+  config.before(:each) do
+    stub_request(:any, /npq-registration-sandbox-web.teacherservices/).to_rack(FakeNpqQualificationsApi)
+  end
   config.before(:each, test: :with_fake_quals_api) do
     stub_request(:any, /preprod-teacher-qualifications-api/).to_rack(FakeQualificationsApi)
   end

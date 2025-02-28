@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component do
+RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, test: :with_fake_quals_api do
   let(:teacher) { QualificationsApi::Teacher.new({}) }
 
   describe "rendering" do
