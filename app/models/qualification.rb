@@ -13,7 +13,9 @@ class Qualification
     NPQLL: "National Professional <br/> Qualification for Leading <br/> Literacy",
     NPQEYL: "National Professional <br/> Qualification for Early <br/> Years Leadership",
     NPQSL: "National Professional <br/> Qualification for Senior <br/> Leadership",
-    NPQLBC: "National Professional <br/> Qualification for Leading <br/> Behaviour and Culture"
+    NPQLBC: "National Professional <br/> Qualification for Leading <br/> Behaviour and Culture",
+    NPQLPM: "National Professional <br/> Qualification for Leading <br/> Primary and Mathematics",
+    NPQSENCO: "National Professional <br/> Qualification for Special <br/> Educational Needs Co-ordinators"
   }.freeze
 
   def certificate_type
@@ -59,5 +61,4 @@ class Qualification
   def formatted_qualification_name
     FORMATTED_QUALIFICATION_TEXT[type].html_safe
   end
-
 end

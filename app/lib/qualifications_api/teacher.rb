@@ -1,9 +1,25 @@
 module QualificationsApi
   class Teacher
-    attr_reader :api_data
+    attr_reader :api_data, :npq_data
+
+    NPQ_QUALIFICATION_NAME = {
+      NPQEL: "National Professional Qualification (NPQ) for Executive Leadership",
+      NPQLTD: "National Professional Qualification (NPQ) for Leading Teacher Development",
+      NPQLT: "National Professional Qualification (NPQ) for Leading Teaching",
+      NPQH:  "National Professional Qualification (NPQ) for Headship",
+      NPQML: "National Professional Qualification (NPQ) for Middle Leadership",
+      NPQLL: "National Professional Qualification (NPQ) for Leading Literacy",
+      NPQEYL: "National Professional Qualification (NPQ) for Early Years Leadership",
+      NPQSL: "National Professional Qualification (NPQ) for Senior Leadership",
+      NPQLBC: "National Professional Qualification (NPQ) for Leading Behaviour and Culture",
+      NPQLPM: "National Professional Qualification (NPQ) for Leading Primary and Mathematics",
+      NPQSENCO: "National Professional Qualification (NPQ) for Special Educational Needs Co-ordinators"
+    }.freeze
 
     def initialize(api_data)
       @api_data = Hashie::Mash.new(api_data.deep_transform_keys(&:underscore))
+      # This should be moved elsewhere after the integration is working
+      @npq_data = NpqQualificationsApi::GetQualificationsForTeacher.new(trn: @api_data.trn).call
     end
 
     def name
@@ -67,6 +83,10 @@ module QualificationsApi
 
     def no_qts_or_eyts?
       !qts_awarded? && !eyts_awarded? && !eyps_awarded?
+    end
+
+    def qtls_awarded?
+      api_data.qtls_status.present?
     end
 
     def qts_awarded?
@@ -147,18 +167,19 @@ module QualificationsApi
     end
 
     def add_npq
-      api_data
-        .fetch("npq_qualifications", [])
-        .sort_by { |npq| npq.awarded&.to_date }
-        .reverse
-        .each do |npq|
-          @qualifications << Qualification.new(
-            awarded_at: npq.awarded&.to_date,
-            certificate_url: npq.certificate_url,
-            name: npq.type&.name,
-            type: npq.type&.code&.to_sym
-          )
+      unless @npq_data == []
+        @npq_data.body["data"]["qualifications"]
+          .sort_by { |npq| npq["award_date"]&.to_date }
+          .reverse
+          .each do |npq|
+            @qualifications << Qualification.new(
+              awarded_at: npq["award_date"]&.to_date,
+              certificate_url: "present",
+              name: NPQ_QUALIFICATION_NAME[npq["npq_type"].to_sym],
+              type: npq["npq_type"]&.to_sym
+            )
         end
+      end
     end
 
     def add_itt(qts: true)
