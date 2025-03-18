@@ -91,7 +91,6 @@ module QualificationsApi
             include: %w[
               Induction
               InitialTeacherTraining
-              NpqQualifications
               MandatoryQualifications
               Sanctions
               PreviousNames
