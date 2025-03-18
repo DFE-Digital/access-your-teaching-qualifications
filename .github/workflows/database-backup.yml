@@ -10,6 +10,7 @@ on:
         type: choice
         options:
           - test
+          - preprod
           - production
       backup-file:
         description: |
@@ -48,15 +49,15 @@ jobs:
       - uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 
       - name: Set environment variables
         run: |
           source global_config/${DEPLOY_ENV}.sh
           tf_vars_file=${TF_VARS_PATH}/${DEPLOY_ENV}.tfvars.json
-          echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
           echo "CLUSTER=$(jq -r '.cluster' ${tf_vars_file})" >> $GITHUB_ENV
+          echo "NAMESPACE=$(jq -r '.namespace' ${tf_vars_file})" >> $GITHUB_ENV
           echo "RESOURCE_GROUP_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-rg" >> $GITHUB_ENV
           echo "STORAGE_ACCOUNT_NAME=${AZURE_RESOURCE_PREFIX}${SERVICE_SHORT}dbbkp${CONFIG_SHORT}sa" >> $GITHUB_ENV
           TODAY=$(date +"%F")
@@ -71,15 +72,6 @@ jobs:
           echo "BACKUP_FILE=${BACKUP_FILE}" >> $GITHUB_ENV
           echo "KEYVAULT_NAME=${AZURE_RESOURCE_PREFIX}-${SERVICE_SHORT}-${CONFIG_SHORT}-inf-kv" >> $GITHUB_ENV
 
-      - name: Fetch secrets from key vault
-        uses: azure/CLI@v2
-        id: key-vault-secrets
-        with:
-          inlineScript: |
-            SLACK_WEBHOOK=$(az keyvault secret show --name "SLACK-WEBHOOK" --vault-name ${KEYVAULT_NAME} --query "value" -o tsv)
-            echo "::add-mask::$SLACK_WEBHOOK"
-            echo "SLACK_WEBHOOK=$SLACK_WEBHOOK" >> $GITHUB_OUTPUT
-
       - name: Backup ${{ env.DEPLOY_ENV }} postgres
         uses: DFE-Digital/github-actions/backup-postgres@master
         with:
@@ -89,8 +81,8 @@ jobs:
           namespace: ${{ env.NAMESPACE }}
           cluster: ${{ env.CLUSTER }}
           azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           backup-file: ${{ env.BACKUP_FILE }}.sql
           db-server-name: ${{ inputs.db-server }}
-          slack-webhook: ${{ steps.key-vault-secrets.outputs.SLACK_WEBHOOK }}
+          slack-webhook: ${{ secrets.SLACK_WEBHOOK }}
