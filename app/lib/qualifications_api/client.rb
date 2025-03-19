@@ -117,7 +117,7 @@ module QualificationsApi
     def teachers(date_of_birth:, last_name:)
       response =
         get(
-          "v3/teachers",
+          "v3/persons",
           {
             dateOfBirth: date_of_birth.to_s,
             findBy: "LastNameAndDateOfBirth",
