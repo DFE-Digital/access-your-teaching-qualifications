@@ -21,7 +21,7 @@ class FakeQualificationsApi < Sinatra::Base
     end
   end
 
-  get "/v3/teachers" do
+  get "/v3/persons" do
     content_type :json
 
     case bearer_token
