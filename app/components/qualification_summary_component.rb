@@ -7,9 +7,12 @@ class QualificationSummaryComponent < ViewComponent::Base
 
   delegate :awarded_at,
            :certificate_type,
+           :qtls_applicable,
            :details,
            :id,
            :itt?,
+           :qts?,
+           :passed_induction,
            :name,
            :type,
            to: :qualification
@@ -18,6 +21,10 @@ class QualificationSummaryComponent < ViewComponent::Base
 
   def rows
     return itt_rows if itt?
+    if qts? && qtls_applicable
+      return combined_qts_qtls_rows if !passed_induction && awarded_at.present? 
+      return qtls_rows
+    end
 
     @rows = [
       { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } }
@@ -67,7 +74,7 @@ class QualificationSummaryComponent < ViewComponent::Base
   def itt_rows
     return [] if details.end_date.blank?
 
-    [
+    @rows = [
       {
         key: {
           text: "Qualification"
@@ -134,5 +141,57 @@ class QualificationSummaryComponent < ViewComponent::Base
         }
       }
     ]
+  end
+
+  def qtls_rows
+    if qualification.set_membership_active
+      [
+        {
+          key: { 
+            text: "Awarded"
+          }, 
+          value: {
+            text: "#{awarded_at&.to_fs(:long_uk)} via qualified teacher learning and skills (QTLS) status"
+          }
+        },
+        {
+          key: {
+            text: "Certificate"
+          },
+          value: {
+            text:
+            link_to(
+              "Download #{type.to_s.upcase} certificate",
+              qualifications_certificate_path(type, format: :pdf),
+              class: "govuk-link"
+              )
+          }
+        }
+      ]
+    elsif !qualification.set_membership_active
+      [
+        { key: { text: "No QTS" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+      ]
+    end
+  end
+
+  def combined_qts_qtls_rows
+    @rows = qtls_rows
+    if !qualification.set_membership_active && qualification.certificate_url
+      @rows << {
+        key: {
+          text: "Certificate"
+        },
+        value: {
+          text:
+            link_to(
+              "Download #{type.to_s.upcase} certificate",
+              qualifications_certificate_path(type, format: :pdf),
+              class: "govuk-link"
+            )
+        }
+      }
+    end
+    @rows.select { |row| row[:value][:text].present? }
   end
 end

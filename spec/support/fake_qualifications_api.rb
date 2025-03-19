@@ -154,7 +154,7 @@ class FakeQualificationsApi < Sinatra::Base
         { first_name: "Terry", last_name: "Jones", middle_name: "" },
         { first_name: "Terry", last_name: "Smith", middle_name: "" }
       ],
-      sanctions: [],
+      alerts: [],
       trn:
     }
   end
@@ -168,7 +168,7 @@ class FakeQualificationsApi < Sinatra::Base
       previousNames: [
         { first_name: "Stephen", last_name: "Toast", middle_name: "" },
       ],
-      sanctions: [],
+      alerts: [],
       trn: "987654321"
     }
   end
@@ -183,13 +183,13 @@ class FakeQualificationsApi < Sinatra::Base
         { first_name: "Terry", last_name: "Jones", middle_name: "" },
         { first_name: "Terry", last_name: "Smith", middle_name: "" }
       ],
-      sanctions: [
+      alerts: [
         {
-          code: "G1",
+          alert_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99",
           startDate: "2019-10-25"
         },
         {
-          code: "A1A",
+          alert_id: "fa6bd220-61b0-41fc-9066-421b3b9d7885",
           startDate: "2018-9-20"
         }
       ],

@@ -17,6 +17,8 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
         name: "Induction summary",
         awarded_at: induction.end_date&.to_date,
         type: :itt,
+        qtls_applicable: false,
+        set_membership_active: false,
         details: induction
       )
     end

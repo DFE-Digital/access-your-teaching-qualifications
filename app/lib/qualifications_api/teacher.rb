@@ -30,7 +30,7 @@ module QualificationsApi
              :first_name,
              :last_name,
              :middle_name,
-             :sanctions,
+             :alerts,
              :trn,
              to: :api_data
 
@@ -70,7 +70,7 @@ module QualificationsApi
     end
 
     def sanctions
-      api_data.sanctions&.map { |sanction| Sanction.new(sanction) }
+      api_data.alerts&.map { |alert| Sanction.new(alert) }
     end
 
     def teaching_status
@@ -87,6 +87,10 @@ module QualificationsApi
 
     def qtls_awarded?
       api_data.qtls_status.present?
+    end
+
+    def qtls_expired?
+      api_data.qtls_status == "Expired"
     end
 
     def qts_awarded?
@@ -143,13 +147,16 @@ module QualificationsApi
     private
 
     def add_qts
-      return if api_data.qts.blank?
+      return if api_data.qts.blank? && api_data.qtls_status.blank?
 
       @qualifications << Qualification.new(
         awarded_at: api_data.qts.awarded&.to_date,
         certificate_url: api_data.qts.certificate_url,
         name: "Qualified teacher status (QTS)",
+        qtls_applicable: api_data.qtls_status == "Active" || api_data.qtls_status == "Expired",
+        set_membership_active: api_data.qtls_status == "Active",
         status_description: api_data.qts.status_description,
+        passed_induction: passed_induction?,
         type: :qts
       )
     end
@@ -207,6 +214,8 @@ module QualificationsApi
         awarded_at: api_data.induction.end_date&.to_date,
         certificate_url: api_data.induction&.certificate_url,
         details: CoercedDetails.new(api_data.induction),
+        qtls_applicable: api_data.qtls_status == "Active" || api_data.qtls_status == "Expired",
+        set_membership_active: api_data.qtls_status == "Active", 
         name: "Induction",
         type: :induction
       )

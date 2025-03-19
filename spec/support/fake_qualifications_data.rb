@@ -85,7 +85,13 @@ module FakeQualificationsData
           }
         }
       ],
-      sanctions: trn == "9876543" ? [ { code: "G1", startDate: "2020-10-25" } ] : []
+      alerts: if trn == "9876543"
+  [ { alert_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99", 
+startDate: "2020-10-25" } ]
+else
+  []
+end,
+      qtlsStatus: "None"
     }
   end
 
@@ -102,7 +108,8 @@ module FakeQualificationsData
       initialTeacherTraining: nil,
       mandatoryQualifications: [],
       npqQualifications: [],
-      sanctions: []
+      alerts: [],
+      qtlsStatus: nil,
     }
   end
 end
