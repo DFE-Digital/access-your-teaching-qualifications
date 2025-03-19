@@ -142,14 +142,22 @@ class QualificationSummaryComponent < ViewComponent::Base
   end
 
   def qtls_rows
+<<<<<<< HEAD
     if set_membership_active || qts_and_qtls
+=======
+    if qualification.set_membership_active
+>>>>>>> d03d67e (Display QTLS Flag for SET records)
       [
         {
           key: { 
             text: "Awarded"
           }, 
           value: {
+<<<<<<< HEAD
             text: qtls_awarded_at_text
+=======
+            text: "#{awarded_at&.to_fs(:long_uk)} via qualified teacher learning and skills (QTLS) status"
+>>>>>>> d03d67e (Display QTLS Flag for SET records)
           }
         },
         {
