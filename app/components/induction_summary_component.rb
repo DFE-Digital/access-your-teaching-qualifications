@@ -5,7 +5,8 @@ class InductionSummaryComponent < ViewComponent::Base
 
   attr_accessor :qualification
 
-  delegate :awarded_at, :type, :details, :name, to: :qualification
+  delegate :awarded_at, :type, :details, :name, :qtls_applicable, :set_membership_active, :qts_and_qtls, 
+to: :qualification
 
   def detail_classes
     "app__induction-details"
@@ -52,39 +53,43 @@ class InductionSummaryComponent < ViewComponent::Base
   end
 
   def rows
-    @rows = [
-      {
-        key: {
-          text: "Status"
+    if qtls_applicable
+      @rows = qtls_rows
+    else
+      @rows = [
+        {
+          key: {
+            text: "Status"
+          },
+          value: {
+            text: status_description[details&.status&.to_sym]
+          } ,
         },
-        value: {
-          text: details.status_description.to_s.humanize
+        {
+          key: {
+            text: "Completed"
+          },
+          value: {
+            text: awarded_at&.to_fs(:long_uk)
+          }
         }
-      },
-      {
-        key: {
-          text: "Completed"
-        },
-        value: {
-          text: awarded_at&.to_fs(:long_uk)
-        }
-      }
-    ]
+      ]
 
-    if details.status == "Pass"
-      @rows << {
-        key: {
-          text: "Certificate"
-        },
-        value: {
-          text:
-            link_to(
-              "Download Induction certificate",
-              qualifications_certificate_path(:induction, format: :pdf),
-              class: "govuk-link"
-            )
+      if details.status == "Pass"
+        @rows << {
+          key: {
+            text: "Certificate"
+          },
+          value: {
+            text:
+              link_to(
+                "Download Induction certificate",
+                qualifications_certificate_path(:induction, format: :pdf),
+                class: "govuk-link"
+              )
+          }
         }
-      }
+      end
     end
     @rows.select { |row| row[:value][:text].present? }
   end
@@ -92,4 +97,41 @@ class InductionSummaryComponent < ViewComponent::Base
   def title
     name
   end
+
+  def qtls_rows
+    if set_membership_active
+      [
+        {
+          key: {
+            text: "Status"
+          },
+          value: {
+            text: "Exempt"
+          } ,
+        }
+      ]
+    elsif !set_membership_active
+      [
+        {
+          key: {
+            text: "Status"
+          },
+          value: {
+            text: "No induction"
+          } ,
+        }
+      ]
+    end 
+  end
+
+  def status_description
+    {
+      RequiredtoComplete: "Required to complete",
+      Exempt: "Exempt",
+      InProgress: "In progress",
+      Pass: "Passed induction",
+      Fail: "Fail",
+      FailedinWales: "Failed in Wales"
+    }
+  end  
 end

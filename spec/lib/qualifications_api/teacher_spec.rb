@@ -405,24 +405,14 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
 
     it { is_expected.to be_truthy }
 
-    context 'when there are possible restrictions' do
-      let(:api_data) do
-        {
-          "sanctions" => [
-            { "code" => "T6", "start_date" => "2024-01-01" },
-            { "possibleMatchOnChildrensBarredList" => true }
-          ]
-        }
-      end
-
-      it { is_expected.to be_falsey }
-    end
-
     context "when there are sanctions that are not prohibited" do
       let(:api_data) do
         {
-          "sanctions" => [
-            { "code" => "T6", "start_date" => "2024-01-01" },
+          "alerts" => [
+            "alert_type" => {
+              "alert_type_id" => "7924fe90-483c-49f8-84fc-674feddba848"
+            }, 
+            "start_date" => "2024-01-01" 
           ]
         }
       end
@@ -433,8 +423,10 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     context "when there are sanctions not listed in the Sanction model" do
       let(:api_data) do
         {
-          "sanctions" => [
-            { "code" => "T7", "start_date" => "2024-01-01" },
+          "alerts" => [
+            "alert_type" => {
+            "alert_type_id" => "241eeb78-fac7-4c77-8059-c12e93dc2fae", "start_date" => "2024-01-01" 
+          }
           ]
         }
       end
@@ -445,8 +437,11 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     context "when there are sanctions that are prohibited" do
       let(:api_data) do
         {
-          "sanctions" => [
-            { "code" => "A13", "start_date" => "2024-01-01" },
+          "alerts" => [
+            "alert_type" =>  {
+              "alert_type_id" => "1a2b06ae-7e9f-4761-b95d-397ca5da4b13"
+            },
+            "start_date" => "2024-01-01" 
           ]
         }
       end
