@@ -220,9 +220,8 @@ module QualificationsApi
         details: CoercedDetails.new(api_data.induction),
         qtls_applicable: qtls_applicable?,
         qts_and_qtls: qts_and_qtls?,
-        certificate_url: api_data.induction&.certificate_url,
         details: CoercedDetails.new(api_data.induction),
-        set_membership_active: api_data.qtls_status == "Active", 
+        set_membership_active: api_data&.qtls_status == "Active", 
         name: "Induction",
         type: :induction
       )
