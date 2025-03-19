@@ -8,6 +8,7 @@ class InductionSummaryComponent < ViewComponent::Base
   delegate :awarded_at, :type, :details, :name, :qtls_applicable, :set_membership_active, :qts_and_qtls, 
 to: :qualification
 
+
   def detail_classes
     "app__induction-details"
   end
