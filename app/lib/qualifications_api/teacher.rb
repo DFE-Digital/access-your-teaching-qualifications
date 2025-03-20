@@ -98,7 +98,7 @@ module QualificationsApi
     end
 
     def npq_awarded?
-      api_data.npq_qualifications.first&.awarded.present?
+      npq_data.body["data"]["qualifications"] != []
     end
 
     def eyps_awarded?
