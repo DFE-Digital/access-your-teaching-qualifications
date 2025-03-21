@@ -4,7 +4,8 @@ module RouteConstraints
       # TODO: Update after AKS migration
       request.host.in?(HostingEnvironment.aytq_domain) ||
       request.host.include?("aytq-review-pr") ||
-      request.host.include?("access-your-teaching-qualifications-pr-")
+      request.host.include?("access-your-teaching-qualifications-pr-") ||
+      request.host.include?("access-your-teaching-qualifications-temp")
     end
   end
 end
