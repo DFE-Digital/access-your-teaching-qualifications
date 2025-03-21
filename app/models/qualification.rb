@@ -1,7 +1,8 @@
 class Qualification
   include ActiveModel::Model
 
-  attr_accessor :awarded_at, :certificate_url, :name, :status_description, :type
+  attr_accessor :awarded_at, :certificate_url, :name, :status_description, :type, :qtls_applicable, 
+:set_membership_active, :passed_induction
   attr_writer :details
 
   FORMATTED_QUALIFICATION_TEXT = {
