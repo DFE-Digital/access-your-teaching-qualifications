@@ -115,6 +115,7 @@ module QualificationsApi
     end
 
     def teachers(date_of_birth:, last_name:)
+      client.headers["X-Api-Version"] = "20250327"
       response =
         get(
           "v3/persons",

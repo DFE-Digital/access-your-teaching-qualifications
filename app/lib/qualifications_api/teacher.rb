@@ -73,6 +73,10 @@ module QualificationsApi
     end
 
     def teaching_status
+      if qtls_applicable?
+        return 'QTS via QTLS' if set_membership_active?
+        return 'No QTS' if set_membership_expired?
+      end
       return 'QTS' if qts_awarded?
       return 'EYTS' if eyts_awarded?
       return 'EYPS' if eyps_awarded?
@@ -88,7 +92,11 @@ module QualificationsApi
       api_data.qtls_status.present?
     end
 
-    def qtls_expired?
+    def set_membership_active?
+      api_data.qtls_status == "Active"
+    end
+
+    def set_membership_expired?
       api_data.qtls_status == "Expired"
     end
 
@@ -110,8 +118,9 @@ module QualificationsApi
 
     def induction_status
     return 'Passed induction' if passed_induction?
-    return 'Exempt from induction' if exempt_from_induction?
-    
+    if exempt_from_induction_via_induction_status? || exempt_from_induction_via_qts_via_qtls?
+      return 'Exempt from induction' 
+    end
     'No induction'
     end
 
@@ -119,12 +128,16 @@ module QualificationsApi
       api_data.induction&.status == "Pass" || api_data.induction_status&.status == "Pass"
     end
 
-    def exempt_from_induction?
+    def exempt_from_induction_via_induction_status?
       api_data.induction&.status == "Exempt" || api_data.induction_status&.status == "Exempt"
     end
 
+    def exempt_from_induction_via_qts_via_qtls?
+      qtls_applicable? && !passed_induction? && set_membership_active? 
+    end
+
     def no_induction?
-      !passed_induction? && !exempt_from_induction?
+      !passed_induction? && exempt_from_induction_via_induction_status?
     end
 
     def qts_and_qtls?
@@ -220,8 +233,8 @@ module QualificationsApi
         details: CoercedDetails.new(api_data.induction),
         qtls_applicable: qtls_applicable?,
         qts_and_qtls: qts_and_qtls?,
-        details: CoercedDetails.new(api_data.induction),
-        set_membership_active: api_data&.qtls_status == "Active", 
+        set_membership_active: api_data&.qtls_status == "Active",
+        passed_induction: passed_induction?, 
         name: "Induction",
         type: :induction
       )

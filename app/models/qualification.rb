@@ -53,10 +53,6 @@ class Qualification
     type == :eyts
   end
 
-  def qts_and_qtls?
-    false
-  end
-
   def formatted_qualification_name
     FORMATTED_QUALIFICATION_TEXT[type].html_safe
   end
