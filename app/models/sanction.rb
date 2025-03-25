@@ -165,7 +165,7 @@ class Sanction
         Call the Teaching Regulation Agency (TRA) on 0207 593 5393 for more information.
       DESCRIPTION
     },
-    "ed0cd700-3fb2-4db0-9403-ba57126090ed	" => {
+    "ed0cd700-3fb2-4db0-9403-ba57126090ed" => {
       title: "Prohibition order",
       description: <<~DESCRIPTION.chomp
         Found guilty of of serious misconduct.

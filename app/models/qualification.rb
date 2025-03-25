@@ -1,8 +1,8 @@
 class Qualification
   include ActiveModel::Model
 
-  attr_accessor :awarded_at, :name, :status_description, :type, :qtls_applicable, 
-:set_membership_active, :passed_induction, :qts_and_qtls
+  attr_accessor :awarded_at, :name, :status_description, :type, :qtls_only, 
+  :set_membership_active, :set_membership_expired, :passed_induction, :failed_induction, :qts_and_qtls
   attr_writer :details
 
   FORMATTED_QUALIFICATION_TEXT = {
@@ -51,10 +51,6 @@ class Qualification
 
   def eyts?
     type == :eyts
-  end
-
-  def qts_and_qtls?
-    false
   end
 
   def formatted_qualification_name

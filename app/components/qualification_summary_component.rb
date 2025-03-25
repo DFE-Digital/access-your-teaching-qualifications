@@ -7,13 +7,15 @@ class QualificationSummaryComponent < ViewComponent::Base
 
   delegate :awarded_at,
            :certificate_type,
-           :qtls_applicable,
+           :qtls_only,
            :details,
            :id,
            :itt?,
            :qts?,
            :passed_induction,
+           :failed_induction,
            :set_membership_active,
+           :set_membership_expired,
            :name,
            :type,
            :qts_and_qtls,
@@ -23,10 +25,8 @@ class QualificationSummaryComponent < ViewComponent::Base
 
   def rows
     return itt_rows if itt?
-    if qts? && qtls_applicable
-      return qtls_rows
-    end
-
+    return qtls_rows if qts? && qtls_only
+      
     @rows = [
       { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
       {
@@ -142,22 +142,14 @@ class QualificationSummaryComponent < ViewComponent::Base
   end
 
   def qtls_rows
-<<<<<<< HEAD
-    if set_membership_active || qts_and_qtls
-=======
-    if qualification.set_membership_active
->>>>>>> d03d67e (Display QTLS Flag for SET records)
+    if set_membership_active
       [
         {
           key: { 
             text: "Awarded"
           }, 
           value: {
-<<<<<<< HEAD
             text: qtls_awarded_at_text
-=======
-            text: "#{awarded_at&.to_fs(:long_uk)} via qualified teacher learning and skills (QTLS) status"
->>>>>>> d03d67e (Display QTLS Flag for SET records)
           }
         },
         {
@@ -187,5 +179,13 @@ class QualificationSummaryComponent < ViewComponent::Base
     else 
       awarded_at&.to_fs(:long_uk).to_s
     end
+  end
+
+  def render_qts_induction_exemption_message?
+    qts? && qtls_only && set_membership_active && !passed_induction && !failed_induction
+  end
+
+  def render_qtls_warning_message?
+    qts? && qtls_only && set_membership_expired && !passed_induction
   end
 end

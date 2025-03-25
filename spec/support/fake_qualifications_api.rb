@@ -154,6 +154,7 @@ class FakeQualificationsApi < Sinatra::Base
         { first_name: "Terry", last_name: "Jones", middle_name: "" },
         { first_name: "Terry", last_name: "Smith", middle_name: "" }
       ],
+      induction: {status: "None", end_date: nil, start_date: nil},
       alerts: [],
       trn:
     }

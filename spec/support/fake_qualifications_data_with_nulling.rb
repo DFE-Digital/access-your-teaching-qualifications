@@ -41,7 +41,7 @@ class FakeQualificationsDataWithNulling
   def minimal_induction!
     @data[:induction][:startDate] = nil
     @data[:induction][:endDate] = nil
-    @data[:induction][:status] = nil
+    @data[:induction][:status] = "None"
     @data[:induction][:statusDescription] = nil
     @data[:induction][:certificateUrl] = nil
     @data[:induction][:periods].each do |period|

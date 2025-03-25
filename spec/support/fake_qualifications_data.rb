@@ -16,15 +16,13 @@ module FakeQualificationsData
       qts: {
         awarded: "2023-02-27",
         statusDescription: "Qualified (trained in the UK)",
-        routes: {
-          awarded_approved_count: "1"
-        }
+        awarded_approved_count: "1"
       },
       induction: {
         startDate: "2022-09-01",
         endDate: "2022-10-01",
-        status: "Pass",
-        statusDescription: "Passed Induction",
+        status: "Passed",
+        statusDescription: "Passed",
         periods: [
           {
             startDate: "2022-09-01",
@@ -50,7 +48,7 @@ module FakeQualificationsData
                 endDate: "2023-01-28",
                 programmeType: "HEI",
                 programmeTypeDescription: "Higher education institution",
-                result: "Pass",
+                result: "Passed",
                 ageRange: {
                   description: "10 to 16 years"
                 },

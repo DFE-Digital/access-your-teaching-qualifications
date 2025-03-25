@@ -73,6 +73,10 @@ module QualificationsApi
     end
 
     def teaching_status
+      if qtls_only?
+        return 'QTS via QTLS' if set_membership_active?
+        return 'No QTS' if set_membership_expired?
+      end
       return 'QTS' if qts_awarded?
       return 'EYTS' if eyts_awarded?
       return 'EYPS' if eyps_awarded?
@@ -88,7 +92,11 @@ module QualificationsApi
       api_data.qtls_status.present?
     end
 
-    def qtls_expired?
+    def set_membership_active?
+      api_data.qtls_status == "Active"
+    end
+
+    def set_membership_expired?
       api_data.qtls_status == "Expired"
     end
 
@@ -109,26 +117,35 @@ module QualificationsApi
     end
 
     def induction_status
-    return 'Passed induction' if passed_induction?
-    return 'Exempt from induction' if exempt_from_induction?
-    
+    return 'Passed' if passed_induction?
+    if exempt_from_induction_via_induction_status? || exempt_from_induction_via_qts_via_qtls?
+      return 'Exempt from induction' 
+    end
     'No induction'
     end
 
     def passed_induction?
-      api_data.induction&.status == "Pass" || api_data.induction_status&.status == "Pass"
+      api_data.induction&.status == "Passed" || api_data.induction_status&.status == "Passed"
     end
 
-    def exempt_from_induction?
+    def failed_induction?
+      api_data.induction&.status == "Failed" || api_data.induction_status&.status == "Failed"
+    end
+
+    def exempt_from_induction_via_induction_status?
       api_data.induction&.status == "Exempt" || api_data.induction_status&.status == "Exempt"
     end
 
+    def exempt_from_induction_via_qts_via_qtls?
+      !passed_induction? && set_membership_active? 
+    end
+
     def no_induction?
-      !passed_induction? && !exempt_from_induction?
+      !passed_induction? && exempt_from_induction_via_induction_status?
     end
 
     def qts_and_qtls?
-      api_data.qts&.routes&.awarded_or_approved_count&. > 1
+      api_data.qts&.awarded_or_approved_count&. > 1
     end
 
     def pending_name_change?
@@ -139,31 +156,33 @@ module QualificationsApi
       api_data.pending_date_of_birth_change == true
     end
 
-    def qtls_applicable?
-      api_data&.qtls_status == "Active" || api_data&.qtls_status == "Expired"
+    def qtls_only?
+      !qts_and_qtls? && api_data&.qts&.status_description == "Qualified Teacher Learning and Skills status"
     end
 
     def no_details?
-      qualifications.empty? && 
-        api_data.induction.blank? && 
+        api_data.induction.status == "None" && 
         api_data.eyps.blank? && 
         api_data.qts.blank? && 
-        api_data.eyts.blank?
+        api_data.eyts.blank? &&
+        npq_data.body["data"]["qualifications"].blank?
     end
 
     private
 
     def add_qts
-      return if api_data.qts.blank? && !qtls_applicable?
+      return if api_data.qts.blank? && !qtls_only?
 
       @qualifications << Qualification.new(
         awarded_at: api_data.qts&.awarded&.to_date,
         name: "Qualified teacher status (QTS)",
-        qtls_applicable: qtls_applicable?,
+        qtls_only: qtls_only?,
         qts_and_qtls: qts_and_qtls?,
-        set_membership_active: api_data&.qtls_status == "Active",
+        set_membership_active: set_membership_active?,
+        set_membership_expired: set_membership_expired?,
         status_description: api_data.qts&.status_description,
         passed_induction: passed_induction?,
+        failed_induction: failed_induction?,
         type: :qts
       )
     end
@@ -213,15 +232,17 @@ module QualificationsApi
     end
 
     def add_induction
-      return if api_data.induction.blank? && !qtls_applicable?
+      return if api_data.induction.blank?
+      return if api_data.induction.status == "None" && !qtls_only?
 
       @qualifications << Qualification.new(
         awarded_at: api_data.induction&.end_date&.to_date,
         details: CoercedDetails.new(api_data.induction),
-        qtls_applicable: qtls_applicable?,
+        qtls_only: qtls_only?,
         qts_and_qtls: qts_and_qtls?,
-        details: CoercedDetails.new(api_data.induction),
-        set_membership_active: api_data&.qtls_status == "Active", 
+        set_membership_active: set_membership_active?,
+        set_membership_expired: set_membership_expired?,
+        passed_induction: passed_induction?, 
         name: "Induction",
         type: :induction
       )

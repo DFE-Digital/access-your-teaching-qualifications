@@ -7,7 +7,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       "induction" => {
         "startDate" => "2015-01-01",
         "endDate" => "2015-07-01",
-        "statusDescription" => "Complete",
+        "status" => "Complete",
         "certificateUrl" => "https",
         "periods" => [
           {
@@ -29,7 +29,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
           "endDate" => "2012-02-2",
           "programmeType" => "EYITTSchoolDirectEarlyYears",
           "programmeTypeDescription" => "Early Years Initial Teacher Training (School Direct)",
-          "result" => "Pass",
+          "result" => "Passed",
           "ageRange" => {
             "description" => "3 to 7 years"
           },
@@ -47,7 +47,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
           "endDate" => "2013-01-28",
           "programmeType" => "HEI",
           "programmeTypeDescription" => "Higher Education Institution",
-          "result" => "Pass",
+          "result" => "Passed",
           "ageRange" => {
             "description" => "10 to 16 years"
           },
@@ -124,7 +124,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
               "endDate" => "2013-01-28",
               "programmeType" => "HEI",
               "programmeTypeDescription" => "Higher Education Institution",
-              "result" => "Pass",
+              "result" => "Passed",
               "ageRange" => {
                 "description" => "10 to 16 years"
               },
@@ -175,7 +175,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
               "endDate" => "2013-01-28",
               "programmeType" => "HEI",
               "programmeTypeDescription" => "Higher Education Institution",
-              "result" => "Pass",
+              "result" => "Passed",
               "ageRange" => {
                 "description" => "10 to 16 years"
               },
@@ -211,7 +211,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
               "endDate" => "2013-01-28",
               "programmeType" => 1,
               "programmeTypeDescription" => "Higher Education Institution",
-              "result" => "Pass",
+              "result" => "Passed",
               "ageRange" => {
                 "description" => "10 to 16 years"
               },
@@ -334,7 +334,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     let(:teacher) { described_class.new(api_data) }
 
     context "induction status is 'Pass'" do
-      let(:api_data) { { "induction" => { "status" => "Pass", } } }
+      let(:api_data) { { "induction" => { "status" => "Passed", } } }
 
       it "returns true" do
         expect(teacher.passed_induction?).to eq true
@@ -342,7 +342,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     end
 
     context "induction status is anything other than 'Pass'" do
-      let(:api_data) { { "induction" => { "status_description" => "Fail", } } }
+      let(:api_data) { { "induction" => { "status_description" => "Failed", } } }
 
       it "returns false" do
         expect(teacher.passed_induction?).to eq false

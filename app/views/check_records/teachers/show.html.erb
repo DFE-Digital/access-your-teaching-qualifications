@@ -19,7 +19,7 @@
       <%= @teacher.name %>
     </h1>
 
-    <% if @teacher.sanctions.any? %>
+    <% if @teacher.sanctions.any? && @teacher.sanctions&.first&.description.present? %>
       <%= govuk_inset_text classes: "app-inset-text--red govuk-!-padding-bottom-2 govuk-!-padding-top-3 govuk-!-margin-bottom- govuk-!-margin-top-0" do %>
         <% @teacher.sanctions.each do |sanction| %>
           <h2 class="govuk-heading-m govuk-!-margin-bottom-1 govuk-!-margin-top-0">

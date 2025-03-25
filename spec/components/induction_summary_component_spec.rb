@@ -17,7 +17,7 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
         name: "Induction summary",
         awarded_at: induction.end_date&.to_date,
         type: :itt,
-        qtls_applicable: false,
+        qtls_only: false,
         qts_and_qtls: false,
         set_membership_active: false,
         details: induction
@@ -32,7 +32,7 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
     it "renders the component rows" do
       rows = rendered.css(".govuk-summary-list__row")
       expect(rows[0].css(".govuk-summary-list__key").text).to eq("Status")
-      expect(rows[0].css(".govuk-summary-list__value").text).to eq("Passed induction")
+      expect(rows[0].css(".govuk-summary-list__value").text).to eq("Passed")
 
       expect(rows[1].css(".govuk-summary-list__key").text).to eq("Completed")
       expect(rows[1].css(".govuk-summary-list__value").text).to eq(" 1 October 2022")

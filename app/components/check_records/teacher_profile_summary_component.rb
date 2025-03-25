@@ -20,7 +20,7 @@ class CheckRecords::TeacherProfileSummaryComponent < ViewComponent::Base
   private
 
   delegate :induction_status, :no_induction?, :no_restrictions?, :no_qts_or_eyts?, :teaching_status, 
-           :restriction_status,
+           :restriction_status, :set_membership_active?, :set_membership_expired?,
            to: :teacher
 
   def restriction_tag
@@ -28,10 +28,21 @@ class CheckRecords::TeacherProfileSummaryComponent < ViewComponent::Base
   end
 
   def teaching_status_tag
-    { message: teaching_status, colour: no_qts_or_eyts? ? 'blue' : 'green'}
+    { message: teaching_status, colour: teaching_status_tag_colour}
   end
 
   def induction_tag
     { message: induction_status, colour: no_induction? ? 'blue' : 'green'}
+  end
+
+  def teaching_status_tag_colour
+    if teacher.qtls_only?
+      if set_membership_active?
+        return 'green'
+      elsif set_membership_expired?
+        return 'blue'
+      end
+    end
+    no_qts_or_eyts? ? 'blue' : 'green'
   end
 end

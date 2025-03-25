@@ -5,9 +5,8 @@ class InductionSummaryComponent < ViewComponent::Base
 
   attr_accessor :qualification
 
-  delegate :awarded_at, :type, :details, :name, :qtls_applicable, :set_membership_active, :qts_and_qtls, 
-to: :qualification
-
+  delegate :awarded_at, :type, :details, :name, :qtls_only, :set_membership_active, 
+  :set_membership_expired, :qts_and_qtls, :passed_induction, to: :qualification
 
   def detail_classes
     "app__induction-details"
@@ -54,7 +53,7 @@ to: :qualification
   end
 
   def rows
-    if qtls_applicable
+    if qtls_only && !passed_induction && details&.status != "Failed"
       @rows = qtls_rows
     else
       @rows = [
@@ -63,7 +62,7 @@ to: :qualification
             text: "Status"
           },
           value: {
-            text: status_description[details&.status&.to_sym]
+            text: description_text(details&.status)
           } ,
         },
         {
@@ -76,7 +75,7 @@ to: :qualification
         }
       ]
 
-      if details.status == "Pass"
+      if details.status == "Passed"
         @rows << {
           key: {
             text: "Certificate"
@@ -125,14 +124,15 @@ to: :qualification
     end 
   end
 
-  def status_description
-    {
-      RequiredtoComplete: "Required to complete",
-      Exempt: "Exempt",
-      InProgress: "In progress",
-      Pass: "Passed induction",
-      Fail: "Fail",
-      FailedinWales: "Failed in Wales"
-    }
-  end  
+  def render_induction_exemption_reminder?
+    set_membership_active && !passed_induction && details&.status != "Failed"
+  end
+
+  def render_induction_exemption_warning?
+    set_membership_expired && !passed_induction && details&.status != "Failed"
+  end
+
+  def description_text(status)
+    status&.underscore&.humanize unless status.blank? || status == "None"
+  end
 end
