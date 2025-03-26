@@ -135,6 +135,7 @@ jobs:
     name: Deploy to production environment
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    concurrency: deploy_production
     needs: [build_image, deploy]
     environment:
       name: production
