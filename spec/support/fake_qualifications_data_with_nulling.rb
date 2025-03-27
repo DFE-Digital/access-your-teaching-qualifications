@@ -76,6 +76,6 @@ class FakeQualificationsDataWithNulling
   end
 
   def minimal_sanctions!
-    @data[:sanctions] = [ { code: "G1", startDate: nil } ]
+    @data[:alerts] = [ { alert_type: { alert_type_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99"}, startDate: nil } ]
   end
 end

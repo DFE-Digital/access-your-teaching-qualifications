@@ -5,7 +5,16 @@
   <p class="text">This is to certify that: <strong><%= teacher.name %></strong></p>
   <p class="text">Teacher Reference Number: <strong><%= teacher.trn %></strong></p>
   <p>&#160;</p>
-  <% if teacher.exempt_from_induction? %>
+  <% if @qualification.set_membership_active %>
+    <p class="text">has attained qualified teacher status (QTS) via qualified teacher learning and <br/>
+    skills (QTLS) status, meets the requirements for employment in maintained schools and <br/> 
+    non-maintained special schools in England and is exempt from the requirements to serve a  <br/>
+    statutory induction period.</p>
+
+    <p class="text">You will lose QTS and your exemption from the requirement to serve induction if your <br/>
+      Society for Education and Training (SET) membership expires.
+    </p>
+  <% elsif teacher.exempt_from_induction? %>
   <p class="text">has attained qualified teacher status (QTS), meets the requirements for employment in <br/>
     maintained schools and non-maintained special schools in England and is exempt from the <br/>
     requirements to serve a statutory induction period.</p>

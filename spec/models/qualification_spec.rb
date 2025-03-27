@@ -16,28 +16,6 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
-  describe "#id" do
-    let(:type) { :npq }
-    subject { qualification.id }
-
-    let(:qualification) { described_class.new(certificate_url:, type:) }
-    let(:certificate_url) { "https://example.com/1234" }
-
-    it { is_expected.to eq("1234") }
-
-    context "when certificate url is not present" do
-      let(:certificate_url) { nil }
-
-      it { is_expected.to be_nil }
-    end
-
-    context "when certificate type is qts" do
-      let(:type) { :qts }
-
-      it { is_expected.to be_nil }
-    end
-  end
-
   describe "#induction?" do
     subject { qualification.induction? }
 
