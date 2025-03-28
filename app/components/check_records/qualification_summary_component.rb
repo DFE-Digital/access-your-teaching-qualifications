@@ -11,10 +11,15 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
            :id,
            :induction?,
            :itt?,
+           :qtls_applicable,
+           :set_membership_active,
            :mq?,
            :name,
            :status_description,
            :type,
+           :qts?,
+           :passed_induction,
+           :qts_and_qtls,
            to: :qualification
 
   alias_method :title, :name
@@ -26,7 +31,9 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
       elsif mq?
         mq_rows
       elsif induction?
-        induction_rows if induction?
+        induction_rows
+      elsif qts?
+        qts_rows
       else
         [
           { key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
@@ -38,8 +45,15 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
   end
 
   def induction_rows
+    if qtls_applicable && !passed_induction
+      if set_membership_active 
+        return [{ key: { text: "Induction status" }, value: { text: "Exempt"} }]
+      else 
+        return [{ key: { text: "Induction status" }, value: { text: "No induction"} }]
+      end
+    end
     [
-      { key: { text: "Induction status" }, value: { text: details.status_description } },
+      { key: { text: "Induction status" }, value: { text: induction_status_description[details&.status&.to_sym] } },
       { key: { text: "Date completed" }, value: { text: awarded_at&.to_fs(:long_uk) } }
     ]
   end
@@ -84,4 +98,40 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
       { key: { text: "Date awarded" }, value: { text: awarded_at.to_fs(:long_uk) } }
     ]
   end
+
+  def qts_rows
+    if !qtls_applicable && status_description.blank?
+      return 
+    end
+    rows = [{ key: { text: "QTS status" }, value: { text: qts_status_text } }]
+    unless qtls_applicable && !set_membership_active 
+      rows.append( { key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } } )
+    end
+    rows
+  end
+
+  def qts_status_text
+    if qtls_applicable
+      if qts_and_qtls && set_membership_active
+        "Qualified"
+      elsif set_membership_active
+        "Qualified via qualified teacher learning and skills (QTLS) status"
+      elsif !set_membership_active
+        "No QTS"
+      end
+    else
+      status_description
+    end
+  end
+
+  def induction_status_description
+    {
+      RequiredtoComplete: "Required to complete",
+      Exempt: "Exempt",
+      InProgress: "In progress",
+      Pass: "Passed Induction",
+      Fail: "Fail",
+      FailedinWales: "Failed in Wales"
+    }
+  end  
 end

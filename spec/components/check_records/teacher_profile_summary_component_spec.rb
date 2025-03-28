@@ -20,19 +20,58 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
     end
     
     context "when teacher has QTS" do
-      let(:teacher) { QualificationsApi::Teacher.new({ 'qts' => { 'awarded' => Time.current }}) }
+      let(:teacher) do QualificationsApi::Teacher.new(
+        { 
+          'qts' => { 
+              'awarded' => Time.current,
+              'qtls_applicable' => false,
+              'set_membership_active' => false,
+              'passed_induction' => true
+          }
+        }
+        ) 
+      end
 
       it { is_expected.to have_text("QTS") }
     end
 
+    context "when teacher has QTS via QTLS" do
+      let(:teacher) do QualificationsApi::Teacher.new(
+        { 
+          'qts' => { 
+              'awarded' => Time.current,
+          },
+          'qtlsStatus' => 'Active'
+        }
+        ) 
+      end
+      it { is_expected.to have_text("QTS via QTLS") }
+    end
+
     context "when teacher has passed induction" do
-      let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status' => 'Pass' }}) }
+      let(:teacher) do QualificationsApi::Teacher.new(
+        { 
+          'induction' => { 
+              'status' => "Pass",
+              },
+          'qtlsStatus' => 'None'
+        }
+        ) 
+      end
 
       it { is_expected.to have_text("Passed induction") }
     end
 
     context "when teacher has failed induction" do
-      let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status' => 'Fail' }}) }
+      let(:teacher) do QualificationsApi::Teacher.new(
+        { 
+          'induction' => { 
+              'status' => "Fail",
+              },
+          'qtlsStatus' => 'None'
+        }
+        ) 
+      end
 
       it { is_expected.not_to have_text("Passed induction") }
     end
@@ -41,6 +80,54 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
       let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status' => 'Exempt' }}) }
 
       it { is_expected.to have_text("Exempt from induction") }
+    end
+
+    context "when teacher does not have QTS is exempt from induction via QTLS" do
+      let(:teacher) do QualificationsApi::Teacher.new(
+        { 
+          'qts' => {},
+          'induction' => { 
+              'status' => "Fail",
+          },
+          'qtlsStatus' => 'Active'
+        }
+        ) 
+      end
+
+      it { is_expected.to have_text("Exempt from induction") }
+      it { is_expected.to have_text("QTS via QTLS")}
+    end
+
+    context "when teacher does not have QTS is exempt from induction via QTLS and SET membership expires" do
+      let(:teacher) do QualificationsApi::Teacher.new(
+        { 
+          'qts' => {},
+          'induction' => { 
+              'status' => "Fail",
+              },
+          'qtlsStatus' => 'Expired'
+        }
+        ) 
+      end
+
+      it { is_expected.to have_text("No induction") }
+      it { is_expected.to have_text("No QTS") }
+    end
+
+    context "when teacher has QTS but not completed induction and has QTLS" do
+      let(:teacher) do QualificationsApi::Teacher.new(
+        { 
+          'qts' => {},
+          'induction' => { 
+              'status' => "Fail",
+              },
+          'qtlsStatus' => 'Active'
+        }
+        ) 
+      end
+
+      it { is_expected.to have_text("Exempt from induction") }
+      it { is_expected.to have_text("QTS") }
     end
   end
 end
