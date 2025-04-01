@@ -55,9 +55,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def and_i_can_see_a_list_of_valid_evidence
-    within(".govuk-details") do
-      expect(page).to have_selector(:css, "li", text: "deed poll", visible: :all)
-    end
+    expect(page).to have_selector(:css, "li", text: "deed poll", visible: :all)
   end
 
   def when_i_submit_the_form

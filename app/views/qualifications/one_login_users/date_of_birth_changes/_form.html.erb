@@ -1,13 +1,11 @@
 <%= form.govuk_date_field :date_of_birth, date_of_birth: true, legend: nil, hint: { text: "For example, 31 3 1980" } %>
 
 <h2 class="govuk-heading-s">Upload evidence</h2>
-<%= govuk_details(summary_text: "Documents we accept") do %>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>birth certificate</li>
-    <li>passport</li>
-    <li>driving license</li>
-  </ul>
-<% end %>
-
-<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true }, hint: { text: "File must be a PDF, JPG, JPEG or PNG" } %>
+<p>Documents we accept</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li>birth certificate</li>
+  <li>passport</li>
+  <li>driving license</li>
+</ul>
+<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true, role: "link" }, hint: { text: "File must be a PDF, JPG, JPEG or PNG" } %>
 <%= form.govuk_submit "Continue" %>
