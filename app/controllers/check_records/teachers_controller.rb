@@ -11,7 +11,7 @@ module CheckRecords
       end
     rescue QualificationsApi::TeacherNotFoundError
       respond_to do |format|
-        format.html { render "not_found" }
+        format.html { render "not_found", locals: { trn: SecureIdentifier.decode(params[:id]) } } 
         format.any { head :not_found }
       end
     end

@@ -7,24 +7,29 @@ class QualificationSummaryComponent < ViewComponent::Base
 
   delegate :awarded_at,
            :certificate_type,
+           :qtls_only,
            :details,
            :id,
            :itt?,
+           :qts?,
+           :passed_induction,
+           :failed_induction,
+           :set_membership_active,
+           :set_membership_expired,
            :name,
            :type,
+           :qts_and_qtls,
            to: :qualification
 
   alias_method :title, :name
 
   def rows
     return itt_rows if itt?
-
+    return qtls_rows if qts? && qtls_only
+      
     @rows = [
-      { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } }
-    ]
-
-    if qualification.certificate_url
-      @rows << {
+      { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+      {
         key: {
           text: "Certificate"
         },
@@ -37,7 +42,7 @@ class QualificationSummaryComponent < ViewComponent::Base
             )
         }
       }
-    end
+    ]
 
     if qualification.status_description
       @rows << {
@@ -67,7 +72,7 @@ class QualificationSummaryComponent < ViewComponent::Base
   def itt_rows
     return [] if details.end_date.blank?
 
-    [
+    @rows = [
       {
         key: {
           text: "Qualification"
@@ -134,5 +139,53 @@ class QualificationSummaryComponent < ViewComponent::Base
         }
       }
     ]
+  end
+
+  def qtls_rows
+    if set_membership_active
+      [
+        {
+          key: { 
+            text: "Awarded"
+          }, 
+          value: {
+            text: qtls_awarded_at_text
+          }
+        },
+        {
+          key: {
+            text: "Certificate"
+          },
+          value: {
+            text:
+            link_to(
+              "Download #{type.to_s.upcase} certificate",
+              qualifications_certificate_path(type, format: :pdf),
+              class: "govuk-link"
+              )
+          }
+        }
+      ]
+    elsif !set_membership_active
+      [
+        { key: { text: "Status" }, value: { text: "No QTS" } },
+      ]
+    end
+  end
+
+  def qtls_awarded_at_text
+    if set_membership_active
+      "#{awarded_at&.to_fs(:long_uk)} via qualified teacher learning and skills (QTLS) status"
+    else 
+      awarded_at&.to_fs(:long_uk).to_s
+    end
+  end
+
+  def render_qts_induction_exemption_message?
+    qts? && qtls_only && set_membership_active && !passed_induction && !failed_induction
+  end
+
+  def render_qtls_warning_message?
+    qts? && qtls_only && set_membership_expired && !passed_induction
   end
 end

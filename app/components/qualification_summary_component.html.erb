@@ -1,1 +1,14 @@
-<%= render GovukComponent::SummaryListComponent.new(rows:, card: { title: }) if rows.any? %>
+<% if rows.any? %>
+    <%= govuk_summary_card(title:) do |card| %>
+        <%= govuk_summary_list(rows:)%>
+        <% if render_qts_induction_exemption_message? %>
+            <hr class="govuk-section-break govuk-section-break--visible">
+              <p> </p>
+              <p>You will no longer have QTS via QTLS status if your Society for Education and Training (SET) membership expires</p>
+        <% elsif render_qtls_warning_message? %>
+          <hr class="govuk-section-break govuk-section-break--visible">
+            <p> </p>
+            <%= govuk_warning_text(text: "You no longer have QTS via QTLS status because your Society for Education and Training (SET) membership expired") %>
+        <% end %>
+    <% end %>
+<% end %>

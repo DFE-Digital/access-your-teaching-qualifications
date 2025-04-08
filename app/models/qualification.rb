@@ -1,7 +1,8 @@
 class Qualification
   include ActiveModel::Model
 
-  attr_accessor :awarded_at, :certificate_url, :name, :status_description, :type
+  attr_accessor :awarded_at, :name, :status_description, :type, :qtls_only, 
+  :set_membership_active, :set_membership_expired, :passed_induction, :failed_induction, :qts_and_qtls
   attr_writer :details
 
   FORMATTED_QUALIFICATION_TEXT = {
@@ -26,12 +27,6 @@ class Qualification
 
   def details
     @details ||= Hashie::Mash.new({})
-  end
-
-  def id
-    # QTS and EYTS certificate URLs don't contain an id
-    return nil if qts? || eyts?
-    @certificate_url&.split("/")&.last
   end
 
   def induction?

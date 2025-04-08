@@ -1,8 +1,14 @@
-<div class="govuk-summary-card">
-  <div class="govuk-summary-card__title-wrapper">
-    <h2 class="govuk-summary-card__title"><%= title %></h2>
-  </div>
-  <div class="govuk-summary-card__content">
-    <%= render GovukComponent::SummaryListComponent.new(rows:) if rows.any? %>
-  </div>
-</div>
+<% if rows.any?%>
+  <%= govuk_summary_card(title:) do |card| %>
+      <%= govuk_summary_list(rows:)%>
+      <% if render_induction_exemption_reminder? %>
+          <hr class="govuk-section-break govuk-section-break--visible">
+          <p> </p>
+          <p>You will no longer be exempt from induction if your Society for Education and Training (SET) membership expires</p>
+      <% elsif render_induction_exemption_warning? %>
+          <hr class="govuk-section-break govuk-section-break--visible">
+          <p> </p>
+          <%= govuk_warning_text(text: "You are no longer exempt from induction because your Society for Education and Training (SET) membership expired") %>
+      <% end %>
+  <% end %>
+<% end %>

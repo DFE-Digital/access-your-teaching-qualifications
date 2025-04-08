@@ -11,20 +11,18 @@ module FakeQualificationsData
       ],
       eyts: {
         awarded: "2022-04-01",
-        certificateUrl: "/v3/certificates/eyts",
         statusDescription: "Qualified (trained in the UK)",
       },
       qts: {
         awarded: "2023-02-27",
-        certificateUrl: "/v3/certificates/qts",
         statusDescription: "Qualified (trained in the UK)",
+        awarded_approved_count: "1"
       },
       induction: {
         startDate: "2022-09-01",
         endDate: "2022-10-01",
-        status: "Pass",
-        statusDescription: "Passed Induction",
-        certificateUrl: "/v3/certificates/induction",
+        status: "Passed",
+        statusDescription: "Passed",
         periods: [
           {
             startDate: "2022-09-01",
@@ -50,7 +48,7 @@ module FakeQualificationsData
                 endDate: "2023-01-28",
                 programmeType: "HEI",
                 programmeTypeDescription: "Higher education institution",
-                result: "Pass",
+                result: "Passed",
                 ageRange: {
                   description: "10 to 16 years"
                 },
@@ -85,7 +83,13 @@ module FakeQualificationsData
           }
         }
       ],
-      sanctions: trn == "9876543" ? [ { code: "G1", startDate: "2020-10-25" } ] : []
+      alerts: if trn == "9876543"
+  [ { alert_type: {alert_type_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99"}, 
+startDate: "2020-10-25" } ]
+else
+  []
+end,
+      qtlsStatus: "None"
     }
   end
 
@@ -102,7 +106,8 @@ module FakeQualificationsData
       initialTeacherTraining: nil,
       mandatoryQualifications: [],
       npqQualifications: [],
-      sanctions: []
+      alerts: [],
+      qtlsStatus: nil,
     }
   end
 end

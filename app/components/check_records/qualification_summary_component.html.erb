@@ -1,6 +1,23 @@
 <% if rows.any? %>
   <div class="govuk-!-margin-bottom-9">
-    <h2 class="govuk-heading-m"><%= title %></h2>
-    <%= render GovukComponent::SummaryListComponent.new(rows:) %>
+      <h2 class="govuk-heading-m"><%= title %></h2>
+  <%= govuk_summary_list(rows:)%>
+    <% if render_induction_exemption_message?%>
+        <%= govuk_inset_text do %>
+          <p>Exempt from induction via qualified teacher learning and skills (QTLS) status and an active membership with the <a href="https://set.et-foundation.co.uk/your-career/qtls">Society for Education and Training (SET)</a></p>
+
+          <p>They will need to complete induciton if their SET membership expires.</p>
+        <% end %>
+    <% elsif render_qts_induction_exemption_message %>
+      <%= govuk_inset_text do %>
+        <p>Holds QTS and is Exempt from Induction as they have QTLS status and an active membership with the <a href="https://set.et-foundation.co.uk/your-career/qtls">Society for Education and Training (SET)</a></p>
+
+        <p>Will no longer hold QTS or be exempt from induction if their SET membership expires.</p>
+      <% end %>
+    <% elsif render_qtls_warning_message? %>
+      <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired") %>
+    <% elsif render_induction_exemption_warning? %>
+      <%= govuk_warning_text(text: "No longer exempt from induction because their Society for Education and Training (SET) membership expired") %>
+    <% end %>
   </div>
 <% end %>

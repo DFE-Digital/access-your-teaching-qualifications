@@ -4,7 +4,7 @@ require_relative "fake_qualifications_data_with_nulling"
 class FakeQualificationsApi < Sinatra::Base
   include FakeQualificationsData
 
-  get "/v3/teacher" do
+  get "/v3/person" do
     content_type :json
 
     case bearer_token
@@ -21,7 +21,7 @@ class FakeQualificationsApi < Sinatra::Base
     end
   end
 
-  get "/v3/teachers" do
+  get "/v3/persons" do
     content_type :json
 
     case bearer_token
@@ -55,7 +55,7 @@ class FakeQualificationsApi < Sinatra::Base
     end
   end
 
-  get "/v3/teachers/:trn" do
+  get "/v3/persons/:trn" do
     content_type :json
 
     trn = params[:trn]
@@ -154,7 +154,8 @@ class FakeQualificationsApi < Sinatra::Base
         { first_name: "Terry", last_name: "Jones", middle_name: "" },
         { first_name: "Terry", last_name: "Smith", middle_name: "" }
       ],
-      sanctions: [],
+      induction: {status: "None", end_date: nil, start_date: nil},
+      alerts: [],
       trn:
     }
   end
@@ -168,7 +169,7 @@ class FakeQualificationsApi < Sinatra::Base
       previousNames: [
         { first_name: "Stephen", last_name: "Toast", middle_name: "" },
       ],
-      sanctions: [],
+      alerts: [],
       trn: "987654321"
     }
   end
@@ -183,13 +184,17 @@ class FakeQualificationsApi < Sinatra::Base
         { first_name: "Terry", last_name: "Jones", middle_name: "" },
         { first_name: "Terry", last_name: "Smith", middle_name: "" }
       ],
-      sanctions: [
+      alerts: [
         {
-          code: "G1",
+          alert_type: {
+            alert_type_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99",
+          },
           startDate: "2019-10-25"
         },
         {
-          code: "A1A",
+          alert_type: {
+            alert_type_id: "fa6bd220-61b0-41fc-9066-421b3b9d7885"
+          },
           startDate: "2018-9-20"
         }
       ],

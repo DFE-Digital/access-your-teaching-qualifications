@@ -69,7 +69,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def then_i_see_induction_details
     expect(page).to have_content("Induction")
-    expect(page).to have_content("Passed Induction")
+    expect(page).to have_content("Passed")
     expect(page).to have_content("1 October 2022")
   end
 
@@ -92,7 +92,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     expect(page).to have_content("Higher education institution")
     expect(page).to have_content("Business Studies")
     expect(page).to have_content("28 January 2023")
-    expect(page).to have_content("Pass")
+    expect(page).to have_content("Passed")
   end
 
   def then_i_see_npq_details
