@@ -3,16 +3,15 @@
 <%= form.govuk_text_field :last_name, label: { text: "Last name" } %>
 
 <h2 class="govuk-heading-s">Upload evidence</h2>
-<%= govuk_details(summary_text: "Documents we accept") do %>
-  <ul class="govuk-list govuk-list--bullet">
-    <li> marriage certificate </li>
-    <li> civil partnership certificate </li>
-    <li> decree absolute and birth certificate </li>
-    <li> statutory declaration </li>
-    <li> deed poll </li>
-  </ul>
-<% end %>
+<p>Documents we accept</p>
+<ul class="govuk-list govuk-list--bullet">
+  <li> marriage certificate </li>
+  <li> civil partnership certificate </li>
+  <li> decree absolute and birth certificate </li>
+  <li> statutory declaration </li>
+  <li> deed poll </li>
+</ul>
 
-<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true }, hint: { text: "File must be a PDF, JPG, JPEG or PNG" } %>
+<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true, role: "link" }, hint: { text: "File must be a PDF, JPG, JPEG or PNG" } %>
 
 <%= form.govuk_submit "Continue" %>
