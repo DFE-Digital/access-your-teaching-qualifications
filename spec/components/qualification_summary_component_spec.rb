@@ -12,9 +12,9 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     let(:qualification) do
       Qualification.new(
         name: "Initial teacher training (ITT)",
-        awarded_at: fake_quals_data.end_date&.to_date,
+        awarded_at: fake_quals_data.initial_teacher_training.first.end_date.value,
         type: :itt,
-        details: fake_quals_data.fetch("initial_teacher_training").first
+        details: QualificationsApi::CoercedDetails.new(fake_quals_data.fetch("initial_teacher_training").first)
       )
     end
     let(:component) { described_class.new(qualification:) }
@@ -26,11 +26,11 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     end
 
     it "renders the qualification" do
-      expect(rows[0].text).to include(qualification.details.dig(:qualification, :name))
+      expect(rows[0].text).to include(qualification.details.dig("qualification", "name"))
     end
 
     it "renders the qualification provider" do
-      expect(rows[1].text).to include(qualification.details.dig(:provider, :name))
+      expect(rows[1].text).to include(qualification.details.dig("provider", "name"))
     end
 
     it "renders the qualification programme type" do

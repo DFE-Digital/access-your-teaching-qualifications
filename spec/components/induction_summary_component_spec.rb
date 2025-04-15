@@ -15,7 +15,7 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
     let(:qualification) do
       Qualification.new(
         name: "Induction summary",
-        awarded_at: induction.end_date&.to_date,
+        awarded_at: induction.completed_date&.to_date,
         type: :itt,
         qtls_only: false,
         qts_and_qtls: false,
@@ -43,7 +43,6 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
 
     it "renders does not render empty component rows" do
       component.qualification.awarded_at = nil
-      component.qualification.details.periods.first.end_date = nil
 
       expect(rendered.css(".govuk-summary-list__key").map(&:text)).not_to include("Completed")
       expect(rendered.css(".govuk-summary-list__key").map(&:text)).not_to include("End date")
