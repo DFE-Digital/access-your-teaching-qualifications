@@ -236,7 +236,7 @@ module QualificationsApi
       return if api_data.induction.status == "None" && !qtls_only?
 
       @qualifications << Qualification.new(
-        awarded_at: api_data.induction&.end_date&.to_date,
+        awarded_at: api_data.induction&.completed_date&.to_date,
         details: CoercedDetails.new(api_data.induction),
         qtls_only: qtls_only?,
         qts_and_qtls: qts_and_qtls?,
@@ -270,6 +270,31 @@ module QualificationsApi
     include Hashie::Extensions::MergeInitializer
     include Hashie::Extensions::MethodAccess
 
-    coerce_key :result, ->(value) { value.underscore.humanize }
+    def initialize(raw_data = {})
+      super(self.class.flatten_and_mash(raw_data))
+    end
+
+    def self.flatten_and_mash(obj)
+      case obj
+      when Hash
+        if obj.keys.map(&:to_s).sort == ["has_value", "value"]
+          flatten_and_mash(obj["value"] || obj[:value])
+        else
+          Hashie::Mash.new(
+            obj.each_with_object({}) do |(k, v), result|
+              result[k.to_sym] = flatten_and_mash(v)
+            end
+          )
+        end
+      when Array
+        obj.map { |v| flatten_and_mash(v) }
+      else
+        obj
+      end
+    end
+
+    coerce_key :result, ->(value) {
+      value.to_s.underscore.humanize
+    }
   end
 end

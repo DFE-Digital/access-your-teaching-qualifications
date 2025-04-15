@@ -44,12 +44,6 @@ class FakeQualificationsDataWithNulling
     @data[:induction][:status] = "None"
     @data[:induction][:statusDescription] = nil
     @data[:induction][:certificateUrl] = nil
-    @data[:induction][:periods].each do |period|
-      period[:startDate] = nil
-      period[:endDate] = nil
-      period[:terms] = nil
-      period[:appropriateBody] = nil
-    end
   end
 
   def minimal_itt!

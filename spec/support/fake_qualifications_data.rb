@@ -20,19 +20,8 @@ module FakeQualificationsData
       },
       induction: {
         startDate: "2022-09-01",
-        endDate: "2022-10-01",
+        completedDate: "2022-10-01",
         status: "Passed",
-        statusDescription: "Passed",
-        periods: [
-          {
-            startDate: "2022-09-01",
-            endDate: "2022-10-01",
-            terms: 1,
-            appropriateBody: {
-              name: "Induction body"
-            }
-          }
-        ]
       },
       initialTeacherTraining:
         (
@@ -44,11 +33,23 @@ module FakeQualificationsData
                 qualification: {
                   name: "BA"
                 },
-                startDate: "2022-02-28",
-                endDate: "2023-01-28",
-                programmeType: "HEI",
+                startDate: {
+                  value: "2022-02-28",
+                  hasValue: true,
+                },
+                endDate: {
+                  value: "2023-01-28",
+                  hasValue: true,
+                },
+                programmeType: {
+                  hasValue: true,
+                  value: "HEI",
+                },
                 programmeTypeDescription: "Higher education institution",
-                result: "Passed",
+                result: {
+                  hasValue: true,
+                  value: "Passed",
+                },
                 ageRange: {
                   description: "10 to 16 years"
                 },
