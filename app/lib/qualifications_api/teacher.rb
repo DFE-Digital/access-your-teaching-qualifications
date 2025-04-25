@@ -69,7 +69,9 @@ module QualificationsApi
     end
 
     def sanctions
-      api_data.alerts&.map { |alert| Sanction.new(alert) }
+      api_data.alerts&.filter_map do |alert| 
+        Sanction.new(alert) if alert_showable?(alert) 
+      end
     end
 
     def teaching_status
@@ -262,6 +264,10 @@ module QualificationsApi
           type: :mandatory
         )
       end
+    end
+
+    def alert_showable?(alert)
+      alert.end_date.blank? && Sanction::SANCTIONS.key?(alert.alert_type.alert_type_id)
     end
   end
 

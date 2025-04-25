@@ -218,8 +218,49 @@ class Sanction
       description: <<~DESCRIPTION.chomp
         Check the [list of published decisions on GOV.UK](https://www.gov.uk/search/all?parent=&keywords=panel+outcome+misconduct&level_one_taxon=&manual=&organisations%5B%5D=teaching-regulation-agency&organisations%5B%5D=national-college-for-teaching-and-leadership&public_timestamp%5Bfrom%5D=&public_timestamp%5Bto%5D=&order=updated-newest) for more details.
       DESCRIPTION
-    }
+    },
+    "af65c236-47a6-427b-8e4b-930de6d256f0" => {
+      title: "Suspension order without conditions",
+      description: <<~DESCRIPTION.chomp
+        Suspended by the General Teaching Council for England.
+
+        Call the Teaching Regulation Agency (TRA) on 0207 593 5393 to check the conditions.
+      DESCRIPTION
+    },
+    "872d7700-aa6f-435e-b5f9-821fb087962a" => {
+      title: "Suspension order without conditions",
+      description: <<~DESCRIPTION.chomp
+        Suspended by the General Teaching Council for England.
+
+        Call the Teaching Regulation Agency (TRA) on 0207 593 5393 to check the conditions.
+      DESCRIPTION
+    },
+    "3c5fc83b-10e1-4a15-83e6-794fce3e0b45" => {
+      title: "Suspension order without conditions",
+      description: <<~DESCRIPTION.chomp
+        Suspended by the General Teaching Council for England.
+
+        Call the Teaching Regulation Agency (TRA) on 0207 593 5393 to check the conditions.
+      DESCRIPTION
+    },
+    "17b4fe26-7468-4702-92e5-785b861cf0fa" => {
+      title: "Suspension order with conditions",
+      description: <<~DESCRIPTION.chomp
+        Suspended by the General Teaching Council for England.
+  
+        Call the Teaching Regulation Agency (TRA) on 0207 593 5393 to check the conditions.
+      DESCRIPTION
+    },
+    "a6f51ccc-a19c-4dc2-ba80-ffb7a95ff2ee" => {
+      title: "Suspension order without conditions",
+      description: <<~DESCRIPTION.chomp
+        Suspended by the General Teaching Council for England.
+
+        Call the Teaching Regulation Agency (TRA) on 0207 593 5393 to check the conditions.
+      DESCRIPTION
+    },
   }.freeze
+
 
   def description
     SANCTIONS[alert_type_id][:description] if SANCTIONS[alert_type_id]
