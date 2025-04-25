@@ -425,8 +425,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         {
           "alerts" => [
             "alert_type" => {
-            "alert_type_id" => "241eeb78-fac7-4c77-8059-c12e93dc2fae", "start_date" => "2024-01-01" 
-          }
+            "alert_type_id" => "Nonsense", "start_date" => "2024-01-01" 
+          },
           ]
         }
       end
@@ -447,6 +447,22 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
 
       it { is_expected.to be_falsey }
+    end
+
+    context "when there are sanctions that have an end date" do
+      let(:api_data) do
+        {
+          "alerts" => [
+            "alert_type" =>  {
+              "alert_type_id" => "1a2b06ae-7e9f-4761-b95d-397ca5da4b13"
+            },
+            "start_date" => "2024-01-01",
+            "end_date" => "2025-01-02",
+          ]
+        }
+      end
+
+      it { is_expected.to be_truthy }
     end
   end
 end
