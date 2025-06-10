@@ -51,6 +51,11 @@ module "web_application" {
   send_traffic_to_maintenance_page = var.send_traffic_to_maintenance_page
 
   web_external_hostnames = [local.check_domain]
+
+  ingress_annotations = {
+    "nginx.ingress.kubernetes.io/rate-limit-rps"        = var.environment == "production" ? "50" : "100"
+    "nginx.ingress.kubernetes.io/rate-limit-connections" = var.environment == "production" ? "20" : "30"
+  }
 }
 
 module "worker_application" {
