@@ -7,7 +7,7 @@ module CheckRecords
 
     def new
       if DfESignIn.bypass?
-        redirect_post "/check-records/auth/developer/callback", options: { authenticity_token: :auto }
+        redirect_post "/check-records/auth/developer", options: { authenticity_token: :auto }
       else
         redirect_post "/check-records/auth/dfe", options: { authenticity_token: :auto }
       end
