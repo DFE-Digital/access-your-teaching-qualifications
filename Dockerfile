@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.3.0-alpine AS builder
+FROM ruby:3.4.4-alpine AS builder
 
 # RUN apk -U upgrade && \
 #     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
@@ -62,7 +62,7 @@ RUN rm -rf log/* tmp/* /tmp && \
     find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.3.0-alpine AS production
+FROM ruby:3.4.4-alpine AS production
 
 # The application runs from /app
 WORKDIR /app
