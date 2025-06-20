@@ -87,41 +87,14 @@ ENV GIT_SHA=$COMMIT_SHA
 ENV SHA=$GIT_SHA
 # Set up puppeteer (for PDF generation)
 # https://pptr.dev/troubleshooting#running-on-alpine
-# Install system deps
-# Install runtime dependencies
 RUN apk add --no-cache \
+    chromium \
     nss \
     freetype \
     harfbuzz \
     ca-certificates \
     ttf-freefont \
-    nodejs \
-    yarn \
-    udev \
-    dumb-init \
-    curl \
-    unzip
-
-# Download Chrome for Testing (version 137.0.7151.55)
-ENV CHROME_VERSION=137.0.7151.55
-ENV CHROME_URL=https://storage.googleapis.com/chrome-for-testing-public/${CHROME_VERSION}/linux64/chrome-linux64.zip
-
-# Download and install Chrome
-RUN mkdir -p /opt/chrome && \
-    wget -qO /tmp/chrome.zip $CHROME_URL && \
-    unzip /tmp/chrome.zip -d /opt/chrome && \
-    ln -sf /opt/chrome/chrome-linux64/chrome /usr/bin/chromium-browser && \
-    rm /tmp/chrome.zip
-
-# ✅ Test that Chromium is installed and accessible
-RUN whoami
-RUN uname -a
-RUN echo $PATH
-RUN ls -l /usr/bin/chromium-browser
-RUN ls -l /opt/chrome/chrome-linux64/chrome
-RUN /opt/chrome/chrome-linux64/chrome --version
-RUN /usr/bin/chromium-browser --version
-
+    nodejs
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \

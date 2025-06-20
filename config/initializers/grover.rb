@@ -8,7 +8,6 @@ Grover.configure do |config|
       right: "0"
     },
   launch_args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  executable_path: "/usr/bin/chromium-browser",
   }
   config.use_jpeg_middleware = false
   config.use_png_middleware = false
