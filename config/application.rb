@@ -15,6 +15,7 @@ require "action_cable/engine"
 require "rails/test_unit/railtie"
 require "./app/models/hosting_environment"
 require "grover"
+require "ostruct"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
