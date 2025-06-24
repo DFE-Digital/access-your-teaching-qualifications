@@ -7,7 +7,7 @@ Grover.configure do |config|
       left: "0",
       right: "0"
     },
-  launch_args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  launch_args: ["--no-sandbox", "--disable-setuid-sandbox", "--disable-gpu"],
   }
   config.use_jpeg_middleware = false
   config.use_png_middleware = false

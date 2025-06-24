@@ -3,7 +3,7 @@
 # production: runs the actual app
 
 # Build builder image
-FROM ruby:3.3.0-alpine AS builder
+FROM ruby:3.4.4-alpine3.20 AS builder
 
 # RUN apk -U upgrade && \
 #     apk add --update --no-cache gcc git libc6-compat libc-dev make nodejs \
@@ -19,7 +19,7 @@ RUN apk add --update --no-cache tzdata && \
 # build-base: dependencies for bundle
 # yarn: node package manager
 # postgresql-dev: postgres driver and libraries
-RUN apk add --no-cache build-base yarn postgresql13-dev git
+RUN apk add --no-cache build-base yarn postgresql15-dev git yaml-dev
 
 # Install gems defined in Gemfile
 COPY .ruby-version Gemfile Gemfile.lock ./
@@ -62,7 +62,7 @@ RUN rm -rf log/* tmp/* /tmp && \
     find /usr/local/bundle/gems -name "*.html" -delete
 
 # Build runtime image
-FROM ruby:3.3.0-alpine AS production
+FROM ruby:3.4.4-alpine3.20 AS production
 
 # The application runs from /app
 WORKDIR /app
@@ -85,16 +85,24 @@ COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 ARG COMMIT_SHA
 ENV GIT_SHA=$COMMIT_SHA
 ENV SHA=$GIT_SHA
+
 # Set up puppeteer (for PDF generation)
 # https://pptr.dev/troubleshooting#running-on-alpine
+# Install system deps
+# Install runtime dependencies
 RUN apk add --no-cache \
-    chromium \
     nss \
     freetype \
     harfbuzz \
     ca-certificates \
     ttf-freefont \
-    nodejs
+    nodejs \
+    yarn \
+    udev \
+    dumb-init \
+    curl \
+    chromium=131.0.6778.108-r0
+
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 
 CMD bundle exec rails db:migrate:ignore_concurrent_migration_exceptions && \
