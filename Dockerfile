@@ -3,6 +3,12 @@
 # production: runs the actual app
 
 # Build builder image
+# WHEN WE UPDATE THIS WE HAVE TO KEEP PUPPETEER IN SYNC WITH THE VERSION OF CHROMIUM THAT GETS INSTALLED
+# Get the version `apk list chromium` in the running image and then update package.json https://pptr.dev/chromium-support#
+# This is used for rendering PDFs
+# We are specifically using ruby:3.4.4-alpine3.20 rather than ruby:3.4.4 as later versions of alpine don't come with a
+# version of chromium that is on the list of supported versions for puppeteer.
+# See docs/updating_ruby.md and docs/puppeteer.md for more details on how to update this image.
 FROM ruby:3.4.4-alpine3.20 AS builder
 
 # RUN apk -U upgrade && \
