@@ -63,8 +63,8 @@ module FakeQualificationsData
           end
         ),
       mandatoryQualifications: [
-        { awarded: "2023-02-28", specialism: "Visual impairment" },
-        { awarded: "2022-01-01", specialism: "Hearing" }
+        { endDate: "2023-02-28", specialism: "Visual impairment", qualificationId: 1 },
+        { endDate: "2022-01-01", specialism: "Hearing", qualificationId: 1 }
       ],
       npqQualifications: [
         {
