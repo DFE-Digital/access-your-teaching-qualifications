@@ -68,7 +68,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         "statusDescription" => "Qualified",
       },
       "mandatoryQualifications" => [
-        { "awarded" => "2013-06-01", "specialism" => "Visual Impairment" }
+        { "endDate" => "2013-06-01", "specialism" => "Visual Impairment", "qualificationId" => 1 }
       ],
     }
   end

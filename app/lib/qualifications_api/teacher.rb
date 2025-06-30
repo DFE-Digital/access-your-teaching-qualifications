@@ -254,11 +254,11 @@ module QualificationsApi
       return if api_data.mandatory_qualifications.blank?
 
       @qualifications << api_data.mandatory_qualifications
-        .sort_by { |mq| mq.awarded&.to_date }
+        .sort_by { |mq| mq.end_date&.to_date }
         .reverse
         .map do |mq|
         Qualification.new(
-          awarded_at: mq.awarded&.to_date,
+          awarded_at: mq.end_date&.to_date,
           details: mq,
           name: "Mandatory qualification (MQ)",
           type: :mandatory
