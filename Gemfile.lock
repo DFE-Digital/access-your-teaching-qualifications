@@ -385,7 +385,7 @@ GEM
     parser (3.3.4.2)
       ast (~> 2.4.1)
       racc
-    pg (1.5.8)
+    pg (1.5.9)
     prettier_print (1.2.1)
     propshaft (1.0.0)
       actionpack (>= 7.0.0)
