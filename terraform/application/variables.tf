@@ -64,7 +64,6 @@ variable "send_traffic_to_maintenance_page" {
   default     = false
   description = "During a maintenance operation, keep sending traffic to the maintenance page instead of resetting the ingress"
 }
-
 variable "account_replication_type" {
   description = "Replication LRS (across AZs) or GRS (across regions)"
   default     = "LRS"
@@ -88,7 +87,10 @@ variable "worker_replicas" {
 variable "postgres_enable_high_availability" {
   default = false
 }
-
+variable "max_memory" {
+  type    = string
+  default = "1Gi"
+}
 variable "enable_dfe_analytics_federated_auth" {
   description = "Create the resources in Google cloud for federated authentication and enable in application"
   default     = false
