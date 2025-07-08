@@ -15,3 +15,12 @@ variable "rate_limit" {
   }))
   default = null
 }
+
+variable "rate_limit_max" {
+  type    = string
+  default = null
+}
+
+variable "allow_aks" {
+  default = false
+}
