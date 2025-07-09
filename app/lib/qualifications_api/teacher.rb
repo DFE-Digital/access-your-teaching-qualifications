@@ -42,17 +42,15 @@ module QualificationsApi
     end
 
     def qualifications
-      @qualifications = []
-
-      add_npq
-      add_mandatory_qualifications
-      add_induction
-      add_qts
-      add_itt
-      add_eyts
-      add_itt(qts: false)
-
-      @qualifications.flatten!
+      @qualifications ||= [
+        npq_qualifications,
+        mq_qualifications,
+        induction_qualification,
+        qts_qualification,
+        itt_qualifications,
+        eyts_qualification,
+        itt_qualifications(qts: false),
+      ].flatten.compact
     end
 
     def restriction_status
@@ -172,10 +170,10 @@ module QualificationsApi
 
     private
 
-    def add_qts
+    def qts_qualification
       return if api_data.qts.blank? && !qtls_only?
 
-      @qualifications << Qualification.new(
+      Qualification.new(
         awarded_at: api_data.qts&.awarded&.to_date,
         name: "Qualified teacher status (QTS)",
         qtls_only: qtls_only?,
@@ -189,10 +187,10 @@ module QualificationsApi
       )
     end
 
-    def add_eyts
+    def eyts_qualification
       return if api_data.eyts.blank?
 
-      @qualifications << Qualification.new(
+      Qualification.new(
         awarded_at: api_data.eyts.awarded&.to_date,
         name: "Early years teacher status (EYTS)",
         status_description: api_data.eyts.status_description,
@@ -200,65 +198,64 @@ module QualificationsApi
       )
     end
 
-    def add_npq
-      unless @npq_data == []
-        @npq_data.body["data"]["qualifications"]
-          .sort_by { |npq| npq["award_date"]&.to_date }
-          .reverse
-          .each do |npq|
-            @qualifications << Qualification.new(
-              awarded_at: npq["award_date"]&.to_date,
-              name: NPQ_QUALIFICATION_NAME[npq["npq_type"].to_sym],
-              type: npq["npq_type"]&.to_sym
-            )
-        end
+    def npq_qualifications
+      return [] if @npq_data == []
+
+      @npq_data.body["data"]["qualifications"]
+        .sort_by { |npq| npq["award_date"]&.to_date }
+        .reverse
+        .each do |npq|
+        @qualifications << Qualification.new(
+          awarded_at: npq["award_date"]&.to_date,
+          name: NPQ_QUALIFICATION_NAME[npq["npq_type"].to_sym],
+          type: npq["npq_type"]&.to_sym
+        )
       end
     end
 
-    def add_itt(qts: true)
+    def itt_qualifications(qts: true)
       all_itt_data = api_data.fetch("initial_teacher_training", [])
       eyts_itt_data, qts_itt_data = all_itt_data.partition { |itt| itt.programme_type.to_s&.starts_with?("EYITT") }
       itt_data = qts ? qts_itt_data : eyts_itt_data
 
-      @qualifications << itt_data
-        .sort_by { |itt| itt.awarded&.to_date }
-        .reverse
-        .map do |itt_response|
-          Qualification.new(
-            awarded_at: itt_response.end_date&.to_date,
-            details: CoercedDetails.new(itt_response),
-            name: "Initial teacher training (ITT)",
-            type: :itt
-          )
-        end
+      itt_data.sort_by { |itt| itt.awarded&.to_date }
+              .reverse
+              .map do |itt_response|
+        Qualification.new(
+          awarded_at: itt_response.end_date&.to_date,
+          details: CoercedDetails.new(itt_response),
+          name: "Initial teacher training (ITT)",
+          type: :itt
+        )
+      end
     end
 
-    def add_induction
+    def induction_qualification
       return if api_data.induction.blank?
       return if api_data.induction.status == "None" && !qtls_only?
 
-      @qualifications << Qualification.new(
+      Qualification.new(
         awarded_at: api_data.induction&.completed_date&.to_date,
         details: CoercedDetails.new(api_data.induction),
         qtls_only: qtls_only?,
         qts_and_qtls: qts_and_qtls?,
         set_membership_active: set_membership_active?,
         set_membership_expired: set_membership_expired?,
-        passed_induction: passed_induction?, 
+        passed_induction: passed_induction?,
         name: "Induction",
         type: :induction
       )
     end
 
-    def add_mandatory_qualifications
-      return if api_data.mandatory_qualifications.blank?
+    def mq_qualifications
+      return [] if api_data.mandatory_qualifications.blank?
 
-      @qualifications << api_data.mandatory_qualifications
-        .sort_by { |mq| mq.end_date&.to_date }
-        .reverse
-        .map do |mq|
+      api_data.mandatory_qualifications
+              .sort_by { |mq| mq.awarded&.to_date }
+              .reverse
+              .map do |mq|
         Qualification.new(
-          awarded_at: mq.end_date&.to_date,
+          awarded_at: mq.awarded&.to_date,
           details: mq,
           name: "Mandatory qualification (MQ)",
           type: :mandatory
