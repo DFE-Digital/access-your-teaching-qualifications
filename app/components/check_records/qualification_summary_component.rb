@@ -27,23 +27,24 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
   alias_method :title, :name
 
   def rows
-    @rows = (
-      if itt?
-        itt_rows
-      elsif mq?
-        mq_rows
-      elsif induction?
-        induction_rows
-      elsif qts?
-        qts_rows
-      else
-        [
-          { key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
-          { key: { text: "Status" }, value: { text: status_description } },
-        ]
-      end
-    )
-    @rows.select { |row| row[:value][:text].present? }
+    @rows ||= build_rows.select { |row| row[:value][:text].present? }
+  end
+
+  def build_rows
+    if itt?
+      itt_rows
+    elsif mq?
+      mq_rows
+    elsif induction?
+      induction_rows
+    elsif qts?
+      qts_rows
+    else
+      [
+        { key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+        { key: { text: "Status" }, value: { text: status_description } },
+      ]
+    end
   end
 
   def induction_rows
