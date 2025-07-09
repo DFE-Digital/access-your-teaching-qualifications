@@ -23,7 +23,7 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
       let(:teacher) do QualificationsApi::Teacher.new(
         { 
           'qts' => { 
-              'awarded' => Time.current,
+              'holdsFrom' => Time.current,
               'qtls_only' => false,
               'set_membership_active' => false,
               'passed_induction' => true
@@ -37,16 +37,23 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
 
     context "when teacher has QTS via QTLS" do
       let(:teacher) do QualificationsApi::Teacher.new(
-        { 
           'qts' => { 
-              'awarded' => Time.current,
+              'holdsFrom' => Time.current,
               'awardedOrApprovedCount' => 1,
-              'statusDescription' => "Qualified Teacher Learning and Skills status",
+              "routes" => [
+                {
+                  "routeToProfessionalStatusType" => {
+                    "routeToProfessionalStatusTypeId" => QualificationsApi::Teacher::QTLS_ROUTE_ID,
+                    "name" => "string",
+                    "professionalStatusType" => "QualifiedTeacherStatus"
+                  }
+                }
+              ]
           },
           'qtlsStatus' => 'Active'
-        }
-        ) 
+        )
       end
+
       it { is_expected.to have_text("QTS via QTLS") }
     end
 
@@ -88,12 +95,20 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
       let(:teacher) do QualificationsApi::Teacher.new(
         { 
           'qts' => { 
-              'awarded' => Time.current,
-              'awardedOrApprovedCount' => 1,
-              'statusDescription' => "Qualified Teacher Learning and Skills status",
+            'holdsFrom' => Time.current,
+            'awardedOrApprovedCount' => 1,
+            "routes" => [
+              {
+                "routeToProfessionalStatusType" => {
+                  "routeToProfessionalStatusTypeId" => QualificationsApi::Teacher::QTLS_ROUTE_ID,
+                  "name" => "string",
+                  "professionalStatusType" => "QualifiedTeacherStatus"
+                }
+              }
+            ]
           },
           'induction' => { 
-              'status' => "None",
+            'status' => "None",
           },
           'qtlsStatus' => 'Active'
         }
@@ -124,9 +139,17 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
       let(:teacher) do QualificationsApi::Teacher.new(
         { 
           'qts' => { 
-              'awarded' => Time.current,
+              'holdsFrom' => Time.current,
               'awardedOrApprovedCount' => 2,
-              'statusDescription' => "Qualified",
+              "routes" => [
+                {
+                  "routeToProfessionalStatusType" => {
+                    "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                    "name" => "string",
+                    "professionalStatusType" => "QualifiedTeacherStatus"
+                  }
+                }
+              ]
           },
           'induction' => { 
               'status' => "None",

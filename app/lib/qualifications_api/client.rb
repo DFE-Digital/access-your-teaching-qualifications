@@ -81,7 +81,7 @@ module QualificationsApi
     end
 
     def teacher(trn: nil)
-      client.headers["X-Api-Version"] = "20250327"
+      client.headers["X-Api-Version"] = "20250627"
       # If TRN is provided, we use an endpoint which expects a fixed Bearer token.
       # If TRN is blank, the token needs to come from an authenticated Identity user.
       endpoint = (trn ? "v3/persons/#{trn}" : "v3/person")
@@ -91,7 +91,6 @@ module QualificationsApi
           {
             include: %w[
               Induction
-              InitialTeacherTraining
               MandatoryQualifications
               Alerts
               PreviousNames

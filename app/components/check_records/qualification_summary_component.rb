@@ -10,107 +10,146 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
            :details,
            :id,
            :induction?,
-           :itt?,
+           :rtps?,
            :qtls_only,
            :set_membership_active,
            :set_membership_expired,
            :mq?,
            :name,
-           :status_description,
            :type,
            :qts?,
+           :eyts?,
            :passed_induction,
            :failed_induction,
            :qts_and_qtls,
            to: :qualification
 
-  alias_method :title, :name
+  def title
+    return "Professional Status" if qts? || eyts?
+    return "Route to Professional Status" if rtps?
+
+    name
+  end
 
   def rows
     @rows ||= build_rows.select { |row| row[:value][:text].present? }
   end
 
   def build_rows
-    if itt?
-      itt_rows
+    if rtps?
+      rtps_rows
     elsif mq?
       mq_rows
     elsif induction?
       induction_rows
     elsif qts?
       qts_rows
+    elsif eyts?
+      eyts_rows
     else
       [
-        { key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
-        { key: { text: "Status" }, value: { text: status_description } },
+        { key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } },
       ]
     end
   end
 
   def induction_rows
     if qtls_only && !passed_induction && !failed_induction?
-      if set_membership_active 
-        return [{ key: { text: "Induction status" }, value: { text: "Exempt"} }]
-      else 
+      if set_membership_active
+        return [
+          { key: { text: "Induction status" }, value: { text: "Exempt" } },
+          { key: { text: "Reason for exemption" },
+            value: { text: details[:exemption_reasons]&.map(&:name)&.join(", ") } }
+        ]
+      else
         return [{ key: { text: "Induction status" }, value: { text: "No induction"} }]
       end
     end
+
     [
-      { 
-        key: { text: "Induction status" }, 
-        value: { text: description_text(details&.status) } 
+      {
+        key: { text: "Induction status" },
+        value: { text: description_text(details&.status) }
       },
       { key: { text: "Date completed" }, value: { text: awarded_at&.to_fs(:long_uk) } }
     ]
   end
 
-  def itt_rows
+  def rtps_rows
     [
-      { key: { text: "Qualification" }, value: { text: details.qualification&.name } },
-      { key: { text: "ITT provider" }, value: { text: details.provider&.name } },
-      { key: { text: "Programme type" }, value: { text: details.programme_type_description } },
+      { key: { text: "Route Type" }, value: { text: details.route_to_professional_status_type&.name } },
+      { key: { text: "Qualification" }, value: { text: details.degree_type&.name } },
+      { key: { text: "Provider" }, value: { text: details.training_provider&.name } },
       {
         key: {
           text: "Subject"
         },
         value: {
-          text: details.subjects.map { |subject| subject.name.titleize }.join(", ")
-        }
-      },
-      { key: { text: "Age range" }, value: { text: details.age_range&.description } },
-      {
-        key: {
-          text: "Course start date"
-        },
-        value: {
-          text: details.start_date&.to_date&.to_fs(:long_uk)
+          text: details.training_subjects&.map { |subject| subject.name.titleize }&.join(", ")
         }
       },
       {
+        key: { text: "Age range" },
+        value: { text: age_range_from_training_age_specialism(details.training_age_specialism) }
+      },
+      {
         key: {
-          text: "Course end date"
+          text: "Start date"
         },
         value: {
-          text: details.end_date&.to_date&.to_fs(:long_uk)
+          text: details.training_start_date&.to_date&.to_fs(:long_uk)
         }
       },
-      { key: { text: "Course result" }, value: { text: details.result&.to_s&.humanize } }
+      {
+        key: {
+          text: "End date"
+        },
+        value: {
+          text: details.training_end_date&.to_date&.to_fs(:long_uk)
+        }
+      },
+      { key: { text: "Course result" }, value: { text: details.status&.to_s&.underscore&.humanize } }
     ]
+  end
+
+  def age_range_from_training_age_specialism(training_age_specialism)
+    case training_age_specialism&.type
+    when "Range"
+      "#{training_age_specialism.from} to #{training_age_specialism.to} years"
+    else
+      # Easier to use a hash lookup for the known types
+      # Rather than .underscore.humanize, especially since that tactic just results in "Key stage1"
+      {
+        'FoundationStage' => "Foundation stage",
+        'FurtherEducation' =>  "Further education",
+        'KeyStage1' =>  "Key stage 1",
+        'KeyStage2' =>  "Key stage 2",
+        'KeyStage3' =>  "Key stage 3",
+        'KeyStage4' =>  "Key stage 4"
+      }[training_age_specialism&.type]
+    end
   end
 
   def mq_rows
     [
       { key: { text: "Specialism" }, value: { text: details.specialism } },
-      { key: { text: "Date awarded" }, value: { text: awarded_at.to_fs(:long_uk) } }
+      { key: { text: "Held since" }, value: { text: awarded_at.to_fs(:long_uk) } }
     ]
   end
 
   def qts_rows
-    rows = [{ key: { text: "QTS status" }, value: { text: qts_status_text } }]
+    rows = [{ key: { text: "Status" }, value: { text: qts_status_text } }]
     unless qtls_only && !set_membership_active
-      rows.append( { key: { text: "Date awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } } )
+      rows.append( { key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } } )
     end
     rows
+  end
+
+  def eyts_rows
+    [
+      { key: { text: "Status" }, value: { text: "Early years teacher status (EYTS)" } },
+      { key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } }
+    ]
   end
 
   def qts_status_text
@@ -124,8 +163,8 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
   def qts_status_description_text
     if qtls_only
       "Qualified via qualified teacher learning and skills (QTLS) status"
-    else 
-      status_description
+    else
+      "Qualified teacher status (QTS)"
     end
   end
 
