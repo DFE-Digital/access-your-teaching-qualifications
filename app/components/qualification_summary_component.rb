@@ -24,10 +24,14 @@ class QualificationSummaryComponent < ViewComponent::Base
   alias_method :title, :name
 
   def rows
+    @rows ||= build_rows.select { |row| row[:value][:text].present? }
+  end
+
+  def build_rows
     return itt_rows if itt?
     return qtls_rows if qts? && qtls_only
       
-    @rows = [
+    qualification_rows = [
       { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
       {
         key: {
@@ -45,7 +49,7 @@ class QualificationSummaryComponent < ViewComponent::Base
     ]
 
     if qualification.status_description
-      @rows << {
+      qualification_rows << {
         key: {
           text: "Status"
         },
@@ -56,7 +60,7 @@ class QualificationSummaryComponent < ViewComponent::Base
     end
 
     if details.specialism
-      @rows << {
+      qualification_rows << {
         key: {
           text: "Specialism"
         },
@@ -66,13 +70,13 @@ class QualificationSummaryComponent < ViewComponent::Base
       }
     end
 
-    @rows.select { |row| row[:value][:text].present? }
+    qualification_rows
   end
 
   def itt_rows
     return [] if details.end_date.blank?
 
-    @rows = [
+    [
       {
         key: {
           text: "Qualification"
