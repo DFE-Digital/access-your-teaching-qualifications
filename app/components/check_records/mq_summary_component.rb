@@ -6,21 +6,25 @@ class CheckRecords::MqSummaryComponent < ViewComponent::Base
   attr_accessor :mqs
 
   def rows
-    mqs.map do |mq|
-      {
-        key: {
-          text: key_text(mq)
+    @rows ||= mqs.flat_map do |mandatory_qualification|
+      [
+        {
+          key: {
+            text: "MQ Specialism"
+          },
+          value: {
+            text: mandatory_qualification.details.specialism.humanize
+          }
         },
-        value: {
-          text: mq.awarded_at.to_fs(:long_uk)
+        {
+          key: {
+            text: "Date Awarded",
+          },
+          value: {
+            text: mandatory_qualification.awarded_at&.to_fs(:long_uk)
+          }
         }
-      }
+      ]
     end
-  end
-
-  private
-
-  def key_text(mandatory_qualification)
-    "Date #{mandatory_qualification.details.specialism.downcase} MQ awarded"
   end
 end
