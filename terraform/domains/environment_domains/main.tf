@@ -12,4 +12,6 @@ module "domains" {
   cached_paths        = try(each.value.cached_paths, [])
   redirect_rules      = try(each.value.redirect_rules, [])
   rate_limit          = try(var.rate_limit, null)
+  rate_limit_max      = try(var.rate_limit_max, null)
+  allow_aks           = try(var.allow_aks, null)
 }
