@@ -5,8 +5,16 @@ class InductionSummaryComponent < ViewComponent::Base
 
   attr_accessor :qualification
 
-  delegate :awarded_at, :type, :details, :name, :qtls_only, :set_membership_active, 
-  :set_membership_expired, :qts_and_qtls, :passed_induction, to: :qualification
+  delegate :awarded_at,
+           :type,
+           :details,
+           :name,
+           :qtls_only,
+           :set_membership_active,
+           :set_membership_expired,
+           :qts_and_qtls,
+           :passed_induction,
+           to: :qualification
 
   def detail_classes
     "app__induction-details"
@@ -19,79 +27,84 @@ class InductionSummaryComponent < ViewComponent::Base
   def history
     details
       .periods
-      .map do |period|
-        [
-          {
-            key: {
-              text: "Appropriate body"
-            },
-            value: {
-              text: period&.appropriate_body&.name
-            }
-          },
-          {
-            key: {
-              text: "Start date"
-            },
-            value: {
-              text: period.start_date&.to_date&.to_fs(:long_uk)
-            }
-          },
-          {
-            key: {
-              text: "End date"
-            },
-            value: {
-              text: period.end_date&.to_date&.to_fs(:long_uk)
-            }
-          },
-          { key: { text: "Number of terms" }, value: { text: period.terms } }
-        ]
-      end
+      .map { |period| history_from_period(period) }
       .flatten
       .select { |row| row[:value][:text].present? }
   end
 
-  def rows
-    if qtls_only && !passed_induction && details&.status != "Failed"
-      @rows = qtls_rows
-    else
-      @rows = [
-        {
-          key: {
-            text: "Status"
-          },
-          value: {
-            text: description_text(details&.status)
-          } ,
+  def history_from_period(period)
+    [
+      {
+        key: {
+          text: "Appropriate body"
         },
-        {
-          key: {
-            text: "Completed"
-          },
-          value: {
-            text: awarded_at&.to_fs(:long_uk)
-          }
+        value: {
+          text: period&.appropriate_body&.name
         }
-      ]
+      },
+      {
+        key: {
+          text: "Start date"
+        },
+        value: {
+          text: period.start_date&.to_date&.to_fs(:long_uk)
+        }
+      },
+      {
+        key: {
+          text: "End date"
+        },
+        value: {
+          text: period.end_date&.to_date&.to_fs(:long_uk)
+        }
+      },
+      { key: { text: "Number of terms" }, value: { text: period.terms } }
+    ]
+  end
 
-      if details.status == "Passed"
-        @rows << {
-          key: {
-            text: "Certificate"
-          },
-          value: {
-            text:
-              link_to(
-                "Download Induction certificate",
-                qualifications_certificate_path(:induction, format: :pdf),
-                class: "govuk-link"
-              )
-          }
+  def rows
+    @rows ||= build_rows.select { |row| row[:value][:text].present? }
+  end
+
+  def build_rows
+    return qtls_rows if qtls_only && !passed_induction && details&.status != "Failed"
+
+    qualification_rows = [
+      {
+        key: {
+          text: "Status"
+        },
+        value: {
+          text: description_text(details&.status)
+        } ,
+      },
+      {
+        key: {
+          text: "Completed"
+        },
+        value: {
+          text: awarded_at&.to_fs(:long_uk)
         }
-      end
+      }
+    ]
+
+    if details.status == "Passed"
+      qualification_rows << {
+        key: {
+          text: "Certificate"
+        },
+        value: {
+          text:
+            link_to(
+              "Download Induction certificate",
+              qualifications_certificate_path(:induction, format: :pdf),
+              class: "govuk-link"
+            )
+        }
+      }
     end
-    @rows.select { |row| row[:value][:text].present? }
+
+    qualification_rows
   end
 
   def title
@@ -121,7 +134,7 @@ class InductionSummaryComponent < ViewComponent::Base
           } ,
         }
       ]
-    end 
+    end
   end
 
   def render_induction_exemption_reminder?
