@@ -3,14 +3,14 @@ class Qualification
 
   attr_accessor :awarded_at,
                 :name,
-                :status_description,
                 :type,
                 :qtls_only,
                 :set_membership_active,
                 :set_membership_expired,
                 :passed_induction,
                 :failed_induction,
-                :qts_and_qtls
+                :qts_and_qtls,
+                :routes
 
   attr_writer :details
 
@@ -42,8 +42,8 @@ class Qualification
     type == :induction
   end
 
-  def itt?
-    type == :itt
+  def rtps?
+    type == :rtps
   end
 
   def mq?
@@ -64,5 +64,11 @@ class Qualification
 
   def formatted_qualification_name
     FORMATTED_QUALIFICATION_TEXT[type].html_safe
+  end
+
+  def route_ids
+    routes&.map do |route|
+      route.route_to_professional_status_type.route_to_professional_status_type_id
+    end || []
   end
 end

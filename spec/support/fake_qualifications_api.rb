@@ -10,8 +10,8 @@ class FakeQualificationsApi < Sinatra::Base
     case bearer_token
     when "token"
       quals_data.to_json
-    when "no-itt-token"
-      quals_data(trn: "1234567", itt: false).to_json
+    when "no-rtps-token"
+      quals_data(trn: "1234567", rtps: false).to_json
     when "nulled-quals-data"
       FakeQualificationsDataWithNulling.generate.to_json
     when "invalid-token"

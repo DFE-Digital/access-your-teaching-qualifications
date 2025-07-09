@@ -16,6 +16,8 @@ module QualificationsApi
       NPQSENCO: "National Professional Qualification (NPQ) for Special Educational Needs Co-ordinators"
     }.freeze
 
+    QTLS_ROUTE_ID = "BE6EAF8C-92DD-4EFF-AAD3-1C89C4BEC18C".freeze
+
     def initialize(api_data)
       @api_data = Hashie::Mash.new(api_data.deep_transform_keys(&:underscore))
       # This should be moved elsewhere after the integration is working
@@ -46,10 +48,8 @@ module QualificationsApi
         npq_qualifications,
         mq_qualifications,
         induction_qualification,
-        qts_qualification,
-        itt_qualifications,
-        eyts_qualification,
-        itt_qualifications(qts: false),
+        qts_qualifications,
+        eyts_qualifications,
       ].flatten.compact
     end
 
@@ -60,15 +60,15 @@ module QualificationsApi
     end
 
     def no_restrictions?
-      return true if sanctions.blank? || 
-      sanctions.all?(&:guilty_but_not_prohibited?) || 
+      return true if sanctions.blank? ||
+        sanctions.all?(&:guilty_but_not_prohibited?) ||
         sanctions.map(&:title).join.blank?
       false
     end
 
     def sanctions
-      api_data.alerts&.filter_map do |alert| 
-        Sanction.new(alert) if alert_showable?(alert) 
+      api_data.alerts&.filter_map do |alert|
+        Sanction.new(alert) if alert_showable?(alert)
       end
     end
 
@@ -101,11 +101,11 @@ module QualificationsApi
     end
 
     def qts_awarded?
-      api_data.qts&.awarded.present?
+      api_data.qts&.holds_from.present?
     end
 
     def eyts_awarded?
-      api_data.eyts&.awarded.present?
+      api_data.eyts&.holds_from.present?
     end
 
     def npq_awarded?
@@ -117,11 +117,11 @@ module QualificationsApi
     end
 
     def induction_status
-    return 'Passed' if passed_induction?
-    if exempt_from_induction_via_induction_status? || exempt_from_induction_via_qts_via_qtls?
-      return 'Exempt from induction' 
-    end
-    'No induction'
+      return 'Passed' if passed_induction?
+      if exempt_from_induction_via_induction_status? || exempt_from_induction_via_qts_via_qtls?
+        return 'Exempt from induction'
+      end
+      'No induction'
     end
 
     def passed_induction?
@@ -137,7 +137,7 @@ module QualificationsApi
     end
 
     def exempt_from_induction_via_qts_via_qtls?
-      !passed_induction? && set_membership_active? 
+      !passed_induction? && set_membership_active?
     end
 
     def no_induction?
@@ -157,45 +157,63 @@ module QualificationsApi
     end
 
     def qtls_only?
-      !qts_and_qtls? && api_data&.qts&.status_description == "Qualified Teacher Learning and Skills status"
+      return false if qts_and_qtls?
+
+      routes = api_data&.qts&.routes || []
+      route_status_type_ids = routes.map do |route|
+        route.route_to_professional_status_type.route_to_professional_status_type_id
+      end
+      route_status_type_ids.uniq == [QTLS_ROUTE_ID]
     end
 
     def no_details?
-        api_data.induction.status == "None" && 
-        api_data.eyps.blank? && 
-        api_data.qts.blank? && 
+      api_data.induction.status == "None" &&
+        api_data.eyps.blank? &&
+        api_data.qts.blank? &&
         api_data.eyts.blank? &&
         npq_data.body["data"]["qualifications"].blank?
     end
 
     private
 
-    def qts_qualification
-      return if api_data.qts.blank? && !qtls_only?
+    def qts_qualifications
+      qts_data = api_data.qts
+      return [] if qts_data.blank? && !qtls_only?
 
-      Qualification.new(
-        awarded_at: api_data.qts&.awarded&.to_date,
+      qts_qualification = Qualification.new(
+        awarded_at: qts_data&.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
         qtls_only: qtls_only?,
         qts_and_qtls: qts_and_qtls?,
         set_membership_active: set_membership_active?,
         set_membership_expired: set_membership_expired?,
-        status_description: api_data.qts&.status_description,
         passed_induction: passed_induction?,
         failed_induction: failed_induction?,
-        type: :qts
+        type: :qts,
+        routes: qts_data.routes || []
       )
+
+      [
+        qts_qualification,
+        rtps_qualifications(route_ids: qts_qualification.route_ids, include_blank: true)
+      ].flatten
     end
 
-    def eyts_qualification
-      return if api_data.eyts.blank?
+    def eyts_qualifications
+      eyts_data = api_data.eyts
+      return [] if eyts_data.blank?
 
-      Qualification.new(
-        awarded_at: api_data.eyts.awarded&.to_date,
+      eyts_qualification = Qualification.new(
+        awarded_at: eyts_data.holds_from&.to_date,
         name: "Early years teacher status (EYTS)",
-        status_description: api_data.eyts.status_description,
-        type: :eyts
+        type: :eyts,
+        routes: eyts_data.routes || []
       )
+
+      [
+        eyts_qualification,
+        rtps_qualifications(route_ids: eyts_qualification.route_ids)
+      ].flatten
     end
 
     def npq_qualifications
@@ -204,8 +222,8 @@ module QualificationsApi
       @npq_data.body["data"]["qualifications"]
         .sort_by { |npq| npq["award_date"]&.to_date }
         .reverse
-        .each do |npq|
-        @qualifications << Qualification.new(
+        .map do |npq|
+        Qualification.new(
           awarded_at: npq["award_date"]&.to_date,
           name: NPQ_QUALIFICATION_NAME[npq["npq_type"].to_sym],
           type: npq["npq_type"]&.to_sym
@@ -213,26 +231,32 @@ module QualificationsApi
       end
     end
 
-    def itt_qualifications(qts: true)
-      all_itt_data = api_data.fetch("initial_teacher_training", [])
-      eyts_itt_data, qts_itt_data = all_itt_data.partition { |itt| itt.programme_type.to_s&.starts_with?("EYITT") }
-      itt_data = qts ? qts_itt_data : eyts_itt_data
+    def rtps_qualifications(route_ids: [], include_blank: false)
+      return [] if api_data.routes_to_professional_statuses.blank?
 
-      itt_data.sort_by { |itt| itt.awarded&.to_date }
-              .reverse
-              .map do |itt_response|
+      routes = api_data.routes_to_professional_statuses.select do |route|
+        route_ids.include?(route.route_to_professional_status_id) ||
+          (include_blank && route.route_to_professional_status_id.blank?)
+      end
+
+      sorted_routes = routes.sort_by { |r|
+        date = r.holds_from&.to_date
+        [date ? 1 : 0, date]
+      }.reverse
+
+      sorted_routes.map do |route|
         Qualification.new(
-          awarded_at: itt_response.end_date&.to_date,
-          details: CoercedDetails.new(itt_response),
-          name: "Initial teacher training (ITT)",
-          type: :itt
+          awarded_at: route.training_end_date&.to_date,
+          details: CoercedDetails.new(route),
+          name: route.route_to_professional_status_type.name,
+          type: :rtps
         )
       end
     end
 
     def induction_qualification
-      return if api_data.induction.blank?
-      return if api_data.induction.status == "None" && !qtls_only?
+      return [] if api_data.induction.blank?
+      return [] if api_data.induction.status == "None" && !qtls_only?
 
       Qualification.new(
         awarded_at: api_data.induction&.completed_date&.to_date,
@@ -248,14 +272,15 @@ module QualificationsApi
     end
 
     def mq_qualifications
-      return [] if api_data.mandatory_qualifications.blank?
+      mqs_data = api_data.mandatory_qualifications
+      return [] if mqs_data.blank?
 
-      api_data.mandatory_qualifications
-              .sort_by { |mq| mq.awarded&.to_date }
-              .reverse
-              .map do |mq|
+      sorted_mqs = mqs_data.sort_by { |mq| mq.end_date&.to_date }
+                           .reverse
+
+      sorted_mqs.map do |mq|
         Qualification.new(
-          awarded_at: mq.awarded&.to_date,
+          awarded_at: mq.end_date&.to_date,
           details: mq,
           name: "Mandatory qualification (MQ)",
           type: :mandatory
@@ -297,6 +322,10 @@ module QualificationsApi
     end
 
     coerce_key :result, ->(value) {
+      value.to_s.underscore.humanize
+    }
+
+    coerce_key :status, ->(value) {
       value.to_s.underscore.humanize
     }
   end
