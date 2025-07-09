@@ -6,7 +6,7 @@ class CheckRecords::NpqSummaryComponent < ViewComponent::Base
   attr_accessor :npqs
 
   def rows
-    npqs.map do |npq|
+    @rows ||= npqs.map do |npq|
       {
         key: {
           text: key_text(npq)
