@@ -24,7 +24,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         {
           "routeToProfessionalStatusId" => "eyts-route-id-22222",
           "routeToProfessionalStatusType" => {
-            "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+            "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
             "name" => "BA",
             "professionalStatusType" => "EarlyYearsTeacherStatus"
           },
@@ -68,7 +68,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         {
           "routeToProfessionalStatusId" => "qts-route-id-11111",
           "routeToProfessionalStatusType" => {
-            "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+            "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
             "name" => "BA",
             "professionalStatusType" => "QualifiedTeacherStatus"
           },
@@ -115,7 +115,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         "routes" => [
           {
             "routeToProfessionalStatusType" => {
-              "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+              "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
               "name" => "string",
               "professionalStatusType" => "QualifiedTeacherStatus"
             }
@@ -127,7 +127,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
         "routes" => [
           {
             "routeToProfessionalStatusType" => {
-              "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+              "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
               "name" => "BA",
               "professionalStatusType" => "EarlyYearsTeacherStatus"
             }
@@ -161,7 +161,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
 
     it "designates RTPS qualifications as QTS if no programme type is present" do
       rtps_qualification = api_data["routesToProfessionalStatuses"].first
-      rtps_qualification["routeToProfessionalStatusId"] = nil
+      rtps_qualification["routeToProfessionalStatusType"]["routeToProfessionalStatusTypeId"] = nil
       api_data["routesToProfessionalStatuses"] = [rtps_qualification]
 
       expect(qualifications.map(&:type)).to eq(
@@ -203,7 +203,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             {
               "routeToProfessionalStatusId" => "eyts-route-id-22222",
               "routeToProfessionalStatusType" => {
-                "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+                "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
                 "name" => "BA",
                 "professionalStatusType" => "EarlyYearsTeacherStatus"
               },
@@ -247,7 +247,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             {
               "routeToProfessionalStatusId" => "qts-route-id-11111",
               "routeToProfessionalStatusType" => {
-                "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
                 "name" => "BA",
                 "professionalStatusType" => "QualifiedTeacherStatus"
               },
@@ -294,7 +294,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "routes" => [
               {
                 "routeToProfessionalStatusType" => {
-                  "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                  "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
                   "name" => "string",
                   "professionalStatusType" => "QualifiedTeacherStatus"
                 }
@@ -306,7 +306,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "routes" => [
               {
                 "routeToProfessionalStatusType" => {
-                  "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+                  "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
                   "name" => "BA",
                   "professionalStatusType" => "EarlyYearsTeacherStatus"
                 }
@@ -356,7 +356,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             {
               "routeToProfessionalStatusId" => "eyts-route-id-22222",
               "routeToProfessionalStatusType" => {
-                "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+                "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
                 "name" => "BA",
                 "professionalStatusType" => "EarlyYearsTeacherStatus"
               },
@@ -400,7 +400,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             {
               "routeToProfessionalStatusId" => "qts-route-id-11111",
               "routeToProfessionalStatusType" => {
-                "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
                 "name" => "Initial teacher training (ITT)",
                 "professionalStatusType" => "QualifiedTeacherStatus"
               },
@@ -447,7 +447,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "routes" => [
               {
                 "routeToProfessionalStatusType" => {
-                  "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                  "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
                   "name" => "string",
                   "professionalStatusType" => "QualifiedTeacherStatus"
                 }
@@ -459,7 +459,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "routes" => [
               {
                 "routeToProfessionalStatusType" => {
-                  "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+                  "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
                   "name" => "string",
                   "professionalStatusType" => "EarlyYearsTeacherStatus"
                 }
@@ -501,7 +501,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             {
               "routeToProfessionalStatusId" => "eyts-route-id-22222",
               "routeToProfessionalStatusType" => {
-                "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+                "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
                 "name" => "BA",
                 "professionalStatusType" => "EarlyYearsTeacherStatus"
               },
@@ -545,7 +545,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             {
               "routeToProfessionalStatusId" => "qts-route-id-11111",
               "routeToProfessionalStatusType" => {
-                "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
                 "name" => "Initial teacher training (ITT)",
                 "professionalStatusType" => "QualifiedTeacherStatus"
               },
@@ -592,7 +592,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "routes" => [
               {
                 "routeToProfessionalStatusType" => {
-                  "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                  "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
                   "name" => "string",
                   "professionalStatusType" => "QualifiedTeacherStatus"
                 }
@@ -604,7 +604,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
             "routes" => [
               {
                 "routeToProfessionalStatusType" => {
-                  "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+                  "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
                   "name" => "string",
                   "professionalStatusType" => "EarlyYearsTeacherStatus"
                 }

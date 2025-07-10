@@ -14,7 +14,7 @@ module FakeQualificationsData
         routes: [
           {
             "routeToProfessionalStatusType" => {
-              "routeToProfessionalStatusTypeId" => "eyts-route-id-22222",
+              "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
               "name" => "BA",
               "professionalStatusType" => "EarlyYearsTeacherStatus"
             }
@@ -26,7 +26,7 @@ module FakeQualificationsData
         "routes" => [
           {
             "routeToProfessionalStatusType" => {
-              "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+              "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
               "name" => "Initial teacher training (ITT)",
               "professionalStatusType" => "QualifiedTeacherStatus"
             }
@@ -59,7 +59,7 @@ module FakeQualificationsData
     {
       "routeToProfessionalStatusId": "qts-route-id-11111",
       "routeToProfessionalStatusType": {
-        "routeToProfessionalStatusTypeId": "qts-route-id-11111",
+        "routeToProfessionalStatusTypeId": "qts-route-type-id-11111",
         "name": "Initial teacher training (ITT)",
         "professionalStatusType": "QualifiedTeacherStatus"
       },

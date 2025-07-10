@@ -144,7 +144,7 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
               "routes" => [
                 {
                   "routeToProfessionalStatusType" => {
-                    "routeToProfessionalStatusTypeId" => "qts-route-id-11111",
+                    "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
                     "name" => "string",
                     "professionalStatusType" => "QualifiedTeacherStatus"
                   }
