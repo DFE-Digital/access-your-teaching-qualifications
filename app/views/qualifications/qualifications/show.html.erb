@@ -1,10 +1,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <span class="govuk-caption-xl"><%= @user.name.possessive.gsub("'","’") %></span>
-
     <%= govuk_notification_banner(title_text: "Important") do |notification_banner| %>
       <% notification_banner.with_heading(text: "ITT qualification, training type and result details are not available at the moment. They will be available in the next few days. You can still download your QTS or EYTS certificate.") %>
     <% end %>
+
+    <span class="govuk-caption-xl"><%= @user.name.possessive.gsub("'","’") %></span>
 
     <h1 class="govuk-heading-xl">Teaching qualifications</h1>
 
