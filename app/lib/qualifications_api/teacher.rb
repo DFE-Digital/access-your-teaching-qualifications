@@ -235,8 +235,9 @@ module QualificationsApi
       return [] if api_data.routes_to_professional_statuses.blank?
 
       routes = api_data.routes_to_professional_statuses.select do |route|
-        route_ids.include?(route.route_to_professional_status_id) ||
-          (include_blank && route.route_to_professional_status_id.blank?)
+        route_id = route.route_to_professional_status_type.route_to_professional_status_type_id
+
+        route_ids.include?(route_id) || (include_blank && route_id.blank?)
       end
 
       sorted_routes = routes.sort_by { |r|
