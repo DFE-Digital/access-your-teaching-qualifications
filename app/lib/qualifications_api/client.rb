@@ -95,6 +95,7 @@ module QualificationsApi
               Alerts
               PreviousNames
               PendingDetailChanges
+              RoutesToProfessionalStatuses
             ].join(",")
           }
         )
