@@ -31,16 +31,28 @@ RSpec.describe Qualification, type: :model do
     end
   end
 
-  describe "#itt?" do
-    subject { qualification.itt? }
+  describe "#rtps?" do
+    subject { qualification.rtps? }
 
     let(:qualification) { described_class.new(type:) }
     let(:type) { :qts }
 
     it { is_expected.to be_falsey }
 
-    context "when the qualification type is itt" do
-      let(:type) { :itt }
+    context "when the qualification type is rtps" do
+      let(:type) { :rtps }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when the qualification type is qts_rtps" do
+      let(:type) { :qts_rtps }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when the qualification type is eyts_rtps" do
+      let(:type) { :eyts_rtps }
 
       it { is_expected.to be_truthy }
     end

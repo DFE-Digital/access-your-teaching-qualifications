@@ -4,12 +4,12 @@ RSpec.feature "User views their qualifications", type: :system do
   include CommonSteps
   include QualificationAuthenticationSteps
 
-  scenario "when they have no ITT", test: %i[with_stubbed_auth with_fake_quals_api] do
+  scenario "when they have no RTPS", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
     and_i_am_signed_in_via_identity
 
     when_i_visit_the_qualifications_page
-    then_i_see_there_are_no_itt_details
+    then_i_see_there_are_no_rtps_details
   end
 
   private
@@ -26,7 +26,7 @@ RSpec.feature "User views their qualifications", type: :system do
           name: "Not Trained"
         },
         credentials: {
-          token: "no-itt-token",
+          token: "no-rtps-token",
           expires_in: 1.hour.to_i
         },
         extra: {
@@ -39,7 +39,7 @@ RSpec.feature "User views their qualifications", type: :system do
     )
   end
 
-  def then_i_see_there_are_no_itt_details
+  def then_i_see_there_are_no_rtps_details
     expect(page).not_to have_content("Initial teacher training (ITT)")
   end
 

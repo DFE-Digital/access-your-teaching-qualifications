@@ -1,8 +1,17 @@
 class Qualification
   include ActiveModel::Model
 
-  attr_accessor :awarded_at, :name, :status_description, :type, :qtls_only, 
-  :set_membership_active, :set_membership_expired, :passed_induction, :failed_induction, :qts_and_qtls
+  attr_accessor :awarded_at,
+                :name,
+                :type,
+                :qtls_only,
+                :set_membership_active,
+                :set_membership_expired,
+                :passed_induction,
+                :failed_induction,
+                :qts_and_qtls,
+                :routes
+
   attr_writer :details
 
   FORMATTED_QUALIFICATION_TEXT = {
@@ -33,8 +42,8 @@ class Qualification
     type == :induction
   end
 
-  def itt?
-    type == :itt
+  def rtps?
+    [:qts_rtps, :eyts_rtps, :rtps].include?(type)
   end
 
   def mq?
@@ -55,5 +64,11 @@ class Qualification
 
   def formatted_qualification_name
     FORMATTED_QUALIFICATION_TEXT[type].html_safe
+  end
+
+  def route_ids
+    routes&.map do |route|
+      route.route_to_professional_status_type.route_to_professional_status_type_id
+    end || []
   end
 end
