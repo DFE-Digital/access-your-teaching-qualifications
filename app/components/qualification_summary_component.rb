@@ -12,6 +12,7 @@ class QualificationSummaryComponent < ViewComponent::Base
            :id,
            :rtps?,
            :qts?,
+           :eyts?,
            :passed_induction,
            :failed_induction,
            :set_membership_active,
@@ -21,7 +22,11 @@ class QualificationSummaryComponent < ViewComponent::Base
            :qts_and_qtls,
            to: :qualification
 
-  alias_method :title, :name
+  def title
+    return [name, rtps_route_type].compact.join(": ") if rtps?
+
+    name
+  end
 
   def rows
     @rows ||= build_rows.select { |row| row[:value][:text].present? }
@@ -31,8 +36,19 @@ class QualificationSummaryComponent < ViewComponent::Base
     return rtps_rows if rtps?
     return qtls_rows if qts? && qtls_only
 
-    qualification_rows = [
+    qualification_rows
+  end
+
+  def qualification_rows
+    [
       { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+      type_supports_certificates? ? certificate_rows : nil,
+      details.specialism.present? ? specialism_rows : nil,
+    ].flatten.compact
+  end
+
+  def certificate_rows
+    [
       {
         key: {
           text: "Certificate"
@@ -47,9 +63,15 @@ class QualificationSummaryComponent < ViewComponent::Base
         }
       }
     ]
+  end
 
-    if details.specialism
-      qualification_rows << {
+  def type_supports_certificates?
+    type != :mandatory
+  end
+
+  def specialism_rows
+    [
+      {
         key: {
           text: "Specialism"
         },
@@ -57,9 +79,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: details.specialism
         }
       }
-    end
-
-    qualification_rows
+    ]
   end
 
   def rtps_rows
@@ -71,7 +91,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "Route Type"
         },
         value: {
-          text: details.route_to_professional_status_type&.name
+          text: rtps_route_type
         }
       },
       {
@@ -131,6 +151,10 @@ class QualificationSummaryComponent < ViewComponent::Base
         }
       }
     ]
+  end
+
+  def rtps_route_type
+    details.route_to_professional_status_type&.name
   end
 
   def age_range_from_training_age_specialism(training_age_specialism)

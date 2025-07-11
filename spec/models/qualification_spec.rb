@@ -44,5 +44,17 @@ RSpec.describe Qualification, type: :model do
 
       it { is_expected.to be_truthy }
     end
+
+    context "when the qualification type is qts_rtps" do
+      let(:type) { :qts_rtps }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when the qualification type is eyts_rtps" do
+      let(:type) { :eyts_rtps }
+
+      it { is_expected.to be_truthy }
+    end
   end
 end

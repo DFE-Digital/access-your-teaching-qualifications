@@ -25,8 +25,7 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
            to: :qualification
 
   def title
-    return "Professional Status" if qts? || eyts?
-    return "Route to Professional Status" if rtps?
+    return [name, rtps_route_type].compact.join(": ") if rtps?
 
     name
   end
@@ -77,7 +76,6 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
 
   def rtps_rows
     [
-      { key: { text: "Route Type" }, value: { text: details.route_to_professional_status_type&.name } },
       { key: { text: "Qualification" }, value: { text: details.degree_type&.name } },
       { key: { text: "Provider" }, value: { text: details.training_provider&.name } },
       {
@@ -108,8 +106,12 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
           text: details.training_end_date&.to_date&.to_fs(:long_uk)
         }
       },
-      { key: { text: "Course result" }, value: { text: details.status&.to_s&.underscore&.humanize } }
+      { key: { text: "Result" }, value: { text: details.status&.to_s&.underscore&.humanize } }
     ]
+  end
+
+  def rtps_route_type
+    details.route_to_professional_status_type&.name
   end
 
   def age_range_from_training_age_specialism(training_age_specialism)
@@ -145,27 +147,15 @@ class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
     rows
   end
 
-  def eyts_rows
-    [
-      { key: { text: "Status" }, value: { text: "Early years teacher status (EYTS)" } },
-      { key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } }
-    ]
-  end
-
   def qts_status_text
-    if qtls_only && !set_membership_active
-      "No QTS"
-    else
-      qts_status_description_text
-    end
+    return "Qualified Teacher Status (QTS)" unless qtls_only
+    return "Qualified via qualified teacher learning and skills (QTLS) status" if set_membership_active
+
+    "No QTS"
   end
 
-  def qts_status_description_text
-    if qtls_only
-      "Qualified via qualified teacher learning and skills (QTLS) status"
-    else
-      "Qualified teacher status (QTS)"
-    end
+  def eyts_rows
+    [{ key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } }]
   end
 
   def failed_induction?

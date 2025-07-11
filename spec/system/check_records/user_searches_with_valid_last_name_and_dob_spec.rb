@@ -74,26 +74,23 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_qts_details
-    expect(page).to have_content("Professional Status")
-    expect(page).to have_content("Status\tQualified teacher status (QTS)")
+    expect(page).to have_content("Qualified teacher status (QTS)")
     expect(page).to have_content("Held since\t27 February 2023")
   end
 
   def then_i_see_eyts_details
     expect(page).to have_content("Early years teacher status (EYTS)")
-    expect(page).to have_content("Held since")
-    expect(page).to have_content("27 February 2023")
+    expect(page).to have_content("Held since\t27 February 2023")
   end
 
   def then_i_see_rtps_details
-    expect(page).to have_content("Route Type\tInitial teacher training (ITT)")
     expect(page).to have_content("Qualification\tBA")
     expect(page).to have_content("Provider\tEarl Spencer Primary School")
     expect(page).to have_content("Subject\tBusiness Studies")
     expect(page).to have_content("Age range\t7 to 14 years")
     expect(page).to have_content("Start date\t28 February 2022")
     expect(page).to have_content("End date\t28 January 2023")
-    expect(page).to have_content("Course result\tIn training")
+    expect(page).to have_content("Result\tIn training")
   end
 
   def then_i_see_npq_details

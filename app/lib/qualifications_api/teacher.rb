@@ -195,7 +195,7 @@ module QualificationsApi
 
       [
         qts_qualification,
-        rtps_qualifications(route_ids: qts_qualification.route_ids, include_blank: true)
+        rtps_qualifications(type: :qts, route_ids: qts_qualification.route_ids, include_blank: true)
       ].flatten
     end
 
@@ -212,7 +212,7 @@ module QualificationsApi
 
       [
         eyts_qualification,
-        rtps_qualifications(route_ids: eyts_qualification.route_ids)
+        rtps_qualifications(type: :eyts, route_ids: eyts_qualification.route_ids)
       ].flatten
     end
 
@@ -231,7 +231,7 @@ module QualificationsApi
       end
     end
 
-    def rtps_qualifications(route_ids: [], include_blank: false)
+    def rtps_qualifications(type:, route_ids: [], include_blank: false)
       return [] if api_data.routes_to_professional_statuses.blank?
 
       routes = api_data.routes_to_professional_statuses.select do |route|
@@ -249,8 +249,8 @@ module QualificationsApi
         Qualification.new(
           awarded_at: route.training_end_date&.to_date,
           details: CoercedDetails.new(route),
-          name: route.route_to_professional_status_type.name,
-          type: :rtps
+          name: "Route to #{type.to_s.upcase}",
+          type: :"#{type}_rtps"
         )
       end
     end
