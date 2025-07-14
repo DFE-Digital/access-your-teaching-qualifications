@@ -31,14 +31,6 @@ GIT
       net-http-persistent (~> 4.0)
       nokogiri (~> 1, >= 1.10.8)
 
-GIT
-  remote: https://github.com/ilyakatz/data-migrate.git
-  revision: d4cebfad06b13a1fd30050986320436cae965352
-  specs:
-    data_migrate (11.3.0)
-      activerecord (>= 6.1)
-      railties (>= 6.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -168,6 +160,9 @@ GEM
     cuprite (0.15.1)
       capybara (~> 3.0)
       ferrum (~> 0.15.0)
+    data_migrate (11.3.0)
+      activerecord (>= 6.1)
+      railties (>= 6.1)
     date (3.3.4)
     declarative (0.0.20)
     diff-lcs (1.5.1)
@@ -672,7 +667,7 @@ DEPENDENCIES
   console1984
   cssbundling-rails
   cuprite
-  data_migrate!
+  data_migrate
   dfe-analytics!
   dotenv-rails
   factory_bot_rails
