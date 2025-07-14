@@ -10,7 +10,7 @@ gem "azure-storage-blob", github: "honeyankit/azure-storage-ruby"
 gem "bootsnap", require: false
 gem "console1984"
 gem "cssbundling-rails"
-gem "data_migrate", github: "ilyakatz/data-migrate"
+gem "data_migrate"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
 gem "faraday"
 gem "govuk-components", "~> 5.6"
