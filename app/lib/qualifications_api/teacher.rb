@@ -161,9 +161,9 @@ module QualificationsApi
 
       routes = api_data&.qts&.routes || []
       route_status_type_ids = routes.map do |route|
-        route.route_to_professional_status_type.route_to_professional_status_type_id
+        route.route_to_professional_status_type.route_to_professional_status_type_id.upcase # upcase to ensure case insensitivity
       end
-      route_status_type_ids.uniq == [QTLS_ROUTE_ID]
+      route_status_type_ids.uniq == [QTLS_ROUTE_ID.upcase] # upcase to ensure case insensitivity
     end
 
     def no_details?
