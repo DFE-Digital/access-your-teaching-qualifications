@@ -41,7 +41,7 @@ class QualificationSummaryComponent < ViewComponent::Base
 
   def qualification_rows
     [
-      { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+      { key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } },
       type_supports_certificates? ? certificate_rows : nil,
       details.specialism.present? ? specialism_rows : nil,
     ].flatten.compact
@@ -180,7 +180,7 @@ class QualificationSummaryComponent < ViewComponent::Base
       [
         {
           key: {
-            text: "Awarded"
+            text: "Held since"
           },
           value: {
             text: qtls_awarded_at_text

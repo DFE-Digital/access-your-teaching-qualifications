@@ -49,14 +49,14 @@ RSpec.feature "User views their qualifications", type: :system do
 
   def then_i_see_my_qts_details
     expect(page).to have_content("Qualified teacher status (QTS)")
-    expect(page).to have_content("Awarded")
+    expect(page).to have_content("Held since")
     expect(page).to have_content("27 February 2023")
     expect(page).to have_content("Download QTS certificate")
   end
 
   def then_i_see_my_eyts_details
     expect(page).to have_content("Early years teacher status (EYTS)")
-    expect(page).to have_content("Awarded")
+    expect(page).to have_content("Held since")
     expect(page).to have_content("27 February 2023")
     expect(page).to have_content("Download EYTS certificate")
   end
@@ -96,7 +96,7 @@ RSpec.feature "User views their qualifications", type: :system do
 
   def then_i_see_my_npq_details
     expect(page).to have_content("National Professional Qualification (NPQ) for Headship")
-    expect(page).to have_content("Awarded")
+    expect(page).to have_content("Held since")
     expect(page).to have_content("27 February 2023")
     expect(page).to have_content("Download NPQH certificate")
   end
@@ -114,7 +114,7 @@ RSpec.feature "User views their qualifications", type: :system do
 
   def then_i_see_my_mq_details
     expect(page).to have_content("Mandatory qualification (MQ)")
-    expect(page).to have_content("Awarded\t28 February 2023")
+    expect(page).to have_content("Held since\t28 February 2023")
     expect(page).to have_content("Specialism\tVisual impairment")
   end
 end
