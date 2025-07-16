@@ -320,7 +320,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
 
       it "sorts the qualifications in reverse order by date of award and type" do
-        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, :eyts_rtps])
+        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, 
+:eyts_rtps])
       end
     end
 
@@ -473,7 +474,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
 
       it "the QTS gets priority in the sort order" do
-        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, :eyts_rtps])
+        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, 
+:eyts_rtps])
       end
     end
 
@@ -618,7 +620,8 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
 
       it "the QTS gets priority in the sort order" do
-        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, :eyts_rtps])
+        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, 
+:eyts_rtps])
       end
     end
   end
