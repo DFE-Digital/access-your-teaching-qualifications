@@ -19,6 +19,10 @@
       <%= @teacher.name %>
     </h1>
 
+    <% if @teacher.render_qtls_expired_message? %>
+      <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired") %>
+    <% end %>
+
     <% if @teacher.sanctions.any? && @teacher.sanctions&.first&.description.present? %>
       <%= govuk_inset_text classes: "app-inset-text--red govuk-!-padding-bottom-2 govuk-!-padding-top-3 govuk-!-margin-bottom- govuk-!-margin-top-0" do %>
         <% @teacher.sanctions.each do |sanction| %>

@@ -174,6 +174,10 @@ module QualificationsApi
         npq_data.body["data"]["qualifications"].blank?
     end
 
+    def render_qtls_expired_message?
+      api_data.qtls_status == "Expired" && !qts_awarded?
+    end
+
     private
 
     def qts_qualifications
