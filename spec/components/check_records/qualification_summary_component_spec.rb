@@ -19,57 +19,35 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        name: "Initial teacher training (ITT)",
-        awarded_at: fake_quals_data.end_date&.to_date,
-        type: :itt,
-        details: QualificationsApi::CoercedDetails.new(fake_quals_data.fetch("initial_teacher_training").first)
+        name: "Route to QTS",
+        awarded_at: fake_quals_data.routes_to_professional_statuses.first.holds_from.to_date,
+        type: :qts_rtps,
+        details: QualificationsApi::CoercedDetails.new(fake_quals_data.routes_to_professional_statuses.first)
       )
     end
     let(:component) { described_class.new(qualification:) }
     let(:rendered) { render_inline(component) }
     let(:rows) { rendered.css(".govuk-summary-list__row") }
 
-    it "renders the qualification name" do
-      expect(rendered.css("h2").text).to eq(qualification.name)
+    it "renders the title of the section with the route type" do
+      expect(rendered.css("h2").text).to eq("Route to QTS: Initial teacher training (ITT)")
     end
 
     it "renders the qualification" do
-      expect(rows[0].text).to include(qualification.details.dig("qualification", "name"))
-    end
-
-    it "renders the qualification provider" do
-      expect(rows[1].text).to include(qualification.details.dig("provider", "name"))
-    end
-
-    it "renders the qualification programme type" do
-      expect(rows[2].text).to include(qualification.details.programme_type_description)
-    end
-
-    it "renders the qualification subject" do
-      expect(rows[3].text).to include(qualification.details.subjects.first.name.titleize)
-    end
-
-    it "renders the qualification age range" do
-      expect(rows[4].text).to include(qualification.details.age_range&.description)
-    end
-
-    it "renders the qualification status" do
-      expect(rows[5].text).to include(Date.parse(qualification.details.start_date).to_fs(:long_uk))
-    end
-
-    it "renders the qualification course end date" do
-      expect(rows[6].text).to include(Date.parse(qualification.details.end_date).to_fs(:long_uk))
-    end
-
-    it "renders the qualification status" do
-      expect(rows[7].text).to include(qualification.details.result)
+      expect(rows[0].text).to include("BA")
+      expect(rows[1].text).to include("Earl Spencer Primary School")
+      expect(rows[2].text).to include("Business Studies")
+      expect(rows[3].text).to include("7 to 14 years")
+      expect(rows[4].text).to include("28 February 2022")
+      expect(rows[5].text).to include("28 January 2023")
+      expect(rows[6].text).to include("In training")
     end
 
     it "omits rows with no value" do
       qualification.details.end_date = nil
-      qualification.details.result = nil
+      qualification.details.status = nil
       expect(rows.text).not_to include("Course end date")
-      expect(rows.text).not_to include("Course result")
+      expect(rows.text).not_to include("Result")
     end
   end
 
@@ -83,13 +61,12 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
-        name: "QTS",
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
+        name: "Qualified teacher status (QTS)",
         qtls_only: false,
         set_membership_active: false,
         passed_induction: false,
         qts_and_qtls: false,
-        status_description: "Qualified (trained in the UK)",
         type: :qts,
       )
     end
@@ -97,13 +74,12 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     let(:rendered) { render_inline(component) }
     let(:rows) { rendered.css(".govuk-summary-list__row") }
 
-    it "renders the qualification name" do
+    it "renders the title of the qualification" do
       expect(rendered.css("h2").text).to eq(qualification.name)
     end
 
-
-    it "renders the status description" do
-      expect(rows[0].text).to include(qualification.status_description)
+    it "renders the status" do
+      expect(rows[0].text).to include("Qualified Teacher Status (QTS)")
     end
 
     it "renders the awarded at date" do
@@ -121,13 +97,12 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: true,
         passed_induction: false,
         qts_and_qtls: false,
-        name: "QTS",
-        status_description: "Qualified Teacher Learning and Skills status",
+        name: "Qualified teacher status (QTS)",
         type: :qts,
       )
     end
@@ -139,7 +114,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       expect(rows.count).to eq(2)
     end
 
-    it "renders the qualification name" do
+    it "renders the title of the qualification" do
       expect(rendered.css("h2").text).to eq(qualification.name)
     end
 
@@ -162,13 +137,12 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: false,
         passed_induction: false,
         qts_and_qtls: false,
-        name: "QTS",
-        status_description: "Qualified (trained in the UK)",
+        name: "Qualified teacher status (QTS)",
         type: :qts,
       )
     end
@@ -176,7 +150,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     let(:rendered) { render_inline(component) }
     let(:rows) { rendered.css(".govuk-summary-list__row") }
 
-    it "renders the qualification name" do
+    it "renders the title of the qualification" do
       expect(rendered.css("h2").text).to eq(qualification.name)
     end
 
@@ -199,13 +173,12 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: false,
         set_membership_active: true,
         passed_induction: false,
         qts_and_qtls: true,
-        name: "QTS",
-        status_description: "Qualified (trained in the UK)",
+        name: "Qualified teacher status (QTS)",
         type: :qts,
       )
     end
@@ -217,7 +190,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       expect(rows.count).to eq(2)
     end
 
-    it "renders the qualification name" do
+    it "renders the title of the qualification" do
       expect(rendered.css("h2").text).to eq(qualification.name)
     end
 
@@ -241,13 +214,12 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: false,
         set_membership_active: true,
         passed_induction: false,
         qts_and_qtls: true,
-        name: "QTS",
-        status_description: "Qualified (trained in the UK)",
+        name: "Qualified teacher status (QTS)",
         type: :qts,
       )
     end
@@ -255,20 +227,19 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     let(:rendered) { render_inline(component) }
     let(:rows) { rendered.css(".govuk-summary-list__row") }
 
-    it "renders two rows" do
+    it "renders one row" do
       expect(rows.count).to eq(2)
     end
 
-    it "renders the qualification name" do
+    it "renders the title of the qualification" do
       expect(rendered.css("h2").text).to eq(qualification.name)
     end
 
-    it "renders the status description" do
-      expect(rows[0].text).to include("Qualified")
-      expect(rows[0].text).not_to include("via qualified teacher learning and skills (QTLS) status")
+    it "renders the status" do
+      expect(rows[0].text).to include("Qualified Teacher Status (QTS)")
     end
 
-    it "renders the status description" do
+    it "renders the awarded at date" do
       expect(rows[1].text).to include(qualification.awarded_at.to_fs(:long_uk))
     end
   end
@@ -283,13 +254,13 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: true,
         passed_induction: false,
         qts_and_qtls: true,
         name: "Induction",
-        details: CoercedDetails.new({status: "Not complete"}),
+        details: CoercedDetails.new({ status: "Not complete" }),
         type: :induction,
       )
     end
@@ -321,7 +292,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: true,
         passed_induction: false,
@@ -359,7 +330,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.awarded&.to_date,
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: false,
         passed_induction: false,

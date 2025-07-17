@@ -12,6 +12,6 @@ Grover.configure do |config|
   config.use_jpeg_middleware = false
   config.use_png_middleware = false
   config.ignore_path = ->(path) do
-    path !~ /^\/qualifications\/certificates\/(eyts|itt|induction|mq|npq|qts)/i
+    path !~ /^\/qualifications\/certificates\/(eyts|rtps|induction|mq|npq|qts)/i
   end
 end

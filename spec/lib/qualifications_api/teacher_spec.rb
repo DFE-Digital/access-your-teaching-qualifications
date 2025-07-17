@@ -20,55 +20,122 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
           }
         ]
       },
-      "initialTeacherTraining" => [
+      "routesToProfessionalStatuses" => [
         {
-          "qualification" => {
-            "name" => "PGCE"
+          "routeToProfessionalStatusId" => "eyts-route-id-22222",
+          "routeToProfessionalStatusType" => {
+            "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+            "name" => "BA",
+            "professionalStatusType" => "EarlyYearsTeacherStatus"
           },
-          "startDate" => "2011-01-17",
-          "endDate" => "2012-02-2",
-          "programmeType" => "EYITTSchoolDirectEarlyYears",
-          "programmeTypeDescription" => "Early Years Initial Teacher Training (School Direct)",
-          "result" => "Passed",
-          "ageRange" => {
-            "description" => "3 to 7 years"
+          "status" => "Holds",
+          "holdsFrom" => "2012-02-2",
+          "trainingStartDate" => "2011-01-17",
+          "trainingEndDate" => "2012-02-2",
+          "trainingSubjects" => [
+            {
+              "reference" => "100079",
+              "name" => "Business Studies"
+            }
+          ],
+          "trainingAgeSpecialism" => {
+            "type" => "Range",
+            "from" => 3,
+            "to" => 7
           },
-          "provider" => {
-            "name" => "Earl Spencer Primary School",
-            "ukprn" => nil
+          "trainingCountry" => {
+            "reference" => "string",
+            "name" => "United Kingdom"
           },
-          "subjects" => [{ "code" => "100079", "name" => "business studies" }]
-        },
-        {
-          "qualification" => {
+          "trainingProvider" => {
+            "ukprn" => "12345",
+            "name" => "Earl Spencer Primary School"
+          },
+          "degreeType" => {
+            "degreeTypeId" => "degree-type-id-44444",
             "name" => "BA"
           },
-          "startDate" => "2012-02-28",
-          "endDate" => "2013-01-28",
-          "programmeType" => "HEI",
-          "programmeTypeDescription" => "Higher Education Institution",
-          "result" => "Passed",
-          "ageRange" => {
-            "description" => "10 to 16 years"
+          "inductionExemption" => {
+            "isExempt" => true,
+            "exemptionReasons" => [
+              {
+                "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                "name" => "string"
+              }
+            ]
+          }
+        },
+        {
+          "routeToProfessionalStatusId" => "qts-route-id-11111",
+          "routeToProfessionalStatusType" => {
+            "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+            "name" => "BA",
+            "professionalStatusType" => "QualifiedTeacherStatus"
           },
-          "provider" => {
-            "name" => "Earl Spencer Primary School",
-            "ukprn" => nil
+          "status" => "Holds",
+          "holdsFrom" => "2013-01-28",
+          "trainingStartDate" => "2012-02-28",
+          "trainingEndDate" => "2013-01-28",
+          "trainingSubjects" => [
+            {
+              "reference" => "100079",
+              "name" => "Business Studies"
+            }
+          ],
+          "trainingAgeSpecialism" => {
+            "type" => "Range",
+            "from" => 10,
+            "to" => 16
           },
-          "subjects" => [{ "code" => "100079", "name" => "business studies" }]
-        }
+          "trainingCountry" => {
+            "reference" => "string",
+            "name" => "United Kingdom"
+          },
+          "trainingProvider" => {
+            "ukprn" => "12345",
+            "name" => "Earl Spencer Primary School"
+          },
+          "degreeType" => {
+            "degreeTypeId" => "degree-type-id-44444",
+            "name" => "BA"
+          },
+          "inductionExemption" => {
+            "isExempt" => true,
+            "exemptionReasons" => [
+              {
+                "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                "name" => "string"
+              }
+            ]
+          }
+        },
       ],
       "qts" => {
-        "awarded" => "2015-11-01",
-        "statusDescription" => "Qualified (trained in the UK)",
+        "holdsFrom" => "2015-11-01",
+        "routes" => [
+          {
+            "routeToProfessionalStatusType" => {
+              "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+              "name" => "string",
+              "professionalStatusType" => "QualifiedTeacherStatus"
+            }
+          }
+        ]
       },
       "eyts" => {
-        "awarded" => "2015-11-02",
-        "certificateUrl" => "https://example.com/certificate.pdf",
-        "statusDescription" => "Qualified",
+        "holdsFrom" => "2015-11-02",
+        "routes" => [
+          {
+            "routeToProfessionalStatusType" => {
+              "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+              "name" => "BA",
+              "professionalStatusType" => "EarlyYearsTeacherStatus"
+            }
+          }
+        ]
       },
       "mandatoryQualifications" => [
-        { "awarded" => "2013-06-01", "specialism" => "Visual Impairment" }
+        { "endDate" => "2013-06-01", "specialism" => "Visual Impairment", "mandatoryQualificationId" => 1 }
       ],
     }
   end
@@ -80,78 +147,181 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
 
     it "sorts the qualifications in reverse chronological order by date of award" do
       expect(qualifications.map(&:type)).to eq(
-        %i[NPQSL NPQML mandatory induction qts itt eyts itt]
+        %i[NPQSL NPQML mandatory induction qts qts_rtps eyts eyts_rtps]
       )
     end
 
-    it "orders QTS ITT qualifications before EYTS ITT qualifications" do
-      itt_qualifications = qualifications.select { |q| q.type == :itt }
-      expect(itt_qualifications.map { |q| q.details.programme_type }).to eq(
-        %w[HEI EYITTSchoolDirectEarlyYears]
+    it "orders QTS RTPS qualifications before EYTS RTPS qualifications" do
+      rtps_qualifications = qualifications.select { |q| q.type == :eyts_rtps || q.type == :qts_rtps }
+      expect(rtps_qualifications.map do |q|
+ q.details.route_to_professional_status_type.professional_status_type end).to eq(
+        %w[QualifiedTeacherStatus EarlyYearsTeacherStatus]
       )
     end
 
-    it "designates ITT qualifications as QTS if no programme type is present" do
-      itt_qualification = api_data["initialTeacherTraining"].first
-      itt_qualification["programmeType"] = nil
-      api_data["initialTeacherTraining"] = [itt_qualification]
+    it "designates RTPS qualifications as QTS if no programme type is present" do
+      rtps_qualification = api_data["routesToProfessionalStatuses"].first
+      rtps_qualification["routeToProfessionalStatusType"]["routeToProfessionalStatusTypeId"] = nil
+      api_data["routesToProfessionalStatuses"] = [rtps_qualification]
 
       expect(qualifications.map(&:type)).to eq(
-        %i[NPQSL NPQML mandatory induction qts itt eyts]
+        %i[NPQSL NPQML mandatory induction qts qts_rtps eyts]
       )
     end
 
-    context "ITT result field" do
+    context "RTPS result field" do
       before do
-        api_data["initialTeacherTraining"].each { |itt| itt["result"] = "DeferredForSkillsTests" }
+        api_data["routesToProfessionalStatuses"].each { |rtps| rtps["status"] = "DeferredForSkillsTests" }
       end
 
       it "returns human readable values" do
-        expect(qualifications.find { |q| q.type == :itt }.details.result).to eq("Deferred for skills tests")
+        expect(qualifications.find { |q| q.type == :qts_rtps }.details.status).to eq("Deferred for skills tests")
       end
     end
 
     context "when a qualification has no awarded date" do
       let(:api_data) do
         {
-          "trn" => "111112",
-          "initial_teacher_training" => [
+          "trn" => "1111111",
+          "induction" => {
+            "startDate" => "2015-01-01",
+            "endDate" => "2015-07-01",
+            "status" => "Complete",
+            "certificateUrl" => "https",
+            "periods" => [
+              {
+                "startDate" => "string",
+                "endDate" => "string",
+                "terms" => "integer",
+                "appropriateBody" => {
+                  "name" => "string"
+                }
+              }
+            ]
+          },
+          "routesToProfessionalStatuses" => [
             {
-              "qualification" => {
+              "routeToProfessionalStatusId" => "eyts-route-id-22222",
+              "routeToProfessionalStatusType" => {
+                "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+                "name" => "BA",
+                "professionalStatusType" => "EarlyYearsTeacherStatus"
+              },
+              "status" => "Holds",
+              "holdsFrom" => nil,
+              "trainingStartDate" => "2011-01-17",
+              "trainingEndDate" => "2012-02-2",
+              "trainingSubjects" => [
+                {
+                  "reference" => "100079",
+                  "name" => "Business Studies"
+                }
+              ],
+              "trainingAgeSpecialism" => {
+                "type" => "Range",
+                "from" => 3,
+                "to" => 7
+              },
+              "trainingCountry" => {
+                "reference" => "string",
+                "name" => "United Kingdom"
+              },
+              "trainingProvider" => {
+                "ukprn" => "12345",
+                "name" => "Earl Spencer Primary School"
+              },
+              "degreeType" => {
+                "degreeTypeId" => "degree-type-id-44444",
                 "name" => "BA"
               },
-              "startDate" => "2012-02-28",
-              "endDate" => "2013-01-28",
-              "programmeType" => "HEI",
-              "programmeTypeDescription" => "Higher Education Institution",
-              "result" => "Passed",
-              "ageRange" => {
-                "description" => "10 to 16 years"
-              },
-              "provider" => {
-                "name" => "Earl Spencer Primary School",
-                "ukprn" => nil
-              },
-              "subjects" => [
-                { "code" => "100079", "name" => "business studies" }
-              ]
-            }
-          ],
-          "npqQualifications" => [
+              "inductionExemption" => {
+                "isExempt" => true,
+                "exemptionReasons" => [
+                  {
+                    "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                    "name" => "string"
+                  }
+                ]
+              }
+            },
             {
-              "type" => {
-                "code" => "NPQML",
-                "name" => "NPQ for Middle Leadership"
+              "routeToProfessionalStatusId" => "qts-route-id-11111",
+              "routeToProfessionalStatusType" => {
+                "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+                "name" => "BA",
+                "professionalStatusType" => "QualifiedTeacherStatus"
               },
-              "awarded" => nil,
-              "certificateUrl" => "https://example.com/v3/certificates/456"
-            }
-          ]
+              "status" => "Holds",
+              "holdsFrom" => "2013-01-28",
+              "trainingStartDate" => "2012-02-28",
+              "trainingEndDate" => "2013-01-28",
+              "trainingSubjects" => [
+                {
+                  "reference" => "100079",
+                  "name" => "Business Studies"
+                }
+              ],
+              "trainingAgeSpecialism" => {
+                "type" => "Range",
+                "from" => 10,
+                "to" => 16
+              },
+              "trainingCountry" => {
+                "reference" => "string",
+                "name" => "United Kingdom"
+              },
+              "trainingProvider" => {
+                "ukprn" => "12345",
+                "name" => "Earl Spencer Primary School"
+              },
+              "degreeType" => {
+                "degreeTypeId" => "degree-type-id-44444",
+                "name" => "BA"
+              },
+              "inductionExemption" => {
+                "isExempt" => true,
+                "exemptionReasons" => [
+                  {
+                    "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                    "name" => "string"
+                  }
+                ]
+              }
+            },
+          ],
+          "qts" => {
+            "holdsFrom" => "2015-11-01",
+            "routes" => [
+              {
+                "routeToProfessionalStatusType" => {
+                  "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+                  "name" => "string",
+                  "professionalStatusType" => "QualifiedTeacherStatus"
+                }
+              }
+            ]
+          },
+          "eyts" => {
+            "holdsFrom" => "2015-11-02",
+            "routes" => [
+              {
+                "routeToProfessionalStatusType" => {
+                  "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+                  "name" => "BA",
+                  "professionalStatusType" => "EarlyYearsTeacherStatus"
+                }
+              }
+            ]
+          },
+          "mandatoryQualifications" => [
+            { "endDate" => "2013-06-01", "specialism" => "Visual Impairment", "mandatoryQualificationId" => 1 }
+          ],
         }
       end
 
       it "sorts the qualifications in reverse order by date of award and type" do
-        expect(qualifications.map(&:type)).to eq(%i[NPQML itt])
+        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, 
+:eyts_rtps])
       end
     end
 
@@ -163,75 +333,295 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       end
     end
 
-    context "when QTS and ITT share the same date" do
+    context "when QTS and RTPS share the same date" do
       let(:api_data) do
         {
-          "initialTeacherTraining" => [
+          "trn" => "1111111",
+          "induction" => {
+            "startDate" => "2015-01-01",
+            "endDate" => "2015-07-01",
+            "status" => "Complete",
+            "certificateUrl" => "https",
+            "periods" => [
+              {
+                "startDate" => "string",
+                "endDate" => "string",
+                "terms" => "integer",
+                "appropriateBody" => {
+                  "name" => "string"
+                }
+              }
+            ]
+          },
+          "routesToProfessionalStatuses" => [
             {
-              "qualification" => {
+              "routeToProfessionalStatusId" => "eyts-route-id-22222",
+              "routeToProfessionalStatusType" => {
+                "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+                "name" => "BA",
+                "professionalStatusType" => "EarlyYearsTeacherStatus"
+              },
+              "status" => "Holds",
+              "holdsFrom" => "2012-02-2",
+              "trainingStartDate" => "2011-01-17",
+              "trainingEndDate" => "2012-02-2",
+              "trainingSubjects" => [
+                {
+                  "reference" => "100079",
+                  "name" => "Business Studies"
+                }
+              ],
+              "trainingAgeSpecialism" => {
+                "type" => "Range",
+                "from" => 3,
+                "to" => 7
+              },
+              "trainingCountry" => {
+                "reference" => "string",
+                "name" => "United Kingdom"
+              },
+              "trainingProvider" => {
+                "ukprn" => "12345",
+                "name" => "Earl Spencer Primary School"
+              },
+              "degreeType" => {
+                "degreeTypeId" => "degree-type-id-44444",
                 "name" => "BA"
               },
-              "startDate" => "2012-02-28",
-              "endDate" => "2013-01-28",
-              "programmeType" => "HEI",
-              "programmeTypeDescription" => "Higher Education Institution",
-              "result" => "Passed",
-              "ageRange" => {
-                "description" => "10 to 16 years"
+              "inductionExemption" => {
+                "isExempt" => true,
+                "exemptionReasons" => [
+                  {
+                    "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                    "name" => "string"
+                  }
+                ]
+              }
+            },
+            {
+              "routeToProfessionalStatusId" => "qts-route-id-11111",
+              "routeToProfessionalStatusType" => {
+                "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+                "name" => "Initial teacher training (ITT)",
+                "professionalStatusType" => "QualifiedTeacherStatus"
               },
-              "provider" => {
-                "name" => "Earl Spencer Primary School",
-                "ukprn" => nil
+              "status" => "InTraining",
+              "holdsFrom" => "2015-11-01",
+              "trainingStartDate" => "2014-11-01",
+              "trainingEndDate" => "2015-11-01",
+              "trainingSubjects" => [
+                {
+                  "reference" => "12345",
+                  "name" => "Business Studies"
+                }
+              ],
+              "trainingAgeSpecialism" => {
+                "type" => "Range",
+                "from" => 7,
+                "to" => 14
               },
-              "subjects" => [
-                { "code" => "100079", "name" => "business studies" }
-              ]
+              "trainingCountry" => {
+                "reference" => "string",
+                "name" => "United Kingdom"
+              },
+              "trainingProvider" => {
+                "ukprn" => "12345",
+                "name" => "Earl Spencer Primary School"
+              },
+              "degreeType" => {
+                "degreeTypeId" => "degree-type-id-44444",
+                "name" => "BA"
+              },
+              "inductionExemption" => {
+                "isExempt" => true,
+                "exemptionReasons" => [
+                  {
+                    "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                    "name" => "string"
+                  }
+                ]
+              }
             }
           ],
           "qts" => {
-            "awarded" => "2013-01-28",
-          }
+            "holdsFrom" => "2015-11-01",
+            "routes" => [
+              {
+                "routeToProfessionalStatusType" => {
+                  "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+                  "name" => "string",
+                  "professionalStatusType" => "QualifiedTeacherStatus"
+                }
+              }
+            ]
+          },
+          "eyts" => {
+            "holdsFrom" => "2015-11-02",
+            "routes" => [
+              {
+                "routeToProfessionalStatusType" => {
+                  "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+                  "name" => "string",
+                  "professionalStatusType" => "EarlyYearsTeacherStatus"
+                }
+              }
+            ]
+          },
+          "mandatoryQualifications" => [
+            { "endDate" => "2013-06-01", "specialism" => "Visual Impairment", "mandatoryQualificationId" => 1 }
+          ],
         }
       end
 
       it "the QTS gets priority in the sort order" do
-        expect(qualifications.map(&:type)).to eq(%i[qts itt])
+        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, 
+:eyts_rtps])
       end
     end
 
     context "when programmeType is an Integer" do
       let(:api_data) do
         {
-          "initialTeacherTraining" => [
+          "trn" => "1111111",
+          "induction" => {
+            "startDate" => "2015-01-01",
+            "endDate" => "2015-07-01",
+            "status" => "Complete",
+            "certificateUrl" => "https",
+            "periods" => [
+              {
+                "startDate" => "string",
+                "endDate" => "string",
+                "terms" => "integer",
+                "appropriateBody" => {
+                  "name" => "string"
+                }
+              }
+            ]
+          },
+          "routesToProfessionalStatuses" => [
             {
-              "qualification" => {
+              "routeToProfessionalStatusId" => "eyts-route-id-22222",
+              "routeToProfessionalStatusType" => {
+                "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+                "name" => "BA",
+                "professionalStatusType" => "EarlyYearsTeacherStatus"
+              },
+              "status" => "Holds",
+              "holdsFrom" => "2012-02-2",
+              "trainingStartDate" => "2011-01-17",
+              "trainingEndDate" => "2012-02-2",
+              "trainingSubjects" => [
+                {
+                  "reference" => "100079",
+                  "name" => "Business Studies"
+                }
+              ],
+              "trainingAgeSpecialism" => {
+                "type" => "Range",
+                "from" => 3,
+                "to" => 7
+              },
+              "trainingCountry" => {
+                "reference" => "string",
+                "name" => "United Kingdom"
+              },
+              "trainingProvider" => {
+                "ukprn" => "12345",
+                "name" => "Earl Spencer Primary School"
+              },
+              "degreeType" => {
+                "degreeTypeId" => "degree-type-id-44444",
                 "name" => "BA"
               },
-              "startDate" => "2012-02-28",
-              "endDate" => "2013-01-28",
-              "programmeType" => 1,
-              "programmeTypeDescription" => "Higher Education Institution",
-              "result" => "Passed",
-              "ageRange" => {
-                "description" => "10 to 16 years"
+              "inductionExemption" => {
+                "isExempt" => true,
+                "exemptionReasons" => [
+                  {
+                    "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                    "name" => "string"
+                  }
+                ]
+              }
+            },
+            {
+              "routeToProfessionalStatusId" => "qts-route-id-11111",
+              "routeToProfessionalStatusType" => {
+                "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+                "name" => "Initial teacher training (ITT)",
+                "professionalStatusType" => "QualifiedTeacherStatus"
               },
-              "provider" => {
-                "name" => "Earl Spencer Primary School",
-                "ukprn" => nil
+              "status" => "InTraining",
+              "holdsFrom" => "2015-11-01",
+              "trainingStartDate" => "2014-11-01",
+              "trainingEndDate" => "2015-11-01",
+              "trainingSubjects" => [
+                {
+                  "reference" => "12345",
+                  "name" => "Business Studies"
+                }
+              ],
+              "trainingAgeSpecialism" => {
+                "type" => "Range",
+                "from" => 7,
+                "to" => 14
               },
-              "subjects" => [
-                { "code" => "100079", "name" => "business studies" }
-              ]
+              "trainingCountry" => {
+                "reference" => "string",
+                "name" => "United Kingdom"
+              },
+              "trainingProvider" => {
+                "ukprn" => "12345",
+                "name" => "Earl Spencer Primary School"
+              },
+              "degreeType" => {
+                "degreeTypeId" => "degree-type-id-44444",
+                "name" => "BA"
+              },
+              "inductionExemption" => {
+                "isExempt" => true,
+                "exemptionReasons" => [
+                  {
+                    "inductionExemptionReasonId" => "induction-exemption-reason-id-33333",
+                    "name" => "string"
+                  }
+                ]
+              }
             }
           ],
           "qts" => {
-            "awarded" => "2013-01-28",
-          }
+            "holdsFrom" => "2015-11-01",
+            "routes" => [
+              {
+                "routeToProfessionalStatusType" => {
+                  "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+                  "name" => "string",
+                  "professionalStatusType" => "QualifiedTeacherStatus"
+                }
+              }
+            ]
+          },
+          "eyts" => {
+            "holdsFrom" => "2015-11-02",
+            "routes" => [
+              {
+                "routeToProfessionalStatusType" => {
+                  "routeToProfessionalStatusTypeId" => "eyts-route-type-id-22222",
+                  "name" => "string",
+                  "professionalStatusType" => "EarlyYearsTeacherStatus"
+                }
+              }
+            ]
+          },
+          "mandatoryQualifications" => [
+            { "endDate" => "2013-06-01", "specialism" => "Visual Impairment", "mandatoryQualificationId" => 1 }
+          ],
         }
       end
 
       it "the QTS gets priority in the sort order" do
-        expect(qualifications.map(&:type)).to eq(%i[qts itt])
+        expect(qualifications.map(&:type)).to eq([:NPQSL, :NPQML, :mandatory, :induction, :qts, :qts_rtps, :eyts, 
+:eyts_rtps])
       end
     end
   end
@@ -314,7 +704,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     let(:teacher) { described_class.new(api_data) }
 
     context "qts awarded timestamp is present" do
-      let(:api_data) { { "qts" => { "awarded" => "2013-01-28", } } }
+      let(:api_data) { { "qts" => { "holdsFrom" => "2013-01-28", } } }
 
       it "returns true" do
         expect(teacher.qts_awarded?).to eq true
@@ -342,7 +732,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     end
 
     context "induction status is anything other than 'Pass'" do
-      let(:api_data) { { "induction" => { "status_description" => "Failed", } } }
+      let(:api_data) { { "induction" => { "status" => "Failed", } } }
 
       it "returns false" do
         expect(teacher.passed_induction?).to eq false

@@ -10,8 +10,9 @@ class QualificationSummaryComponent < ViewComponent::Base
            :qtls_only,
            :details,
            :id,
-           :itt?,
+           :rtps?,
            :qts?,
+           :eyts?,
            :passed_induction,
            :failed_induction,
            :set_membership_active,
@@ -21,14 +22,33 @@ class QualificationSummaryComponent < ViewComponent::Base
            :qts_and_qtls,
            to: :qualification
 
-  alias_method :title, :name
+  def title
+    return [name, rtps_route_type].compact.join(": ") if rtps?
+
+    name
+  end
 
   def rows
-    return itt_rows if itt?
+    @rows ||= build_rows.select { |row| row[:value][:text].present? }
+  end
+
+  def build_rows
+    return rtps_rows if rtps?
     return qtls_rows if qts? && qtls_only
-      
-    @rows = [
-      { key: { text: "Awarded" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+
+    qualification_rows
+  end
+
+  def qualification_rows
+    [
+      { key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } },
+      type_supports_certificates? ? certificate_rows : nil,
+      details.specialism.present? ? specialism_rows : nil,
+    ].flatten.compact
+  end
+
+  def certificate_rows
+    [
       {
         key: {
           text: "Certificate"
@@ -43,20 +63,15 @@ class QualificationSummaryComponent < ViewComponent::Base
         }
       }
     ]
+  end
 
-    if qualification.status_description
-      @rows << {
-        key: {
-          text: "Status"
-        },
-        value: {
-          text: qualification.status_description
-        }
-      }
-    end
+  def type_supports_certificates?
+    type != :mandatory
+  end
 
-    if details.specialism
-      @rows << {
+  def specialism_rows
+    [
+      {
         key: {
           text: "Specialism"
         },
@@ -64,37 +79,35 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: details.specialism
         }
       }
-    end
-
-    @rows.select { |row| row[:value][:text].present? }
+    ]
   end
 
-  def itt_rows
-    return [] if details.end_date.blank?
+  def rtps_rows
+    return [] if details.training_end_date.blank?
 
-    @rows = [
+    [
+      {
+        key: {
+          text: "Route Type"
+        },
+        value: {
+          text: rtps_route_type
+        }
+      },
       {
         key: {
           text: "Qualification"
         },
         value: {
-          text: details.qualification&.name
+          text: details.degree_type&.name
         }
       },
       {
         key: {
-          text: "ITT provider"
+          text: "Provider"
         },
         value: {
-          text: details.provider&.name
-        }
-      },
-      {
-        key: {
-          text: "Training type"
-        },
-        value: {
-          text: details.programme_type_description
+          text: details.training_provider&.name
         }
       },
       {
@@ -102,8 +115,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "Subjects"
         },
         value: {
-          text:
-            details.subjects.map { |subject| subject.name.titleize }.join(", ")
+          text: details.training_subjects&.map { |subject| subject.name.titleize }&.join(", ")
         }
       },
       {
@@ -111,7 +123,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "Start date"
         },
         value: {
-          text: details.start_date&.to_date&.to_fs(:long_uk)
+          text: details.training_start_date&.to_date&.to_fs(:long_uk)
         }
       },
       {
@@ -119,7 +131,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "End date"
         },
         value: {
-          text: details.end_date&.to_date&.to_fs(:long_uk)
+          text: details.training_end_date&.to_date&.to_fs(:long_uk)
         }
       },
       {
@@ -127,7 +139,7 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "Status"
         },
         value: {
-          text: details.result&.to_s&.humanize
+          text: details.status&.to_s&.underscore&.humanize
         }
       },
       {
@@ -135,19 +147,41 @@ class QualificationSummaryComponent < ViewComponent::Base
           text: "Age range"
         },
         value: {
-          text: details.age_range&.description
+          text: age_range_from_training_age_specialism(details.training_age_specialism)
         }
       }
     ]
+  end
+
+  def rtps_route_type
+    details.route_to_professional_status_type&.name
+  end
+
+  def age_range_from_training_age_specialism(training_age_specialism)
+    case training_age_specialism&.type
+    when "Range"
+      "#{training_age_specialism.from} to #{training_age_specialism.to} years"
+    else
+      # Easier to use a hash lookup for the known types
+      # Rather than .underscore.humanize, especially since that tactic just results in "Key stage1"
+      {
+        'FoundationStage' => "Foundation stage",
+        'FurtherEducation' =>  "Further education",
+        'KeyStage1' =>  "Key stage 1",
+        'KeyStage2' =>  "Key stage 2",
+        'KeyStage3' =>  "Key stage 3",
+        'KeyStage4' =>  "Key stage 4"
+      }[training_age_specialism&.type]
+    end
   end
 
   def qtls_rows
     if set_membership_active
       [
         {
-          key: { 
-            text: "Awarded"
-          }, 
+          key: {
+            text: "Held since"
+          },
           value: {
             text: qtls_awarded_at_text
           }
@@ -158,10 +192,10 @@ class QualificationSummaryComponent < ViewComponent::Base
           },
           value: {
             text:
-            link_to(
-              "Download #{type.to_s.upcase} certificate",
-              qualifications_certificate_path(type, format: :pdf),
-              class: "govuk-link"
+              link_to(
+                "Download #{type.to_s.upcase} certificate",
+                qualifications_certificate_path(type, format: :pdf),
+                class: "govuk-link"
               )
           }
         }
@@ -176,7 +210,7 @@ class QualificationSummaryComponent < ViewComponent::Base
   def qtls_awarded_at_text
     if set_membership_active
       "#{awarded_at&.to_fs(:long_uk)} via qualified teacher learning and skills (QTLS) status"
-    else 
+    else
       awarded_at&.to_fs(:long_uk).to_s
     end
   end
