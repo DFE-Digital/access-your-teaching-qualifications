@@ -3,6 +3,10 @@
     <span class="govuk-caption-xl"><%= @user.name.possessive.gsub("'","’") %></span>
     <h1 class="govuk-heading-xl">Teaching qualifications</h1>
 
+    <% if @teacher.render_qtls_expired_message? %>
+      <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired") %>
+    <% end %>
+
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
         <% @teacher.qualifications.each do |qualification| %>
