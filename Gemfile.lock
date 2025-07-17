@@ -125,7 +125,7 @@ GEM
       turbo-rails
     backport (1.2.0)
     base64 (0.3.0)
-    benchmark (0.3.0)
+    benchmark (0.4.1)
     bigdecimal (3.2.2)
     bindata (2.5.0)
     bindex (0.8.1)
@@ -265,7 +265,7 @@ GEM
     httpclient (2.8.3)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
-    io-console (0.8.0)
+    io-console (0.8.1)
     irb (1.15.2)
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
@@ -543,10 +543,10 @@ GEM
     securerandom (0.4.1)
     semantic_logger (4.16.0)
       concurrent-ruby (~> 1.0)
-    sentry-rails (5.19.0)
+    sentry-rails (5.26.0)
       railties (>= 5.0)
-      sentry-ruby (~> 5.19.0)
-    sentry-ruby (5.19.0)
+      sentry-ruby (~> 5.26.0)
+    sentry-ruby (5.26.0)
       bigdecimal
       concurrent-ruby (~> 1.0, >= 1.0.2)
     shoulda-matchers (6.4.0)
@@ -702,7 +702,7 @@ DEPENDENCIES
   rspec
   rspec-rails
   rubocop-govuk
-  sentry-rails (~> 5.19)
+  sentry-rails (~> 5.26)
   shoulda-matchers
   sidekiq (< 7)
   sidekiq-cron
