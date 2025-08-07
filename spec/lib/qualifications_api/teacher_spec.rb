@@ -165,7 +165,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
       api_data["routesToProfessionalStatuses"] = [rtps_qualification]
 
       expect(qualifications.map(&:type)).to eq(
-        %i[NPQSL NPQML mandatory induction qts qts_rtps eyts]
+        %i[NPQSL NPQML mandatory induction qts qts_rtps eyts other_rtps]
       )
     end
 

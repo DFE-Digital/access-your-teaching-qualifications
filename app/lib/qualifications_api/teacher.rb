@@ -50,6 +50,7 @@ module QualificationsApi
         induction_qualification,
         qts_qualifications,
         eyts_qualifications,
+        all_other_rtps_qualifications,
       ].flatten.compact
     end
 
@@ -181,11 +182,11 @@ module QualificationsApi
 
     private
 
-    def qts_qualifications
+    def qts_qualification
       qts_data = api_data.qts
-      return [] if qts_data.blank? && !qtls_only?
+      return if qts_data.blank? && !qtls_only?
 
-      qts_qualification = Qualification.new(
+      @qts_qualification ||= Qualification.new(
         awarded_at: qts_data&.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
         qtls_only: qtls_only?,
@@ -197,6 +198,10 @@ module QualificationsApi
         type: :qts,
         routes: qts_data.routes || []
       )
+    end
+
+    def qts_qualifications
+      return if qts_qualification.nil?
 
       [
         qts_qualification,
@@ -204,21 +209,46 @@ module QualificationsApi
       ].flatten
     end
 
-    def eyts_qualifications
+    def eyts_qualification
       eyts_data = api_data.eyts
-      return [] if eyts_data.blank?
+      return if eyts_data.blank?
 
-      eyts_qualification = Qualification.new(
+      @eyts_qualification ||= Qualification.new(
         awarded_at: eyts_data.holds_from&.to_date,
         name: "Early years teacher status (EYTS)",
         type: :eyts,
         routes: eyts_data.routes || []
       )
+    end
+
+    def eyts_qualifications
+      return if eyts_qualification.nil?
 
       [
         eyts_qualification,
         rtps_qualifications(type: :eyts, route_ids: eyts_qualification.route_ids)
       ].flatten
+    end
+
+    def all_rtps_ids
+      return [] if api_data.routes_to_professional_statuses.blank?
+
+      api_data.routes_to_professional_statuses.map do |route|
+        route.route_to_professional_status_type.route_to_professional_status_type_id
+      end
+    end
+
+    def all_other_rtps_qualifications
+      eyts_route_ids = eyts_qualification&.route_ids || []
+      qts_route_ids = qts_qualification&.route_ids || []
+
+      non_qts_eyts_route_ids = all_rtps_ids - eyts_route_ids - qts_route_ids
+
+      rtps_qualifications(
+        type: :other,
+        route_ids: non_qts_eyts_route_ids,
+        name: "Route to Professional Status"
+      )
     end
 
     def npq_qualifications
@@ -236,7 +266,7 @@ module QualificationsApi
       end
     end
 
-    def rtps_qualifications(type:, route_ids: [], include_blank: false)
+    def rtps_qualifications(type:, route_ids: [], include_blank: false, name: nil)
       return [] if api_data.routes_to_professional_statuses.blank?
 
       routes = api_data.routes_to_professional_statuses.select do |route|
@@ -254,7 +284,7 @@ module QualificationsApi
         Qualification.new(
           awarded_at: route.training_end_date&.to_date,
           details: CoercedDetails.new(route),
-          name: "Route to #{type.to_s.upcase}",
+          name: name || "Route to #{type.to_s.upcase}",
           type: :"#{type}_rtps"
         )
       end
