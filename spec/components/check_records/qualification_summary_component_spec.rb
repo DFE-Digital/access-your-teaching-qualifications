@@ -40,7 +40,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       expect(rows[3].text).to include("7 to 14 years")
       expect(rows[4].text).to include("28 February 2022")
       expect(rows[5].text).to include("28 January 2023")
-      expect(rows[6].text).to include("In training")
+      expect(rows[6].text).to include("Holds")
     end
 
     it "omits rows with no value" do

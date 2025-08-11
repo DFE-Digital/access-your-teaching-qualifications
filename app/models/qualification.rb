@@ -43,7 +43,7 @@ class Qualification
   end
 
   def rtps?
-    [:qts_rtps, :eyts_rtps, :rtps].include?(type)
+    [:qts_rtps, :eyts_rtps, :other_rtps, :rtps].include?(type)
   end
 
   def mq?

@@ -45,7 +45,7 @@ module FakeQualificationsData
           }
         ]
       },
-      "routesToProfessionalStatuses": [rtps ? build_rtps : nil].compact,
+      "routesToProfessionalStatuses": [rtps ? build_rtps : nil].compact.flatten,
       mandatoryQualifications: [
         { endDate: "2023-02-28", specialism: "Visual impairment", mandatoryQualificationId: 1 },
         { endDate: "2022-01-01", specialism: "Hearing", mandatoryQualificationId: 1 }
@@ -56,50 +56,91 @@ module FakeQualificationsData
   end
 
   def build_rtps
-    {
-      "routeToProfessionalStatusId": "qts-route-id-11111",
-      "routeToProfessionalStatusType": {
-        "routeToProfessionalStatusTypeId": "qts-route-type-id-11111",
-        "name": "Initial teacher training (ITT)",
-        "professionalStatusType": "QualifiedTeacherStatus"
-      },
-      "status": "InTraining",
-      "holdsFrom": "2023-02-27",
-      "trainingStartDate": "2022-02-28",
-      "trainingEndDate": "2023-01-28",
-      "trainingSubjects": [
-        {
-          "reference": "12345",
-          "name": "Business Studies"
-        }
-      ],
-      "trainingAgeSpecialism": {
-        "type": "Range",
-        "from": 7,
-        "to": 14
-      },
-      "trainingCountry": {
-        "reference": "string",
-        "name": "United Kingdom"
-      },
-      "trainingProvider": {
-        "ukprn": "12345",
-        "name": "Earl Spencer Primary School"
-      },
-      "degreeType": {
-        "degreeTypeId": "degree-type-id-44444",
-        "name": "BA"
-      },
-      "inductionExemption": {
-        "isExempt": true,
-        "exemptionReasons": [
+    [
+      {
+        "routeToProfessionalStatusId": "qts-route-id-11111",
+        "routeToProfessionalStatusType": {
+          "routeToProfessionalStatusTypeId": "qts-route-type-id-11111",
+          "name": "Initial teacher training (ITT)",
+          "professionalStatusType": "QualifiedTeacherStatus"
+        },
+        "status": "Holds",
+        "holdsFrom": "2023-02-27",
+        "trainingStartDate": "2022-02-28",
+        "trainingEndDate": "2023-01-28",
+        "trainingSubjects": [
           {
-            "inductionExemptionReasonId": "induction-exemption-reason-id-33333",
-            "name": "string"
+            "reference": "12345",
+            "name": "Business Studies"
           }
-        ]
+        ],
+        "trainingAgeSpecialism": {
+          "type": "Range",
+          "from": 7,
+          "to": 14
+        },
+        "trainingCountry": {
+          "reference": "string",
+          "name": "United Kingdom"
+        },
+        "trainingProvider": {
+          "ukprn": "12345",
+          "name": "Earl Spencer Primary School"
+        },
+        "degreeType": {
+          "degreeTypeId": "degree-type-id-44444",
+          "name": "BA"
+        },
+        "inductionExemption": {
+          "isExempt": true,
+          "exemptionReasons": [
+            {
+              "inductionExemptionReasonId": "induction-exemption-reason-id-33333",
+              "name": "string"
+            }
+          ]
+        }
+      },
+      {
+        "routeToProfessionalStatusId": "other-route-id-11111",
+        "routeToProfessionalStatusType": {
+          "routeToProfessionalStatusTypeId": "other-route-type-id-11111",
+          "name": "Non-held Route",
+          "professionalStatusType": "QualifiedTeacherStatus"
+        },
+        "status": "InTraining",
+        "holdsFrom": nil,
+        "trainingStartDate": "2022-02-28",
+        "trainingEndDate": "2030-01-28",
+        "trainingSubjects": [
+          {
+            "reference": "12345",
+            "name": "Business Studies"
+          }
+        ],
+        "trainingAgeSpecialism": {
+          "type": "Range",
+          "from": 15,
+          "to": 18
+        },
+        "trainingCountry": {
+          "reference": "string",
+          "name": "United Kingdom"
+        },
+        "trainingProvider": {
+          "ukprn": "23456",
+          "name": "Earl Spencer Secondary School"
+        },
+        "degreeType": {
+          "degreeTypeId": "degree-type-id-55555",
+          "name": "MA"
+        },
+        "inductionExemption": {
+          "isExempt": false,
+          "exemptionReasons": []
+        }
       }
-    }
+    ]
   end
 
   def fake_alerts(trn)
