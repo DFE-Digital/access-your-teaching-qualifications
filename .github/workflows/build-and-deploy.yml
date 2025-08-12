@@ -33,7 +33,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Build and push docker image
         id: build-image
@@ -58,7 +58,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Deploy to AKS
         uses: ./.github/actions/deploy-environment
@@ -119,7 +119,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Deploy to AKS
         uses: ./.github/actions/deploy-environment
@@ -144,7 +144,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Deploy to AKS
         uses: ./.github/actions/deploy-environment
