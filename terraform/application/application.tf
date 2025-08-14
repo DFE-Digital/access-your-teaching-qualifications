@@ -53,6 +53,8 @@ module "web_application" {
   send_traffic_to_maintenance_page = var.send_traffic_to_maintenance_page
 
   web_external_hostnames = [local.check_domain]
+
+  run_as_non_root = true
 }
 
 module "worker_application" {
@@ -73,4 +75,6 @@ module "worker_application" {
   docker_image               = var.docker_image
   enable_logit               = true
   enable_gcp_wif             = var.enable_dfe_analytics_federated_auth
+
+  run_as_non_root = true
 }
