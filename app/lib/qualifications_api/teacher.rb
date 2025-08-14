@@ -125,16 +125,20 @@ module QualificationsApi
       'No induction'
     end
 
+    def induction_status_values
+      [api_data.induction&.status, api_data.induction_status&.status]
+    end
+
     def passed_induction?
-      api_data.induction&.status == "Passed" || api_data.induction_status&.status == "Passed"
+      induction_status_values.include?("Passed")
     end
 
     def failed_induction?
-      api_data.induction&.status == "Failed" || api_data.induction_status&.status == "Failed"
+      induction_status_values.include?("Failed")
     end
 
     def exempt_from_induction_via_induction_status?
-      api_data.induction&.status == "Exempt" || api_data.induction_status&.status == "Exempt"
+      induction_status_values.include?("Exempt")
     end
 
     def exempt_from_induction_via_qts_via_qtls?

@@ -38,6 +38,7 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
     expect(page).to have_content "Terry Walsh"
     expect(page).to have_content "Restriction"
     expect(page).to have_content "Passed"
+    expect(page).to have_selector('td[data-raw-values="Passed,"]')
   end
 
   def and_my_search_is_logged

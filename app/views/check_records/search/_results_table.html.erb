@@ -22,7 +22,7 @@
               text: teacher.restriction_status == 'Restriction' ? govuk_tag(text: teacher.restriction_status, colour: 'red') : teacher.restriction_status
             )
             row.with_cell(text: teacher.teaching_status)
-            row.with_cell(text: teacher.induction_status)
+            row.with_cell(text: teacher.induction_status, html_attributes: { data: { raw_values: teacher.induction_status_values.join(",") }})
           end
         end
       end
