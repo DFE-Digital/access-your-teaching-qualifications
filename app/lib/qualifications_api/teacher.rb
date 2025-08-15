@@ -130,7 +130,7 @@ module QualificationsApi
     end
 
     def passed_induction?
-      induction_status_values.include?("Passed")
+      induction_status_values.intersect?(["Passed", "Pass"])
     end
 
     def failed_induction?

@@ -82,7 +82,7 @@ class FakeQualificationsApi < Sinatra::Base
     case bearer_token
     when "token"
       {
-        results: [quals_data(trn: "9876543")],
+        results: [quals_data(trn: "9876543", bulk_response: true)],
         total: 1
       }.to_json
     when "invalid-token"

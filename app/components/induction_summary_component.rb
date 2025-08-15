@@ -88,7 +88,7 @@ class InductionSummaryComponent < ViewComponent::Base
       }
     ]
 
-    if details.status == "Passed"
+    if ["Passed", "Pass"].include?(details.status)
       qualification_rows << {
         key: {
           text: "Certificate"
