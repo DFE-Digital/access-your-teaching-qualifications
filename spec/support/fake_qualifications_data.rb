@@ -1,5 +1,8 @@
 module FakeQualificationsData
-  def quals_data(trn: nil, rtps: true)
+  def quals_data(trn: nil, rtps: true, bulk_response: false)
+    # Bulk queries use an older version of the API that returns Pass instead of Passed
+    passed_value = bulk_response ? "Pass" : "Passed"
+
     {
       trn: trn || "3000299",
       dateOfBirth: "2000-01-01",
@@ -37,7 +40,7 @@ module FakeQualificationsData
       induction: {
         startDate: "2022-09-01",
         completedDate: "2022-10-01",
-        status: "Passed",
+        status: passed_value,
         exemptionReasons: [
           {
             inductionExemptionReasonId: "induction-exemption-reason-id-33333",
