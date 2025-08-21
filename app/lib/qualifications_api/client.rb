@@ -138,7 +138,7 @@ module QualificationsApi
 
     def bulk_teachers(queries: [])
       response = client.post("v3/persons/find", { persons: queries }) do |request|
-        request.headers["X-Api-Version"] = "20240814"
+        request.headers["X-Api-Version"] = "20250627"
       end
       case response.status
       when 200
