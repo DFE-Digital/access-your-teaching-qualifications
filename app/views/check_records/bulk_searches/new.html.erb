@@ -11,11 +11,11 @@
 
       <%= govuk_list spaced: true, type: :number do %>
         <li>
-          <h3>Download the CSV template.</h3>
+          <h2>Download the CSV template.</h2>
           <p class="govuk-body"><%= govuk_link_to "Download CSV template file", asset_path("multiple_records.csv") %></p>
         </li>
         <li>
-          <h3>Add each person's details</h3>
+          <h2>Add each person's details</h2>
           <p class="govuk-body">
             Open the CSV file and add the teacher reference number (TRN) and date of birth for each 
             person you want to find a record for.
@@ -29,7 +29,7 @@
           </p>
         </li>
         <li>
-          <h3>Upload file</h3>
+          <h2>Upload file</h2>
           <p class="govuk-body">We'll tell you if we find any teacher records.</p>
         </li>
       <% end %>
