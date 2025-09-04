@@ -19,50 +19,52 @@
       </div>
     </div>
   </header>
-    <div class="govuk-service-navigation"
-         data-module="govuk-service-navigation">
-      <div class="govuk-width-container">
-        <div class="govuk-service-navigation__container">
-          <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
-            <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
-              Menu
-            </button>
-            <ul class="govuk-service-navigation__list" id="navigation">
-                <li class="govuk-service-navigation__item">
-                  <span class="govuk-service-navigation__service-name">
-        <a href="#" class="govuk-service-navigation__link">
-          <%= t("check_records_service.name") %>
-        </a>
-      </span>
-                </li>
-                <% if FeatureFlags::FeatureFlag.active?(:bulk_search) %>
-                <li class="govuk-service-navigation__item">
-                  <a class="govuk-service-navigation__link" href=<%= check_records_search_path %>>
-                    <strong class="govuk-service-navigation__active-fallback"> Find a record </strong>
-                  </a>
-                </li>
-                <li class="govuk-service-navigation__item govuk-service-navigation__item">
-                  <a class="govuk-service-navigation__link" href=<%= new_check_records_bulk_search_path %>>
-                    <strong class="govuk-service-navigation__active-fallback"> Find multiple records </strong>
-                  </a>
-                </li>
-                <% end %>
-                <% if current_dsi_user %>
-                <li class="govuk-service-navigation__item govuk-service-navigation__item--align-right">
-                    <a class="govuk-service-navigation__link" href=<%= check_records_sign_out_path %>>
-                      <strong class="govuk-service-navigation__active-fallback"> Sign out </strong>
-                    </a>
-                  </li>
-                <% elsif request.path != check_records_sign_in_path %>
-                <li class="govuk-service-navigation__item govuk-service-navigation__item--align-right">
-                    <a class="govuk-service-navigation__link" href=<%= check_records_sign_in_path %>>
-                      <strong class="govuk-service-navigation__active-fallback"> Sign in </strong>
-                    </a>
-                  </li>
-                <% end %>
-            </ul>
-          </nav>
-        </div>
+
+  <div class="govuk-service-navigation" data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+      <div class="govuk-service-navigation__container">
+        <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+          <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
+            Menu
+          </button>
+          <ul class="govuk-service-navigation__list" id="navigation">
+            <li class="govuk-service-navigation__item">
+              <span class="govuk-service-navigation__service-name">
+                <a href="#" class="govuk-service-navigation__link">
+                  <%= t("check_records_service.name") %>
+                </a>
+              </span>
+            </li>
+
+            <% if FeatureFlags::FeatureFlag.active?(:bulk_search) %>
+              <li class="govuk-service-navigation__item">
+                <a class="govuk-service-navigation__link" href=<%= check_records_search_path %>>
+                  <strong class="govuk-service-navigation__active-fallback"> Find a record </strong>
+                </a>
+              </li>
+              <li class="govuk-service-navigation__item govuk-service-navigation__item">
+                <a class="govuk-service-navigation__link" href=<%= new_check_records_bulk_search_path %>>
+                  <strong class="govuk-service-navigation__active-fallback"> Find multiple records </strong>
+                </a>
+              </li>
+            <% end %>
+
+            <% if current_dsi_user %>
+              <li class="govuk-service-navigation__item govuk-service-navigation__item--align-right">
+                <a class="govuk-service-navigation__link" href=<%= check_records_sign_out_path %>>
+                  <strong class="govuk-service-navigation__active-fallback"> Sign out </strong>
+                </a>
+              </li>
+            <% elsif request.path != check_records_sign_in_path %>
+              <li class="govuk-service-navigation__item govuk-service-navigation__item--align-right">
+                <a class="govuk-service-navigation__link" href=<%= check_records_sign_in_path %>>
+                  <strong class="govuk-service-navigation__active-fallback"> Sign in </strong>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </nav>
       </div>
     </div>
+  </div>
 <% end %>
