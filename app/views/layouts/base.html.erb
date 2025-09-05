@@ -28,10 +28,10 @@
     <%= yield :navigation %>
 
     <div class="govuk-width-container">
-      <%= govuk_phase_banner(tag: { text: "Beta" }, html_attributes: {aria: {role: "banner"}}) do %>
+      <%= govuk_phase_banner(tag: { text: "Beta" }) do %>
         This is a new service – your <%= govuk_link_to("feedback", main_app.qualifications_feedbacks_path) %> will help us to improve it.
       <% end %>
-      <%= govuk_back_link(href: yield(:back_link_url), html_attributes: {aria: {role: "link"}}) if content_for?(:back_link_url) %>
+      <%= govuk_back_link(href: yield(:back_link_url)) if content_for?(:back_link_url) %>
       <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <%= render(FlashMessageComponent.new(flash: flash)) %>
