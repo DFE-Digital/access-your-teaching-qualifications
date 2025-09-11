@@ -8,8 +8,8 @@ class Search
 
   include ActiveModel::Model
 
-  attr_accessor :last_name, :searched_at
-  attr_reader :date_of_birth
+  attr_accessor :searched_at
+  attr_reader :last_name, :date_of_birth
 
   validates :last_name, presence: true
   validate :date_of_birth_is_valid
@@ -23,6 +23,10 @@ class Search
     date_fields[1] = word_to_month_number(date_fields[1]) if month_is_a_word
 
     @date_of_birth = DateOfBirth.new(*date_fields)
+  end
+
+  def last_name=(value)
+    @last_name = value&.strip
   end
 
   private
