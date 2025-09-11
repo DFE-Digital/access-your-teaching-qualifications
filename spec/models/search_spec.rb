@@ -4,6 +4,34 @@ RSpec.describe Search do
   it { is_expected.to validate_presence_of(:last_name) }
   it { is_expected.to validate_presence_of(:date_of_birth) }
 
+  describe "#last_name=" do
+    subject(:search) { described_class.new(last_name:) }
+
+    context "with spaces in the name" do
+      let(:last_name) { " O'Connor " }
+
+      it "strips the spaces" do
+        expect(search.last_name).to eq("O'Connor")
+      end
+    end
+
+    context "with tabs and new lines in the name" do
+      let(:last_name) { "\tO'Connor\n" }
+
+      it "strips the tabs and new lines" do
+        expect(search.last_name).to eq("O'Connor")
+      end
+    end
+
+    context "with no spaces in the name" do
+      let(:last_name) { "O'Connor" }
+
+      it "does not modify the name" do
+        expect(search.last_name).to eq("O'Connor")
+      end
+    end
+  end
+
   describe "#date_of_birth=" do
     subject(:search) { described_class.new(date_of_birth:) }
 
