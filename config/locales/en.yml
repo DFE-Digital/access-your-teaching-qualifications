@@ -64,7 +64,7 @@ en:
         trn_search:
           attributes:
             trn:
-              blank: Enter a valid TRN
+              blank: Enter a valid TRN or skip this question
 
   activerecord:
     errors:

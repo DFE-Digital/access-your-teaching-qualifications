@@ -1,6 +1,6 @@
-<%= form.govuk_text_field :first_name, label: { text: "First name" } %>
-<%= form.govuk_text_field :middle_name, label: { text: "Middle name" }, hint_text: "Optional" %>
-<%= form.govuk_text_field :last_name, label: { text: "Last name" } %>
+<%= form.govuk_text_field :first_name, autocomplete: "given-name", label: { text: "First name" } %>
+<%= form.govuk_text_field :middle_name, autocomplete: "additional-name", label: { text: "Middle name" }, hint_text: "Optional" %>
+<%= form.govuk_text_field :last_name, autocomplete: "family-name", label: { text: "Last name" } %>
 
 <h2 class="govuk-heading-s">Upload evidence</h2>
 <p>Documents we accept</p>
