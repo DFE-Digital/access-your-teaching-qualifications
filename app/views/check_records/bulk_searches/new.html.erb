@@ -34,7 +34,7 @@
         </li>
       <% end %>
 
-      <%= f.govuk_file_field :file, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "Upload file" }, hint: { text: "File type must be a CSV" }, required: true %>
+      <%= f.govuk_file_field :file, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "Upload file" }, hint: { text: "File type must be a CSV" } %>
 
       <%= f.govuk_submit "Find records" %>
     <% end %>

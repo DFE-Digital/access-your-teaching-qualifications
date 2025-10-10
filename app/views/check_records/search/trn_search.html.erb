@@ -16,7 +16,7 @@
       <%= f.hidden_field "date_of_birth(2i)", value: search_params["date_of_birth(2i)"] %>
       <%= f.hidden_field "date_of_birth(3i)", value: search_params["date_of_birth(3i)"] %>
 
-      <%= f.govuk_text_field :trn, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "TRN" }, required: true %>
+      <%= f.govuk_text_field :trn, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "TRN" } %>
       <%= f.govuk_submit "Find record" %>
     <% end %>
 
