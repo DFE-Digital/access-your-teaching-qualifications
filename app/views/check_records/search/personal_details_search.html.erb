@@ -9,13 +9,12 @@
 
       <h1 class="govuk-heading-l">Find teacher record</h1>
 
-      <%= f.govuk_text_field :last_name, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "Last name" }, required: true %>
+      <%= f.govuk_text_field :last_name, class: "govuk-input--width-20", label: { class: "govuk-label--s", text: "Last name" } %>
 
       <%= f.govuk_date_field(
             :date_of_birth,
             date_of_birth: true,
-            legend: { size: 's', text: 'Date of birth' },
-            required: true
+            legend: { size: 's', text: 'Date of birth' }
           )
       %>
       <%= f.govuk_submit "Find record" %>
