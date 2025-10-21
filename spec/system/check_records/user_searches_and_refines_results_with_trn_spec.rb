@@ -47,7 +47,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   alias_method :and_i_submit_the_form, :when_i_submit_the_form
 
   def then_i_see_an_error
-    expect(page).to have_content "Enter a valid TRN"
+    expect(page).to have_content "Enter a valid TRN or skip this question"
   end
 
   def when_i_enter_a_trn
