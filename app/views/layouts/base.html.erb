@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="govuk-template">
+<html lang="en" class="govuk-template govuk-template--rebranded">
   <head>
     <title><%= [yield(:page_title).presence, t('service.name')].compact.join(' - ') %></title>
 
@@ -40,33 +40,27 @@
     </div>
 
     <%= render GovukComponent::FooterComponent.new do |footer| %>
-      <% footer.with_meta do %>
-        <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-          <h2 class="govuk-heading-m">Get help</h2>
-          <p class="govuk-!-font-size-16">
-            Email: <%= govuk_mail_to t('service.email'), t('service.email'), class: "govuk-footer__link", subject: t('service.name') %>
-            <br>
-            You’ll get a response within 5 working days.
-          </p>
+      <% footer.with_meta_html do %>
+        <h2 class="govuk-heading-m">Get help</h2>
+        <p class="govuk-!-font-size-16">
+          Email: <%= govuk_mail_to t('service.email'), t('service.email'), class: "govuk-footer__link", subject: t('service.name') %>
+          <br>
+          You’ll get a response within 5 working days.
+        </p>
 
-          <h2 class="govuk-visually-hidden">Footer links</h2>
+        <h2 class="govuk-visually-hidden">Footer links</h2>
 
-          <ul class="govuk-footer__inline-list">
-            <li class="govuk-footer__inline-list-item">
-              <%= govuk_link_to("Accessibility", "/qualifications/accessibility", class: "govuk-footer__link") %>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <%= govuk_link_to("Cookies", "/qualifications/cookies", class: "govuk-footer__link") %>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <%= govuk_link_to("Privacy notice", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers", class: "govuk-footer__link") %>
-            </li>
-          </ul>
-        </div>
-
-        <div class="govuk-footer__meta-item">
-          <%= link_to(footer.copyright_text, footer.copyright_url, class: "#{footer.brand}-footer__link #{footer.brand}-footer__copyright-logo") %>
-        </div>
+        <ul class="govuk-footer__inline-list">
+          <li class="govuk-footer__inline-list-item">
+            <%= govuk_link_to("Accessibility", "/qualifications/accessibility", class: "govuk-footer__link") %>
+          </li>
+          <li class="govuk-footer__inline-list-item">
+            <%= govuk_link_to("Cookies", "/qualifications/cookies", class: "govuk-footer__link") %>
+          </li>
+          <li class="govuk-footer__inline-list-item">
+            <%= govuk_link_to("Privacy notice", "https://www.gov.uk/government/publications/privacy-information-education-providers-workforce-including-teachers", class: "govuk-footer__link") %>
+          </li>
+        </ul>
       <% end %>
     <% end %>
   </body>

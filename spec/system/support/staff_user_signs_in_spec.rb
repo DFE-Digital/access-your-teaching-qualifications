@@ -15,7 +15,7 @@ RSpec.describe "DSI authentication" do
   private
 
   def then_i_am_signed_in
-    within("header") do
+    within("#navigation") do
       expect(page).to have_link("Features")
       expect(page).to have_content "Sign out"
     end

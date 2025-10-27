@@ -32,7 +32,7 @@ RSpec.describe "Viewing feedback" do
   end
 
   def then_i_see_the_feedback_submissions
-    expect(page).to have_css(".govuk-header__navigation-item--active", text: "Feedback")
+    expect(page).to have_css(".govuk-service-navigation__item--active", text: "Feedback")
     expect(page).to have_css("h1", text: "Feedback")
 
     h2s = page.all("h2")

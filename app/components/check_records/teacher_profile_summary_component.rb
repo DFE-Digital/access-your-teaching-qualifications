@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class CheckRecords::TeacherProfileSummaryComponent < ViewComponent::Base
+class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
   attr_reader :teacher
   attr_accessor :tags
 
   def initialize(teacher)
-    super
+    super()
     @teacher = teacher
     @tags = []
     build_tags
