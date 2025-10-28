@@ -6,4 +6,8 @@
   </div>
 <% end %>
 
+<% content_for :navigation do %>
+  <%= render(Qualifications::NavigationComponent.new(current_user: current_user)) %>
+<% end %>
+
 <%= render template: 'layouts/base' %>
