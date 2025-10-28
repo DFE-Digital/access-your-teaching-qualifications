@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CheckRecords::QualificationSummaryComponent < ViewComponent::Base
+class CheckRecords::QualificationSummaryComponent < ApplicationComponent
   include ActiveModel::Model
 
   attr_accessor :qualification

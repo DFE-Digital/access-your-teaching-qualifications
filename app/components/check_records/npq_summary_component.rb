@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CheckRecords::NpqSummaryComponent < ViewComponent::Base
+class CheckRecords::NpqSummaryComponent < ApplicationComponent
   include ActiveModel::Model
 
   attr_accessor :npqs

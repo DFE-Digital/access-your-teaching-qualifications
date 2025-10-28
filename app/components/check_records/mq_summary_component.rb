@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CheckRecords::MqSummaryComponent < ViewComponent::Base
+class CheckRecords::MqSummaryComponent < ApplicationComponent
   include ActiveModel::Model
 
   attr_accessor :mqs

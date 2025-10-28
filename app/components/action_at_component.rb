@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ActionAtComponent < ViewComponent::Base
+class ActionAtComponent < ApplicationComponent
   include ActiveModel::Model
 
   attr_accessor :action

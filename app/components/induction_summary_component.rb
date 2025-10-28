@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class InductionSummaryComponent < ViewComponent::Base
+class InductionSummaryComponent < ApplicationComponent
   include ActiveModel::Model
 
   attr_accessor :qualification

@@ -152,7 +152,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     end
 
     it "orders QTS RTPS qualifications before EYTS RTPS qualifications" do
-      rtps_qualifications = qualifications.select { |q| q.type == :eyts_rtps || q.type == :qts_rtps }
+      rtps_qualifications = qualifications.select { |q| [:eyts_rtps, :qts_rtps].include?(q.type) }
       expect(rtps_qualifications.map do |q|
  q.details.route_to_professional_status_type.professional_status_type end).to eq(
         %w[QualifiedTeacherStatus EarlyYearsTeacherStatus]
