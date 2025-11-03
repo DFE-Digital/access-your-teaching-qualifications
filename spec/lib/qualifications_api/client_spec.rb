@@ -30,6 +30,40 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
       end
     end
 
+    context "with caching enabled" do
+      let(:memory_store) { ActiveSupport::Cache.lookup_store(:memory_store) }
+      let(:npq_request_domain) do
+        "#{ENV.fetch("NPQ_QUALIFICATIONS_API_URL")}api/teacher-record-service/v1/qualifications/1234567"
+      end
+
+      # Turn on caching temporarily so we can test this properly since
+      # Rails.cache is set to :null_store in the test environment
+      before do
+        allow(Rails).to receive(:cache).and_return(memory_store)
+        Rails.cache.clear
+      end
+
+      it "makes a request to the correct NPQ endpoint when loading the teacher and caches the result" do
+        # load the cache on first request
+        client = described_class.new(token: "token")
+        client.teacher(trn: "1234567")
+
+        # second request should hit the cache
+        client = described_class.new(token: "token")
+        response = client.teacher(trn: "1234567")
+
+        expect(WebMock).to have_requested(:get, npq_request_domain).once
+
+        travel 16.minutes do
+          # after 15 minutes we should make the request again and not hit the cache
+          client = described_class.new(token: "token")
+          response = client.teacher(trn: "1234567")
+
+          expect(WebMock).to have_requested(:get, npq_request_domain).twice
+        end
+      end
+    end
+
     context "when an invalid trn is provided" do
       it "raises an error" do
         client = described_class.new(token: "token")
