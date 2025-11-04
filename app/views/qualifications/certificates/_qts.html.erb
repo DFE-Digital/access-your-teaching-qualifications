@@ -4,21 +4,35 @@
   <h1 class="heading">Qualified<br/>Teacher Status</h1>
   <p class="text">This is to certify that: <strong><%= teacher.name %></strong></p>
   <p class="text">Teacher Reference Number: <strong><%= teacher.trn %></strong></p>
-  <p>&#160;</p>
   <% if @qualification.set_membership_active %>
-    <p class="text">has attained qualified teacher status (QTS) via qualified teacher learning and <br/>
-    skills (QTLS) status, meets the requirements for employment in maintained schools and <br/> 
-    non-maintained special schools in England and is exempt from the requirements to serve a  <br/>
-    statutory induction period.</p>
-
-    <p class="text">You will lose QTS and your exemption from the requirement to serve induction if your <br/>
-      Society for Education and Training (SET) membership expires.
+    <ul>
+      <li class="text">
+        has attained qualified teacher status (QTS) via qualified teacher learning and<br/>
+        skills (QTLS) status
+      </li>
+      <li class="text">
+        meets the requirements for employment in maintained schools and non-maintained<br/>
+        special schools in England
+      </li>
+      <li class="text">
+        is exempt from the requirement to serve a statutory induction period.
+      </li>
+    </ul>
+    <p class="text">
+      QTS attained via QTLS status depends on an active membership with the Society<br/>
+      for Education and Training (SET). If you hold QTS only via QTLS and SET membership<br/>
+      and your membership ends, you will lose QTS. If you were directly awarded QTS<br/>
+      (for example, following initial teacher training) as well as holding QTS via<br/>
+      QTLS and SET membership and your membership ends, you will not lose QTS.<br/>
+      However, your exemption from induction will end.
     </p>
   <% elsif teacher.exempt_from_induction_via_induction_status? %>
+  <p>&#160;</p>
   <p class="text">has attained qualified teacher status (QTS), meets the requirements for employment in <br/>
     maintained schools and non-maintained special schools in England and is exempt from the <br/>
     requirements to serve a statutory induction period.</p>
   <% else %>
+  <p>&#160;</p>
   <p class="text">has attained qualified teacher status (QTS), meets the requirements for employment in<br/>
     maintained schools and non-maintained special schools in England provided that statutory<br/>
     induction period is completed satisfactorily.</p>
