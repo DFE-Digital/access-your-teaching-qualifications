@@ -33,5 +33,24 @@ module NpqQualificationsApi
     rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
       raise NpqQualificationsApi::ApiError, "API connection failed: #{e.message}"
     end
+
+    def get_with_cache(endpoint, options = {}, cache_key:, expires_in: 15.minutes)
+      Rails.cache.fetch(cache_key_sha(endpoint, options, cache_key), expires_in: expires_in) do
+        get(endpoint, options)
+      end
+    end
+
+    private
+
+    def cache_key_sha(endpoint, options, cache_key)
+      key_hash = {
+        cache_key: cache_key,
+        endpoint: endpoint,
+        options: options,
+        faraday_version: Gem.loaded_specs['faraday'].version # if we update Faraday, cached responses may not be valid
+      }
+
+      Digest::SHA256.hexdigest(key_hash.to_json)
+    end
   end
 end

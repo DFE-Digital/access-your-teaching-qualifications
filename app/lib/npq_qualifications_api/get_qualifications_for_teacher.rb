@@ -8,7 +8,8 @@ module NpqQualificationsApi
 
     def call
       client = Client.new
-      response = client.get(endpoint)
+      response = client.get_with_cache(endpoint, 
+                                       cache_key: "NpqQualificationsApi/GetQualificationsForTeacher#trn:#{@trn}")
 
       if response.success? && response.body.any?
         response
