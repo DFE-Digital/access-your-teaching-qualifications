@@ -318,7 +318,7 @@ GEM
       net-imap
       net-pop
       net-smtp
-    mail-notify (2.0.0)
+    mail-notify (2.1.0)
       actionmailer (>= 5.2.8.1)
       actionpack (>= 5.2.8.1)
       actionview (>= 5.2.8.1)
@@ -360,8 +360,8 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.10-x86_64-linux-musl)
       racc (~> 1.4)
-    notifications-ruby-client (6.0.0)
-      jwt (>= 1.5, < 3)
+    notifications-ruby-client (6.3.0)
+      jwt (>= 1.5, < 4)
     oauth2 (2.0.9)
       faraday (>= 0.17.3, < 3.0)
       jwt (>= 1.0, < 3.0)
