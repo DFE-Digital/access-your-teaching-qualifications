@@ -26,7 +26,7 @@ type: 'application/pdf', disposition: 'attachment'
         :onelogin_user_token
       else
         :identity_user_token
-              end
+      end
       @client ||= QualificationsApi::Client.new(token: session[token])
     end
 
