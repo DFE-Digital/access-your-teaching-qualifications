@@ -119,9 +119,9 @@ module QualificationsApi
 
     def induction_status
       return 'Passed' if passed_induction?
-      if exempt_from_induction_via_induction_status? || exempt_from_induction_via_qts_via_qtls?
-        return 'Exempt from induction'
-      end
+      return 'Failed' if failed_induction?
+      return 'Exempt from induction' if exempt_from_induction?
+
       'No induction'
     end
 
@@ -135,6 +135,10 @@ module QualificationsApi
 
     def failed_induction?
       induction_status_values.include?("Failed")
+    end
+
+    def exempt_from_induction?
+      exempt_from_induction_via_induction_status? || exempt_from_induction_via_qts_via_qtls?
     end
 
     def exempt_from_induction_via_induction_status?
