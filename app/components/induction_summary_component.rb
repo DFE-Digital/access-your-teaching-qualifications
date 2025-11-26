@@ -112,29 +112,18 @@ class InductionSummaryComponent < ApplicationComponent
   end
 
   def qtls_rows
-    if set_membership_active
-      [
-        {
-          key: {
-            text: "Status"
-          },
-          value: {
-            text: "Exempt"
-          } ,
+    status = set_membership_active ? "Exempt" : "No induction"
+
+    [
+      {
+        key: {
+          text: "Status"
+        },
+        value: {
+          text: status
         }
-      ]
-    elsif !set_membership_active
-      [
-        {
-          key: {
-            text: "Status"
-          },
-          value: {
-            text: "No induction"
-          } ,
-        }
-      ]
-    end
+      }
+    ]
   end
 
   def render_induction_exemption_reminder?
