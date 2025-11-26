@@ -78,6 +78,7 @@ module QualificationsApi
         return 'QTS via QTLS' if set_membership_active?
         return 'No QTS' if set_membership_expired?
       end
+      return 'QTS and QTLS' if qts_and_qtls?
       return 'QTS' if qts_awarded?
       return 'EYTS' if eyts_awarded?
       return 'EYPS' if eyps_awarded?
@@ -186,6 +187,10 @@ module QualificationsApi
 
     def render_qtls_expired_message?
       api_data.qtls_status == "Expired" && !qts_awarded?
+    end
+
+    def render_has_qtls_message?
+      set_membership_active?
     end
 
     private
