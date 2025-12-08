@@ -177,13 +177,12 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
   def render_induction_exemption_warning?
     induction? &&
       set_membership_expired &&
-      !passed_induction &&
       details&.status != "Failed" &&
       details&.status != "Exempt"
   end
 
   def render_qtls_warning_message?
-    qts? && qtls_only && set_membership_expired && !passed_induction
+    qts? && qtls_only && set_membership_expired
   end
 
   def description_text(status)

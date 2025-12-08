@@ -14,6 +14,7 @@ RSpec.describe "Teacher search with restrictions",
     then_i_see_the_restriction_on_the_result
 
     when_i_click_on_the_result
+    save_screenshot("scenario_screenshots/ctr/sanctions.png", full: true)
     then_i_see_the_details_of_the_record
   end
 

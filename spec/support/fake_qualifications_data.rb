@@ -182,8 +182,16 @@ module FakeQualificationsData
 
     [
       {
-        alert_type: { alert_type_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99" },
-        startDate: "2020-10-25"
+        alert_type: {
+          alert_type_id: "ed0cd700-3fb2-4db0-9403-ba57126090ed",
+        },
+        startDate: "2019-10-25"
+      },
+      {
+        alert_type: {
+          alert_type_id: "fa6bd220-61b0-41fc-9066-421b3b9d7885"
+        },
+        startDate: "2018-9-20"
       }
     ]
   end

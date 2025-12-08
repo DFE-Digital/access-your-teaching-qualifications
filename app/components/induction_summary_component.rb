@@ -76,7 +76,7 @@ class InductionSummaryComponent < ApplicationComponent
         },
         value: {
           text: description_text(details&.status)
-        } ,
+        },
       },
       {
         key: {
@@ -131,7 +131,7 @@ class InductionSummaryComponent < ApplicationComponent
   end
 
   def render_induction_exemption_warning?
-    set_membership_expired && !passed_induction && details&.status != "Failed" && details&.status != "Exempt"
+    set_membership_expired && details&.status != "Failed" && details&.status != "Exempt"
   end
 
   def description_text(status)

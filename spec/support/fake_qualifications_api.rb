@@ -191,7 +191,7 @@ class FakeQualificationsApi < Sinatra::Base
       alerts: [
         {
           alert_type: {
-            alert_type_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99",
+            alert_type_id: "ed0cd700-3fb2-4db0-9403-ba57126090ed",
           },
           startDate: "2019-10-25"
         },

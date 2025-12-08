@@ -220,6 +220,6 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def render_qtls_warning_message?
-    qts? && qtls_only && set_membership_expired && !passed_induction
+    qts? && qtls_only && set_membership_expired
   end
 end
