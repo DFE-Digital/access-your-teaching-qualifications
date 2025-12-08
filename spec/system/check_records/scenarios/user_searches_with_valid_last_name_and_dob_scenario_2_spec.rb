@@ -10,7 +10,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
     allow_any_instance_of(FakeQualificationsData).to receive(:quals_data).and_return(override_quals_data)
   end
 
-  let(:override_quals_data) {
+  let(:override_quals_data) do
     {
       "trn": "3012586",
       "firstName": "Christopher",
@@ -35,7 +35,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
       "previousNames": [],
       "qtlsStatus": "Expired"
     }
-  }
+  end
 
   after { travel_back }
 
@@ -52,7 +52,6 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
 
     when_i_click_on_the_teacher_record
     then_the_trn_is_not_in_the_url
-    save_screenshot("scenario_screenshots/ctr/scenario_2.png", full: true)
     then_i_see_an_expired_qtls_message
     then_i_see_npq_details
     and_a_viewed_timestamp_is_displayed
@@ -94,7 +93,9 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
   end
 
   def then_i_see_an_expired_qtls_message
-    expect(page).to have_content("No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired")
+    expect(page).to have_content(
+      "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired"
+    )
   end
 
   def then_i_see_npq_details

@@ -10,7 +10,8 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
     allow_any_instance_of(FakeQualificationsData).to receive(:quals_data).and_return(override_quals_data)
   end
 
-  let(:override_quals_data) {
+  # rubocop:disable Layout/LineLength
+  let(:override_quals_data) do
     {
       "trn": "3012588",
       "firstName": "Christopher",
@@ -112,7 +113,8 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
       "previousNames": [],
       "qtlsStatus": "Active"
     }
-  }
+  end
+  # rubocop:enable Layout/LineLength
 
   after { travel_back }
 
@@ -129,7 +131,6 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
 
     when_i_click_on_the_teacher_record
     then_the_trn_is_not_in_the_url
-    save_screenshot("scenario_screenshots/ctr/scenario_5.png", full: true)
     then_i_see_induction_details
     then_i_see_qts_details
     then_i_see_qts_rtps_details

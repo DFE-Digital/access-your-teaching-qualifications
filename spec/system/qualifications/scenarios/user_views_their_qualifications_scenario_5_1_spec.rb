@@ -8,8 +8,8 @@ RSpec.feature "User views their qualifications", type: :system do
     allow_any_instance_of(FakeQualificationsData).to receive(:quals_data).and_return(override_quals_data)
   end
 
-  let(:full_name) { override_quals_data.slice(:firstName, :middleName, :lastName).values.map(&:strip).join(" ") }
-  let(:override_quals_data) {
+  let(:name) { override_quals_data.slice(:firstName, :middleName, :lastName).values.map(&:strip).join(" ") }
+  let(:override_quals_data) do
     {
       "trn": "3012593",
       "firstName": "Christopher",
@@ -70,7 +70,7 @@ RSpec.feature "User views their qualifications", type: :system do
       "previousNames": [],
       "qtlsStatus": "Expired"
     }
-  }
+  end
 
   scenario "scenario 5.1",
            test: %i[with_stubbed_auth with_fake_quals_api] do
@@ -78,7 +78,6 @@ RSpec.feature "User views their qualifications", type: :system do
     and_i_am_signed_in_via_identity
 
     when_i_visit_the_qualifications_page
-    save_screenshot("scenario_screenshots/aytq/scenario_5_1.png", full: true)
     then_i_see_my_induction_details
     then_i_see_my_qts_details
     and_my_qts_certificate_is_downloadable
@@ -103,7 +102,7 @@ RSpec.feature "User views their qualifications", type: :system do
     click_on "Download Induction certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include("filename=\"#{full_name}_induction_certificate.pdf\"")
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_induction_certificate.pdf\"")
   end
 
   def then_i_see_my_qts_details
@@ -117,7 +116,7 @@ RSpec.feature "User views their qualifications", type: :system do
     click_on "Download QTS certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include("filename=\"#{full_name}_qts_certificate.pdf\";")
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_qts_certificate.pdf\";")
   end
 
   def then_i_see_my_npq_details
@@ -131,10 +130,12 @@ RSpec.feature "User views their qualifications", type: :system do
     click_on "Download NPQH certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include("filename=\"#{full_name}_npqh_certificate.pdf\";")
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_npqh_certificate.pdf\";")
   end
 
   def then_i_see_appropriate_warnings
-    expect(page).to have_content("You are no longer exempt from induction because your Society for Education and Training (SET) membership expired")
+    expect(page).to have_content(
+      "You are no longer exempt from induction because your Society for Education and Training (SET) membership expired"
+    )
   end
 end
