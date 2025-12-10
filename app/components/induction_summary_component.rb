@@ -67,26 +67,19 @@ class InductionSummaryComponent < ApplicationComponent
   end
 
   def build_rows
-    return qtls_rows if qtls_only && !passed_induction && details&.status != "Failed"
+    return induction_status_row("Failed") if details&.status == "Failed"
+    return induction_status_row("Exempt") if set_membership_active
+    return induction_status_row("No induction") if qtls_only && !passed_induction
 
-    qualification_rows = [
-      {
-        key: {
-          text: "Status"
-        },
-        value: {
-          text: description_text(details&.status)
-        },
+    qualification_rows = induction_status_row(description_text(details&.status))
+    qualification_rows << {
+      key: {
+        text: "Completed"
       },
-      {
-        key: {
-          text: "Completed"
-        },
-        value: {
-          text: awarded_at&.to_fs(:long_uk)
-        }
+      value: {
+        text: awarded_at&.to_fs(:long_uk)
       }
-    ]
+    }
 
     if ["Passed", "Pass"].include?(details.status)
       qualification_rows << {
@@ -111,16 +104,14 @@ class InductionSummaryComponent < ApplicationComponent
     name
   end
 
-  def qtls_rows
-    status = set_membership_active ? "Exempt" : "No induction"
-
+  def induction_status_row(induction_status)
     [
       {
         key: {
           text: "Status"
         },
         value: {
-          text: status
+          text: induction_status
         }
       }
     ]

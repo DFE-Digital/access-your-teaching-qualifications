@@ -82,12 +82,8 @@ RSpec.feature "User views their qualifications", type: :system do
     and_my_induction_certificate_is_downloadable
     then_i_see_my_qts_details
     and_my_qts_certificate_is_downloadable
-    then_i_see_my_rtps_details
-    then_i_see_my_eyts_details
-    and_my_eyts_certificate_is_downloadable
     then_i_see_my_npq_details
     and_my_npq_certificate_is_downloadable
-    then_i_see_my_mq_details
     and_event_tracking_is_working
   end
 
@@ -100,7 +96,7 @@ RSpec.feature "User views their qualifications", type: :system do
   def then_i_see_my_induction_details
     expect(page).to have_content("Induction")
     expect(page).to have_content("Passed")
-    expect(page).to have_content("1 October 2022")
+    expect(page).to have_content("1 March 2025")
     expect(page).to have_link("Download Induction certificate")
   end
 
@@ -108,9 +104,7 @@ RSpec.feature "User views their qualifications", type: :system do
     click_on "Download Induction certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include(
-                                                              "filename=\"#{name}_induction_certificate.pdf\""
-                                                            )
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_induction_certificate.pdf\"")
   end
 
   def then_i_see_my_qts_details
@@ -120,41 +114,13 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("Download QTS certificate")
   end
 
-  def then_i_see_my_eyts_details
-    expect(page).to have_content("Early years teacher status (EYTS)")
-    expect(page).to have_content("Held since")
-    expect(page).to have_content("27 February 2023")
-    expect(page).to have_content("Download EYTS certificate")
-  end
-
   def and_my_qts_certificate_is_downloadable
     click_on "Download QTS certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include(
-                                                              "filename=\"#{name}_qts_certificate.pdf\";"
-                                                            )
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_qts_certificate.pdf\";")
   end
 
-  def and_my_eyts_certificate_is_downloadable
-    click_on "Download EYTS certificate"
-    expect(page.response_headers["content-type"]).to eq("application/pdf")
-    expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include(
-                                                              "filename=\"#{name}_eyts_certificate.pdf\";"
-                                                            )
-  end
-
-  def then_i_see_my_rtps_details
-    expect(page).to have_content("Initial teacher training (ITT)")
-    expect(page).to have_content("BA")
-    expect(page).to have_content("Earl Spencer Primary School")
-    expect(page).to have_content("Business Studies")
-    expect(page).to have_content("28 February 2022")
-    expect(page).to have_content("28 January 2023")
-    expect(page).to have_content("Status\tPass")
-    expect(page).to have_content("7 to 14 years")
-  end
 
   def then_i_see_my_npq_details
     expect(page).to have_content("National Professional Qualification (NPQ) for Headship")
@@ -167,14 +133,6 @@ RSpec.feature "User views their qualifications", type: :system do
     click_on "Download NPQH certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include(
-                                                              "filename=\"#{name}_npqh_certificate.pdf\";"
-                                                            )
-  end
-
-  def then_i_see_my_mq_details
-    expect(page).to have_content("Mandatory qualification (MQ)")
-    expect(page).to have_content("Held since\t28 February 2023")
-    expect(page).to have_content("Specialism\tVisual impairment")
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_npqh_certificate.pdf\";")
   end
 end

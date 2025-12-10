@@ -53,15 +53,16 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
   end
 
   def induction_rows
-    if qtls_only && !passed_induction && !failed_induction?
+    unless failed_induction?
       if set_membership_active
         return [
           { key: { text: "Induction status" }, value: { text: "Exempt" } },
-          { key: { text: "Reason for exemption" },
-            value: { text: details[:exemption_reasons]&.map(&:name)&.join(", ") } }
+          { key: { text: "Reason for exemption" }, value: { text: details[:exemption_reasons]&.map(&:name)&.join(", ") } }
         ]
-      else
-        return [{ key: { text: "Induction status" }, value: { text: "No induction"} }]
+      end
+
+      if qtls_only && !passed_induction
+        return [{ key: { text: "Induction status" }, value: { text: "No induction" }}]
       end
     end
 
@@ -162,16 +163,12 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
     details&.status.present? ? details&.status == "Failed" : false
   end
 
-  def induction_required_to_complete?
-    !passed_induction && !failed_induction?
-  end
-
   def render_induction_exemption_message?
-    induction? && set_membership_active && induction_required_to_complete?
+    induction? && set_membership_active && !failed_induction?
   end
 
   def render_qts_induction_exemption_message
-    qts? && qtls_only && set_membership_active && !passed_induction && !failed_induction
+    qts? && qtls_only && set_membership_active && !failed_induction
   end
 
   def render_induction_exemption_warning?

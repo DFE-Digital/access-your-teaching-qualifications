@@ -38,9 +38,9 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
   end
 
   def induction_tag_message
-    return 'Passed induction' if passed_induction?
     return 'Failed induction' if failed_induction?
     return 'Induction Exempt' if exempt_from_induction?
+    return 'Passed induction' if passed_induction?
 
     'No induction'
   end

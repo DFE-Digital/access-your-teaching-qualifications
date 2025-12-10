@@ -261,7 +261,6 @@ class Sanction
     },
   }.freeze
 
-
   def description
     SANCTIONS[alert_type_id][:description] if SANCTIONS[alert_type_id]
   end

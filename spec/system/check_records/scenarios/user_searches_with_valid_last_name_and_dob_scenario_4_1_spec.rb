@@ -152,9 +152,6 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
   end
 
   def then_i_see_appropriate_warnings
-    # expect(page).to have_content(
-    #   "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired"
-    # )
     expect(page).to have_content(
       "No longer exempt from induction because their Society for Education and Training (SET) membership expired"
     )
