@@ -20,7 +20,7 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
     ].compact
   end
 
-  delegate :induction_status, :no_induction?, :no_restrictions?, :no_qts_or_eyts?, :teaching_status, 
+  delegate :induction_status, :no_induction?, :no_restrictions?, :no_qts_or_eyts?, :teaching_status,
            :restriction_status, :set_membership_active?, :set_membership_expired?, :qtls_only?, :qts_and_qtls?,
            :passed_induction?, :failed_induction?, :exempt_from_induction?,
            to: :teacher
@@ -30,19 +30,15 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
   end
 
   def teaching_status_tag
-    { message: teaching_status, colour: teaching_status_tag_colour}
+    { message: teaching_status, colour: teaching_status_tag_colour }
   end
 
   def induction_tag
-    { message: induction_tag_message, colour: no_induction? ? 'blue' : 'green'}
+    { message: induction_tag_message, colour: no_induction? ? 'blue' : 'green' }
   end
 
   def induction_tag_message
-    return 'Failed induction' if failed_induction?
-    return 'Induction Exempt' if exempt_from_induction?
-    return 'Passed induction' if passed_induction?
-
-    'No induction'
+    I18n.t("summary_tags.induction.status.#{induction_status}")
   end
 
   def teaching_status_tag_colour

@@ -7,8 +7,7 @@ class Qualification
                 :qtls_only,
                 :set_membership_active,
                 :set_membership_expired,
-                :passed_induction,
-                :failed_induction,
+                :induction_status,
                 :qts_and_qtls,
                 :routes
 

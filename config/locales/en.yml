@@ -14,6 +14,38 @@ en:
     feedback_auth_failure: You must be signed in to give feedback.
     session_expired: Your session has expired. Please sign in again.
 
+  bulk_search:
+    induction:
+      status:
+        failed: Failed
+        exempt: Exempt from induction
+        passed: Passed
+        none: No induction
+        required_to_complete: Required to complete
+        in_progress: In Progress
+        failed_in_wales: Failed in Wales
+
+  summary_tags:
+    induction:
+      status:
+        failed: Failed induction
+        exempt: Induction exempt
+        passed: Passed induction
+        none: No induction
+        required_to_complete: Required to complete Induction
+        in_progress: Induction in progress
+        failed_in_wales: Induction failed in wales
+
+  induction_summary:
+    status:
+      failed: Failed
+      exempt: Exempt
+      passed: Passed
+      none: No induction
+      required_to_complete: Required to complete
+      in_progress: In Progress
+      failed_in_wales: Failed in Wales
+
   activemodel:
     errors:
       models:

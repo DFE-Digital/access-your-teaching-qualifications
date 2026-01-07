@@ -86,7 +86,7 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
     context "when teacher is exempt from induction" do
       let(:teacher) { QualificationsApi::Teacher.new({ 'induction' => { 'status' => 'Exempt' }}) }
 
-      it { is_expected.to have_text("Induction Exempt") }
+      it { is_expected.to have_text("Induction exempt") }
     end
 
     context "when teacher does not have QTS is exempt from induction via QTLS" do
@@ -112,7 +112,7 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
         )
       end
 
-      it { is_expected.to have_text("Induction Exempt") }
+      it { is_expected.to have_text("Induction exempt") }
       it { is_expected.to have_text("QTS via QTLS")}
     end
 
@@ -154,7 +154,7 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
         )
       end
 
-      it { is_expected.to have_text("Induction Exempt") }
+      it { is_expected.to have_text("Induction exempt") }
       it { is_expected.to have_text("QTS") }
     end
   end

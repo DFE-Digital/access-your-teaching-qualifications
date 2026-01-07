@@ -56,7 +56,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
-        passed_induction: true,
+        induction_status: :passed,
         qtls_only: false,
         qts_and_qtls: false,
         set_membership_active: false,
@@ -92,7 +92,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
-        passed_induction: true,
+        induction_status: :passed,
         qtls_only: true,
         qts_and_qtls: false,
         set_membership_active: true,
@@ -130,7 +130,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
-        passed_induction: true,
+        induction_status: :passed,
         qtls_only: true,
         qts_and_qtls: false,
         set_membership_active: false,
@@ -162,7 +162,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
-        passed_induction: false,
+        induction_status: :failed,
         qtls_only: true,
         qts_and_qtls: false,
         set_membership_active: true,
@@ -198,7 +198,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
-        passed_induction: true,
+        induction_status: :passed,
         qtls_only: true,
         set_membership_active: true,
         type: :qts,
@@ -235,7 +235,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
-        passed_induction: true,
+        induction_status: :passed,
         qtls_only: true,
         set_membership_active: false,
         type: :qts,
@@ -266,7 +266,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
-        passed_induction: false,
+        induction_status: :exempt,
         qtls_only: true,
         set_membership_active: true,
         type: :qts,

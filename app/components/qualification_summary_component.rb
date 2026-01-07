@@ -13,8 +13,7 @@ class QualificationSummaryComponent < ApplicationComponent
            :rtps?,
            :qts?,
            :eyts?,
-           :passed_induction,
-           :failed_induction,
+           :induction_status,
            :set_membership_active,
            :set_membership_expired,
            :name,
@@ -216,10 +215,14 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def render_qts_induction_exemption_message?
-    qts? && qtls_only && set_membership_active && !passed_induction && !failed_induction
+    qts? && set_membership_active && !failed_induction?
+  end
+
+  def failed_induction?
+    induction_status == :failed
   end
 
   def render_qtls_warning_message?
-    qts? && qtls_only && set_membership_expired
+    qts? && set_membership_expired
   end
 end

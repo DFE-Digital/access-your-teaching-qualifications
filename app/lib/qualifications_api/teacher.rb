@@ -119,11 +119,17 @@ module QualificationsApi
     end
 
     def induction_status
-      return 'Passed' if passed_induction?
-      return 'Failed' if failed_induction?
-      return 'Exempt from induction' if exempt_from_induction?
+      # This is the order of precedence for induction status
+      # If logic for a new status is added, ensure it is in the correct order
+      # If logic for an existing status becomes more complicated, break it out like induction_exemption_present?
+      return :failed               if induction_status_values.include?("Failed")
+      return :exempt               if induction_exemption_present? # this has additional logic
+      return :passed               if induction_status_values.intersect?(["Passed", "Pass"])
+      return :required_to_complete if induction_status_values.include?("RequiredToComplete")
+      return :in_progress          if induction_status_values.include?("InProgress")
+      return :failed_in_wales      if induction_status_values.include?("FailedInWales")
 
-      'No induction'
+      :none
     end
 
     def induction_status_values
@@ -131,14 +137,18 @@ module QualificationsApi
     end
 
     def passed_induction?
-      induction_status_values.intersect?(["Passed", "Pass"])
+      induction_status == :passed
     end
 
     def failed_induction?
-      induction_status_values.include?("Failed")
+      induction_status == :failed
     end
 
     def exempt_from_induction?
+      induction_status == :exempt
+    end
+
+    def induction_exemption_present?
       exempt_from_induction_via_induction_status? || exempt_from_induction_via_qts_via_qtls?
     end
 
@@ -147,7 +157,7 @@ module QualificationsApi
     end
 
     def exempt_from_induction_via_qts_via_qtls?
-      !passed_induction? && set_membership_active?
+      set_membership_active?
     end
 
     def no_induction?
@@ -206,8 +216,7 @@ module QualificationsApi
         qts_and_qtls: qts_and_qtls?,
         set_membership_active: set_membership_active?,
         set_membership_expired: set_membership_expired?,
-        passed_induction: passed_induction?,
-        failed_induction: failed_induction?,
+        induction_status: induction_status,
         type: :qts,
         routes: qts_data.routes || []
       )
@@ -314,7 +323,7 @@ module QualificationsApi
         qts_and_qtls: qts_and_qtls?,
         set_membership_active: set_membership_active?,
         set_membership_expired: set_membership_expired?,
-        passed_induction: passed_induction?,
+        induction_status: induction_status,
         name: "Induction",
         type: :induction
       )

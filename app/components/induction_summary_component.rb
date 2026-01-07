@@ -13,7 +13,7 @@ class InductionSummaryComponent < ApplicationComponent
            :set_membership_active,
            :set_membership_expired,
            :qts_and_qtls,
-           :passed_induction,
+           :induction_status,
            to: :qualification
 
   def detail_classes
@@ -67,11 +67,9 @@ class InductionSummaryComponent < ApplicationComponent
   end
 
   def build_rows
-    return induction_status_row("Failed") if details&.status == "Failed"
-    return induction_status_row("Exempt") if set_membership_active
-    return induction_status_row("No induction") if qtls_only && !passed_induction
+    qualification_rows = induction_status_row(induction_status)
+    return qualification_rows unless induction_status == :passed
 
-    qualification_rows = induction_status_row(description_text(details&.status))
     qualification_rows << {
       key: {
         text: "Completed"
@@ -81,21 +79,19 @@ class InductionSummaryComponent < ApplicationComponent
       }
     }
 
-    if ["Passed", "Pass"].include?(details.status)
-      qualification_rows << {
-        key: {
-          text: "Certificate"
-        },
-        value: {
-          text:
-            link_to(
-              "Download Induction certificate",
-              qualifications_certificate_path(:induction, format: :pdf),
-              class: "govuk-link"
-            )
-        }
+    qualification_rows << {
+      key: {
+        text: "Certificate"
+      },
+      value: {
+        text:
+          link_to(
+            "Download Induction certificate",
+            qualifications_certificate_path(:induction, format: :pdf),
+            class: "govuk-link"
+          )
       }
-    end
+    }
 
     qualification_rows
   end
@@ -104,28 +100,24 @@ class InductionSummaryComponent < ApplicationComponent
     name
   end
 
-  def induction_status_row(induction_status)
+  def induction_status_row(status)
     [
       {
         key: {
           text: "Status"
         },
         value: {
-          text: induction_status
+          text: I18n.t("induction_summary.status.#{status}")
         }
       }
     ]
   end
 
   def render_induction_exemption_reminder?
-    set_membership_active && !passed_induction && details&.status != "Failed"
+    set_membership_active && induction_status != :failed
   end
 
   def render_induction_exemption_warning?
-    set_membership_expired && details&.status != "Failed" && details&.status != "Exempt"
-  end
-
-  def description_text(status)
-    status&.underscore&.humanize unless status.blank? || status == "None"
+    set_membership_expired && [:exempt, :failed].exclude?(induction_status)
   end
 end

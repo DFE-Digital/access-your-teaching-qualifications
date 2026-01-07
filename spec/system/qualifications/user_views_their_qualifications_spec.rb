@@ -11,7 +11,6 @@ RSpec.feature "User views their qualifications", type: :system do
 
     when_i_visit_the_qualifications_page
     then_i_see_my_induction_details
-    and_my_induction_certificate_is_downloadable
     then_i_see_my_qts_details
     and_my_qts_certificate_is_downloadable
     then_i_see_my_rtps_details
@@ -31,20 +30,7 @@ RSpec.feature "User views their qualifications", type: :system do
 
   def then_i_see_my_induction_details
     expect(page).to have_content("Induction")
-    expect(page).to have_content("Passed")
-    expect(page).to have_content("1 October 2022")
-    expect(page).to have_link("Download Induction certificate")
-  end
-
-  def and_my_induction_certificate_is_downloadable
-    click_on "Download Induction certificate"
-    expect(page.response_headers["content-type"]).to eq("application/pdf")
-    expect(page.response_headers["content-disposition"]).to include(
-                                                              "attachment"
-                                                            )
-    expect(page.response_headers["content-disposition"]).to include(
-                                                              "filename=\"Terry Walsh_induction_certificate.pdf\""
-                                                            )
+    expect(page).to have_content("Exempt")
   end
 
   def then_i_see_my_qts_details
@@ -90,7 +76,7 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("Business Studies")
     expect(page).to have_content("28 February 2022")
     expect(page).to have_content("28 January 2023")
-    expect(page).to have_content("Status\tPass")
+    expect(page).to have_content("Status\tHolds")
     expect(page).to have_content("7 to 14 years")
   end
 

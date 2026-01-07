@@ -57,7 +57,7 @@ module FakeQualificationsData
   end
 
   def qts_data(qts_via_qtls:)
-    route = if qts_via_qtls  && false
+    route = if qts_via_qtls
       {
         "routeToProfessionalStatusType" => {
           "routeToProfessionalStatusTypeId" => QualificationsApi::Teacher::QTLS_ROUTE_ID,
