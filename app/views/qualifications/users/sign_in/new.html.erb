@@ -4,27 +4,29 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Sign in to access your teaching qualifications</h1>
 
-    <% if FeatureFlags::FeatureFlag.active?(:one_login) %>
-      <p class="govuk-body">You’ll need a GOV.UK One Login account to access your teaching qualifications.</p>
-      <p class="govuk-body">You can create an account if you do not have one already.</p>
-      <%=
-        govuk_button_to(
-          "Sign in with GOV.UK One Login",
-          "/qualifications/users/auth/onelogin",
-          method: :post
-        )
-      %>
+    <h2 class="govuk-heading-m">Choose your sign-in method</h2>
 
-    <% else %>
-      <p class="govuk-body">You’ll need a DfE Identity account to access your teaching qualifications.</p>
-      <p class="govuk-body">You can create an account if you do not have one already.</p>
-      <%=
-        govuk_button_to(
-          "Sign in with DfE Identity",
-          "/qualifications/users/auth/identity",
-          method: :post
-        )
-      %>
-    <% end %>
+    <h3 class="govuk-heading-s">Sign in with GOV.UK One Login</h3>
+
+    <p class="govuk-body">You’ll need a GOV.UK One Login account to access your teaching qualifications.</p>
+    <p class="govuk-body">You can create an account if you do not have one already.</p>
+    <%=
+      govuk_button_to(
+        "Sign in with GOV.UK One Login",
+        "/qualifications/users/auth/onelogin",
+        method: :post
+      )
+    %>
+
+    <h3 class="govuk-heading-s">Sign in with DfE Identity</h3>
+    <p class="govuk-body">You’ll need a DfE Identity account to access your teaching qualifications.</p>
+    <p class="govuk-body">You can create an account if you do not have one already.</p>
+    <%=
+      govuk_button_to(
+        "Sign in with DfE Identity",
+        "/qualifications/users/auth/identity",
+        method: :post
+      )
+    %>
   </div>
 </div>
