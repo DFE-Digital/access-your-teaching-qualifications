@@ -8,7 +8,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   after { travel_back }
 
-  scenario "User searches with a last name that has whitespace and finds a record",
+  scenario "User searches with qts_via_qtls and failed induction does not show as exempt",
            test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_check_service_is_open
     and_time_is_frozen
@@ -42,10 +42,10 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def and_search_with_a_valid_name_and_dob
-    fill_in "Last name", with: ["Walsh ", " Walsh", "Walsh\n"].sample
-    fill_in "Day", with: ["5 ", " 5", "5"].sample
-    fill_in "Month", with: ["April ", " April", "April\n"].sample
-    fill_in "Year", with: ["1992 ", " 1992", "1992\n"].sample
+    fill_in "Last name", with: "FailedInduction"
+    fill_in "Day", with: "5"
+    fill_in "Month", with: "April"
+    fill_in "Year", with: "1992"
     click_button "Find record"
   end
 
@@ -54,12 +54,12 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_the_trn_is_not_in_the_url
-    expect(page).to have_current_path("/check-records/teachers/#{SecureIdentifier.encode('1234567')}")
+    expect(page).to have_current_path("/check-records/teachers/#{SecureIdentifier.encode('1357913')}")
   end
 
   def and_my_search_is_logged
     search_log = SearchLog.last
-    expect(search_log.last_name).to eq "Walsh"
+    expect(search_log.last_name).to eq "FailedInduction"
     expect(search_log.date_of_birth.to_s).to eq "1992-04-05"
     expect(search_log.result_count).to eq 1
   end
@@ -70,7 +70,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def then_i_see_induction_details
     expect(page).to have_content("Induction")
-    expect(page).to have_content("Exempt")
+    expect(page).to have_content("Failed")
   end
 
   def then_i_see_qts_details
@@ -104,7 +104,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_npq_details
-    expect(page).to have_content("Date NPQ for Early Years Leadership awarded")
+    expect(page).to have_content("Date NPQ for Headship awarded")
     expect(page).to have_content("27 February 2023")
   end
 
@@ -128,7 +128,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     expect(page).to have_content "You should dispose of the offline records"
   end
 end
-def then_i_see_previous_last_names
-  expect(page).to have_content("Previous last names")
-  expect(page).to have_content("Jones\nSmith")
-end
+  def then_i_see_previous_last_names
+    expect(page).to have_content("Previous last names")
+    expect(page).to have_content("Jones\nSmith")
+  end

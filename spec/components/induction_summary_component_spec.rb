@@ -20,6 +20,7 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
         qtls_only: false,
         qts_and_qtls: false,
         set_membership_active: false,
+        induction_status: :passed,
         details: induction
       )
     end

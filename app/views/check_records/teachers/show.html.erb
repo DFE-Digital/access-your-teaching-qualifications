@@ -23,6 +23,12 @@
       <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired") %>
     <% end %>
 
+    <% if @teacher.render_has_qtls_message? %>
+      <%= govuk_notification_banner(title_text: "Important") do %>
+        <p>Qualified teacher learning and skills (QTLS) status will expire if <%= link_to("Society for Education and Training (SET)", "https://set.et-foundation.co.uk/your-career/qtls") %> membership is not renewed.</p>
+      <% end %>
+    <% end %>
+
     <% if @teacher.sanctions.any? && @teacher.sanctions&.first&.description.present? %>
       <%= govuk_inset_text classes: "app-inset-text--red govuk-!-padding-bottom-2 govuk-!-padding-top-3 govuk-!-margin-bottom- govuk-!-margin-top-0" do %>
         <% @teacher.sanctions.each do |sanction| %>

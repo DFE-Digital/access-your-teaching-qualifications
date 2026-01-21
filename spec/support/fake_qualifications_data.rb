@@ -1,5 +1,5 @@
 module FakeQualificationsData
-  def quals_data(trn: nil, rtps: true)
+  def quals_data(trn: nil, rtps: true, qts_via_qtls: true, induction_status: "Passed")
     {
       trn: trn || "3000299",
       dateOfBirth: "2000-01-01",
@@ -21,37 +21,64 @@ module FakeQualificationsData
           }
         ]
       },
-      qts: {
-        holdsFrom: "2023-02-27",
-        "routes" => [
-          {
-            "routeToProfessionalStatusType" => {
-              "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
-              "name" => "Initial teacher training (ITT)",
-              "professionalStatusType" => "QualifiedTeacherStatus"
-            }
-          }
-        ],
-        awarded_approved_count: "1"
-      },
-      induction: {
-        startDate: "2022-09-01",
-        completedDate: "2022-10-01",
-        status: "Passed",
-        exemptionReasons: [
-          {
-            inductionExemptionReasonId: "induction-exemption-reason-id-33333",
-            "name": "Gained QTS before 1999"
-          }
-        ]
-      },
+      qts: qts_data(qts_via_qtls:),
+      induction: induction_data(induction_status),
       "routesToProfessionalStatuses": [rtps ? build_rtps : nil].compact.flatten,
       mandatoryQualifications: [
         { endDate: "2023-02-28", specialism: "Visual impairment", mandatoryQualificationId: 1 },
         { endDate: "2022-01-01", specialism: "Hearing", mandatoryQualificationId: 1 }
       ],
       alerts: fake_alerts(trn),
-      qtlsStatus: "None"
+      qtlsStatus: qts_via_qtls ? "Active" : "None"
+    }
+  end
+
+  def induction_data(induction_status)
+    if induction_status == "Failed"
+      return {
+        startDate: "2022-09-01",
+        completedDate: nil,
+        status: induction_status,
+        exemptionReasons: []
+      }
+    end
+
+    {
+      startDate: "2022-09-01",
+      completedDate: "2022-10-01",
+      status: induction_status,
+      exemptionReasons: [
+        {
+          inductionExemptionReasonId: "induction-exemption-reason-id-33333",
+          "name": "Gained QTS before 1999"
+        }
+      ]
+    }
+  end
+
+  def qts_data(qts_via_qtls:)
+    route = if qts_via_qtls
+      {
+        "routeToProfessionalStatusType" => {
+          "routeToProfessionalStatusTypeId" => QualificationsApi::Teacher::QTLS_ROUTE_ID,
+          "name" => "string",
+          "professionalStatusType" => "QualifiedTeacherStatus"
+        }
+      }
+    else
+      {
+        "routeToProfessionalStatusType" => {
+          "routeToProfessionalStatusTypeId" => "qts-route-type-id-11111",
+          "name" => "Initial teacher training (ITT)",
+          "professionalStatusType" => "QualifiedTeacherStatus"
+        }
+      }
+    end
+
+    {
+      holdsFrom: "2023-02-27",
+      "routes" => [route],
+      awarded_approved_count: "1"
     }
   end
 
@@ -155,8 +182,16 @@ module FakeQualificationsData
 
     [
       {
-        alert_type: { alert_type_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99" },
-        startDate: "2020-10-25"
+        alert_type: {
+          alert_type_id: "ed0cd700-3fb2-4db0-9403-ba57126090ed",
+        },
+        startDate: "2019-10-25"
+      },
+      {
+        alert_type: {
+          alert_type_id: "fa6bd220-61b0-41fc-9066-421b3b9d7885"
+        },
+        startDate: "2018-9-20"
       }
     ]
   end

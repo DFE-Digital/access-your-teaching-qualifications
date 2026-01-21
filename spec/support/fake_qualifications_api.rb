@@ -44,6 +44,11 @@ class FakeQualificationsApi < Sinatra::Base
           total: 1,
           results: [no_data]
         }.to_json
+      when "FailedInduction"
+        {
+          total: 1,
+          results: [teacher_data(trn: "1357913")]
+        }.to_json
       else
         {
           total: 1,
@@ -68,6 +73,8 @@ class FakeQualificationsApi < Sinatra::Base
         quals_data(trn:).to_json
       when "1212121"
         no_data.to_json
+      when "1357913"
+        quals_data(trn:, qts_via_qtls: true, induction_status: "Failed").to_json
       else
         halt 404
       end
@@ -184,7 +191,7 @@ class FakeQualificationsApi < Sinatra::Base
       alerts: [
         {
           alert_type: {
-            alert_type_id: "40794ea8-eda2-40a8-a26a-5f447aae6c99",
+            alert_type_id: "ed0cd700-3fb2-4db0-9403-ba57126090ed",
           },
           startDate: "2019-10-25"
         },

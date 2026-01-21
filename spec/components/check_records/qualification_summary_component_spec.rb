@@ -65,7 +65,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         name: "Qualified teacher status (QTS)",
         qtls_only: false,
         set_membership_active: false,
-        passed_induction: false,
+        induction_status: :none,
         qts_and_qtls: false,
         type: :qts,
       )
@@ -100,7 +100,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: true,
-        passed_induction: false,
+        induction_status: :exempt,
         qts_and_qtls: false,
         name: "Qualified teacher status (QTS)",
         type: :qts,
@@ -140,7 +140,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: false,
-        passed_induction: false,
+        induction_status: :none,
         qts_and_qtls: false,
         name: "Qualified teacher status (QTS)",
         type: :qts,
@@ -176,7 +176,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: false,
         set_membership_active: true,
-        passed_induction: false,
+        induction_status: :exempt,
         qts_and_qtls: true,
         name: "Qualified teacher status (QTS)",
         type: :qts,
@@ -217,7 +217,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: false,
         set_membership_active: true,
-        passed_induction: false,
+        induction_status: :exempt,
         qts_and_qtls: true,
         name: "Qualified teacher status (QTS)",
         type: :qts,
@@ -257,7 +257,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: true,
-        passed_induction: false,
+        induction_status: :exempt,
         qts_and_qtls: true,
         name: "Induction",
         details: CoercedDetails.new({ status: "Not complete" }),
@@ -295,7 +295,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
         set_membership_active: true,
-        passed_induction: false,
+        induction_status: :exempt,
         qts_and_qtls: false,
         name: "Induction",
         details: CoercedDetails.new(status: "Something else"),
@@ -330,10 +330,11 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
     let(:qualification) do
       Qualification.new(
-        awarded_at: fake_quals_data.qts.holds_from&.to_date,
+        awarded_at: nil,
         qtls_only: true,
         set_membership_active: false,
-        passed_induction: false,
+        set_membership_expired: true,
+        induction_status: :none,
         qts_and_qtls: false,
         name: "Induction",
         details: CoercedDetails.new({status: "Something else"}),
@@ -345,7 +346,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     let(:rendered) { render_inline(component) }
     let(:rows) { rendered.css(".govuk-summary-list__row") }
 
-    it "renders two rows" do
+    it "renders one row" do
       expect(rows.count).to eq(1)
     end
 

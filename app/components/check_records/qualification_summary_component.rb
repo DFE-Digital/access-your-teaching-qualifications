@@ -19,8 +19,7 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
            :type,
            :qts?,
            :eyts?,
-           :passed_induction,
-           :failed_induction,
+           :induction_status,
            :qts_and_qtls,
            to: :qualification
 
@@ -53,25 +52,24 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
   end
 
   def induction_rows
-    if qtls_only && !passed_induction && !failed_induction?
-      if set_membership_active
-        return [
-          { key: { text: "Induction status" }, value: { text: "Exempt" } },
-          { key: { text: "Reason for exemption" },
-            value: { text: details[:exemption_reasons]&.map(&:name)&.join(", ") } }
-        ]
-      else
-        return [{ key: { text: "Induction status" }, value: { text: "No induction"} }]
-      end
-    end
-
     [
       {
         key: { text: "Induction status" },
-        value: { text: description_text(details&.status) }
-      },
-      { key: { text: "Date completed" }, value: { text: awarded_at&.to_fs(:long_uk) } }
-    ]
+        value: { text: I18n.t("induction_summary.status.#{induction_status}") }
+      }
+    ].tap do |rows|
+      if induction_exempt?
+        rows << {
+          key: { text: "Reason for exemption" },
+          value: { text: details[:exemption_reasons]&.map(&:name)&.join(", ") }
+        }
+      elsif awarded_at.present?
+        rows << {
+          key: { text: "Date completed" },
+          value: { text: awarded_at&.to_fs(:long_uk) }
+        }
+      end
+    end
   end
 
   def rtps_rows
@@ -159,34 +157,29 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
   end
 
   def failed_induction?
-    details&.status.present? ? details&.status == "Failed" : false
+    induction_status == :failed
   end
 
-  def induction_required_to_complete?
-    !passed_induction && !failed_induction?
+  def induction_exempt?
+    induction_status == :exempt
   end
 
   def render_induction_exemption_message?
-    induction? && set_membership_active && induction_required_to_complete?
+    induction? && set_membership_active && !failed_induction?
   end
 
   def render_qts_induction_exemption_message
-    qts? && qtls_only && set_membership_active && !passed_induction && !failed_induction
+    qts? && qtls_only && set_membership_active && !failed_induction?
   end
 
   def render_induction_exemption_warning?
     induction? &&
       set_membership_expired &&
-      !passed_induction &&
-      details&.status != "Failed" &&
-      details&.status != "Exempt"
+      !failed_induction? &&
+      !induction_exempt?
   end
 
   def render_qtls_warning_message?
-    qts? && qtls_only && set_membership_expired && !passed_induction
-  end
-
-  def description_text(status)
-    status&.underscore&.humanize unless status.blank? || status == "None"
+    qts? && qtls_only && set_membership_expired
   end
 end
