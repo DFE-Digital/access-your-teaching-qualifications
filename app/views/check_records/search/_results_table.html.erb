@@ -18,9 +18,11 @@
           body.with_row do |row|
             row.with_cell(text: govuk_link_to(teacher.name, check_records_teacher_path(SecureIdentifier.encode(teacher.trn)), class: 'govuk-link--no-visited-state govuk-!-font-weight-bold'))
             row.with_cell(text: teacher.trn)
-            row.with_cell(
-              text: teacher.restriction_status == 'Restriction' ? govuk_tag(text: teacher.restriction_status, colour: 'red') : teacher.restriction_status
-            )
+            if teacher.no_restrictions?
+              row.with_cell(text: t("bulk_search.restrictions.false"))
+            else
+              row.with_cell(text: govuk_tag(text: t("bulk_search.restrictions.true"), colour: 'red'))
+            end
             row.with_cell(text: teacher.teaching_status)
             row.with_cell(
               text: t("bulk_search.induction.status.#{teacher.induction_status}"),

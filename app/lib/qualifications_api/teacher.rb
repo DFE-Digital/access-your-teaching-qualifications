@@ -54,12 +54,6 @@ module QualificationsApi
       ].flatten.compact
     end
 
-    def restriction_status
-      return 'No restrictions' if no_restrictions?
-
-      'Restriction'
-    end
-
     def no_restrictions?
       return true if sanctions.blank? ||
         sanctions.all?(&:guilty_but_not_prohibited?) ||

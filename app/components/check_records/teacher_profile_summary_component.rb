@@ -21,12 +21,15 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
   end
 
   delegate :induction_status, :no_induction?, :no_restrictions?, :no_qts_or_eyts?, :teaching_status,
-           :restriction_status, :set_membership_active?, :set_membership_expired?, :qtls_only?, :qts_and_qtls?,
+           :set_membership_active?, :set_membership_expired?, :qtls_only?, :qts_and_qtls?,
            :passed_induction?, :failed_induction?, :exempt_from_induction?,
            to: :teacher
 
   def restriction_tag
-    { message: "Restricted", colour: "red" } unless no_restrictions?
+    {
+      message: I18n.t("summary_tags.restrictions.#{!no_restrictions?}"),
+      colour: no_restrictions? ? "green" : "red"
+    }
   end
 
   def teaching_status_tag
