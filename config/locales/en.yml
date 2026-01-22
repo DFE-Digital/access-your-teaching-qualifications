@@ -15,6 +15,9 @@ en:
     session_expired: Your session has expired. Please sign in again.
 
   bulk_search:
+    restrictions:
+      true: Restriction
+      false: No restrictions
     induction:
       status:
         failed: Failed
@@ -26,6 +29,9 @@ en:
         failed_in_wales: Failed in Wales
 
   summary_tags:
+    restrictions:
+      true: Restricted
+      false: No restrictions
     induction:
       status:
         failed: Failed induction

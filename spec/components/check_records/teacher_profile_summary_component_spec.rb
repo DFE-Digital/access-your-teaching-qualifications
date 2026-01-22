@@ -13,6 +13,29 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
     it { is_expected.to have_text("No QTS or EYTS") }
     it { is_expected.to have_text("No induction") }
 
+    describe "restrictions tag" do
+      context "when the teacher has no restrictions" do
+        let(:teacher) { QualificationsApi::Teacher.new({}) }
+
+        it { is_expected.to have_text("No restrictions") }
+      end
+
+      context "when the teacher has restrictions" do
+        let(:teacher) do
+          QualificationsApi::Teacher.new({
+            "alerts" => [
+              "alert_type" =>  {
+                "alert_type_id" => "1a2b06ae-7e9f-4761-b95d-397ca5da4b13"
+              },
+              "start_date" => "2024-01-01"
+            ]
+          })
+        end
+
+        it { is_expected.to have_text("Restricted") }
+      end
+    end
+
     context "when teacher has EYPS" do
       let(:teacher) { QualificationsApi::Teacher.new({ 'eyps' => { 'awarded' => Time.current }}) }
 
