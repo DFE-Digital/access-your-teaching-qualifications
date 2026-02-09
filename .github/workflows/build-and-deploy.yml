@@ -43,7 +43,7 @@ jobs:
           context: .
           max-cache: true
           reuse-cache: true
-          snyk-token: ${{ secrets.SNYK_TOKEN }}
+  #          snyk-token: ${{ secrets.SNYK_TOKEN }}
 
   deploy_review_app:
     name: Deploy to review environment
