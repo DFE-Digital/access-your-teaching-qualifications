@@ -6,7 +6,7 @@
         items = []
 
         if current_user
-          if FeatureFlags::FeatureFlag.active?(:one_login)
+          if current_session.logged_in_via_one_login?
             items << {
               current: current_page?(qualifications_identity_user_path),
               href: qualifications_one_login_user_path,
