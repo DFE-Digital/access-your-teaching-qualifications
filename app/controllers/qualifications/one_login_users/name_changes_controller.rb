@@ -1,7 +1,7 @@
 module Qualifications
   module OneLoginUsers
     class NameChangesController < QualificationsInterfaceController
-      before_action :redirect_to_root_unless_one_login_enabled
+      before_action :redirect_to_root_unless_one_login_active
       before_action :redirect_if_change_pending, except: [:submitted]
 
       def new
@@ -61,7 +61,7 @@ module Qualifications
       end
 
       def qualifications_api_client
-        @qualifications_api_client ||= QualificationsApi::Client.new(token: session[user_token_session_key])
+        @qualifications_api_client ||= QualificationsApi::Client.new(token: current_session.user_token)
       end
 
       def redirect_if_change_pending

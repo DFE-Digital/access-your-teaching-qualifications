@@ -7,7 +7,6 @@ RSpec.feature "GOVUK One Login auth", type: :system do
 
   scenario "User signs out", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
-    given_onelogin_authentication_is_active
     and_onelogin_auth_is_mocked
     and_i_am_signed_in_via_onelogin
     when_i_click_the_sign_out_link
