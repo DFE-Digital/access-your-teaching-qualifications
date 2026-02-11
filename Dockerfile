@@ -113,6 +113,7 @@ RUN apk add --no-cache \
     udev \
     dumb-init \
     curl \
+    libssl3=3.3.6-r0 \
     chromium=131.0.6778.108-r0
 
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
