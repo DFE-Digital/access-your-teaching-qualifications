@@ -7,7 +7,6 @@ RSpec.feature "Account page", type: :system do
 
   scenario "User views their account page", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
-    given_onelogin_authentication_is_active
     and_onelogin_auth_is_mocked
     when_i_go_to_the_sign_in_page
     and_click_the_onelogin_sign_in_button

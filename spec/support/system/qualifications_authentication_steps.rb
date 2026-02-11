@@ -51,7 +51,6 @@ module QualificationAuthenticationSteps
   end
   alias_method :and_onelogin_auth_is_mocked, :given_onelogin_auth_is_mocked
 
-
   def when_i_go_to_the_sign_in_page
     visit qualifications_root_path
   end

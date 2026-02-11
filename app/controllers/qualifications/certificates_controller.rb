@@ -22,12 +22,7 @@ type: 'application/pdf', disposition: 'attachment'
     private
 
     def client
-      token = if FeatureFlags::FeatureFlag.active?(:one_login)
-        :onelogin_user_token
-      else
-        :identity_user_token
-      end
-      @client ||= QualificationsApi::Client.new(token: session[token])
+      @client ||= QualificationsApi::Client.new(token: current_session.user_token)
     end
 
     def teacher

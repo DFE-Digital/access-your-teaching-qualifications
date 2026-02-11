@@ -11,7 +11,7 @@ RSpec.feature "The root path", type: :system do
   end
 
   def then_i_see_the_signin_with_identity_page
-    expect(page).to have_content(signin_button_text)
+    expect(page).to have_selector("input[type=submit][value='#{signin_button_text}']")
   end
 
   def signin_button_text
