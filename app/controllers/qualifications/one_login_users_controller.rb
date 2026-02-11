@@ -14,6 +14,13 @@ module Qualifications
 
     private
 
+    def onelogin_security_details_url
+      return "https://home.account.gov.uk" if HostingEnvironment.production?
+
+      "https://home.integration.account.gov.uk/"
+    end
+    helper_method :onelogin_security_details_url
+
     def extract_payload(token)
       _header, encoded_payload, _signature = token.split('.')
       payload = Base64.urlsafe_decode64(encoded_payload)
