@@ -92,7 +92,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def and_i_confirm_my_changes
-    click_button "Continue"
+    click_button "Submit support request"
   end
 
   def then_my_request_is_submitted
