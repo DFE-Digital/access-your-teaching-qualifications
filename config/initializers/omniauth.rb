@@ -70,7 +70,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            send_scope_to_token_endpoint: false,
            client_options: {
              authorization_endpoint: "/oauth2/authorize",
-             end_session_endpoint: "/oauth2/logout",
+             end_session_endpoint: "#{ENV.fetch("ONELOGIN_API_DOMAIN", "not_set")}/oauth2/logout",
              token_endpoint: "/oauth2/token",
              userinfo_endpoint: "/oauth2/userinfo",
              host: URI(ENV.fetch("ONELOGIN_API_DOMAIN", "not_set")).host,
@@ -86,8 +86,8 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            issuer: ENV["ONELOGIN_ISSUER"],
            path_prefix: "/qualifications/users/auth",
            pkce: true,
-           post_logout_redirect_uri:
-             "#{ENV["HOSTING_DOMAIN"]}/qualifications/sign-out",
+           logout_path: "/logout",
+           post_logout_redirect_uri: "#{ENV["HOSTING_DOMAIN"]}/qualifications/sign-out",
            response_type: :code,
            scope: %w[email openid profile teaching_record]
 end

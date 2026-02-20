@@ -13,9 +13,12 @@ module Qualifications
 
       def create
         if user_signed_in?
+          # Saving before resetting the session as this relies on session data
+          omniauth_logout_path = current_session.logout_path
+
           reset_session
 
-          redirect_to current_session.logout_path
+          redirect_to omniauth_logout_path
         else
           redirect_to qualifications_start_path
         end
