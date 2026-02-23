@@ -120,12 +120,12 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
       # Easier to use a hash lookup for the known types
       # Rather than .underscore.humanize, especially since that tactic just results in "Key stage1"
       {
-        'FoundationStage' => "Foundation stage",
-        'FurtherEducation' =>  "Further education",
-        'KeyStage1' =>  "Key stage 1",
-        'KeyStage2' =>  "Key stage 2",
-        'KeyStage3' =>  "Key stage 3",
-        'KeyStage4' =>  "Key stage 4"
+        "FoundationStage" => "Foundation stage",
+        "FurtherEducation" =>  "Further education",
+        "KeyStage1" =>  "Key stage 1",
+        "KeyStage2" =>  "Key stage 2",
+        "KeyStage3" =>  "Key stage 3",
+        "KeyStage4" =>  "Key stage 4"
       }[training_age_specialism&.type]
     end
   end

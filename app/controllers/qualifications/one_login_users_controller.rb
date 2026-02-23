@@ -22,7 +22,7 @@ module Qualifications
     helper_method :onelogin_security_details_url
 
     def extract_payload(token)
-      _header, encoded_payload, _signature = token.split('.')
+      _header, encoded_payload, _signature = token.split(".")
       payload = Base64.urlsafe_decode64(encoded_payload)
       JSON.parse payload
     end
@@ -32,7 +32,7 @@ module Qualifications
       Sentry.with_scope do |scope|
         scope.set_user(id: current_user.id)
         scope.set_context(
-          'Authentication session',
+          "Authentication session",
           {
             trn: current_user.trn,
             auth_uuid: current_user.auth_uuid,
