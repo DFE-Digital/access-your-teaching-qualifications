@@ -7,7 +7,7 @@
   <div class="govuk-grid-column-full">
     <h1 class="govuk-heading-l">File summary</h1>
     <p class="govuk-body">
-      Your CSV file includes the details of <%= pluralize(@total, 'person') %>:
+      Your CSV file includes the details of <%= pluralize(@total, "person") %>:
     </p>
 
     <%= govuk_link_to "Find records", check_records_bulk_search_path(@bulk_search_response), class: "govuk-button" %>

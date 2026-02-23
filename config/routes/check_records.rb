@@ -23,7 +23,7 @@ namespace :check_records, path: "check-records" do
   patch "/terms-and-conditions" => "terms_and_conditions#update"
 
   resources :teachers, only: %i[show]
-  resources :bulk_searches, only: %i[new create show], path: 'bulk-searches'
+  resources :bulk_searches, only: %i[new create show], path: "bulk-searches"
 
   scope "/feedback" do
     get "/", to: "feedbacks#new", as: :feedbacks
@@ -33,9 +33,9 @@ namespace :check_records, path: "check-records" do
 end
 
 scope via: :all do
-  get '/404', to: 'check_records/errors#not_found'
-  get '/422', to: 'check_records/errors#unprocessable_entity'
-  get '/500', to: 'check_records/errors#internal_server_error'
+  get "/404", to: "check_records/errors#not_found"
+  get "/422", to: "check_records/errors#unprocessable_entity"
+  get "/500", to: "check_records/errors#internal_server_error"
 end
 
 root to: redirect("/check-records/search"), as: :check_records_root

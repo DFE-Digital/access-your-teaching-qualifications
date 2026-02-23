@@ -6,9 +6,9 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h1 class="govuk-heading-l"><%= pluralize(@total, 'teacher record') %> found</h1>
+    <h1 class="govuk-heading-l"><%= pluralize(@total, "teacher record") %> found</h1>
     <p class="govuk-body govuk-!-margin-bottom-6">
-      We found <%= pluralize(@total, 'teacher record') %> out of the <%= pluralize(@total_results + @total_not_found, 'entry') %> you uploaded.
+      We found <%= pluralize(@total, "teacher record") %> out of the <%= pluralize(@total_results + @total_not_found, "entry") %> you uploaded.
     </p>
     <%= govuk_tabs do |tabs|
       if @results.any?

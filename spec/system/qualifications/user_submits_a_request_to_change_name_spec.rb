@@ -45,7 +45,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def and_click_change_name
-    change_links = all('a', text: 'Change')
+    change_links = all("a", text: "Change")
     change_links[0].click
   end
 
@@ -83,7 +83,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def when_i_edit_my_name
-    change_links = all('a', text: 'Change')
+    change_links = all("a", text: "Change")
     change_links[0].click
     fill_in "First name", with: "Ray"
     fill_in "Middle name", with: ""

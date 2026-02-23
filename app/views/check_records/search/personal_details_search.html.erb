@@ -2,7 +2,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render 'check_records/organisation_name' %>
+    <%= render "check_records/organisation_name" %>
 
     <%= form_with model: @search, url: check_records_result_path, method: :get do |f| %>
       <%= f.govuk_error_summary %>
@@ -20,7 +20,7 @@
       <%= f.govuk_date_field(
             :date_of_birth,
             date_of_birth: true,
-            legend: { size: 's', text: 'Date of birth' }
+            legend: { size: "s", text: "Date of birth" }
           )
       %>
       <%= f.govuk_submit "Find record" %>
