@@ -46,7 +46,7 @@ module Qualifications
 
     def set_active_storage_url_options
       if Rails.env.test?
-        ActiveStorage::Current.url_options = { host: 'localhost', port: 3000, protocol: 'http' }
+        ActiveStorage::Current.url_options = { host: "localhost", port: 3000, protocol: "http" }
       end
     end
 

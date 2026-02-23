@@ -7,7 +7,7 @@ class BulkSearchResponse < ApplicationRecord
 
   def expire_other_responses
     BulkSearchResponse.where(dsi_user:)
-                      .where('expires_at > ?', Time.current)
+                      .where("expires_at > ?", Time.current)
                       .update_all(expires_at: Time.current)
   end
 end

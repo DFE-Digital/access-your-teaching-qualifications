@@ -49,9 +49,9 @@ namespace :qualifications do
 end
 
 scope via: :all do
-  get '/404', to: 'qualifications/errors#not_found'
-  get '/422', to: 'qualifications/errors#unprocessable_entity'
-  get '/500', to: 'qualifications/errors#internal_server_error'
+  get "/404", to: "qualifications/errors#not_found"
+  get "/422", to: "qualifications/errors#unprocessable_entity"
+  get "/500", to: "qualifications/errors#internal_server_error"
 end
 
 root to: redirect("/qualifications/sign-in"), as: :qualifications_root
