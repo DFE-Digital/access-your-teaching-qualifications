@@ -4,23 +4,25 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-l">Sign in to access your teaching qualifications</h1>
 
-    <p class="govuk-body">You’ll need a GOV.UK One Login to access your teaching qualifications.</p>
-    <p class="govuk-body">You can create an account if you do not have one already.</p>
+
+    <p class="govuk-body">Use your DfE Identity account to access this service.</p>
+
     <%=
       govuk_button_to(
-        "Sign in with GOV.UK One Login",
-        "/qualifications/users/auth/onelogin",
+        "Sign in with DfE Identity",
+        "/qualifications/users/auth/identity",
         method: :post
       )
     %>
 
-    <h2 class="govuk-heading-m">If you have a DfE Identity account</h2>
-    <p class="govuk-body">You can still sign in using your existing DfE Identity account.</p>
-    <p class="govuk-body">We recommend using GOV.UK One Login instead. You’ll need it to access this service in the future.</p>
+    <h2 class="govuk-heading-m">If you’re a new user</h2>
+    <span class="govuk-body">You can</span>
     <%=
-      form_with url: "/qualifications/users/auth/identity", method: :post do |form|
-        form.submit "Sign in with DfE Identity", class: "govuk-link govuk-link--button"
+      form_with(url: "/qualifications/users/auth/onelogin", method: :post, class: "govuk-!-display-inline-block") do |form|
+        form.submit "create a GOV.UK One Login", class: "govuk-link govuk-link--button"
       end
     %>
+    <span class="govuk-body">if you do not have a DfE Identity account.</span>
+
   </div>
 </div>
