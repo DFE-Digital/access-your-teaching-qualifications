@@ -35,7 +35,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
 
   def then_i_see_this_teacher_has_no_details
     expect(page).to have_content(
-      "We have no details of this person's qualifications, teacher status or induction status."
+      "We have no details of this person’s qualifications, teacher status or induction status."
     )
   end
 end
