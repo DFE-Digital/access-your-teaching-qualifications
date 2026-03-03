@@ -79,7 +79,7 @@ module Qualifications
         teacher = qualifications_api_client.teacher
         if teacher.pending_date_of_birth_change?
           flash[:warning] =
-            "We're reviewing your date of birth change request. \
+            "We’re reviewing your date of birth change request. \
              Wait until your details have been updated before making another request."
           redirect_to qualifications_one_login_user_path
         end

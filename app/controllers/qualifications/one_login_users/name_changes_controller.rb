@@ -68,7 +68,7 @@ module Qualifications
         teacher = qualifications_api_client.teacher
         if teacher.pending_name_change?
           flash[:warning] =
-            "We're reviewing your name change request. \
+            "We’re reviewing your name change request. \
              Wait until your details have been updated before making another request."
           redirect_to qualifications_one_login_user_path
         end
