@@ -5,6 +5,7 @@ $govuk-fonts-path: "/";
 $govuk-images-path: "/";
 
 @import "govuk-frontend/dist/govuk/all";
+@import "@govuk-one-login/service-header/dist/styles/service-header-no-imports";
 
 .app__details-menu {
   h3 {
@@ -52,4 +53,15 @@ $govuk-images-path: "/";
 
 .app__two-thirds {
   width: 66.66%;
+}
+
+.govuk-link--button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 1.1875rem;
+  color: #1d70b8;
+  text-decoration: underline;
+  box-shadow: none;
+  cursor: pointer;
 }

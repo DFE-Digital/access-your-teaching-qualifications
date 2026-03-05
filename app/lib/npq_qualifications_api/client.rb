@@ -47,7 +47,7 @@ module NpqQualificationsApi
         cache_key: cache_key,
         endpoint: endpoint,
         options: options,
-        faraday_version: Gem.loaded_specs['faraday'].version # if we update Faraday, cached responses may not be valid
+        faraday_version: Gem.loaded_specs["faraday"].version # if we update Faraday, cached responses may not be valid
       }
 
       Digest::SHA256.hexdigest(key_hash.to_json)
