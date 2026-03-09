@@ -110,17 +110,17 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def then_i_see_my_qts_details
-    expect(page).to have_content("Qualified teacher status (QTS)")
+    expect(page).to have_content("QTS via qualified teacher learning and skills (QTLS)")
     expect(page).to have_content("Held since")
     expect(page).to have_content("27 February 2023")
-    expect(page).to have_content("Download QTS certificate")
+    expect(page).to have_content("Download QTLS certificate")
   end
 
   def and_my_qts_certificate_is_downloadable
-    click_on "Download QTS certificate"
+    click_on "Download QTLS certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_qts_certificate.pdf\";")
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_qtls_certificate.pdf\";")
   end
 
   def then_i_see_my_npq_details

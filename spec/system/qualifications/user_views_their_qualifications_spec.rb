@@ -34,10 +34,10 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def then_i_see_my_qts_details
-    expect(page).to have_content("Qualified teacher status (QTS)")
+    expect(page).to have_content("QTS via qualified teacher learning and skills (QTLS)")
     expect(page).to have_content("Held since")
     expect(page).to have_content("27 February 2023")
-    expect(page).to have_content("Download QTS certificate")
+    expect(page).to have_content("Download QTLS certificate")
   end
 
   def then_i_see_my_eyts_details
@@ -48,13 +48,13 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_qts_certificate_is_downloadable
-    click_on "Download QTS certificate"
+    click_on "Download QTLS certificate"
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include(
                                                               "attachment"
                                                             )
     expect(page.response_headers["content-disposition"]).to include(
-                                                              "filename=\"Terry Walsh_qts_certificate.pdf\";"
+                                                              "filename=\"Terry Walsh_qtls_certificate.pdf\";"
                                                             )
   end
 
@@ -70,14 +70,8 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def then_i_see_my_rtps_details
-    expect(page).to have_content("Initial teacher training (ITT)")
-    expect(page).to have_content("BA")
-    expect(page).to have_content("Earl Spencer Primary School")
-    expect(page).to have_content("Business Studies")
-    expect(page).to have_content("28 February 2022")
-    expect(page).to have_content("28 January 2023")
+    expect(page).to have_content("Route to QTLS: QTLS and SET Membership")
     expect(page).to have_content("Status\tHolds")
-    expect(page).to have_content("7 to 14 years")
   end
 
   def then_i_see_my_npq_details

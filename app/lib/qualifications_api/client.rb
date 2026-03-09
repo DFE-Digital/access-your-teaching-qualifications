@@ -102,7 +102,7 @@ module QualificationsApi
 
       case response.status
       when 200
-        QualificationsApi::Teacher.new response.body
+        QualificationsApi::Teacher.new(response.body)
       when 404
         raise QualificationsApi::TeacherNotFoundError
       when 403

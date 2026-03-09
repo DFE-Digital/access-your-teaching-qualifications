@@ -151,7 +151,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
   end
 
   def then_i_see_qts_details
-    expect(page).to have_content("Qualified via qualified teacher learning and skills (QTLS)")
+    expect(page).to have_content("QTS via qualified teacher learning and skills (QTLS)")
     expect(page).to have_content("Held since\t1 January 2025")
   end
 

@@ -11,7 +11,9 @@ class QualificationSummaryComponent < ApplicationComponent
            :details,
            :id,
            :rtps?,
+           :qtls_rtps?,
            :qts?,
+           :qtls?,
            :eyts?,
            :induction_status,
            :set_membership_active,
@@ -28,7 +30,9 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def rows
-    @rows ||= build_rows.select { |row| row[:value][:text].present? }
+    @rows ||= build_rows.select do |row|
+      row[:value][:text].present?
+    end
   end
 
   def build_rows
@@ -82,7 +86,7 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def rtps_rows
-    return [] if details.training_end_date.blank?
+    return [] if details.training_end_date.blank? && !qtls_rtps?
 
     [
       {
@@ -215,7 +219,7 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def render_qts_induction_exemption_message?
-    qts? && set_membership_active && !failed_induction?
+    qtls? && set_membership_active && !failed_induction?
   end
 
   def failed_induction?
@@ -223,6 +227,6 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def render_qtls_warning_message?
-    qts? && set_membership_expired
+    qtls? && set_membership_expired
   end
 end
