@@ -23,7 +23,7 @@ module FakeQualificationsData
       },
       qts: qts_data(qts_via_qtls:),
       induction: induction_data(induction_status),
-      "routesToProfessionalStatuses": [rtps ? build_rtps : nil].compact.flatten,
+      "routesToProfessionalStatuses": [rtps ? build_rtps(qts_via_qtls:) : nil].compact.flatten,
       mandatoryQualifications: [
         { endDate: "2023-02-28", specialism: "Visual impairment", mandatoryQualificationId: 1 },
         { endDate: "2022-01-01", specialism: "Hearing", mandatoryQualificationId: 1 }
@@ -89,7 +89,41 @@ module FakeQualificationsData
     }
   end
 
-  def build_rtps
+  def build_rtps(qts_via_qtls: true)
+    if qts_via_qtls
+      return [
+        {
+          "routeToProfessionalStatusId": "qtls-route-id-33333",
+          "routeToProfessionalStatusType": {
+            "routeToProfessionalStatusTypeId": QualificationsApi::Teacher::QTLS_ROUTE_ID,
+            "name": "QTLS and SET Membership",
+            "professionalStatusType": "QualifiedTeacherStatus"
+          },
+          "status": "Holds",
+          "holdsFrom": "2023-02-27",
+          "trainingStartDate": nil,
+          "trainingEndDate": nil,
+          "trainingSubjects": [],
+          "trainingAgeSpecialism": nil,
+          "trainingCountry": {
+            "reference": "GB-ENG",
+            "name": "England"
+          },
+          "trainingProvider": nil,
+          "degreeType": nil,
+          "inductionExemption": {
+            "isExempt": true,
+            "exemptionReasons": [
+              {
+                "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
+                "name": "Exempt through QTLS status provided they maintain membership of SET"
+              }
+            ]
+          }
+        }
+      ]
+    end
+
     [
       {
         "routeToProfessionalStatusId": "qts-route-id-11111",

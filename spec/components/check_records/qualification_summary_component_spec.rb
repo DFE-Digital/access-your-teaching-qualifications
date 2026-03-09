@@ -12,7 +12,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
   describe "rendering" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
-        quals_data(trn: "1234567")
+        quals_data(trn: "1234567", qts_via_qtls: false)
           .deep_transform_keys(&:to_s)
           .deep_transform_keys(&:underscore)
       )

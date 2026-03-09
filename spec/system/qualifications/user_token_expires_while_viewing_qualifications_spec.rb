@@ -29,7 +29,7 @@ RSpec.feature "Identity auth", type: :system do
   end
 
   def and_i_try_to_download_a_certificate
-    click_on "Download QTS certificate"
+    click_on "Download QTLS certificate"
   end
 
   def then_i_am_required_to_sign_in_again
