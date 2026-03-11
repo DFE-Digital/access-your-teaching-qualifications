@@ -7,7 +7,7 @@ module Qualifications
         "date_of_birth(1i)" => "year",
       }.freeze
 
-      before_action :redirect_to_root_unless_one_login_enabled
+      before_action :redirect_to_root_unless_one_login_active
       before_action :redirect_if_change_pending, except: [:submitted]
 
       def new
@@ -72,14 +72,14 @@ module Qualifications
       end
 
       def qualifications_api_client
-        @qualifications_api_client ||= QualificationsApi::Client.new(token: session[user_token_session_key])
+        @qualifications_api_client ||= QualificationsApi::Client.new(token: current_session.user_token)
       end
 
       def redirect_if_change_pending
         teacher = qualifications_api_client.teacher
         if teacher.pending_date_of_birth_change?
           flash[:warning] =
-            "We're reviewing your date of birth change request. \
+            "We’re reviewing your date of birth change request. \
              Wait until your details have been updated before making another request."
           redirect_to qualifications_one_login_user_path
         end

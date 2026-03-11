@@ -788,7 +788,7 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     end
   end
 
-  describe '#no_restrictions?' do
+  describe "#no_restrictions?" do
     subject(:no_restrictions) { teacher.no_restrictions? }
 
     let(:teacher) { described_class.new(api_data) }

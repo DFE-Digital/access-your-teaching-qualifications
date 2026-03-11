@@ -21,3 +21,7 @@ Style/MethodCalledOnDoEndBlock:
 Style/NumericLiterals:
   Exclude:
     - db/schema.rb
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
