@@ -10,7 +10,7 @@
     <%=
       govuk_button_to(
         "Sign in with DfE Identity",
-        "/qualifications/users/auth/identity",
+        ["/qualifications/users/auth/identity", "trn_token=#{params[:trn_token]}"].join("?"),
         method: :post
       )
     %>
@@ -18,7 +18,7 @@
     <h2 class="govuk-heading-m">If you’re a new user</h2>
     <span class="govuk-body">You can</span>
     <%=
-      form_with(url: "/qualifications/users/auth/onelogin", method: :post, class: "govuk-!-display-inline-block") do |form|
+      form_with(url: ["/qualifications/users/auth/onelogin", "trn_token=#{params[:trn_token]}"].join("?"), method: :post, class: "govuk-!-display-inline-block") do |form|
         form.submit "create a GOV.UK One Login", class: "govuk-link govuk-link--button"
       end
     %>

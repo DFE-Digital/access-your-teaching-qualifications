@@ -20,7 +20,7 @@
     <%=
       govuk_button_to(
         "Sign in with GOVUK One Login",
-        "/qualifications/users/auth/onelogin",
+        ["/qualifications/users/auth/onelogin", "trn_token=#{params[:trn_token]}"].join("?"),
         method: :post
       )
     %>
