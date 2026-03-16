@@ -3,6 +3,7 @@ module Qualifications
     before_action :authenticate_user!
     before_action :handle_expired_token!
     before_action :set_active_storage_url_options
+    before_action :store_dfe_identity_registration_bypass_token
 
     http_basic_authenticate_with(
       name: ENV.fetch("SUPPORT_USERNAME", nil),
@@ -30,6 +31,12 @@ module Qualifications
         flash[:warning] = "You need to sign in to continue."
         redirect_to qualifications_root_path
       end
+    end
+
+    def store_dfe_identity_registration_bypass_token
+      return if params[:registration_token].blank?
+
+      current_session.store_identity_registration_bypass_token(params[:registration_token])
     end
 
     def user_signed_in?

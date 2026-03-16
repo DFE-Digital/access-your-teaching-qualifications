@@ -10,7 +10,7 @@
     <%=
       govuk_button_to(
         "Sign in with DfE Identity",
-        ["/qualifications/users/auth/identity", "trn_token=#{params[:trn_token]}"].join("?"),
+        current_session.dfe_identity_login_path(trn_token: params[:trn_token]),
         method: :post
       )
     %>
