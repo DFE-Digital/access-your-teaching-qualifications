@@ -13,7 +13,7 @@ gem "dartsass-rails", "~> 0.5.1"
 gem "data_migrate"
 gem "dfe-analytics", github: "DFE-Digital/dfe-analytics", tag: "v1.14.2"
 gem "faraday"
-gem "govuk-components", "~> 5.6"
+gem "govuk-components", "~> 6.0"
 gem "govuk_design_system_formbuilder", "~> 5.6"
 gem "govuk_feature_flags",
     git: "https://github.com/DFE-Digital/govuk_feature_flags.git",
