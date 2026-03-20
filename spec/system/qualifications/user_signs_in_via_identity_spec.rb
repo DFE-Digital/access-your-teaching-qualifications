@@ -18,5 +18,6 @@ RSpec.feature "Identity auth", type: :system do
 
   def then_i_am_signed_in_after_successfully_authenticating_with_identity
     expect(User.last.email).to eq "test@example.com"
+    expect(User.last.auth_provider).to eq "identity"
   end
 end
