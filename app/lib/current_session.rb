@@ -73,7 +73,7 @@ class CurrentSession
     }.compact_blank
 
     [
-      "/qualifications/users/auth/onelogin",
+      "/qualifications/users/auth/identity",
       hash.to_query
     ].join("?")
   end
