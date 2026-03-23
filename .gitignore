@@ -45,3 +45,5 @@ dump.rdb
 bin/konduit.sh
 
 chrome/*
+/app/assets/builds/*
+!/app/assets/builds/.keep
