@@ -41,7 +41,7 @@ end
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :openid_connect,
            name: :identity,
-           allow_authorize_params: %i[session_id trn_token],
+           allow_authorize_params: %i[session_id trn_token registration_token],
            callback_path: "/qualifications/users/auth/identity/callback",
            client_options: {
              host: URI(ENV["IDENTITY_API_DOMAIN"]).host,
