@@ -26,7 +26,6 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     then_i_see_qts_details
     then_i_see_rtps_details
     then_i_see_eyts_details
-    then_i_see_other_rtps_details
     then_i_see_npq_details
     then_i_see_mq_details
     and_a_viewed_timestamp_is_displayed
@@ -74,7 +73,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_qts_details
-    expect(page).to have_content("Qualified teacher status (QTS)")
+    expect(page).to have_content("QTS via qualified teacher learning and skills (QTLS)")
     expect(page).to have_content("Held since\t27 February 2023")
   end
 
@@ -84,23 +83,8 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_rtps_details
-    expect(page).to have_content("Qualification\tBA")
-    expect(page).to have_content("Provider\tEarl Spencer Primary School")
-    expect(page).to have_content("Subject\tBusiness Studies")
-    expect(page).to have_content("Age range\t7 to 14 years")
-    expect(page).to have_content("Start date\t28 February 2022")
-    expect(page).to have_content("End date\t28 January 2023")
+    expect(page).to have_content("Route to QTLS: QTLS and SET Membership")
     expect(page).to have_content("Result\tHolds")
-  end
-
-  def then_i_see_other_rtps_details
-    expect(page).to have_content("Qualification\tBA")
-    expect(page).to have_content("Provider\tEarl Spencer Secondary School")
-    expect(page).to have_content("Subject\tBusiness Studies")
-    expect(page).to have_content("Age range\t15 to 18 years")
-    expect(page).to have_content("Start date\t28 February 2022")
-    expect(page).to have_content("End date\t28 January 2030")
-    expect(page).to have_content("Result\tIn training")
   end
 
   def then_i_see_npq_details

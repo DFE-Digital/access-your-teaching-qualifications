@@ -184,7 +184,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
   end
 
   def then_i_see_qts_rtps_details
-    expect(page).to have_content("Route to QTS: QTLS and SET Membership")
+    expect(page).to have_content("Route to QTLS: QTLS and SET Membership")
     expect(page).to have_content("Route to QTS: Apply for Qualified Teacher Status in England")
   end
 

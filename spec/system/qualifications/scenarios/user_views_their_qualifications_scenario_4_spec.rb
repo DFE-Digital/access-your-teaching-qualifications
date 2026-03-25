@@ -124,6 +124,8 @@ RSpec.feature "User views their qualifications", type: :system do
     then_i_see_my_induction_details
     then_i_see_my_qts_details
     and_my_qts_certificate_is_downloadable
+    then_i_see_my_qtls_details
+    and_my_qtls_certificate_is_downloadable
     then_i_see_my_npq_details
     and_my_npq_certificate_is_downloadable
     and_event_tracking_is_working
@@ -152,6 +154,20 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
     expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_qts_certificate.pdf\";")
+  end
+
+  def then_i_see_my_qtls_details
+    expect(page).to have_content("Qualified teacher status (QTS)")
+    expect(page).to have_content("Held since")
+    expect(page).to have_content("1 January 2025")
+    expect(page).to have_content("Download QTLS certificate")
+  end
+
+  def and_my_qtls_certificate_is_downloadable
+    click_on "Download QTLS certificate"
+    expect(page.response_headers["content-type"]).to eq("application/pdf")
+    expect(page.response_headers["content-disposition"]).to include("attachment")
+    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_qtls_certificate.pdf\";")
   end
 
   def then_i_see_my_npq_details

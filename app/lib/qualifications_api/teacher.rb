@@ -199,30 +199,36 @@ module QualificationsApi
 
     private
 
-    def qts_qualification
-      qts_data = api_data.qts
-      return if qts_data.blank? && !qtls_only?
-
-      @qts_qualification ||= Qualification.new(
-        awarded_at: qts_data&.holds_from&.to_date,
-        name: "Qualified teacher status (QTS)",
-        qtls_only: qtls_only?,
-        qts_and_qtls: qts_and_qtls?,
-        set_membership_active: set_membership_active?,
-        set_membership_expired: set_membership_expired?,
-        induction_status: induction_status,
-        type: :qts,
-        routes: qts_data.routes || []
-      )
-    end
-
     def qts_qualifications
-      return if qts_qualification.nil?
+      qts_data = api_data.qts
+      return if qts_data.blank?
 
-      [
-        qts_qualification,
-        rtps_qualifications(type: :qts, route_ids: qts_qualification.route_ids, include_blank: true)
-      ].flatten
+      @qts_qualifications ||= qts_data.routes.map { |route|
+        route_id = route.route_to_professional_status_type.route_to_professional_status_type_id
+        route_data = rtps_by_id(route_ids: [route_id]).first
+
+        type = route_id.upcase == QTLS_ROUTE_ID.upcase ? :qtls : :qts
+        name = if type == :qtls
+                 "QTS via qualified teacher learning and skills (QTLS) status"
+               else
+                 "Qualified teacher status (QTS)"
+               end
+
+        [
+          Qualification.new(
+            awarded_at: route_data&.holds_from&.to_date,
+            name: name,
+            qtls_only: qtls_only?,
+            qts_and_qtls: qts_and_qtls?,
+            set_membership_active: set_membership_active?,
+            set_membership_expired: set_membership_expired?,
+            induction_status: induction_status,
+            type: type,
+            routes: [route]
+          ),
+          rtps_qualifications(type: type, route_ids: [route_id], include_blank: true)
+        ]
+      }.flatten
     end
 
     def eyts_qualification
@@ -254,9 +260,14 @@ module QualificationsApi
       end
     end
 
+    def qts_route_ids
+      return [] if qts_qualifications.blank?
+
+      @qts_route_ids ||= qts_qualifications.map(&:route_ids).flatten.compact
+    end
+
     def all_other_rtps_qualifications
       eyts_route_ids = eyts_qualification&.route_ids || []
-      qts_route_ids = qts_qualification&.route_ids || []
 
       non_qts_eyts_route_ids = all_rtps_ids - eyts_route_ids - qts_route_ids
 
@@ -282,21 +293,27 @@ module QualificationsApi
       end
     end
 
-    def rtps_qualifications(type:, route_ids: [], include_blank: false, name: nil)
+    def rtps_by_id(route_ids: [], include_blank: false)
       return [] if api_data.routes_to_professional_statuses.blank?
 
-      routes = api_data.routes_to_professional_statuses.select do |route|
+      selected_routes = api_data.routes_to_professional_statuses.select do |route|
         route_id = route.route_to_professional_status_type.route_to_professional_status_type_id
 
         route_ids.include?(route_id) || (include_blank && route_id.blank?)
       end
 
-      sorted_routes = routes.sort_by { |r|
+      selected_routes.sort_by { |r|
         date = r.holds_from&.to_date
         [date ? 1 : 0, date]
       }.reverse
+    end
 
-      sorted_routes.map do |route|
+    def rtps_qualifications(type:, route_ids: [], include_blank: false, name: nil)
+      routes = rtps_by_id(route_ids: route_ids, include_blank: include_blank)
+
+      return [] if routes.blank?
+
+      routes.map do |route|
         Qualification.new(
           awarded_at: route.training_end_date&.to_date,
           details: CoercedDetails.new(route),
