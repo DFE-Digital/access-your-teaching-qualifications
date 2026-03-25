@@ -26,7 +26,7 @@ RSpec.describe Qualifications::NavigationComponent, type: :component do
 
       it "renders a link to the One Login account page" do
         render_inline(described_class.new(current_user: user, current_session:))
-        expect(page).to have_link("Account", href: path_helpers.qualifications_one_login_user_path)
+        expect(page).to have_link("GOV.UK One Login", href: path_helpers.qualifications_one_login_user_path)
       end
     end
 
