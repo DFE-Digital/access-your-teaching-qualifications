@@ -1,29 +1,36 @@
-<%= govuk_header %>
-<%= govuk_service_navigation(
-      service_name: t("service.name"),
-      service_url: qualifications_root_path,
-      navigation_items: begin
-        items = []
-
-        if current_user
-          if FeatureFlags::FeatureFlag.active?(:one_login)
-            items << {
-              current: current_page?(qualifications_identity_user_path),
-              href: qualifications_one_login_user_path,
-              text: "Account"
-            }
-          else
-            items << {
-              current: current_page?(qualifications_identity_user_path),
-              href: qualifications_identity_user_path,
-              text: "Account"
-            }
-          end
-
-          items << { href: qualifications_new_sign_out_path, text: "Sign out" }
-        end
-
-        items
-      end
+<% if current_user.present? && current_session.logged_in_via_one_login? %>
+  <%=
+    render(
+      "layouts/one_login_header",
+      account_path: qualifications_one_login_user_path,
+      sign_out_path: qualifications_new_sign_out_path
     )
+  %>
+<% else %>
+  <%= govuk_header %>
+<% end %>
+
+<%=
+  govuk_service_navigation(
+    service_name: t("service.name"),
+    service_url: qualifications_root_path,
+    navigation_items: begin
+      if current_user.present? && !current_session.logged_in_via_one_login?
+        [
+          {
+            current: current_page?(qualifications_identity_user_path),
+            href: qualifications_identity_user_path,
+            text: "Account"
+          },
+          {
+            href: qualifications_new_sign_out_path,
+            text: "Sign out"
+          }
+        ]
+      else
+        []
+      end
+    end
+  )
 %>
+

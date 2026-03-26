@@ -110,7 +110,7 @@ module CheckRecords
     helper_method :search_params
 
     def skipped?
-      params[:skipped] == 't'
+      params[:skipped] == "t"
     end
     helper_method :skipped?
 

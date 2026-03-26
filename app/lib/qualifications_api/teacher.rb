@@ -69,15 +69,15 @@ module QualificationsApi
 
     def teaching_status
       if qtls_only?
-        return 'QTS via QTLS' if set_membership_active?
-        return 'No QTS' if set_membership_expired?
+        return "QTS via QTLS" if set_membership_active?
+        return "No QTS" if set_membership_expired?
       end
-      return 'QTS and QTLS' if qts_and_qtls?
-      return 'QTS' if qts_awarded?
-      return 'EYTS' if eyts_awarded?
-      return 'EYPS' if eyps_awarded?
+      return "QTS and QTLS" if qts_and_qtls?
+      return "QTS" if qts_awarded?
+      return "EYTS" if eyts_awarded?
+      return "EYPS" if eyps_awarded?
 
-      'No QTS or EYTS'
+      "No QTS or EYTS"
     end
 
     def no_qts_or_eyts?

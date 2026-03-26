@@ -1,6 +1,6 @@
 class SecureIdentifier
   SECRET_KEY = Rails.application.credentials.secret_key_base.byteslice(0..31)
-  CIPHER = 'aes-256-cbc'.freeze
+  CIPHER = "aes-256-cbc".freeze
 
   def self.encode(value)
     raise ArgumentError, "value cannot be nil" if value.nil?

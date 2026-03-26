@@ -37,7 +37,7 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
   end
 
   def induction_tag
-    { message: induction_tag_message, colour: no_induction? ? 'blue' : 'green' }
+    { message: induction_tag_message, colour: no_induction? ? "blue" : "green" }
   end
 
   def induction_tag_message
@@ -47,12 +47,12 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
   def teaching_status_tag_colour
     if qtls_only?
       if set_membership_active?
-        return 'green'
+        return "green"
       elsif set_membership_expired?
-        return 'blue'
+        return "blue"
       end
     end
 
-    no_qts_or_eyts? ? 'blue' : 'green'
+    no_qts_or_eyts? ? "blue" : "green"
   end
 end
