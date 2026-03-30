@@ -78,6 +78,14 @@ class CurrentSession
     ].join("?")
   end
 
+  def identity_new_registration_bypass_enabled?
+    session[:identity_new_registration_bypass_token].present?
+  end
+
+  def one_login_available?
+    !identity_new_registration_bypass_enabled?
+  end
+
   def omniauth_provider
     session[OMNIAUTH_PROVIDER_SESSION_KEY]&.to_sym
   end

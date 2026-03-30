@@ -13,17 +13,19 @@
     </ul>
     <h2 class="govuk-heading-m">Before you start</h2>
 
-    <h3 class="govuk-heading-s">Sign in with GOV.UK One Login</h3>
-    <p class="govuk-body">
-      You’ll need to sign in to your GOV.UK One Login. If you do not have a GOV.UK One Login, you can create one.
-    </p>
-    <%=
-      govuk_button_to(
-        "Sign in with GOVUK One Login",
-        ["/qualifications/users/auth/onelogin", "trn_token=#{params[:trn_token]}"].join("?"),
-        method: :post
-      )
-    %>
+    <% if current_session.one_login_available? %>
+      <h3 class="govuk-heading-s">Sign in with GOV.UK One Login</h3>
+      <p class="govuk-body">
+        You’ll need to sign in to your GOV.UK One Login. If you do not have a GOV.UK One Login, you can create one.
+      </p>
+      <%=
+        govuk_button_to(
+          "Sign in with GOVUK One Login",
+          ["/qualifications/users/auth/onelogin", "trn_token=#{params[:trn_token]}"].join("?"),
+          method: :post
+        )
+      %>
+    <% end %>
 
     <h3 class="govuk-heading-s">Sign in with DfE Identity</h3>
     <p class="govuk-body">
