@@ -31,7 +31,7 @@ RSpec.feature "Feedback", host: :check_records, type: :system do
       :dsi_user, 
       email: "test@example.com", 
       terms_and_conditions_accepted_at: Date.yesterday, 
-      terms_and_conditions_version_accepted: "1.0"
+      terms_and_conditions_version_accepted: '1.0'
     )
   end
 

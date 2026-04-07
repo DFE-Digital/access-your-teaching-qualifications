@@ -12,14 +12,6 @@
   <li> deed poll </li>
 </ul>
 
-<%=
-  max_file_size = ActiveSupport::NumberHelper.number_to_human_size(Qualifications::OneLoginUsers::NameChangeForm::MAX_SIZE).delete(" ")
-
-  form.govuk_file_field(
-    :evidence,
-    label: { text: "Upload evidence", hidden: true, role: "link" },
-    hint: { text: "You can upload a PDF, PNG or JPEG file no larger than #{max_file_size}." }
-  )
-%>
+<%= form.govuk_file_field :evidence, label: { text: "Upload evidence", hidden: true, role: "link" }, hint: { text: "File must be a PDF, JPG, JPEG or PNG" } %>
 
 <%= form.govuk_submit "Continue" %>

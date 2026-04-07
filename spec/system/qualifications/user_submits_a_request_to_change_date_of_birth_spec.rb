@@ -37,7 +37,8 @@ RSpec.feature "Account page", type: :system do
   private
 
   def given_i_am_signed_in_via_one_login
-    given_onelogin_auth_is_mocked
+    given_onelogin_authentication_is_active
+    and_onelogin_auth_is_mocked
     when_i_go_to_the_sign_in_page
     and_click_the_onelogin_sign_in_button
   end
@@ -47,7 +48,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def and_click_change_date_of_birth
-    change_links = all("a", text: "Change")
+    change_links = all('a', text: 'Change')
     change_links[1].click
   end
 
@@ -84,7 +85,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def when_i_edit_the_date_of_birth
-    change_links = all("a", text: "Change")
+    change_links = all('a', text: 'Change')
     change_links[0].click
     fill_in "Month", with: 3
 
@@ -92,7 +93,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def and_i_confirm_my_changes
-    click_button "Submit support request"
+    click_button "Continue"
   end
 
   def then_my_request_is_submitted

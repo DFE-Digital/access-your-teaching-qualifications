@@ -30,8 +30,8 @@ We are always looking to improve the accessibility of this service.
 If you find any problems not listed on this page or think we are not meeting accessibility requirements, contact us:
 
 Email: <a href="mailto:<%=
-t("service.email") %>" class="govuk-link govuk-link--no-visited-state"><%=
-t("service.email") %></a>
+t('service.email') %>" class="govuk-link govuk-link--no-visited-state"><%=
+t('service.email') %></a>
 
 <a class="govuk-link" href="http://www.w3.org/WAI/users/inaccessible">Read tips on contacting organisations about inaccessible websites</a>
 

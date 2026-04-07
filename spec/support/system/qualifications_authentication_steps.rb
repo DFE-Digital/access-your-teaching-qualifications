@@ -51,6 +51,7 @@ module QualificationAuthenticationSteps
   end
   alias_method :and_onelogin_auth_is_mocked, :given_onelogin_auth_is_mocked
 
+
   def when_i_go_to_the_sign_in_page
     visit qualifications_root_path
   end
@@ -60,6 +61,6 @@ module QualificationAuthenticationSteps
   end
 
   def and_click_the_onelogin_sign_in_button
-    click_button "create a GOV.UK One Login"
+    click_button "Sign in with GOV.UK One Login"
   end
 end

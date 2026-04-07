@@ -13,16 +13,21 @@ module Qualifications
                               formats: [:html],
                               locals: { teacher: @teacher, qualification: @qualification },
                               layout: "layouts/certificate")
-      grover = Grover.new(html, format: "A4", display_url: ENV["HOSTING_DOMAIN"])
+      grover = Grover.new(html, format: 'A4', display_url: ENV["HOSTING_DOMAIN"])
       pdf = grover.to_pdf
       send_data pdf, filename: "#{@teacher.name}_#{@qualification.type.downcase}_certificate.pdf", 
-type: "application/pdf", disposition: "attachment"
+type: 'application/pdf', disposition: 'attachment'
     end
 
     private
 
     def client
-      @client ||= QualificationsApi::Client.new(token: current_session.user_token)
+      token = if FeatureFlags::FeatureFlag.active?(:one_login)
+        :onelogin_user_token
+      else
+        :identity_user_token
+      end
+      @client ||= QualificationsApi::Client.new(token: session[token])
     end
 
     def teacher

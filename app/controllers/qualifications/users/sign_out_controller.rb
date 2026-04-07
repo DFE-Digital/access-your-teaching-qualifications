@@ -13,12 +13,15 @@ module Qualifications
 
       def create
         if user_signed_in?
-          # Saving before resetting the session as this relies on session data
-          omniauth_logout_path = current_session.logout_path
+          id_token = session[:onelogin_id_token]
 
           reset_session
 
-          redirect_to omniauth_logout_path
+          if FeatureFlags::FeatureFlag.active?(:one_login)
+            redirect_to("/qualifications/users/auth/onelogin/logout?id_token_hint=#{id_token}")
+          else
+            redirect_to "/qualifications/users/auth/identity/logout"
+          end
         else
           redirect_to qualifications_start_path
         end

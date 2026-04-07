@@ -21,7 +21,7 @@ class CheckRecords::NpqSummaryComponent < ApplicationComponent
   private
 
   def key_text(npq)
-    tidied_name = npq.name.gsub(/National Professional Qualification \(NPQ\) for /, "")
+    tidied_name = npq.name.gsub(/National Professional Qualification \(NPQ\) for /, '')
     "Date NPQ for #{tidied_name} awarded"
   end
 end

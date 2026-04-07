@@ -20,7 +20,7 @@ class User < ApplicationRecord
       trn: auth_data.extra.raw_info.trn,
       auth_uuid: auth_data.uid,
       auth_provider: auth_data.provider,
-      one_login_verified_name: auth_data.extra.raw_info.onelogin_verified_names&.first&.join(" "),
+      one_login_verified_name: auth_data.extra.raw_info.onelogin_verified_names&.first&.join(' '),
       one_login_verified_birth_date: auth_data.extra.raw_info.onelogin_verified_birthdates&.first
     )
     user.tap(&:save!)

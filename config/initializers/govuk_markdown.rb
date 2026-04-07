@@ -10,7 +10,7 @@ class MarkdownTemplate
     # This is a workaround to convert the buffer to a string.
     erb_handler = ActionView::Template.registered_template_handler(:erb)
     compiled_source = ActionView::OutputBuffer.new( erb_handler.call( template, source ) )
-    compiled_source << ".to_s"
+    compiled_source << '.to_s'
     "GovukMarkdown.render(begin;#{compiled_source};end).html_safe"
   end
 end

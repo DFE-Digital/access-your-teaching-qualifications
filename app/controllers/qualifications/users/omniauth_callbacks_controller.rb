@@ -10,8 +10,12 @@ module Qualifications
 
       def complete
         auth = request.env["omniauth.auth"]
-        current_session = CurrentSession.create_session(session, auth)
-        @user = current_session.current_user
+        provider = auth.provider
+        @user = User.from_auth(auth)
+        session[:"#{provider}_user_id"] = @user.id
+        session[:"#{provider}_user_token"] = auth.credentials.token
+        session[:"#{provider}_user_token_expiry"] = auth.credentials.expires_in.seconds.from_now.to_i
+        session[:"#{provider}_id_token"] = auth.credentials.id_token
 
         log_auth_credentials_in_development(auth)
         redirect_to qualifications_dashboard_path

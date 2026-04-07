@@ -4,8 +4,6 @@ module Qualifications
       include ActiveModel::Model
       include ActiveModel::Validations
 
-      MAX_SIZE = 3.megabytes
-
       attr_accessor :first_name, :middle_name, :last_name, :evidence, :user
 
       validates :first_name, presence: true, length: { maximum: 100 }
@@ -54,7 +52,8 @@ module Qualifications
       private
 
       def validate_file_size
-        if evidence && evidence.size > MAX_SIZE
+        max_size = 3.megabytes
+        if evidence && evidence.size > max_size
           errors.add(:evidence, "The selected file must be smaller than 3MB")
         end
       end

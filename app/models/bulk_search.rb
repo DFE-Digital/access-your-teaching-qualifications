@@ -1,4 +1,4 @@
-require "csv"
+require 'csv'
 
 class BulkSearch
   include ActiveModel::Model
@@ -94,6 +94,6 @@ class BulkSearch
 
   def sanitise_trn(trn)
     # Ensure the TRN is exactly 7 characters by padding with leading zeros, csv formatting can remove leading zeros
-    trn.to_s.rjust(7, "0")
+    trn.to_s.rjust(7, '0')
   end
 end

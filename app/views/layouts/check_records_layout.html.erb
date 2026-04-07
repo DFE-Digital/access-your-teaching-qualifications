@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template govuk-template--rebranded">
   <head>
-    <title><%= [yield(:page_title).presence, t("check_records_service.name")].compact.join(" - ") %></title>
+    <title><%= [yield(:page_title).presence, t('check_records_service.name')].compact.join(' - ') %></title>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= tag :meta, name: "viewport", content: "width=device-width, initial-scale=1" %>
-    <%= tag :meta, property: "og:image", content: image_path("govuk-opengraph-image.png") %>
-    <%= tag :meta, name: "theme-color", content: "#0b0c0c" %>
-    <%= favicon_link_tag image_path("favicon.ico"), type: nil, sizes: "48x48" %>
-    <%= favicon_link_tag image_path("favicon.svg"), type: "image/svg+xml", sizes: "any" %>
-    <%= favicon_link_tag image_path("govuk-icon-mask.svg"), rel: "mask-icon", color: "#0b0c0c", type: nil %>
-    <%= favicon_link_tag image_path("govuk-icon-180.png"), rel: "apple-touch-icon", type: nil %>
+    <%= tag :meta, name: 'viewport', content: 'width=device-width, initial-scale=1' %>
+    <%= tag :meta, property: 'og:image', content: image_path('govuk-opengraph-image.png') %>
+    <%= tag :meta, name: 'theme-color', content: '#0b0c0c' %>
+    <%= favicon_link_tag image_path('favicon.ico'), type: nil, sizes: "48x48" %>
+    <%= favicon_link_tag image_path('favicon.svg'), type: 'image/svg+xml', sizes: "any" %>
+    <%= favicon_link_tag image_path('govuk-icon-mask.svg'), rel: 'mask-icon', color: "#0b0c0c", type: nil %>
+    <%= favicon_link_tag image_path('govuk-icon-180.png'), rel: 'apple-touch-icon', type: nil %>
 
     <%= stylesheet_link_tag :check_records %>
     <%= javascript_include_tag :check_records, defer: true %>
@@ -20,7 +20,7 @@
 
   <body class="govuk-template__body">
     <%= javascript_tag nonce: true do %>
-      document.body.className += " js-enabled" + ("noModule" in HTMLScriptElement.prototype ? " govuk-frontend-supported" : "");
+      document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
     <% end %>
 
     <%= govuk_skip_link %>
@@ -50,7 +50,7 @@
     <%= render GovukComponent::FooterComponent.new do |footer| %>
       <% footer.with_meta_html do %>
         <h2 class="govuk-heading-m">Get help</h2>
-        <p class="govuk-!-font-size-16">Email: <%= govuk_link_to(t("check_records_service.email"), "mailto:#{t("check_records_service.email")}", class: "govuk-footer__link") %><br>You'll get a response within 5 working days.</p>
+        <p class="govuk-!-font-size-16">Email: <%= govuk_link_to(t('check_records_service.email'), "mailto:#{t('check_records_service.email')}", class: "govuk-footer__link") %><br>You’ll get a response within 5 working days.</p>
 
         <h2 class="govuk-visually-hidden">Footer links</h2>
 
