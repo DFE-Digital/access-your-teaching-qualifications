@@ -4,6 +4,7 @@ The systems are built with resiliency in mind, but they may [fail in different w
 
 This document covers the most critical scenarios and should be used in case of an incident. They should be regularly tested by following the [Disaster recovery testing document](disaster-recovery-testing.md).
 
+
 # AYTQ & CTR
 
 It is important to note that AYTQ and CTR share this repository and their deployments, taking down one service will also take down the other. Therefore, during a disaster recovery scenario for either service, both services will be affected and restoration efforts will impact both.
