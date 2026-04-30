@@ -32,6 +32,7 @@
         This is a new service – your <%= govuk_link_to("feedback", main_app.check_records_feedbacks_path) %> will help us to improve it.
       <% end %>
       <%= govuk_back_link(href: yield(:back_link_url)) if content_for?(:back_link_url) %>
+      <%= link_to("Back", :back, class: "govuk-back-link") if content_for?(:dynamic_back_link) && request.referrer.present? %>
       <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
         <% if FeatureFlags::FeatureFlag.active?(:downtime_banner) %>

@@ -74,7 +74,7 @@
       <ul class="govuk-list govuk-!-font-size-16">
         <% if @teacher.trn.present? %>
           <li>
-            <h4>Teacher Reference number (TRN)</h4>
+            <h3 class="govuk-!-font-size-16">Teacher Reference number (TRN)</h3>
           </li>
           <li>
             <p><%= @teacher.trn  %></p>
@@ -83,7 +83,7 @@
 
         <% if @teacher.date_of_birth.present? %>
           <li>
-            <h4>Date of birth</h4>
+            <h3 class="govuk-!-font-size-16">Date of birth</h3>
           </li>
           <li>
             <p><%= Date.parse(@teacher.date_of_birth).to_fs(:long) %></p>
@@ -92,7 +92,7 @@
 
         <% if @teacher.previous_names.present? %>
             <li>
-              <h4>Previous last names</h4>
+              <h3 class="govuk-!-font-size-16">Previous last names</h3>
             </li>
             <% @teacher.previous_names.each do |name| %>
               <li><%= name %></li>
