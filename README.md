@@ -55,6 +55,22 @@ All environments have continuous deployment, the state of which can be inspected
 - [Architecture overview](docs/architecture.md) — C4 diagrams and Architecture Decision Records
 - [Data schema](docs/data_schema.md) — database tables and which service uses each
 
+### Authentication
+
+- [AYTQ authentication overview](docs/authentication/aytq/readme.md) — how teachers sign in, with two providers running in parallel
+  - [GOV.UK One Login](docs/authentication/aytq/one_login.md) — the primary auth provider (OIDC flow, session management, sign-out)
+  - [DfE Identity](docs/authentication/aytq/dfe_identity.md) — the legacy auth provider (being deprecated)
+- [CTR authentication overview](docs/authentication/ctr/readme.md) — how employers sign in via DfE Sign In (OIDC flow, role authorisation, session management)
+
+### API integrations
+
+- [Qualifications API](docs/api_integrations/qualifications_api.md) — the primary data source for teacher records (integration guide, auth modes, error handling)
+
+### Internal tools
+
+- [Support interface](docs/support_interface.md) — feature flags, feedback, role management, and console auditing
+- [Feature flags](docs/feature_flags.md) — existing feature flags and how to add new ones
+
 ### Infrastructure & operations
 
 - [Deployment](docs/deployment.md) — CI/CD pipeline and troubleshooting

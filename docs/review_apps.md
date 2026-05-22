@@ -14,12 +14,6 @@ Note that review apps have container based Postgres and Redis volumes. The data 
 
 ## Authentication
 
-Each service interacts with the Qualifications API in a different way:
+Each service authenticates differently on review apps. AYTQ uses the full auth flow (requiring an account in preprod), while Check uses an auth bypass — a button on the sign-in page lets you sign in with a test user.
 
-- AYTQ requires a user-specific token, issued on Identity sign in
-- Check uses a fixed token
-
-As such, each service handles signing into an account differently as well:
-
-- AYTQ uses the full Identity auth flow. This requires an Identity account in preprod.
-- Check uses an auth bypass. When accessing the Check sign in page on a review app, a button press lets you sign in with a test user.
+For details on how each service authenticates with the Qualifications API, see [AYTQ authentication](authentication/aytq/readme.md) and the [Qualifications API integration guide](api_integrations/qualifications_api.md#authentication-modes).
