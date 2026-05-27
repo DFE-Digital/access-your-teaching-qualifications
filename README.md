@@ -235,6 +235,10 @@ Preproduction: s189t01-aytq-pp-inf-kv
 Production: s189p01-aytq-pd-app-kv
 ```
 
+## Infrastructure validation workflow
+
+The scheduled workflow defined in `.github/workflows/validate-infra.yml` runs Terraform plan validations for the AKS cluster plus domains infrastructure/environment each day at **07:00 UTC** against **production** only. Failures and drift notifications are sent to the SD Infra alerts Teams channel via the `TEAMS_WEBHOOK_URL_INFRA` secret.
+
 ## Licence
 
 [MIT Licence](LICENCE).

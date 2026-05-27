@@ -89,7 +89,7 @@ terraform-init: composed-variables vendor-modules set-azure-account ## Initializ
 	$(eval export TF_VAR_resource_group_name=${RESOURCE_GROUP_NAME})
 
 terraform-plan: terraform-init ## Plan terraform changes for AKS
-	terraform -chdir=terraform/application plan -var-file "config/${CONFIG}.tfvars.json"
+	terraform -chdir=terraform/application plan ${DETAILED_EXITCODE} -var-file "config/${CONFIG}.tfvars.json"
 
 terraform-apply: terraform-init ## Apply terraform changes for AKS
 	terraform -chdir=terraform/application apply -var-file "config/${CONFIG}.tfvars.json" ${AUTO_APPROVE}
@@ -142,7 +142,7 @@ domains-infra-init: domains composed-variables vendor-domain-infra-modules set-a
 		-backend-config=key=domains_infrastructure.tfstate
 
 domains-infra-plan: domains domains-infra-init  ## Terraform plan for DNS infrastructure (DNS zone and front door). Usage: make domains-infra-plan
-	terraform -chdir=terraform/domains/infrastructure plan -var-file config/zones.tfvars.json
+	terraform -chdir=terraform/domains/infrastructure plan ${DETAILED_EXITCODE} -var-file config/zones.tfvars.json
 
 domains-infra-apply: domains domains-infra-init  ## Terraform apply for DNS infrastructure (DNS zone and front door). Usage: make domains-infra-apply
 	terraform -chdir=terraform/domains/infrastructure apply -var-file config/zones.tfvars.json ${AUTO_APPROVE}
@@ -159,7 +159,7 @@ domains-init: domains composed-variables vendor-domain-modules set-azure-account
 		-backend-config=key=${ENVIRONMENT}.tfstate
 
 domains-plan: domains-init  ## Terraform plan for DNS environment domains. Usage: make development domains-plan
-	terraform -chdir=terraform/domains/environment_domains plan -var-file config/${CONFIG}.tfvars.json
+	terraform -chdir=terraform/domains/environment_domains plan ${DETAILED_EXITCODE} -var-file config/${CONFIG}.tfvars.json
 
 domains-apply: domains-init ## Terraform apply for DNS environment domains. Usage: make development domains-apply
 	terraform -chdir=terraform/domains/environment_domains apply -var-file config/${CONFIG}.tfvars.json ${AUTO_APPROVE}
