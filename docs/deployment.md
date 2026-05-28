@@ -2,13 +2,7 @@
 
 The services are automatically deployed via a [Github action](https://github.com/DFE-Digital/access-your-teaching-qualifications/actions/workflows/build-and-deploy.yml) when a branch is merged to main.
 
-We deploy across four environments:
-
-- test
-- preprod
-- production
-
-Production will only deploy when the non-production deploys were all successful.
+We deploy across three environments (test, preprod, and production). See the [README](../README.md#live-environments) for environment URLs and descriptions. Production will only deploy when the non-production deploys were all successful.
 
 ## Troubleshooting
 
