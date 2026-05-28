@@ -84,7 +84,7 @@ RUN apk add --update --no-cache tzdata && \
     echo "Europe/London" > /etc/timezone
 
 # libpq: required to run postgres
-RUN apk add --no-cache libpq
+RUN apk add --no-cache libpq=16.14-r0
 
 # Create non-root user and group with specific UIDs/GIDs
 RUN addgroup -S appgroup -g 20001 && adduser -S appuser -G appgroup -u 10001
