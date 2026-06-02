@@ -15,6 +15,6 @@ RSpec.feature "The root path", type: :system do
   end
 
   def signin_button_text
-    "Sign in with DfE Identity"
+    "sign in with your DfE Identity account"
   end
 end
