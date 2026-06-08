@@ -56,10 +56,10 @@ module QualificationAuthenticationSteps
   end
 
   def and_click_the_sign_in_button
-    click_button "Sign in with DfE Identity"
+    click_button "sign in with your DfE Identity account"
   end
 
   def and_click_the_onelogin_sign_in_button
-    click_button "create a GOV.UK One Login"
+    click_button "Sign in with GOV.UK One Login"
   end
 end

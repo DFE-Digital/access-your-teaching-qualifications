@@ -13,30 +13,35 @@
     </ul>
     <h2 class="govuk-heading-m">Before you start</h2>
 
-    <% if current_session.one_login_available? %>
-      <h3 class="govuk-heading-s">Sign in with GOV.UK One Login</h3>
-      <p class="govuk-body">
-        You’ll need to sign in to your GOV.UK One Login. If you do not have a GOV.UK One Login, you can create one.
-      </p>
+    <% if current_session.identity_new_registration_bypass_enabled? %>
+      <p class="govuk-body">You'll need a DfE Identity account to access your teaching qualifications.</p>
+      <p class="govuk-body">You can create an account if you do not have one already.</p>
+
       <%=
         govuk_button_to(
-          "Sign in with GOVUK One Login",
-          ["/qualifications/users/auth/onelogin", "trn_token=#{params[:trn_token]}"].join("?"),
+          "Sign in with DfE Identity",
+          current_session.dfe_identity_login_path(trn_token: params[:trn_token]),
           method: :post
         )
       %>
-    <% end %>
+    <% else %>
+      <p class="govuk-body">Use your GOV.UK One Login to access this service. You can create one if you do not have one.</p>
 
-    <h3 class="govuk-heading-s">Sign in with DfE Identity</h3>
-    <p class="govuk-body">
-      You’ll need to create a DfE Identity account to access your teaching qualifications. You’ll use the account to sign-in to this service and other DfE teaching services.
-    </p>
+      <%=
+        govuk_button_to(
+          "Start now",
+          current_session.onelogin_login_path(trn_token: params[:trn_token]),
+          method: :post
+        )
+      %>
 
-    <%= button_to current_session.dfe_identity_login_path(trn_token: params[:trn_token]), class: "govuk-button govuk-button--start" do %>
-      Start now
-      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
-        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"></path>
-      </svg>
+      <span class="govuk-body">You can also</span>
+      <%=
+        form_with(url: current_session.dfe_identity_login_path(trn_token: params[:trn_token]), method: :post, class: "govuk-!-display-inline-block") do |form|
+          form.submit "sign in with your DfE Identity account", class: "govuk-link govuk-link--button"
+        end
+      %>
+      <span class="govuk-body">.</span>
     <% end %>
   </div>
 </div>

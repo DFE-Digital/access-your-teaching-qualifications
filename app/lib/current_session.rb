@@ -78,6 +78,15 @@ class CurrentSession
     ].join("?")
   end
 
+  def onelogin_login_path(trn_token: nil)
+    hash = { trn_token: trn_token }.compact_blank
+
+    [
+      "/qualifications/users/auth/onelogin",
+      hash.to_query
+    ].join("?")
+  end
+
   def identity_new_registration_bypass_enabled?
     session[:identity_new_registration_bypass_token].present?
   end
