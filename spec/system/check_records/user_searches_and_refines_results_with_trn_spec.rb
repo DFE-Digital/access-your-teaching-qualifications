@@ -51,7 +51,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def when_i_enter_a_trn
-    fill_in "TRN", with: "1234567"
+    fill_in "TRN", with: "1234567 " # Testing with excess whitespace to check that it is properly stripped out
   end
 
   def then_i_see_a_teacher_record_in_the_results

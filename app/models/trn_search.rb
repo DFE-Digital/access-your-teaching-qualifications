@@ -7,6 +7,7 @@ class TrnSearch
 
   def find_teacher(teachers:)
     return unless valid?
-    teachers.find { |t| t.trn == trn }
+
+    teachers.find { |t| t.trn == trn.strip }
   end
 end
