@@ -102,6 +102,7 @@ RSpec.configure do |config|
 
     OmniAuth.config.mock_auth.delete(:identity)
     OmniAuth.config.mock_auth.delete(:dfe)
+    OmniAuth.config.mock_auth.delete(:onelogin)
   end
 
   config.around(:each, host: :check_records) do |example|
