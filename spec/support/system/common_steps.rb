@@ -6,6 +6,20 @@ module CommonSteps
     expect(:web_request).to have_been_enqueued_as_analytics_events
   end
 
+  # Certificate downloads don't navigate or change the DOM, so there is
+  # nothing for Capybara to synchronise on: response_headers can still be the
+  # previous response's (the HTML page, or an earlier download) until this
+  # download's response arrives. Poll for the expected download before
+  # asserting on it; on timeout fall through and let the caller's
+  # expectations report the actual headers.
+  def and_i_wait_for_the_download_to_finish(filename:)
+    Timeout.timeout(Capybara.default_max_wait_time * 5) do
+      sleep 0.1 until page.response_headers&.dig("content-disposition").to_s.include?(filename)
+    end
+  rescue Timeout::Error
+    nil
+  end
+
   def when_i_visit_the_service
     visit root_path
   end
