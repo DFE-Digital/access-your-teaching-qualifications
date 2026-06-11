@@ -22,6 +22,7 @@ RSpec.feature "Handling null data", type: :system do
     OmniAuth.config.mock_auth[:identity].credentials.token = "nulled-quals-data"
     when_i_go_to_the_sign_in_page
     and_click_the_sign_in_button
+    and_i_am_taken_to_my_qualifications_dashboard
   end
 
   def when_i_visit_the_qualifications_page
