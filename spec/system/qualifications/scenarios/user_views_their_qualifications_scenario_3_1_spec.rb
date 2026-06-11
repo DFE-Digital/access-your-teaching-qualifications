@@ -112,8 +112,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_qts_certificate_is_downloadable
-    click_on "Download QTS certificate"
-    and_i_wait_for_the_download_to_finish(filename: "#{name}_qts_certificate.pdf")
+    download_certificate("Download QTS certificate", filename: "#{name}_qts_certificate.pdf")
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
     expect(page.response_headers["content-disposition"]).to include(
@@ -122,8 +121,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_eyts_certificate_is_downloadable
-    click_on "Download EYTS certificate"
-    and_i_wait_for_the_download_to_finish(filename: "#{name}_eyts_certificate.pdf")
+    download_certificate("Download EYTS certificate", filename: "#{name}_eyts_certificate.pdf")
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
     expect(page.response_headers["content-disposition"]).to include(
@@ -150,8 +148,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_npq_certificate_is_downloadable
-    click_on "Download NPQH certificate"
-    and_i_wait_for_the_download_to_finish(filename: "#{name}_npqh_certificate.pdf")
+    download_certificate("Download NPQH certificate", filename: "#{name}_npqh_certificate.pdf")
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
     expect(page.response_headers["content-disposition"]).to include(
