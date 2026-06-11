@@ -97,10 +97,10 @@ RSpec.feature "Account page", type: :system do
   end
 
   def then_my_request_is_submitted
-    expect(NameChange.last.full_name).to eq "Ray Purchase"
-    expect(NameChange.last.reference_number).to eq "CASE-TEST-123"
     expect(page).to have_content "Name change request submitted"
     expect(page).to have_content "CASE-TEST-123"
+    expect(NameChange.last.full_name).to eq "Ray Purchase"
+    expect(NameChange.last.reference_number).to eq "CASE-TEST-123"
   end
 
   def and_my_evidence_is_uploaded

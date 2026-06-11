@@ -17,6 +17,7 @@ RSpec.feature "GOVUK One Login auth", type: :system do
   private
 
   def then_i_am_signed_in_after_successfully_authenticating_with_onelogin
+    expect(page).to have_current_path qualifications_dashboard_path
     expect(User.last.email).to eq "test@example.com"
     expect(User.last.auth_provider).to eq "onelogin"
   end
