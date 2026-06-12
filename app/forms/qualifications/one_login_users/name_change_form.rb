@@ -5,6 +5,7 @@ module Qualifications
       include ActiveModel::Validations
 
       MAX_SIZE = 3.megabytes
+      ALLOWED_CONTENT_TYPES = ["image/jpeg", "image/png", "application/pdf"].freeze
 
       attr_accessor :first_name, :middle_name, :last_name, :evidence, :user
 
@@ -60,10 +61,17 @@ module Qualifications
       end
 
       def validate_content_type
-        allowed_types = ["image/jpeg", "image/png", "application/pdf"]
-        if evidence && !allowed_types.include?(evidence.content_type)
-          errors.add(:evidence, "The selected file must be a PDF, JPG, JPEG or PNG")
-        end
+        return if evidence.blank?
+        return if ALLOWED_CONTENT_TYPES.include?(evidence.content_type) &&
+          sniffed_content_type == evidence.content_type
+
+        errors.add(:evidence, "The selected file must be a PDF, JPG, JPEG or PNG")
+      end
+
+      def sniffed_content_type
+        # Pass only the IO so Marcel determines the type from the file's magic
+        # bytes, ignoring the client-supplied filename and Content-Type header
+        Marcel::MimeType.for(evidence)
       end
     end
   end

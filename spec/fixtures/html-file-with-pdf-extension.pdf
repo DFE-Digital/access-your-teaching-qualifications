@@ -1,0 +1,2 @@
+<!DOCTYPE html>
+<html><body><script>alert(1)</script></body></html>
