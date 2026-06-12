@@ -48,7 +48,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_qts_certificate_is_downloadable
-    click_on "Download QTLS certificate"
+    download_certificate("Download QTLS certificate", filename: "Terry Walsh_qtls_certificate.pdf")
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include(
                                                               "attachment"
@@ -59,7 +59,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_eyts_certificate_is_downloadable
-    click_on "Download EYTS certificate"
+    download_certificate("Download EYTS certificate", filename: "Terry Walsh_eyts_certificate.pdf")
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include(
                                                               "attachment"
@@ -82,7 +82,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_npq_certificate_is_downloadable
-    click_on "Download NPQH certificate"
+    download_certificate("Download NPQH certificate", filename: "Terry Walsh_npqh_certificate.pdf")
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include(
                                                               "attachment"

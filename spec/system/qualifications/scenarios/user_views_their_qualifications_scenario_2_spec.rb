@@ -61,7 +61,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def and_my_npq_certificate_is_downloadable
-    click_on "Download NPQH certificate"
+    download_certificate("Download NPQH certificate", filename: "#{name}_npqh_certificate.pdf")
     expect(page.response_headers["content-type"]).to eq("application/pdf")
     expect(page.response_headers["content-disposition"]).to include("attachment")
     expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_npqh_certificate.pdf\";")

@@ -4,6 +4,8 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
   include ActivateFeaturesSteps
   include AuthenticationSteps
 
+  after { travel_back }
+
   scenario "User searches with a valid CSV", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_check_service_is_open
     and_bulk_search_is_enabled
@@ -60,6 +62,5 @@ RSpec.describe "Bulk search", host: :check_records, type: :system do
 
   def then_i_see_the_expired_search_message
     expect(page).to have_content "Bulk search expired"
-    travel_back
-  end 
+  end
 end

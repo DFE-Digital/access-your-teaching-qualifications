@@ -8,12 +8,22 @@ module QualificationAuthenticationSteps
     given_identity_auth_is_mocked
     when_i_go_to_the_sign_in_page
     and_click_the_sign_in_button
+    and_i_am_taken_to_my_qualifications_dashboard
   end
 
   def and_i_am_signed_in_via_onelogin
     given_onelogin_auth_is_mocked
     when_i_go_to_the_sign_in_page
     and_click_the_onelogin_sign_in_button
+    and_i_am_taken_to_my_qualifications_dashboard
+  end
+
+  # Signing in navigates through the OmniAuth callback asynchronously, so a
+  # bare `visit` straight after clicking the sign in button can run before
+  # the session cookie is set and land back on the sign in page. Wait for
+  # the post-auth redirect to complete before handing back to the spec.
+  def and_i_am_taken_to_my_qualifications_dashboard
+    expect(page).to have_current_path(qualifications_dashboard_path, wait: 10)
   end
 
   def given_auth_is_mocked_for(provider:)

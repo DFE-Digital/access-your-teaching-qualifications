@@ -17,7 +17,18 @@ require "dfe/analytics/rspec/matchers"
 WebMock.disable_net_connect!(allow_localhost: true)
 
 Capybara.register_driver(:cuprite) do |app|
-  Capybara::Cuprite::Driver.new(app, timeout: 200, process_timeout: 120, window_size: [1200, 800])
+  # Without an explicit download path Chrome denies downloads, which can
+  # hang clicks on download links and leaves response_headers unset. The
+  # directory must exist or Chrome stalls the download instead.
+  download_path = Rails.root.join("tmp/capybara/downloads").to_s
+  FileUtils.mkdir_p(download_path)
+  Capybara::Cuprite::Driver.new(
+    app,
+    timeout: 200,
+    process_timeout: 120,
+    window_size: [1200, 800],
+    save_path: download_path
+  )
 end
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
@@ -91,6 +102,7 @@ RSpec.configure do |config|
 
     OmniAuth.config.mock_auth.delete(:identity)
     OmniAuth.config.mock_auth.delete(:dfe)
+    OmniAuth.config.mock_auth.delete(:onelogin)
   end
 
   config.around(:each, host: :check_records) do |example|

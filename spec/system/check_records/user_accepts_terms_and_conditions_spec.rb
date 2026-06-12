@@ -7,6 +7,8 @@ RSpec.describe "Terms and conditions acceptance", host: :check_records do
   include AuthenticationSteps
   include ActivateFeaturesSteps
 
+  after { travel_back }
+
   scenario "User accepts terms and conditions", test: :with_stubbed_auth do
     given_the_check_service_is_open
     when_i_sign_in_via_dsi(accept_terms_and_conditions: false)
