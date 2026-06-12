@@ -5,9 +5,72 @@ RSpec.describe BulkSearch, type: :model do
 
   context "when the file is present" do
     subject { described_class.new(file:) }
-    let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search.csv") }
+    let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search.csv", "text/csv") }
 
     it { is_expected.to be_valid }
+  end
+
+  context "when the file has a UTF-8 byte order mark" do
+    subject { described_class.new(file:) }
+    let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search_with_bom.csv", "text/csv") }
+
+    it { is_expected.to be_valid }
+  end
+
+  context "when the file is too large" do
+    let(:bulk_search) { described_class.new(file:) }
+    let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search.csv", "text/csv") }
+
+    it "adds an error" do
+      allow(file).to receive(:size).and_return(BulkSearch::MAX_SIZE + 1)
+      bulk_search.valid?
+
+      expect(bulk_search.errors[:file]).to include("The selected file must be smaller than 1MB")
+    end
+  end
+
+  context "when a binary file is disguised with a CSV Content-Type" do
+    let(:bulk_search) { described_class.new(file:) }
+    let(:file) { fixture_file_upload("spec/fixtures/test-upload.pdf", "text/csv") }
+
+    it "adds an error" do
+      bulk_search.valid?
+
+      expect(bulk_search.errors[:file]).to include("The selected file must be a CSV")
+    end
+  end
+
+  context "when the declared Content-Type is not allowed" do
+    let(:bulk_search) { described_class.new(file:) }
+    let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search.csv", "application/pdf") }
+
+    it "adds an error" do
+      bulk_search.valid?
+
+      expect(bulk_search.errors[:file]).to include("The selected file must be a CSV")
+    end
+  end
+
+  context "when the file is not UTF-8 text" do
+    let(:bulk_search) { described_class.new(file:) }
+    let(:file) { fixture_file_upload("spec/fixtures/utf16_bulk_search.csv", "text/csv") }
+
+    it "adds an error" do
+      bulk_search.valid?
+
+      expect(bulk_search.errors[:file]).to include("The selected file must be a CSV")
+    end
+  end
+
+  context "when the file does not parse as CSV" do
+    let(:bulk_search) { described_class.new(file:) }
+    let(:file) { fixture_file_upload("spec/fixtures/malformed_bulk_search.csv", "text/csv") }
+
+    it "adds an error" do
+      bulk_search.valid?
+
+      expect(bulk_search.errors[:file]).to include("The selected file must be a CSV")
+    end
   end
 
   context "when the header row is missing" do
@@ -23,7 +86,8 @@ RSpec.describe BulkSearch, type: :model do
 
   context "when the file is missing a TRN" do
     let(:bulk_search) { described_class.new(file:) }
-    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_trn.csv") }
+    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_trn.csv",
+                                     "text/csv") }
 
     it "adds an error" do
       bulk_search.valid?
@@ -34,7 +98,8 @@ RSpec.describe BulkSearch, type: :model do
 
   context "when the file is missing a Date of birth" do
     let(:bulk_search) { described_class.new(file:) }
-    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_date_of_birth.csv") }
+    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_date_of_birth.csv",
+                                     "text/csv") }
 
     it "adds an error" do
       bulk_search.valid?
@@ -45,7 +110,8 @@ RSpec.describe BulkSearch, type: :model do
 
   context "when the file has an invalid date of birth" do
     let(:bulk_search) { described_class.new(file:) }
-    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_invalid_date_of_birth.csv") }
+    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_invalid_date_of_birth.csv",
+                                     "text/csv") }
 
     it "adds an error" do
       bulk_search.valid?
@@ -57,7 +123,7 @@ RSpec.describe BulkSearch, type: :model do
   describe "#call", test: :with_fake_quals_api do
     subject(:call) { described_class.new(file:).call }
 
-    let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search.csv") }
+    let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search.csv", "text/csv") }
 
     it { is_expected.to be_truthy }
     it { is_expected.to be_an_instance_of(Array) }
@@ -111,7 +177,7 @@ RSpec.describe BulkSearch, type: :model do
 
     context "when the file has more than 100 rows" do
       let(:bulk_search) { described_class.new(file:) }
-      let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search_101_rows.csv") }
+      let(:file) { fixture_file_upload("spec/fixtures/valid_bulk_search_101_rows.csv", "text/csv") }
 
       it "adds an error" do
         bulk_search.valid?
