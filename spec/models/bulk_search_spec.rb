@@ -86,8 +86,8 @@ RSpec.describe BulkSearch, type: :model do
 
   context "when the file is missing a TRN" do
     let(:bulk_search) { described_class.new(file:) }
-    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_trn.csv",
-                                     "text/csv") }
+    let(:file) do fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_trn.csv",
+                                     "text/csv") end
 
     it "adds an error" do
       bulk_search.valid?
@@ -98,8 +98,8 @@ RSpec.describe BulkSearch, type: :model do
 
   context "when the file is missing a Date of birth" do
     let(:bulk_search) { described_class.new(file:) }
-    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_date_of_birth.csv",
-                                     "text/csv") }
+    let(:file) do fixture_file_upload("spec/fixtures/invalid_bulk_search_missing_date_of_birth.csv",
+                                     "text/csv") end
 
     it "adds an error" do
       bulk_search.valid?
@@ -110,8 +110,8 @@ RSpec.describe BulkSearch, type: :model do
 
   context "when the file has an invalid date of birth" do
     let(:bulk_search) { described_class.new(file:) }
-    let(:file) { fixture_file_upload("spec/fixtures/invalid_bulk_search_invalid_date_of_birth.csv",
-                                     "text/csv") }
+    let(:file) do fixture_file_upload("spec/fixtures/invalid_bulk_search_invalid_date_of_birth.csv",
+                                     "text/csv") end
 
     it "adds an error" do
       bulk_search.valid?
