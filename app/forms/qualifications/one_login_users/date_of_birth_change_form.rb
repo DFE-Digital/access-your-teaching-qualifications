@@ -54,9 +54,10 @@ module Qualifications
       private
 
       def validate_file_size
-        if evidence && evidence.size > MAX_SIZE
-          errors.add(:evidence, "The selected file must be smaller than 3MB")
-        end
+        return if evidence.blank?
+        return if evidence.size <= MAX_SIZE
+
+        errors.add(:evidence, "The selected file must be smaller than 3MB")
       end
 
       def validate_content_type
