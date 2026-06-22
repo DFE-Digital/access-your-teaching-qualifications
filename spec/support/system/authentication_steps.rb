@@ -2,7 +2,6 @@ module AuthenticationSteps
   def when_i_sign_in_via_dsi(authorised: true, internal: false, orgs: [organisation], accept_terms_and_conditions: true)
     given_dsi_auth_is_mocked(authorised:, internal:, orgs:,)
     when_i_visit_the_sign_in_page
-    and_wait_for_the_page_to_load
     and_i_accept_the_terms_and_conditions(accept_terms_and_conditions)
   end
   alias_method :and_i_am_signed_in_via_dsi, :when_i_sign_in_via_dsi
@@ -98,17 +97,5 @@ module AuthenticationSteps
       click_on "Accept", wait: 10
       expect(page).to have_no_current_path(check_records_terms_and_conditions_path, wait: 10)
     end
-  end
-
-  # The sign in page POSTs to DSI via an auto-submitting form (see
-  # CheckRecords::SignInController#new). On the first request of a session the
-  # form's inline script is blocked by the Content-Security-Policy (the nonce
-  # is derived from the session id, which doesn't exist until the first
-  # response sets the session cookie), so the page never submits itself.
-  # Reloading once renders the form with a valid nonce. Only reload while
-  # still stuck on the form: reloading mid-redirect can abort the navigation
-  # and strand the test on a blank page.
-  def and_wait_for_the_page_to_load
-    page.driver.refresh unless page.has_no_css?("form[action*='/auth/']", wait: 2)
   end
 end
