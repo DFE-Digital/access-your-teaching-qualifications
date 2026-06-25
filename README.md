@@ -76,6 +76,7 @@ All environments have continuous deployment, the state of which can be inspected
 - [Deployment](docs/deployment.md) — CI/CD pipeline and troubleshooting
 - [Review apps](docs/review_apps.md) — deploying and using review apps
 - [Operations](docs/operations.md) — Rails console access and keyvault secret management
+- [Evidence uploads](docs/evidence_uploads.md) — upload flow, file content validation, and malware scanning
 - [Azure storage](docs/azure_storage.md) — evidence upload storage configuration
 - [Encryption](docs/encryption.md) — ActiveRecord Encryption and key rotation
 - [Disaster recovery](docs/disaster_recovery.md) — database failure scenarios and recovery procedures

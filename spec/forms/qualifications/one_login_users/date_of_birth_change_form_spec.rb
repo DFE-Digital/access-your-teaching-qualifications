@@ -1,12 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Qualifications::OneLoginUsers::NameChangeForm, type: :model do
-  it { is_expected.to validate_presence_of(:first_name) }
-  it { is_expected.to validate_presence_of(:last_name) }
-  it { is_expected.to validate_length_of(:first_name).is_at_most(100) }
-  it { is_expected.to validate_length_of(:middle_name).is_at_most(100) }
-  it { is_expected.to validate_length_of(:last_name).is_at_most(100) }
-
+RSpec.describe Qualifications::OneLoginUsers::DateOfBirthChangeForm, type: :model do
   describe "evidence content type validation" do
     it "accepts a file whose content matches its declared type" do
       {
@@ -37,8 +31,9 @@ RSpec.describe Qualifications::OneLoginUsers::NameChangeForm, type: :model do
     def build_form(fixture:, declared_type:)
       fixture_path = Rails.root.join("spec/fixtures", fixture)
       described_class.new(
-        first_name: "Jane",
-        last_name: "Doe",
+        day: "5",
+        month: "12",
+        year: "1990",
         evidence: Rack::Test::UploadedFile.new(fixture_path, declared_type),
       )
     end
