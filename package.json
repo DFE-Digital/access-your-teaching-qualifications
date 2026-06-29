@@ -3,7 +3,7 @@
   "private": "true",
   "dependencies": {
     "@govuk-one-login/service-header": "^5.0.0",
-    "esbuild": "^0.25.12",
+    "esbuild": "^0.28.0",
     "govuk-frontend": "^6.1.0",
     "puppeteer": "23.10.4"
   },
