@@ -146,12 +146,11 @@
   resolved "https://registry.yarnpkg.com/@esbuild/win32-x64/-/win32-x64-0.25.12.tgz#9bdad8176be7811ad148d1f8772359041f46c6c5"
   integrity sha512-alJC0uCZpTFrSL0CCDjcgleBXPnCrEAhTBILpeAp7M/OFgoqtAetfBzX0xM00MUsVVPpVjlPuMbREqnZCXaTnA==
 
-"@govuk-one-login/service-header@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@govuk-one-login/service-header/-/service-header-5.0.0.tgz#d1deb335799db367b3d0aa970cec6161455c8739"
-  integrity sha512-C0TClWrjSWrN5U773hFr4ZdUlTWRTCVl4L2D8IrQWimCF84zXdY+LF2bfQM2RqUMIzjdpmMwARv7NS8Wohkrlw==
+"@govuk-one-login/service-header@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@govuk-one-login/service-header/-/service-header-6.0.0.tgz#5a92f048e5203fb7761379068c3c41c767ec1351"
+  integrity sha512-c8ehXo/o18DFhJecfN7JXE1K/J6D9wWN6eT3E8IGSqCHxz72gXoJLwkJh8s6aKVSIvIILuhX7KoRaI72gIKuNQ==
   dependencies:
-    govuk-frontend "^5.13.0"
     nunjucks "^3.2.4"
 
 "@prettier/plugin-ruby@^4.0.4":
@@ -498,11 +497,6 @@ get-uri@^6.0.1:
     basic-ftp "^5.0.2"
     data-uri-to-buffer "^6.0.2"
     debug "^4.3.4"
-
-govuk-frontend@^5.13.0:
-  version "5.14.0"
-  resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-5.14.0.tgz#d93f1ffa88b0696114509cab86e4ea474006f8e0"
-  integrity sha512-MgfaXswIM6KpXS2T5gltEnzgVLgfM3UoE9+rYkhBiR0suaJ8Let31VZXQZqz9QhiPDbv28fW1nRjIyLujfZIBA==
 
 govuk-frontend@^6.1.0:
   version "6.1.0"
