@@ -16,20 +16,6 @@ require "dfe/analytics/rspec/matchers"
 
 WebMock.disable_net_connect!(allow_localhost: true)
 
-Capybara.register_driver(:cuprite) do |app|
-  # Without an explicit download path Chrome denies downloads, which can
-  # hang clicks on download links and leaves response_headers unset. The
-  # directory must exist or Chrome stalls the download instead.
-  download_path = Rails.root.join("tmp/capybara/downloads").to_s
-  FileUtils.mkdir_p(download_path)
-  Capybara::Cuprite::Driver.new(
-    app,
-    timeout: 200,
-    process_timeout: 120,
-    window_size: [1200, 800],
-    save_path: download_path
-  )
-end
 Capybara.default_driver = :cuprite
 Capybara.javascript_driver = :cuprite
 Capybara.app_host = "http://qualifications.localhost"
@@ -87,7 +73,23 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  config.before(:each, type: :system) { driven_by(:cuprite) }
+  config.before(:each, type: :system) do
+    # driven_by re-registers the :cuprite driver per example, so timeout and
+    # save_path must be passed here — a bare driven_by(:cuprite) reverts to
+    # Ferrum's short defaults (10s process_timeout), the CI startup-flake cause.
+    # Chrome also stalls downloads without an explicit, existing save path.
+    download_path = Rails.root.join("tmp/capybara/downloads").to_s
+    FileUtils.mkdir_p(download_path)
+    driven_by(
+      :cuprite,
+      screen_size: [1200, 800],
+      options: {
+        timeout: 200,
+        process_timeout: 120,
+        save_path: download_path
+      }
+    )
+  end
   config.before { Sidekiq::Worker.clear_all }
   config.before(:each) do
     stub_request(:any, /npq-registration-sandbox-web.teacherservices/).to_rack(FakeNpqQualificationsApi)
