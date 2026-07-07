@@ -33,7 +33,7 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Build and push docker image
         id: build-image
@@ -58,7 +58,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Deploy to AKS
         uses: ./.github/actions/deploy-environment
@@ -91,7 +91,7 @@ jobs:
           kubectl exec -n tra-development deployment/access-your-teaching-qualifications-pr-${{ github.event.number }} -- /bin/sh -c "cd /app && bundle exec rake db:seed_role_codes"
 
       - name: Post comment to Pull Request ${{ github.event.number }}
-        uses: marocchino/sticky-pull-request-comment@d4d6b0936434b21bc8345ad45a440c5f7d2c40ff # Pinned at v3.0.3
+        uses: marocchino/sticky-pull-request-comment@0ea0beb66eb9baf113663a64ec522f60e49231c0 # Pinned at v3.0.4
         with:
           header: aks
           message: |
@@ -119,7 +119,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Deploy to AKS
         uses: ./.github/actions/deploy-environment
@@ -144,7 +144,7 @@ jobs:
       id-token: write
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - name: Deploy to AKS
         uses: ./.github/actions/deploy-environment
