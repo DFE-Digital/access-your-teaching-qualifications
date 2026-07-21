@@ -6,6 +6,6 @@ FactoryBot.define do
 
     first_name { "Steven" }
     last_name { "Toast" }
-    uid { "123" }
+    uid { "123456" }
   end
 end
