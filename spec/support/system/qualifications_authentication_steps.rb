@@ -30,6 +30,7 @@ module QualificationAuthenticationSteps
     OmniAuth.config.mock_auth[provider] = OmniAuth::AuthHash.new(
       {
         provider:,
+        uid: "#{provider}-uid-123",
         info: {
           email: "test@example.com",
           first_name: "User",

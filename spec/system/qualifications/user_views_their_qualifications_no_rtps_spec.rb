@@ -18,6 +18,7 @@ RSpec.feature "User views their qualifications", type: :system do
     OmniAuth.config.mock_auth[:identity] = OmniAuth::AuthHash.new(
       {
         provider: "identity",
+        uid: "identity-uid-123",
         info: {
           email: "test@example.com",
           email_verified: "True",
