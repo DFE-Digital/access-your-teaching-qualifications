@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_17_065402) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_24_142404) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -215,7 +215,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_17_065402) do
     t.string "auth_provider"
     t.string "one_login_verified_name"
     t.date "one_login_verified_birth_date"
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["auth_provider", "auth_uuid"], name: "index_users_on_auth_provider_and_auth_uuid", unique: true
+    t.index ["email"], name: "index_users_on_email"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
