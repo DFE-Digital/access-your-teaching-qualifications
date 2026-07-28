@@ -15,6 +15,10 @@ module Qualifications
 
         log_auth_credentials_in_development(auth)
         redirect_to qualifications_dashboard_path
+      rescue User::AuthMissingUidError => e
+        Sentry.capture_exception(e)
+        flash[:warning] = I18n.t("validation_errors.generic_oauth_failure")
+        redirect_to qualifications_root_path
       end
 
       private
