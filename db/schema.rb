@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_07_24_142404) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_29_152804) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -140,7 +140,6 @@ ActiveRecord::Schema[7.2].define(version: 2026_07_24_142404) do
     t.datetime "updated_at", null: false
     t.string "terms_and_conditions_version_accepted"
     t.datetime "terms_and_conditions_accepted_at"
-    t.index ["email"], name: "index_dsi_users_on_email", unique: true
   end
 
   create_table "feature_flags_features", force: :cascade do |t|
