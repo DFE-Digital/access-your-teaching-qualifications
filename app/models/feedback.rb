@@ -1,5 +1,5 @@
 class Feedback < ApplicationRecord
-  enum service: {check: "check", aytq: "aytq"}
+  enum :service, {check: "check", aytq: "aytq"}
 
   SATISFACTION_RATINGS = %w[
     very_satisfied

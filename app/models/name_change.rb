@@ -2,13 +2,14 @@ class NameChange < ApplicationRecord
   belongs_to :user
   has_one_attached :evidence
 
-  enum malware_scan_result: {
-    clean: "clean",
-    error: "error",
-    pending: "pending",
-    suspect: "suspect"
-  },
-  _prefix: :scan_result
+  enum :malware_scan_result,
+       {
+         clean: "clean",
+         error: "error",
+         pending: "pending",
+         suspect: "suspect"
+       },
+       prefix: :scan_result
 
 
   def expiring_evidence_url

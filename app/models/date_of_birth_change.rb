@@ -4,12 +4,14 @@ class DateOfBirthChange < ApplicationRecord
 
   delegate :filename, to: :evidence, prefix: true
 
-  enum malware_scan_result: {
-    clean: "clean",
-    error: "error",
-    pending: "pending",
-    suspect: "suspect"
-  }, _prefix: :scan_result
+  enum :malware_scan_result,
+       {
+         clean: "clean",
+         error: "error",
+         pending: "pending",
+         suspect: "suspect"
+       },
+       prefix: :scan_result
 
 
   def expiring_evidence_url
