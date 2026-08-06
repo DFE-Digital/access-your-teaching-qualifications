@@ -46,6 +46,11 @@ module AccessYourTeachingQualifications
     # after the autoloader has already scanned and named the constants.
     config.add_autoload_paths_to_load_path = true
 
+    # An 8.0 default, set here rather than in new_framework_defaults_8_0.rb
+    # because Rails warns about it from an Active Support railtie initializer,
+    # which runs before config/initializers. Nothing here calls `to_time`.
+    config.active_support.to_time_preserves_timezone = :zone
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
