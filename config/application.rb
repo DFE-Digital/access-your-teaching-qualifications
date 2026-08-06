@@ -24,7 +24,7 @@ Bundler.require(*Rails.groups)
 module AccessYourTeachingQualifications
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+    config.load_defaults 7.2
 
     # Active Record encryption derives its keys with SHA-1 here, because that
     # was the default when the encrypted columns on User and DsiUser were first
