@@ -35,7 +35,7 @@ gem "pg", "~> 1.5"
 gem "propshaft"
 gem "puma", "~> 7.1"
 gem "rails", "~> 8.1.3"
-gem "rails_semantic_logger"
+gem "rails_semantic_logger", "~> 5.0.0" #5.1 calls Sidekiq::Config, which needs Sidekiq 7
 gem "repost"
 gem "sentry-rails", "~> 5.27"
 gem "sidekiq", "< 7" #7 requires Redis >6.2 which isn't available on Azure currently
