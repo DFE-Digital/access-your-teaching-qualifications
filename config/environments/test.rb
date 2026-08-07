@@ -34,10 +34,8 @@ Rails.application.configure do
   # Store uploaded files on the local file system in a temporary directory.
   config.active_storage.service = :test
 
-  # Raise on deprecation notices for the duration of the Rails 8.1 upgrade, so
-  # behaviour removed across a major boundary fails the suite instead of
-  # scrolling past as a warning. Revert to :stderr once the walk is complete.
-  config.active_support.deprecation = :raise
+  # Print deprecation notices to the stderr.
+  config.active_support.deprecation = :stderr
 
   # Raise exceptions for disallowed deprecations.
   config.active_support.disallowed_deprecation = :raise
