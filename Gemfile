@@ -6,7 +6,8 @@ ruby "3.4.4"
 gem "activerecord-session_store"
 gem "amazing_print"
 gem "audits1984"
-gem "azure-storage-blob", github: "honeyankit/azure-storage-ruby"
+gem "azure-blob" #Active Storage adapter; Rails 8.1 removed its built-in AzureStorage service
+gem "azure-storage-blob", github: "honeyankit/azure-storage-ruby" #still used by Malware::FetchScanResult
 gem "bootsnap", require: false
 gem "console1984"
 gem "dartsass-rails", "~> 0.5.1"
