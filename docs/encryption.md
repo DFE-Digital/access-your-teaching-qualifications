@@ -5,6 +5,24 @@ The application uses [ActiveRecord Encryption](https://guides.rubyonrails.org/ac
 Application-level encryption ensures that we reduce the risk of leaking PII information should
 the database ever be compromised.
 
+## Key derivation uses SHA-1
+
+`config/application.rb` pins two settings below `config.load_defaults`:
+
+```ruby
+config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
+config.active_record.encryption.support_sha1_for_non_deterministic_encryption = true
+```
+
+Rails 7.1 changed the digest used to derive encryption keys from SHA-1 to SHA-256. Every
+encrypted column in this database was written under SHA-1, so taking the new default would
+change the derived key: deterministic `email` lookups on `User` and `DsiUser` would match
+nothing, and the non-deterministic name columns would not decrypt at all.
+
+Do not remove these without re-encrypting the existing data first. Note this is specific to
+Active Record encryption — `active_support.key_generator_hash_digest_class`, which signs
+session cookies, moved to SHA-256 back in Rails 7.0 and is not pinned.
+
 ## Encryption keys
 
 Rails encrypts data using a key that is stored outside of version control. In deployed environments
