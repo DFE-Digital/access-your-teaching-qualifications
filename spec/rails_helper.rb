@@ -102,7 +102,6 @@ RSpec.configure do |config|
     example.run
     OmniAuth.config.test_mode = false
 
-    OmniAuth.config.mock_auth.delete(:identity)
     OmniAuth.config.mock_auth.delete(:dfe)
     OmniAuth.config.mock_auth.delete(:onelogin)
   end

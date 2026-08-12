@@ -4,13 +4,6 @@ module QualificationAuthenticationSteps
     sign_in(@user)
   end
 
-  def and_i_am_signed_in_via_identity
-    given_identity_auth_is_mocked
-    when_i_go_to_the_sign_in_page
-    and_click_the_sign_in_button
-    and_i_am_taken_to_my_qualifications_dashboard
-  end
-
   def and_i_am_signed_in_via_onelogin
     given_onelogin_auth_is_mocked
     when_i_go_to_the_sign_in_page
@@ -52,11 +45,6 @@ module QualificationAuthenticationSteps
     )
   end
 
-  def given_identity_auth_is_mocked
-    given_auth_is_mocked_for(provider: :identity)
-  end
-  alias_method :and_identity_auth_is_mocked, :given_identity_auth_is_mocked
-
   def given_onelogin_auth_is_mocked
     given_auth_is_mocked_for(provider: :onelogin)
   end
@@ -64,10 +52,6 @@ module QualificationAuthenticationSteps
 
   def when_i_go_to_the_sign_in_page
     visit qualifications_root_path
-  end
-
-  def and_click_the_sign_in_button
-    click_button "sign in with your DfE Identity account"
   end
 
   def and_click_the_onelogin_sign_in_button

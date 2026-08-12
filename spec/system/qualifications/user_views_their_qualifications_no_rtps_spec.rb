@@ -6,7 +6,7 @@ RSpec.feature "User views their qualifications", type: :system do
 
   scenario "when they have no RTPS", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
-    and_i_am_signed_in_via_identity
+    and_i_am_signed_in_via_onelogin
 
     when_i_visit_the_qualifications_page
     then_i_see_there_are_no_rtps_details
@@ -14,11 +14,11 @@ RSpec.feature "User views their qualifications", type: :system do
 
   private
 
-  def given_identity_auth_is_mocked
-    OmniAuth.config.mock_auth[:identity] = OmniAuth::AuthHash.new(
+  def given_onelogin_auth_is_mocked
+    OmniAuth.config.mock_auth[:onelogin] = OmniAuth::AuthHash.new(
       {
-        provider: "identity",
-        uid: "identity-uid-123",
+        provider: "onelogin",
+        uid: "onelogin-uid-123",
         info: {
           email: "test@example.com",
           email_verified: "True",

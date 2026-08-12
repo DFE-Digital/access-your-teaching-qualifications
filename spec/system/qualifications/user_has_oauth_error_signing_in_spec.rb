@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "DSI authentication", type: :system do
+RSpec.describe "GOVUK One Login authentication", type: :system do
   include AuthorizationSteps
   include QualificationAuthenticationSteps
 
@@ -12,16 +12,16 @@ RSpec.describe "DSI authentication", type: :system do
   end
 
   scenario "User has oauth error when signing in", test: :with_stubbed_auth do
-    given_identity_auth_is_mocked_with_a_failure
+    given_onelogin_auth_is_mocked_with_a_failure
     when_i_go_to_the_sign_in_page
-    and_click_the_sign_in_button
+    and_click_the_onelogin_sign_in_button
     then_i_see_a_sign_in_error
   end
 
   private
 
-  def given_identity_auth_is_mocked_with_a_failure
-    OmniAuth.config.mock_auth[:identity] = :invalid_credentials
+  def given_onelogin_auth_is_mocked_with_a_failure
+    OmniAuth.config.mock_auth[:onelogin] = :invalid_credentials
   end
 
   def then_i_see_a_sign_in_error

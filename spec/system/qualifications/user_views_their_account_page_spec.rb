@@ -13,6 +13,7 @@ RSpec.feature "Account page", type: :system do
     then_i_see_my_qualifications_page
     when_i_click_through_to_update_my_details
     then_i_see_my_account_page
+    and_event_tracking_is_working
   end
 
   private
