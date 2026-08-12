@@ -23,7 +23,7 @@ Key configuration details:
 - Discovery is enabled (configuration fetched from the provider's `.well-known/openid-configuration`)
 - Response type is `:code` (authorization code flow)
 - Scopes requested: `email openid profile dqt:read`
-- Extra authorize params: `session_id`, `trn_token`, `registration_token`
+- Extra authorize params: `session_id`, `trn_token`
 
 The `dqt:read` scope is specific to DfE Identity and grants the issued token read access to the teacher's record via the Qualifications API.
 
@@ -32,12 +32,6 @@ The `dqt:read` scope is specific to DfE Identity and grants the issued token rea
 No UI entry point remains: neither the sign-in page nor the start page offers DfE Identity, so a teacher cannot reach this flow by navigating the service.
 
 The middleware itself is still mounted. A request sent directly to `/qualifications/users/auth/identity` would still run a standard OIDC authorization code flow and redirect back to `/qualifications/users/auth/identity/callback`, where `OmniauthCallbacksController#complete` calls `CurrentSession.create_session(session, auth)`. Closing off that path is part of the remaining decommission work.
-
-### Registration bypass token
-
-DfE Identity never supported new user registration on its own. It supports a `registration_token` parameter to enable this when necessary, which `QualificationsInterfaceController` still stores in the session as `identity_new_registration_bypass_token`.
-
-The token no longer changes anything a teacher sees. It previously replaced the One Login option with a DfE Identity button on the sign-in and start pages; that branch has been removed, so the stored token is now read by nothing.
 
 ## Callback data
 
