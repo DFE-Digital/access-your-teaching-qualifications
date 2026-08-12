@@ -13,35 +13,16 @@
     </ul>
     <h2 class="govuk-heading-m">Before you start</h2>
 
-    <% if current_session.identity_new_registration_bypass_enabled? %>
-      <p class="govuk-body">You'll need a DfE Identity account to access your teaching qualifications.</p>
-      <p class="govuk-body">You can create an account if you do not have one already.</p>
+    <p class="govuk-body">Use your GOV.UK One Login to access this service. You can create one if you do not have one.</p>
 
-      <%=
-        govuk_button_to(
-          "Sign in with DfE Identity",
-          current_session.dfe_identity_login_path(trn_token: params[:trn_token]),
-          method: :post
-        )
-      %>
-    <% else %>
-      <p class="govuk-body">Use your GOV.UK One Login to access this service. You can create one if you do not have one.</p>
+    <%=
+      govuk_button_to(
+        "Start now",
+        current_session.onelogin_login_path(trn_token: params[:trn_token]),
+        method: :post
+      )
+    %>
 
-      <%=
-        govuk_button_to(
-          "Start now",
-          current_session.onelogin_login_path(trn_token: params[:trn_token]),
-          method: :post
-        )
-      %>
-
-      <span class="govuk-body">You can also</span>
-      <%=
-        form_with(url: current_session.dfe_identity_login_path(trn_token: params[:trn_token]), method: :post, class: "govuk-!-display-inline-block") do |form|
-          form.submit "sign in with your DfE Identity account", class: "govuk-link govuk-link--button"
-        end
-      %>
-      <span class="govuk-body">.</span>
-    <% end %>
+    <p class="govuk-body">DfE Identity account is now no longer available - If you previously used this, sign in with GOV.UK One Login instead</p>
   </div>
 </div>
