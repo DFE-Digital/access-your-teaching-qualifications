@@ -62,15 +62,8 @@ class CurrentSession
     end
   end
 
-  def store_identity_registration_bypass_token(token)
-    session[:identity_new_registration_bypass_token] = token
-  end
-
   def dfe_identity_login_path(trn_token: nil)
-    hash = {
-      trn_token: trn_token,
-      registration_token: session[:identity_new_registration_bypass_token]
-    }.compact_blank
+    hash = { trn_token: trn_token }.compact_blank
 
     [
       "/qualifications/users/auth/identity",
@@ -85,14 +78,6 @@ class CurrentSession
       "/qualifications/users/auth/onelogin",
       hash.to_query
     ].join("?")
-  end
-
-  def identity_new_registration_bypass_enabled?
-    session[:identity_new_registration_bypass_token].present?
-  end
-
-  def one_login_available?
-    !identity_new_registration_bypass_enabled?
   end
 
   def omniauth_provider

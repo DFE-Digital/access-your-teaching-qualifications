@@ -8,6 +8,7 @@ RSpec.feature "The qualifications start page", type: :system do
 
     when_i_visit_the_qualifications_start_page
     then_i_see_the_start_page
+    and_i_cannot_sign_in_with_dfe_identity
   end
 
   private
@@ -19,5 +20,13 @@ RSpec.feature "The qualifications start page", type: :system do
   def then_i_see_the_start_page
     expect(page).to have_content("Access your teaching qualifications")
     expect(page).to have_button("Start now")
+  end
+
+  def and_i_cannot_sign_in_with_dfe_identity
+    expect(page).to have_content(
+      "DfE Identity account is now no longer available - if you previously used this, " \
+        "sign in with GOV.UK One Login instead"
+    )
+    expect(page).not_to have_button("sign in with your DfE Identity account")
   end
 end

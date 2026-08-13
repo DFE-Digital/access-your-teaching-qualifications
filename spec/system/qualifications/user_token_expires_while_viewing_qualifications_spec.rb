@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.feature "Identity auth", type: :system do
+RSpec.feature "GOVUK One Login auth", type: :system do
   include CommonSteps
   include QualificationAuthenticationSteps
 
@@ -9,7 +9,7 @@ RSpec.feature "Identity auth", type: :system do
   scenario "Access token expires while viewing qualifications",
            test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
-    and_i_am_signed_in_via_identity
+    and_i_am_signed_in_via_onelogin
 
     when_i_visit_the_qualifications_page
     and_my_access_token_expires

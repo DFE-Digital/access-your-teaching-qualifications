@@ -7,7 +7,7 @@ RSpec.feature "Feedback", type: :system do
 
   scenario "User gives feedback", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
-    and_i_am_signed_in_via_identity
+    and_i_am_signed_in_via_onelogin
     and_i_click_on_feedback
     then_i_see_the_feedback_form
     when_i_press_send_feedback

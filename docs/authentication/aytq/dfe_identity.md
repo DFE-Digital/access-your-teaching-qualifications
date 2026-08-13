@@ -1,6 +1,6 @@
 # DfE Identity Authentication
 
-> **Deprecation notice:** DfE Identity is being replaced by GOV.UK One Login. Both providers currently coexist, but DfE Identity will be removed once the migration to One Login is complete. New development should target the One Login flow.
+> **Deprecation notice:** DfE Identity is being replaced by GOV.UK One Login and is no longer offered on the sign-in or start pages. The OmniAuth middleware and callback are still registered, so the code below still describes how an existing session behaves, but teachers can no longer start a new one. The remaining code will be removed as the decommission completes. All development should target the One Login flow.
 
 DfE Identity (also known as the TRS Auth Server) is a sign-in service maintained by the Teaching Record System (TRS) team. It was built specifically for DfE teaching services and provides OpenID Connect authentication alongside access to the teacher's TRN and personal details.
 
@@ -23,19 +23,15 @@ Key configuration details:
 - Discovery is enabled (configuration fetched from the provider's `.well-known/openid-configuration`)
 - Response type is `:code` (authorization code flow)
 - Scopes requested: `email openid profile dqt:read`
-- Extra authorize params: `session_id`, `trn_token`, `registration_token`
+- Extra authorize params: `session_id`, `trn_token`
 
 The `dqt:read` scope is specific to DfE Identity and grants the issued token read access to the teacher's record via the Qualifications API.
 
 ## Sign-in
 
-The sign-in follows a standard OIDC authorization code flow. The teacher clicks the DfE Identity option, authenticates with DfE Identity, and is redirected back to `/qualifications/users/auth/identity/callback`. The callback controller (`OmniauthCallbacksController#complete`) calls `CurrentSession.create_session(session, auth)` to set up the session.
+No UI entry point remains: neither the sign-in page nor the start page offers DfE Identity, so a teacher cannot reach this flow by navigating the service.
 
-### Registration bypass token
-
-DfE Identity does not currently support new user registration on its own. It supports a `registration_token` parameter to enable this when necessary.
-
-If a teacher arrives at AYTQ with a registration bypass token (stored in the session as `identity_new_registration_bypass_token`), this token is passed through to DfE Identity in the authorize request. When present, the One Login sign-in option is hidden from the UI (via `one_login_available?` returning false), ensuring the teacher completes the DfE Identity registration flow.
+The middleware itself is still mounted. A request sent directly to `/qualifications/users/auth/identity` would still run a standard OIDC authorization code flow and redirect back to `/qualifications/users/auth/identity/callback`, where `OmniauthCallbacksController#complete` calls `CurrentSession.create_session(session, auth)`. Closing off that path is part of the remaining decommission work.
 
 ## Callback data
 
