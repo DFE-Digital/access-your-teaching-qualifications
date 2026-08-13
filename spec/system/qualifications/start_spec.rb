@@ -24,7 +24,7 @@ RSpec.feature "The qualifications start page", type: :system do
 
   def and_i_cannot_sign_in_with_dfe_identity
     expect(page).to have_content(
-      "DfE Identity account is now no longer available - If you previously used this, " \
+      "DfE Identity account is now no longer available - if you previously used this, " \
         "sign in with GOV.UK One Login instead"
     )
     expect(page).not_to have_button("sign in with your DfE Identity account")
