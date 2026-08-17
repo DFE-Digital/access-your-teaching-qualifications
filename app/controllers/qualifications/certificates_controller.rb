@@ -40,9 +40,9 @@ type: "application/pdf", disposition: "attachment"
       when :induction
         teacher.passed_induction?
       when :qts
-        teacher.qts_awarded?
+        teacher.qts_awarded? && !teacher.failed_induction?
       when :qtls
-        teacher.qtls_awarded?
+        teacher.qtls_awarded? && !teacher.failed_induction?
       when :eyts
         teacher.eyts_awarded?
       when :NPQEL,:NPQLTD,:NPQLT,:NPQH,:NPQML,:NPQLL,:NPQEYL,:NPQSL,:NPQLBC,:NPQSENCO, :NPQLPM

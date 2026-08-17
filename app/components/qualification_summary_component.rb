@@ -57,15 +57,32 @@ class QualificationSummaryComponent < ApplicationComponent
           text: "Certificate"
         },
         value: {
-          text:
-            link_to(
-              "Download #{type.to_s.upcase} certificate",
-              qualifications_certificate_path(type, format: :pdf),
-              class: "govuk-link"
-            )
+          text: certificate_value
         }
       }
     ]
+  end
+
+  def certificate_value
+    return certificate_unavailable_message if certificate_withheld_for_failed_induction?
+
+    link_to(
+      "Download #{type.to_s.upcase} certificate",
+      qualifications_certificate_path(type, format: :pdf),
+      class: "govuk-link"
+    )
+  end
+
+  # Someone who has failed induction cannot hold QTS via the QTLS route, so neither QTS
+  # certificate is available to them. EYTS and NPQ certificates are unaffected.
+  def certificate_withheld_for_failed_induction?
+    failed_induction? && (qts? || qtls?)
+  end
+
+  def certificate_unavailable_message
+    return I18n.t("qualification_summary.certificate_unavailable.failed_induction_other_route") if qtls?
+
+    I18n.t("qualification_summary.certificate_unavailable.failed_induction")
   end
 
   def type_supports_certificates?
@@ -189,19 +206,7 @@ class QualificationSummaryComponent < ApplicationComponent
             text: qtls_awarded_at_text
           }
         },
-        {
-          key: {
-            text: "Certificate"
-          },
-          value: {
-            text:
-              link_to(
-                "Download #{type.to_s.upcase} certificate",
-                qualifications_certificate_path(type, format: :pdf),
-                class: "govuk-link"
-              )
-          }
-        }
+        *certificate_rows
       ]
     elsif !set_membership_active
       [
