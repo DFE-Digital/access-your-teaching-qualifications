@@ -6,7 +6,8 @@ ruby "3.4.4"
 gem "activerecord-session_store"
 gem "amazing_print"
 gem "audits1984"
-gem "azure-storage-blob", github: "honeyankit/azure-storage-ruby"
+gem "azure-blob" #Active Storage adapter; Rails 8.1 removed its built-in AzureStorage service
+gem "azure-storage-blob", github: "honeyankit/azure-storage-ruby" #still used by Malware::FetchScanResult
 gem "bootsnap", require: false
 gem "console1984"
 gem "dartsass-rails", "~> 0.5.1"
@@ -34,8 +35,8 @@ gem "pagy"
 gem "pg", "~> 1.5"
 gem "propshaft"
 gem "puma", "~> 7.1"
-gem "rails", "~> 7.2.0"
-gem "rails_semantic_logger"
+gem "rails", "~> 8.1.3"
+gem "rails_semantic_logger", "~> 5.0.0" #5.1 calls Sidekiq::Config, which needs Sidekiq 7
 gem "repost"
 gem "sentry-rails", "~> 5.27"
 gem "sidekiq", "< 7" #7 requires Redis >6.2 which isn't available on Azure currently

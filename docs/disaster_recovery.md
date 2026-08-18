@@ -298,4 +298,4 @@ If this document is being followed as part of a DR test, then [complete DR test 
 ## Post DR review
 - Schedule an incident retro meeting with all the stakeholders
 - Review the incident and fill in the incident report
-- Raise trello cards for any process improvements
+- Raise GitHub issues for any process improvements
