@@ -150,7 +150,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     end
   end
 
-  describe "rendering QTS with QTLS" do
+  describe "rendering QTS with QTLS and failed induction" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -181,8 +181,98 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       expect(rows[0].text).to include(qualification.awarded_at.to_fs(:long_uk))
     end
 
-    it "renders the certificate link" do
-      expect(rows[1].text).to include("Download QTS certificate")
+    it "replaces the certificate link with an explanation" do
+      expect(rows[1].text).to include(
+        "You cannot download this certificate because you failed induction"
+      )
+      expect(rows[1].css("a")).to be_empty
+    end
+  end
+
+  describe "rendering QTS with failed induction" do
+    let(:fake_quals_data) do
+      Hashie::Mash.new(
+        quals_data(trn: "1234567")
+          .deep_transform_keys(&:to_s)
+          .deep_transform_keys(&:underscore)
+      )
+    end
+    let(:qualification) do
+      Qualification.new(
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
+        name: "Qualified teacher status (QTS)",
+        induction_status: :failed,
+        qtls_only: false,
+        qts_and_qtls: true,
+        set_membership_active: true,
+        type: :qts,
+      )
+    end
+    let(:component) { described_class.new(qualification:) }
+    let(:rendered) { render_inline(component) }
+    let(:rows) { rendered.css(".govuk-summary-list__row") }
+
+    it "replaces the certificate link with an explanation" do
+      expect(rows[1].text).to include(
+        "You cannot download this certificate because you failed induction"
+      )
+      expect(rows[1].css("a")).to be_empty
+    end
+  end
+
+  describe "rendering QTLS via a separate route with failed induction" do
+    let(:fake_quals_data) do
+      Hashie::Mash.new(
+        quals_data(trn: "1234567")
+          .deep_transform_keys(&:to_s)
+          .deep_transform_keys(&:underscore)
+      )
+    end
+    let(:qualification) do
+      Qualification.new(
+        awarded_at: fake_quals_data.qts.holds_from&.to_date,
+        name: "QTS via qualified teacher learning and skills (QTLS) status",
+        induction_status: :failed,
+        qtls_only: false,
+        qts_and_qtls: true,
+        set_membership_active: true,
+        type: :qtls,
+      )
+    end
+    let(:component) { described_class.new(qualification:) }
+    let(:rendered) { render_inline(component) }
+    let(:rows) { rendered.css(".govuk-summary-list__row") }
+
+    it "replaces the certificate link with an explanation naming the other route" do
+      expect(rows[1].text).to include(
+        "You cannot download this certificate because you failed induction on another route"
+      )
+      expect(rows[1].css("a")).to be_empty
+    end
+  end
+
+  describe "rendering EYTS with failed induction" do
+    let(:fake_quals_data) do
+      Hashie::Mash.new(
+        quals_data(trn: "1234567")
+          .deep_transform_keys(&:to_s)
+          .deep_transform_keys(&:underscore)
+      )
+    end
+    let(:qualification) do
+      Qualification.new(
+        awarded_at: fake_quals_data.eyts.holds_from&.to_date,
+        name: "Early years teacher status (EYTS)",
+        induction_status: :failed,
+        type: :eyts,
+      )
+    end
+    let(:component) { described_class.new(qualification:) }
+    let(:rendered) { render_inline(component) }
+    let(:rows) { rendered.css(".govuk-summary-list__row") }
+
+    it "still renders the certificate link" do
+      expect(rows[1].text).to include("Download EYTS certificate")
     end
   end
 

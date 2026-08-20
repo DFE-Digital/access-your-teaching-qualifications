@@ -52,6 +52,11 @@ en:
       in_progress: In Progress
       failed_in_wales: Failed in Wales
 
+  qualification_summary:
+    certificate_unavailable:
+      failed_induction: You cannot download this certificate because you failed induction
+      failed_induction_other_route: You cannot download this certificate because you failed induction on another route
+
   activemodel:
     errors:
       models:

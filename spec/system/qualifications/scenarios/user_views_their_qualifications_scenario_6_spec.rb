@@ -123,10 +123,18 @@ RSpec.feature "User views their qualifications", type: :system do
     when_i_visit_the_qualifications_page
     then_i_see_my_induction_details
     then_i_see_my_qts_details
-    and_my_qts_certificate_is_downloadable
+    and_my_qts_certificate_is_not_downloadable
+    then_i_see_my_qtls_details
+    and_my_qtls_certificate_is_not_downloadable
     then_i_see_my_npq_details
     and_my_npq_certificate_is_downloadable
     and_event_tracking_is_working
+
+    when_i_request_the_qts_certificate_directly
+    then_i_am_told_the_certificate_was_not_found
+
+    when_i_request_the_qtls_certificate_directly
+    then_i_am_told_the_certificate_was_not_found
   end
 
   private
@@ -144,14 +152,35 @@ RSpec.feature "User views their qualifications", type: :system do
     expect(page).to have_content("Qualified teacher status (QTS)")
     expect(page).to have_content("Held since")
     expect(page).to have_content("1 January 2025")
-    expect(page).to have_content("Download QTS certificate")
   end
 
-  def and_my_qts_certificate_is_downloadable
-    download_certificate("Download QTS certificate", filename: "#{name}_qts_certificate.pdf")
-    expect(page.response_headers["content-type"]).to eq("application/pdf")
-    expect(page.response_headers["content-disposition"]).to include("attachment")
-    expect(page.response_headers["content-disposition"]).to include("filename=\"#{name}_qts_certificate.pdf\";")
+  def and_my_qts_certificate_is_not_downloadable
+    expect(page).to have_content("You cannot download this certificate because you failed induction")
+    expect(page).to have_no_link("Download QTS certificate")
+  end
+
+  def then_i_see_my_qtls_details
+    expect(page).to have_content("QTS via qualified teacher learning and skills (QTLS) status")
+  end
+
+  def and_my_qtls_certificate_is_not_downloadable
+    expect(page).to have_content(
+      "You cannot download this certificate because you failed induction on another route"
+    )
+    expect(page).to have_no_link("Download QTLS certificate")
+  end
+
+  def when_i_request_the_qts_certificate_directly
+    visit qualifications_certificate_path(:qts, format: :pdf)
+  end
+
+  def when_i_request_the_qtls_certificate_directly
+    visit qualifications_certificate_path(:qtls, format: :pdf)
+  end
+
+  def then_i_am_told_the_certificate_was_not_found
+    expect(page).to have_current_path(qualifications_dashboard_path)
+    expect(page).to have_content("Certificate not found")
   end
 
   def then_i_see_my_npq_details
