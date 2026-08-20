@@ -37,10 +37,6 @@ Shows or hides the bulk search option in the CTR navigation. When active, employ
 
 Controls the TRN disambiguation flow in CTR search. When active, if a name + date of birth search returns more than one result, the user is redirected to a TRN search page prompting them to enter the teacher's TRN for a more specific lookup. When inactive, search results are shown directly regardless of how many matches are returned.
 
-### `teacher_profile_tags`
-
-Adds a profile summary component to the teacher detail page in CTR. When active, `CheckRecords::TeacherProfileSummaryComponent` is rendered in the right-hand column of the teacher show page, displaying summary tags for the teacher's profile.
-
 ### `downtime_banner`
 
 Displays a notification banner across all CTR pages informing users of planned service downtime. This should normally be inactive and only activated during planned downtime windows. The banner message is hardcoded in the CTR layout template, so you'll need to update it before reactivating for a future window.

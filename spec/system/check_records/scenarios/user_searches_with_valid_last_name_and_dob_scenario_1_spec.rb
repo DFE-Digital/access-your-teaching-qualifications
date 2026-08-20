@@ -85,10 +85,6 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
   end
   # rubocop:enable Layout/LineLength
 
-  before do
-    FeatureFlags::FeatureFlag.activate(:teacher_profile_tags)
-  end
-
   after { travel_back }
 
   scenario "Scenario 1",
