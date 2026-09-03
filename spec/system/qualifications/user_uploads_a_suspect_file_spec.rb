@@ -6,7 +6,7 @@ RSpec.feature "Account page", type: :system do
   include QualificationAuthenticationSteps
   include MalwareScanHelpers
 
-  scenario "User submits a request to change date of birth", test: %i[with_stubbed_auth with_fake_quals_api] do
+  scenario "User uploads a suspect file", test: %i[with_stubbed_auth with_fake_quals_api] do
     given_the_qualifications_service_is_open
     given_i_am_signed_in_via_one_login
     given_malware_scanning_is_enabled(scan_result: "Malicious")
@@ -59,9 +59,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def and_i_can_see_a_list_of_valid_evidence
-    within(".govuk-details") do
-      expect(page).to have_selector(:css, "li", text: "driving license", visible: :all)
-    end
+    expect(page).to have_selector(:css, "li", text: "driving license")
   end
 
   def when_i_submit_the_form
@@ -97,7 +95,7 @@ RSpec.feature "Account page", type: :system do
   end
 
   def and_i_confirm_my_changes
-    click_button "Continue"
+    click_button "Submit support request"
   end
 
   def then_my_request_is_submitted
