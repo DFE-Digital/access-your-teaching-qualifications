@@ -1,9 +1,21 @@
 # Operations
 
+## Cluster access
+
+Anything that talks to a cluster, including the Rails console below, needs the
+[Azure CLI](https://docs.microsoft.com/en-gb/cli) installed and a PIM (Privileged Identity Management)
+activation for `production`, `preprod` or `test`.
+
+Activating PIM does not update credentials you already have, so `kubectl` and every `make` target
+that reaches a cluster keep being refused until you fetch them again. Do this after each activation:
+
+```bash
+make production get-cluster-credentials
+```
+
 ## Accessing the Rails console
 
 We have a helpful command you can run that will connect you to the right Azure resource.
-You will need the [Azure CLI](https://docs.microsoft.com/en-gb/cli) installed and a PIM (Privileged Identity Management) request for `production`, `preprod` and `test`.
 
 ```bash
 make test railsc
