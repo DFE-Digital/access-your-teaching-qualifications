@@ -56,6 +56,25 @@ railsc: get-cluster-credentials
 	@echo "Environment: $(CONFIG)"
 	kubectl -n $(NAMESPACE) exec -ti deployment/access-your-teaching-qualifications-$(ENVIRONMENT) -- rails c
 
+# make production railstask TASK=pii:verify
+# make production railstask WORKER=1 TASK=pii:re_encrypt
+# Quote the task when it takes an argument, or zsh reads the brackets as a glob:
+#   make production railstask WORKER=1 TASK='pii:re_encrypt[User:12345]'
+# WORKER=1 targets the sidekiq deployment, for when the web one is scaled to zero.
+# No -t: this is a batch job, and a TTY mangles output you are teeing to a file.
+.PHONY: railstask
+railstask: get-cluster-credentials
+	$(eval CONFIG_FILE=terraform/application/config/$(CONFIG).tfvars.json)
+	$(if $(wildcard $(CONFIG_FILE)),,$(error Config file $(CONFIG_FILE) not found))
+	$(eval NAMESPACE=$(shell jq -r '.namespace // empty' $(CONFIG_FILE)))
+	$(if $(NAMESPACE),,$(error Namespace not found in $(CONFIG_FILE)))
+	$(if $(TASK),,$(error TASK not set. e.g. make production railstask TASK=pii:verify))
+	$(eval DEPLOYMENT=access-your-teaching-qualifications-$(ENVIRONMENT)$(if $(WORKER),-worker,))
+	@echo "Using namespace: $(NAMESPACE)"
+	@echo "Deployment: $(DEPLOYMENT)"
+	@echo "Task: $(TASK)"
+	kubectl -n $(NAMESPACE) exec -i deployment/$(DEPLOYMENT) -- bundle exec rails $(TASK)
+
 bin/konduit.sh:
 	curl -s https://raw.githubusercontent.com/DFE-Digital/teacher-services-cloud/main/scripts/konduit.sh -o bin/konduit.sh \
 		&& chmod +x bin/konduit.sh
