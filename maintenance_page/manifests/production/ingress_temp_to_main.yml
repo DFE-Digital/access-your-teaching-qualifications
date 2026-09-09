@@ -22,7 +22,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: check-a-teachers-record-test-temp.teacherservices.cloud
+    - host: check-a-teachers-record-temp.teacherservices.cloud
       http:
         paths:
           - pathType: ImplementationSpecific
