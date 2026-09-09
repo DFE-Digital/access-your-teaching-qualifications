@@ -26,16 +26,14 @@ module AccessYourTeachingQualifications
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
-    # Active Record encryption derives its keys with SHA-1 here, because that
-    # was the default when the encrypted columns on User and DsiUser were first
-    # written. Rails 7.1 changed the default to SHA-256; adopting it would make
-    # deterministic `email` lookups miss every existing row and leave the
-    # non-deterministic name columns undecryptable against production data.
+    # Keys are now derived with SHA-256, the Rails 7.1 default. Columns written
+    # before that change are carried by the setting below, which registers a
+    # SHA-1 previous scheme for the non-deterministic columns so they still
+    # decrypt. It sits under `load_defaults` so it survives the version walk.
     #
-    # These overrides sit below `load_defaults` so they survive each step of the
-    # version walk. Re-encrypting the existing ciphertext under SHA-256 and
-    # dropping them is deferred to its own piece of work.
-    config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
+    # It comes out once `rails pii:verify` reports no unreadable rows in
+    # production, which is what `rails pii:re_encrypt` is for. Tracked at
+    # https://github.com/DFE-Digital/teaching-record-team-project-board/issues/455
     config.active_record.encryption.support_sha1_for_non_deterministic_encryption = true
 
     # Rails 7.1 defaults this to false, which drops the autoload paths from
