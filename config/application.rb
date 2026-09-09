@@ -26,16 +26,6 @@ module AccessYourTeachingQualifications
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
 
-    # Keys are now derived with SHA-256, the Rails 7.1 default. Columns written
-    # before that change are carried by the setting below, which registers a
-    # SHA-1 previous scheme for the non-deterministic columns so they still
-    # decrypt. It sits under `load_defaults` so it survives the version walk.
-    #
-    # It comes out once `rails pii:verify` reports no unreadable rows in
-    # production, which is what `rails pii:re_encrypt` is for. Tracked at
-    # https://github.com/DFE-Digital/teaching-record-team-project-board/issues/455
-    config.active_record.encryption.support_sha1_for_non_deterministic_encryption = true
-
     # Rails 7.1 defaults this to false, which drops the autoload paths from
     # $LOAD_PATH. Several initializers, and `app/lib/dfe_sign_in.rb` itself,
     # `require` files that live under those paths, so turning it off breaks
