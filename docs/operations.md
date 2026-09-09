@@ -14,6 +14,29 @@ make review railsc PR_NUMBER=<PR_NUMBER>
 
 The review app needs to be deployed first. You can do this manually by tagging a PR with the `deploy` label.
 
+## Running a rake task
+
+Same access as the console above. `railstask` runs a task in a deployed pod rather than opening a
+shell.
+
+```bash
+make test railstask TASK=pii:verify
+make production railstask TASK=pii:verify
+```
+
+Quote the task if it takes an argument, or zsh reads the brackets as a glob:
+
+```bash
+make production railstask TASK='pii:re_encrypt[User:12345]'
+```
+
+`WORKER=1` runs against the sidekiq deployment instead of the web one, for when the web deployment
+is scaled to zero:
+
+```bash
+make production railstask WORKER=1 TASK=pii:re_encrypt
+```
+
 ## Updating keyvault secrets
 
 Updating keyvault secrets is a manual process which will require elevated permissions via PIM for production access to Azure resources, the resource can be found in:
