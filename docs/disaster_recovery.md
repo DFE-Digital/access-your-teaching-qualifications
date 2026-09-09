@@ -13,6 +13,14 @@ Before you can carry out any of the recovery steps below, you need access to the
 
 If you don't have these permissions, contact your team lead or infrastructure team to get them set up before proceeding.
 
+Once your PIM request is approved, fetch cluster credentials before running any `kubectl` command below. Activating PIM does not update credentials you already have, so `kubectl` keeps being refused until you fetch them again, which looks like the activation having failed:
+
+```bash
+make production get-cluster-credentials
+```
+
+Substitute `test` or `preprod` for the environment you are recovering.
+
 ## Which scenario are you in?
 
 If the Azure Postgres flexible server itself is gone — you can't find it in the Azure portal, or Azure reports the resource as deleted — you're dealing with [Scenario 1: Loss of database server](#scenario-1-loss-of-database-server).
