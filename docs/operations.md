@@ -39,7 +39,7 @@ make production railstask TASK=pii:verify
 Quote the task if it takes an argument, or zsh reads the brackets as a glob:
 
 ```bash
-make production railstask TASK='pii:re_encrypt[User:12345]'
+make production railstask TASK='pii:re_encrypt[User,12345]'
 ```
 
 `WORKER=1` runs against the sidekiq deployment instead of the web one, for when the web deployment
