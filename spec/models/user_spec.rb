@@ -129,4 +129,15 @@ RSpec.describe User, type: :model do
       expect(user.verified_by_one_login?).to eq false
     end
   end
+
+  describe "deterministic email lookup" do
+    it "still finds a row converted from SHA-1 to SHA-256" do
+      user = create(:user, email: "converted@example.com", auth_uuid: nil, auth_provider: nil)
+      write_under_sha1(user, :email, "converted@example.com")
+
+      Pii::ReEncryptor.new(logger: Logger.new(File::NULL)).call
+
+      expect(User.find_by(email: "converted@example.com", auth_uuid: nil, auth_provider: nil)).to eq user
+    end
+  end
 end
