@@ -59,7 +59,7 @@ railsc: get-cluster-credentials
 # make production railstask TASK=pii:verify
 # make production railstask WORKER=1 TASK=pii:re_encrypt
 # Quote the task when it takes an argument, or zsh reads the brackets as a glob:
-#   make production railstask WORKER=1 TASK='pii:re_encrypt[User:12345]'
+#   make production railstask WORKER=1 TASK='pii:re_encrypt[User,12345]'
 # WORKER=1 targets the sidekiq deployment, for when the web one is scaled to zero.
 # No -t: this is a batch job, and a TTY mangles output you are teeing to a file.
 .PHONY: railstask
