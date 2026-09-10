@@ -5,23 +5,25 @@ The application uses [ActiveRecord Encryption](https://guides.rubyonrails.org/ac
 Application-level encryption ensures that we reduce the risk of leaking PII information should
 the database ever be compromised.
 
-## Key derivation uses SHA-1
+## Key derivation
 
-`config/application.rb` pins two settings below `config.load_defaults`:
+Keys are derived with SHA-256, the Rails default since `load_defaults 7.1`.
 
-```ruby
-config.active_record.encryption.hash_digest_class = OpenSSL::Digest::SHA1
-config.active_record.encryption.support_sha1_for_non_deterministic_encryption = true
-```
+Every encrypted column in this database was originally written under SHA-1, which was the
+default when they were first encrypted. They were rewritten under SHA-256 by a one-off
+`pii:re_encrypt` task, run with the service in maintenance mode, and the SHA-1 overrides in
+`config/application.rb` were removed once a companion `pii:verify` task confirmed no row
+depended on them. Both tasks were deleted afterwards. See
+https://github.com/DFE-Digital/teaching-record-team-project-board/issues/455
 
-Rails 7.1 changed the digest used to derive encryption keys from SHA-1 to SHA-256. Every
-encrypted column in this database was written under SHA-1, so taking the new default would
-change the derived key: deterministic `email` lookups on `User` and `DsiUser` would match
-nothing, and the non-deterministic name columns would not decrypt at all.
+One thing worth knowing before changing a digest or key again: nothing in the ciphertext
+records which key derived it, because `store_key_references` is off. There is no way to tell a
+converted row from an unconverted one in SQL, and no way to count what is left. Any future
+change needs the same shape of migration, and the only completion check available is reading
+every row through a type with no previous schemes.
 
-Do not remove these without re-encrypting the existing data first. Note this is specific to
-Active Record encryption — `active_support.key_generator_hash_digest_class`, which signs
-session cookies, moved to SHA-256 back in Rails 7.0 and is not pinned.
+Note this is specific to Active Record encryption. `active_support.key_generator_hash_digest_class`,
+which signs session cookies, moved to SHA-256 back in Rails 7.0 and is not pinned.
 
 ## Encryption keys
 
