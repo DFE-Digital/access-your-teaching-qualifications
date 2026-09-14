@@ -39,7 +39,7 @@ Controls the TRN disambiguation flow in CTR search. When active, if a name + dat
 
 ### `downtime_banner`
 
-Displays a notification banner across all CTR pages informing users of planned service downtime. This should normally be inactive and only activated during planned downtime windows. The banner message is hardcoded in the CTR layout template, so you'll need to update it before reactivating for a future window.
+Displays a notification banner on all AYTQ and CTR pages informing users of planned service downtime. This should normally be inactive and only activated during planned downtime windows. The wording is hardcoded in two layouts, `app/views/layouts/base.html.erb` (AYTQ and the Support Interface) and `app/views/layouts/check_records_layout.html.erb` (CTR). Update both before reactivating for a future window.
 
 ## Unused flags
 

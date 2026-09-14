@@ -18,4 +18,8 @@ module ActivateFeaturesSteps
   def and_bulk_search_is_enabled
     FeatureFlags::FeatureFlag.activate(:bulk_search)
   end
+
+  def and_the_downtime_banner_is_active
+    FeatureFlags::FeatureFlag.activate(:downtime_banner)
+  end
 end
