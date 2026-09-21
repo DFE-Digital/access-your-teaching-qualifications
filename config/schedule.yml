@@ -4,4 +4,3 @@ trim_db_sessions:
 send_entity_table_check_data:
   cron: "30 0 * * *" # Every day at 00:30.
   class: "DfE::Analytics::EntityTableCheckJob"
-  queue: dfe_analytics
