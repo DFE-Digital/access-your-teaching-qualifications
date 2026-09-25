@@ -32,21 +32,21 @@ Same access as the console above. `railstask` runs a task in a deployed pod rath
 shell.
 
 ```bash
-make test railstask TASK=pii:verify
-make production railstask TASK=pii:verify
+make test railstask TASK=db:version
+make production railstask TASK=db:version
 ```
 
 Quote the task if it takes an argument, or zsh reads the brackets as a glob:
 
 ```bash
-make production railstask TASK='pii:re_encrypt[User,12345]'
+make production railstask TASK='some:task[an-argument]'
 ```
 
 `WORKER=1` runs against the sidekiq deployment instead of the web one, for when the web deployment
 is scaled to zero:
 
 ```bash
-make production railstask WORKER=1 TASK=pii:re_encrypt
+make production railstask WORKER=1 TASK=db:version
 ```
 
 ## Updating keyvault secrets

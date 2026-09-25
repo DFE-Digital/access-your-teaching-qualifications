@@ -69,15 +69,4 @@ RSpec.describe DsiUser, type: :model do
       expect(dsi_user.last_sign_in_at).to eq dsi_user_session.created_at
     end
   end
-
-  describe "deterministic email lookup" do
-    it "still finds a row converted from SHA-1 to SHA-256" do
-      dsi_user = create(:dsi_user, email: "converted@example.com")
-      write_under_sha1(dsi_user, :email, "converted@example.com")
-
-      Pii::ReEncryptor.new(logger: Logger.new(File::NULL)).call
-
-      expect(DsiUser.find_by(email: "converted@example.com")).to eq dsi_user
-    end
-  end
 end
