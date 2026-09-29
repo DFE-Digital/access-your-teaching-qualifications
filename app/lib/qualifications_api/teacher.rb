@@ -1,6 +1,6 @@
 module QualificationsApi
   class Teacher
-    attr_reader :api_data, :npq_data
+    attr_reader :api_data
 
     NPQ_QUALIFICATION_NAME = {
       NPQEL: "National Professional Qualification (NPQ) for Executive Leadership",
@@ -20,8 +20,14 @@ module QualificationsApi
 
     def initialize(api_data)
       @api_data = Hashie::Mash.new(api_data.deep_transform_keys(&:underscore))
-      # This should be moved elsewhere after the integration is working
-      @npq_data = NpqQualificationsApi::GetQualificationsForTeacher.new(trn: @api_data.trn).call
+    end
+
+    # Fetched on first read, so pages that never show NPQs (such as search results) don't call the
+    # NPQ API. Memoised with defined? because a failed fetch is nil.
+    def npq_data
+      return @npq_data if defined?(@npq_data)
+
+      @npq_data = fetch_npq_data
     end
 
     def name
@@ -102,6 +108,10 @@ module QualificationsApi
 
     def eyts_awarded?
       api_data.eyts&.holds_from.present?
+    end
+
+    def npq_data_available?
+      !npq_data.nil?
     end
 
     def npq_awarded?
@@ -186,7 +196,8 @@ module QualificationsApi
         api_data.eyps.blank? &&
         api_data.qts.blank? &&
         api_data.eyts.blank? &&
-        npq_data.body["data"]["qualifications"].blank?
+        npq_data_available? &&
+        npq_records.blank?
     end
 
     def render_qtls_expired_message?
@@ -279,9 +290,9 @@ module QualificationsApi
     end
 
     def npq_qualifications
-      return [] if @npq_data == []
+      return [] unless npq_data_available?
 
-      @npq_data.body["data"]["qualifications"]
+      npq_records
         .sort_by { |npq| npq["award_date"]&.to_date }
         .reverse
         .map do |npq|
@@ -291,6 +302,19 @@ module QualificationsApi
           type: npq["npq_type"]&.to_sym
         )
       end
+    end
+
+    # GetQualificationsForTeacher has validated the shape: each award_date is ISO 8601 or blank
+    def npq_records
+      npq_data.body["data"]["qualifications"]
+    end
+
+    def fetch_npq_data
+      NpqQualificationsApi::GetQualificationsForTeacher.new(trn: api_data.trn).call
+    rescue NpqQualificationsApi::ApiError => e
+      # The rest of the record can still be shown, so report the failure rather than raising it
+      Sentry.capture_exception(e)
+      nil
     end
 
     def rtps_by_id(route_ids: [], include_blank: false)

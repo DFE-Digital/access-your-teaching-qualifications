@@ -136,3 +136,9 @@ h1 .govuk-tag {
 li.govuk-heading-m {
   display: list-item;
 }
+
+// Stacked banners read as one group of notices, so they sit closer together
+// than a banner and the content that follows it
+.govuk-notification-banner:has(+ .govuk-notification-banner) {
+  @include govuk-responsive-margin(5, "bottom");
+}

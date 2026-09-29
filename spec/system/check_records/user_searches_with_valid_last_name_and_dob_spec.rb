@@ -33,7 +33,56 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
     and_a_print_warning_is_displayed
   end
 
+  scenario "User views a record while the NPQ API is unavailable",
+           test: %i[with_stubbed_auth with_fake_quals_api] do
+    given_the_check_service_is_open
+    and_the_npq_api_is_unavailable
+
+    when_i_sign_in_via_dsi
+    and_search_with_a_valid_name_and_dob
+    when_i_click_on_the_teacher_record
+    then_i_see_the_npq_error_banner
+    then_i_see_induction_details
+    and_i_do_not_see_npq_details
+  end
+
+  {
+    "an HTML maintenance page" => { headers: { "Content-Type" => "text/html" }, body: "<html>Maintenance</html>" },
+    "an empty JSON body" => { headers: { "Content-Type" => "application/json" }, body: "" },
+  }.each do |description, response|
+    scenario "User views a record while the NPQ API returns #{description}",
+             test: %i[with_stubbed_auth with_fake_quals_api] do
+      given_the_check_service_is_open
+      and_the_npq_api_returns(response)
+
+      when_i_sign_in_via_dsi
+      and_search_with_a_valid_name_and_dob
+      when_i_click_on_the_teacher_record
+      then_i_see_the_npq_error_banner
+      then_i_see_induction_details
+      and_i_do_not_see_npq_details
+    end
+  end
+
   private
+
+  def and_the_npq_api_is_unavailable
+    stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/}).to_return(status: 500)
+  end
+
+  def and_the_npq_api_returns(response)
+    stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/}).to_return(status: 200, **response)
+  end
+
+  def then_i_see_the_npq_error_banner
+    expect(page).to have_content(
+      "There was an error and we cannot display this person’s NPQ qualifications. Try again later."
+    )
+  end
+
+  def and_i_do_not_see_npq_details
+    expect(page).not_to have_content("Date NPQ for Early Years Leadership awarded")
+  end
 
   def and_time_is_frozen
     @frozen_time = Time.zone.local(2020, 1, 1, 10, 21)

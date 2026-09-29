@@ -12,6 +12,12 @@
           <%= govuk_warning_text(text: "You no longer have QTS via QTLS status because your Society for Education and Training (SET) membership expired") %>
         <% end %>
 
+        <% unless @teacher.npq_data_available? %>
+          <%= govuk_notification_banner(title_text: "Important") do %>
+            <p>There was an error and we cannot display your NPQ qualifications. Try again later.</p>
+          <% end %>
+        <% end %>
+
         <% @teacher.qualifications.each do |qualification| %>
           <% if qualification.induction? %>
             <%= render InductionSummaryComponent.new(qualification:) %>

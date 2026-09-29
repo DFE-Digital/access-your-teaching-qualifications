@@ -29,14 +29,19 @@ module NpqQualificationsApi
     end
 
     def get(endpoint, options = {})
-      client.get(endpoint, options)
-    rescue Faraday::ConnectionFailed, Faraday::TimeoutError => e
-      raise NpqQualificationsApi::ApiError, "API connection failed: #{e.message}"
+      response = client.get(endpoint, options)
+      # Raising inside get_with_cache's fetch block also keeps failed responses out of the cache
+      raise NpqQualificationsApi::ApiError, "API returned status #{response.status}" unless response.success?
+
+      response
+    rescue Faraday::Error => e
+      raise NpqQualificationsApi::ApiError, "API request failed: #{e.message}"
     end
 
     def get_with_cache(endpoint, options = {}, cache_key:, expires_in: 15.minutes)
       Rails.cache.fetch(cache_key_sha(endpoint, options, cache_key), expires_in: expires_in) do
-        get(endpoint, options)
+        # The block validates the response; raising from it keeps the response out of the cache
+        get(endpoint, options).tap { |response| yield response if block_given? }
       end
     end
 
@@ -47,7 +52,8 @@ module NpqQualificationsApi
         cache_key: cache_key,
         endpoint: endpoint,
         options: options,
-        faraday_version: Gem.loaded_specs["faraday"].version # if we update Faraday, cached responses may not be valid
+        faraday_version: Gem.loaded_specs["faraday"].version, # if we update Faraday, cached responses may not be valid
+        app_version: ENV.fetch("GIT_SHA", "local") # a deploy drops responses cached by the previous release
       }
 
       Digest::SHA256.hexdigest(key_hash.to_json)
