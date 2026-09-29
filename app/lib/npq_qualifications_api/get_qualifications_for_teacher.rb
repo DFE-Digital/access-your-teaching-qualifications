@@ -10,6 +10,7 @@ module NpqQualificationsApi
       Client.new.get_with_cache(endpoint,
                                 cache_key: "NpqQualificationsApi/GetQualificationsForTeacher#trn:#{@trn}") do |response|
         validate_body!(response.body)
+        report_unrecognised_npq_types(response.body)
       end
     end
 
@@ -27,6 +28,16 @@ module NpqQualificationsApi
       return if iso8601_date?(qualification["award_date"])
 
       raise ApiError, "NPQ qualification has an invalid award_date: #{qualification["award_date"].inspect}"
+    end
+
+    # Unrecognised types still render under a fallback name, so they're reported rather than rejected
+    def report_unrecognised_npq_types(body)
+      body["data"]["qualifications"].each do |qualification|
+        type = qualification["npq_type"]
+        next if QualificationsApi::Teacher::NPQ_QUALIFICATION_NAME.key?(type.to_sym)
+
+        Sentry.capture_message("Unrecognised NPQ type #{type.inspect} from the NPQ API")
+      end
     end
 
     def qualifications_list?(body)

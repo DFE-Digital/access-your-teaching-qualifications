@@ -73,5 +73,30 @@ RSpec.describe NpqQualificationsApi::GetQualificationsForTeacher do
       end
     end
 
+    context "when a qualification has an unrecognised npq_type" do
+      before do
+        allow(Sentry).to receive(:capture_message)
+        stub_request(:get, npq_url).to_return(status: 200, headers: json_headers,
+                                              body: body_with([{ award_date: "2023-02-27", npq_type: "NPQXYZ" }]))
+      end
+
+      it "returns the response and reports the type to Sentry" do
+        aggregate_failures do
+          expect(call).to be_success
+          expect(Sentry).to have_received(:capture_message).with(/NPQXYZ/)
+        end
+      end
+
+      context "with a warm cache" do
+        # Rails.cache is a :null_store in the test environment
+        before { allow(Rails).to receive(:cache).and_return(ActiveSupport::Cache.lookup_store(:memory_store)) }
+
+        it "reports the type once per cache fill, not on every call" do
+          2.times { described_class.new(trn: "1234567").call }
+
+          expect(Sentry).to have_received(:capture_message).once
+        end
+      end
+    end
   end
 end

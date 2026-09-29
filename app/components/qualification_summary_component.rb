@@ -65,6 +65,7 @@ class QualificationSummaryComponent < ApplicationComponent
 
   def certificate_value
     return certificate_unavailable_message if certificate_withheld_for_failed_induction?
+    return I18n.t("qualification_summary.certificate_unavailable.no_award_date") if undated_npq?
 
     link_to(
       "Download #{type.to_s.upcase} certificate",
@@ -79,6 +80,11 @@ class QualificationSummaryComponent < ApplicationComponent
     failed_induction? && (qts? || qtls?)
   end
 
+  # The NPQ certificate prints the award date, so it can't be rendered without one
+  def undated_npq?
+    qualification.npq? && awarded_at.nil?
+  end
+
   def certificate_unavailable_message
     return I18n.t("qualification_summary.certificate_unavailable.failed_induction_other_route") if qtls?
 
@@ -86,7 +92,7 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def type_supports_certificates?
-    type != :mandatory
+    QualificationsApi::Certificate::VALID_TYPES.include?(type)
   end
 
   def specialism_rows

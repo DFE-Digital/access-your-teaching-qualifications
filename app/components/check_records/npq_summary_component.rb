@@ -12,13 +12,19 @@ class CheckRecords::NpqSummaryComponent < ApplicationComponent
           text: key_text(npq)
         },
         value: {
-          text: npq.awarded_at.to_fs(:long_uk)
+          text: awarded_text(npq)
         }
       }
     end
   end
 
   private
+
+  def awarded_text(npq)
+    return "Not known" if npq.awarded_at.nil?
+
+    npq.awarded_at.to_fs(:long_uk)
+  end
 
   def key_text(npq)
     tidied_name = npq.name.gsub(/National Professional Qualification \(NPQ\) for /, "")

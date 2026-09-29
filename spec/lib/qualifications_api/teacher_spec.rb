@@ -792,6 +792,56 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     end
   end
 
+  describe "undated NPQs" do
+    let(:teacher) { described_class.new({ "trn" => "1111111", "induction" => { "status" => "None" } }) }
+
+    before do
+      stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/})
+        .to_return(status: 200, headers: { "Content-Type" => "application/json" },
+                   body: { data: { trn: "1111111", qualifications: } }.to_json)
+    end
+
+    context "when an NPQ has a nil or blank award_date alongside dated NPQs" do
+      let(:qualifications) do
+        [
+          { award_date: nil, npq_type: "NPQML" },
+          { award_date: "2020-01-01", npq_type: "NPQH" },
+          { award_date: "", npq_type: "NPQSL" },
+          { award_date: "2023-02-27", npq_type: "NPQEL" },
+        ]
+      end
+
+      it "lists dated NPQs newest first, then undated ones with no awarded_at" do
+        npqs = teacher.qualifications.select(&:npq?)
+
+        aggregate_failures do
+          expect(npqs.first(2).map(&:type)).to eq(%i[NPQEL NPQH])
+          expect(npqs.first(2).map(&:awarded_at)).to eq([Date.new(2023, 2, 27), Date.new(2020, 1, 1)])
+          expect(npqs.last(2).map(&:type)).to contain_exactly(:NPQML, :NPQSL)
+          expect(npqs.last(2).map(&:awarded_at)).to eq([nil, nil])
+        end
+      end
+    end
+  end
+
+  describe "NPQ qualification names" do
+    let(:teacher) { described_class.new({ "trn" => "1111111", "induction" => { "status" => "None" } }) }
+
+    context "when the NPQ API returns an unrecognised npq_type" do
+      before do
+        allow(Sentry).to receive(:capture_message)
+        stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/})
+          .to_return(status: 200, headers: { "Content-Type" => "application/json" },
+                     body: { data: { trn: "1111111",
+                                     qualifications: [{ award_date: "2023-02-27", npq_type: "NPQXYZ" }] } }.to_json)
+      end
+
+      it "names it with a fallback that includes the type" do
+        expect(teacher.qualifications.map(&:name)).to eq(["National Professional Qualification (NPQ) for NPQXYZ"])
+      end
+    end
+  end
+
   describe "passed_induction?" do
     let(:teacher) { described_class.new(api_data) }
 

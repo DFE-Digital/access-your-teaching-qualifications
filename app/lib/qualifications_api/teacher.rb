@@ -292,14 +292,16 @@ module QualificationsApi
     def npq_qualifications
       return [] unless npq_data_available?
 
+      # Newest first, undated last, as rtps_by_id orders routes
       npq_records
-        .sort_by { |npq| npq["award_date"]&.to_date }
+        .sort_by { |npq| award_date(npq).then { |date| [date ? 1 : 0, date] } }
         .reverse
         .map do |npq|
+        type = npq["npq_type"].to_sym
         Qualification.new(
-          awarded_at: npq["award_date"]&.to_date,
-          name: NPQ_QUALIFICATION_NAME[npq["npq_type"].to_sym],
-          type: npq["npq_type"]&.to_sym
+          awarded_at: award_date(npq),
+          name: NPQ_QUALIFICATION_NAME.fetch(type) { "National Professional Qualification (NPQ) for #{type}" },
+          type:
         )
       end
     end
@@ -307,6 +309,12 @@ module QualificationsApi
     # GetQualificationsForTeacher has validated the shape: each award_date is ISO 8601 or blank
     def npq_records
       npq_data.body["data"]["qualifications"]
+    end
+
+    def award_date(npq)
+      return if npq["award_date"].blank? # an undated NPQ still renders, without its date
+
+      npq["award_date"].to_date
     end
 
     def fetch_npq_data
