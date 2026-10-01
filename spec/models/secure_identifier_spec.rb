@@ -37,10 +37,18 @@ RSpec.describe SecureIdentifier do
     it { is_expected.to eq(plain_text) }
 
     context "when given an invalid Base64 string" do
-      let(:encoded_text) { "invalid" }
+      let(:encoded_text) { "1234567" }
 
-      it "returns the passed value" do
-        is_expected.to eq(encoded_text)
+      it "raises an InvalidIdentifier" do
+        expect { subject }.to raise_error(SecureIdentifier::InvalidIdentifier)
+      end
+    end
+
+    context "when given valid Base64 that isn't an encrypted value" do
+      let(:encoded_text) { "1234560" }
+
+      it "raises an InvalidIdentifier" do
+        expect { subject }.to raise_error(SecureIdentifier::InvalidIdentifier)
       end
     end
 

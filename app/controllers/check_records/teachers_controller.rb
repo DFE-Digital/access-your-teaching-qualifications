@@ -9,9 +9,9 @@ module CheckRecords
       @other_qualifications = @teacher.qualifications.reject do |qualification|
         qualification.npq? || qualification.mq?
       end
-    rescue QualificationsApi::TeacherNotFoundError
+    rescue SecureIdentifier::InvalidIdentifier, QualificationsApi::TeacherNotFoundError
       respond_to do |format|
-        format.html { render "not_found", locals: { trn: SecureIdentifier.decode(params[:id]) } } 
+        format.html { render "not_found" }
         format.any { head :not_found }
       end
     end
