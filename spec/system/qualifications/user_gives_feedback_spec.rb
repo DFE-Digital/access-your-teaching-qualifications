@@ -12,6 +12,11 @@ RSpec.feature "Feedback", type: :system do
     then_i_see_the_feedback_form
     when_i_press_send_feedback
     then_i_see_validation_errors
+    when_i_click_back
+    then_i_am_on_my_qualifications_dashboard
+    when_i_click_on_feedback
+    when_i_press_send_feedback
+    then_i_see_validation_errors
     when_i_choose_satisfied
     when_i_fill_in_how_we_can_improve
     when_i_choose_yes
@@ -19,6 +24,12 @@ RSpec.feature "Feedback", type: :system do
     when_i_press_send_feedback
     then_i_see_the_feedback_sent_page
     and_my_feedback_is_saved
+  end
+
+  scenario "User arrives with a return path on another host", test: %i[with_stubbed_auth with_fake_quals_api] do
+    given_the_qualifications_service_is_open
+    when_i_visit_the_feedback_page_returning_to_another_host
+    then_the_back_link_goes_to_the_service_start
   end
 
   private
@@ -30,9 +41,26 @@ RSpec.feature "Feedback", type: :system do
   def and_i_click_on_feedback
     click_on "feedback"
   end
+  alias_method :when_i_click_on_feedback, :and_i_click_on_feedback
+
+  def when_i_click_back
+    click_on "Back"
+  end
+
+  def then_i_am_on_my_qualifications_dashboard
+    expect(page).to have_current_path(qualifications_dashboard_path)
+  end
+
+  def when_i_visit_the_feedback_page_returning_to_another_host
+    visit qualifications_feedbacks_path(return_to: "https://evil.example/phish")
+  end
+
+  def then_the_back_link_goes_to_the_service_start
+    expect(page).to have_link("Back", href: qualifications_root_path)
+  end
 
   def then_i_see_the_feedback_form
-    expect(page).to have_current_path("/qualifications/feedback")
+    expect(page).to have_current_path("/qualifications/feedback", ignore_query: true)
     expect(page).to have_title("Give feedback about Access your Teaching Qualifications")
     expect(page).to have_content("How satisfied are you with the service?")
   end

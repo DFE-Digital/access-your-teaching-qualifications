@@ -1,5 +1,7 @@
 module CheckRecords
   class FeedbacksController < CheckRecordsController
+    include FeedbackReturnPath
+
     def new
       @feedback = Feedback.new
     end
@@ -24,6 +26,10 @@ module CheckRecords
         :contact_permission_given,
         :email
       )
+    end
+
+    def feedback_fallback_path
+      check_records_root_path
     end
 
     def failed_sign_in_message
