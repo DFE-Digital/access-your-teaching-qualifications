@@ -251,6 +251,54 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     end
   end
 
+  describe "rendering an NPQ" do
+    let(:qualification) do
+      Qualification.new(awarded_at: Date.new(2023, 2, 27), name: "National Professional Qualification (NPQ)", type:)
+    end
+    let(:rendered) { render_inline(described_class.new(qualification:)) }
+
+    context "with a recognised type" do
+      let(:type) { :NPQH }
+
+      it "renders the certificate link" do
+        expect(rendered.text).to include("Download NPQH certificate")
+      end
+    end
+
+    context "with an unrecognised type" do
+      let(:type) { :NPQXYZ }
+
+      it "does not render a certificate link" do
+        expect(rendered.text).not_to include("Download")
+      end
+    end
+
+    context "with no award date" do
+      let(:type) { :NPQH }
+      let(:qualification) do
+        Qualification.new(awarded_at: nil, name: "National Professional Qualification (NPQ) for Headship", type:)
+      end
+
+      it "explains why the certificate can't be downloaded instead of linking to it" do
+        aggregate_failures do
+          expect(rendered.text).to include(
+            "You cannot download this certificate because we do not have the date it was awarded"
+          )
+          expect(rendered.css("a")).to be_empty
+          expect(rendered.text).not_to include("Held since")
+        end
+      end
+    end
+
+    context "with an unrecognised type that doesn't start with NPQ" do
+      let(:type) { :LeadingFoo }
+
+      it "does not render a certificate link" do
+        expect(rendered.text).not_to include("Download")
+      end
+    end
+  end
+
   describe "rendering EYTS with failed induction" do
     let(:fake_quals_data) do
       Hashie::Mash.new(

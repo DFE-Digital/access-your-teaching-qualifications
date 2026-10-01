@@ -43,21 +43,21 @@ RSpec.describe QualificationsApi::Client, test: :with_fake_quals_api do
         Rails.cache.clear
       end
 
-      it "makes a request to the correct NPQ endpoint when loading the teacher and caches the result" do
+      it "makes a request to the correct NPQ endpoint when reading the qualifications and caches the result" do
         # load the cache on first request
         client = described_class.new(token: "token")
-        client.teacher(trn: "1234567")
+        client.teacher(trn: "1234567").qualifications
 
         # second request should hit the cache
         client = described_class.new(token: "token")
-        response = client.teacher(trn: "1234567")
+        response = client.teacher(trn: "1234567").qualifications
 
         expect(WebMock).to have_requested(:get, npq_request_domain).once
 
         travel 16.minutes do
           # after 15 minutes we should make the request again and not hit the cache
           client = described_class.new(token: "token")
-          response = client.teacher(trn: "1234567")
+          response = client.teacher(trn: "1234567").qualifications
 
           expect(WebMock).to have_requested(:get, npq_request_domain).twice
         end

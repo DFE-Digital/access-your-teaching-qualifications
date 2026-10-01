@@ -720,6 +720,128 @@ RSpec.describe QualificationsApi::Teacher, type: :model do
     end
   end
 
+  describe "#npq_data_available?" do
+    let(:teacher) { described_class.new(api_data) }
+    let(:api_data) do
+      {
+        "trn" => "1111111",
+        "induction" => { "status" => "None" },
+        "mandatoryQualifications" => [{ "endDate" => "2020-01-01" }]
+      }
+    end
+
+    context "when the NPQ API responds successfully" do
+      it "returns true" do
+        expect(teacher.npq_data_available?).to eq true
+      end
+    end
+
+    context "when the NPQ API returns an error" do
+      before do
+        allow(Sentry).to receive(:capture_exception)
+        stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/}).to_return(status: 500)
+      end
+
+      it "returns false and reports the error to Sentry" do
+        aggregate_failures do
+          expect(teacher.npq_data_available?).to eq false
+          expect(Sentry).to have_received(:capture_exception).with(NpqQualificationsApi::ApiError)
+        end
+      end
+
+      it "leaves out NPQs but keeps the other qualifications" do
+        expect(teacher.qualifications.map(&:name)).to eq(["Mandatory qualification (MQ)"])
+      end
+
+      it "does not report that the teacher has no details" do
+        no_other_details = { "trn" => "1111111", "induction" => { "status" => "None" } }
+
+        expect(described_class.new(no_other_details).no_details?).to eq false
+      end
+    end
+
+    context "when the NPQ API returns a malformed body" do
+      before do
+        allow(Sentry).to receive(:capture_exception)
+        stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/})
+          .to_return(status: 200, headers: { "Content-Type" => "application/json" }, body: "")
+      end
+
+      it "returns false and reports the error to Sentry" do
+        aggregate_failures do
+          expect(teacher.npq_data_available?).to eq false
+          expect(Sentry).to have_received(:capture_exception).with(NpqQualificationsApi::ApiError)
+        end
+      end
+    end
+  end
+
+  describe "NPQ data loading" do
+    let(:npq_url) { %r{/api/teacher-record-service/v1/qualifications/} }
+    let(:teacher) { described_class.new({ "trn" => "1111111", "induction" => { "status" => "None" } }) }
+
+    it "calls the NPQ API only when NPQ data is read, and only once" do
+      aggregate_failures do
+        teacher
+        expect(WebMock).not_to have_requested(:get, npq_url)
+
+        teacher.qualifications
+        teacher.npq_data_available?
+        expect(WebMock).to have_requested(:get, npq_url).once
+      end
+    end
+  end
+
+  describe "undated NPQs" do
+    let(:teacher) { described_class.new({ "trn" => "1111111", "induction" => { "status" => "None" } }) }
+
+    before do
+      stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/})
+        .to_return(status: 200, headers: { "Content-Type" => "application/json" },
+                   body: { data: { trn: "1111111", qualifications: } }.to_json)
+    end
+
+    context "when an NPQ has a nil or blank award_date alongside dated NPQs" do
+      let(:qualifications) do
+        [
+          { award_date: nil, npq_type: "NPQML" },
+          { award_date: "2020-01-01", npq_type: "NPQH" },
+          { award_date: "", npq_type: "NPQSL" },
+          { award_date: "2023-02-27", npq_type: "NPQEL" },
+        ]
+      end
+
+      it "lists dated NPQs newest first, then undated ones with no awarded_at" do
+        npqs = teacher.qualifications.select(&:npq?)
+
+        aggregate_failures do
+          expect(npqs.first(2).map(&:type)).to eq(%i[NPQEL NPQH])
+          expect(npqs.first(2).map(&:awarded_at)).to eq([Date.new(2023, 2, 27), Date.new(2020, 1, 1)])
+          expect(npqs.last(2).map(&:type)).to contain_exactly(:NPQML, :NPQSL)
+          expect(npqs.last(2).map(&:awarded_at)).to eq([nil, nil])
+        end
+      end
+    end
+  end
+
+  describe "NPQ qualification names" do
+    let(:teacher) { described_class.new({ "trn" => "1111111", "induction" => { "status" => "None" } }) }
+
+    context "when the NPQ API returns an unrecognised npq_type" do
+      before do
+        allow(Sentry).to receive(:capture_message)
+        stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/})
+          .to_return(status: 200, headers: { "Content-Type" => "application/json" },
+                     body: { data: { trn: "1111111",
+                                     qualifications: [{ award_date: "2023-02-27", npq_type: "NPQXYZ" }] } }.to_json)
+      end
+
+      it "names it with a fallback that includes the type" do
+        expect(teacher.qualifications.map(&:name)).to eq(["National Professional Qualification (NPQ) for NPQXYZ"])
+      end
+    end
+  end
+
   describe "passed_induction?" do
     let(:teacher) { described_class.new(api_data) }
 

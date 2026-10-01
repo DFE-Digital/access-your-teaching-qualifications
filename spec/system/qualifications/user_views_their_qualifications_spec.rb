@@ -22,7 +22,54 @@ RSpec.feature "User views their qualifications", type: :system do
     and_event_tracking_is_working
   end
 
+  scenario "when the NPQ API is unavailable",
+           test: %i[with_stubbed_auth with_fake_quals_api] do
+    given_the_qualifications_service_is_open
+    and_the_npq_api_is_unavailable
+    and_i_am_signed_in_via_onelogin
+
+    when_i_visit_the_qualifications_page
+    then_i_see_the_npq_error_banner
+    then_i_see_my_induction_details
+    and_i_do_not_see_my_npq_details
+  end
+
+  {
+    "an HTML maintenance page" => { headers: { "Content-Type" => "text/html" }, body: "<html>Maintenance</html>" },
+    "an empty JSON body" => { headers: { "Content-Type" => "application/json" }, body: "" },
+  }.each do |description, response|
+    scenario "when the NPQ API returns #{description}",
+             test: %i[with_stubbed_auth with_fake_quals_api] do
+      given_the_qualifications_service_is_open
+      and_the_npq_api_returns(response)
+      and_i_am_signed_in_via_onelogin
+
+      when_i_visit_the_qualifications_page
+      then_i_see_the_npq_error_banner
+      then_i_see_my_induction_details
+      and_i_do_not_see_my_npq_details
+    end
+  end
+
   private
+
+  def and_the_npq_api_is_unavailable
+    stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/}).to_return(status: 500)
+  end
+
+  def and_the_npq_api_returns(response)
+    stub_request(:get, %r{/api/teacher-record-service/v1/qualifications/}).to_return(status: 200, **response)
+  end
+
+  def then_i_see_the_npq_error_banner
+    expect(page).to have_content(
+      "There was an error and we cannot display your NPQ qualifications. Try again later."
+    )
+  end
+
+  def and_i_do_not_see_my_npq_details
+    expect(page).not_to have_content("National Professional Qualification (NPQ) for Headship")
+  end
 
   def when_i_visit_the_qualifications_page
     visit qualifications_dashboard_path

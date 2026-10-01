@@ -56,6 +56,7 @@ en:
     certificate_unavailable:
       failed_induction: You cannot download this certificate because you failed induction
       failed_induction_other_route: You cannot download this certificate because you failed induction on another route
+      no_award_date: You cannot download this certificate because we do not have the date it was awarded
 
   activemodel:
     errors:

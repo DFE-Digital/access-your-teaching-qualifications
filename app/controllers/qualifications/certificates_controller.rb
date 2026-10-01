@@ -46,7 +46,7 @@ type: "application/pdf", disposition: "attachment"
       when :eyts
         teacher.eyts_awarded?
       when :NPQEL,:NPQLTD,:NPQLT,:NPQH,:NPQML,:NPQLL,:NPQEYL,:NPQSL,:NPQLBC,:NPQSENCO, :NPQLPM
-        teacher.npq_awarded?
+        teacher.npq_awarded? && qualification.awarded_at.present? # the certificate prints the award date
       else
         qualification.awarded_at.present?
       end
