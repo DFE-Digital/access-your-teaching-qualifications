@@ -1,4 +1,6 @@
 class SecureIdentifier
+  class InvalidIdentifier < StandardError; end
+
   SECRET_KEY = Rails.application.credentials.secret_key_base.byteslice(0..31)
   CIPHER = "aes-256-cbc".freeze
 
@@ -21,12 +23,12 @@ class SecureIdentifier
     decipher = OpenSSL::Cipher.new(CIPHER)
     decipher.decrypt
     decipher.key = SECRET_KEY
-  
+
     begin
       decoded = Base64.urlsafe_decode64(value)
       decipher.update(decoded) + decipher.final # rubocop:disable Rails/SaveBang
-    rescue ArgumentError
-      value
+    rescue ArgumentError, OpenSSL::Cipher::CipherError
+      raise InvalidIdentifier, "expected a value produced by SecureIdentifier.encode"
     end
   end
 end
