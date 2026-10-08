@@ -1,5 +1,7 @@
 module Qualifications
   class FeedbacksController < QualificationsInterfaceController
+    include FeedbackReturnPath
+
     skip_before_action :authenticate_user!
     skip_before_action :handle_expired_token!
 
@@ -27,6 +29,10 @@ module Qualifications
         :contact_permission_given,
         :email
       )
+    end
+
+    def feedback_fallback_path
+      qualifications_root_path
     end
   end
 end
