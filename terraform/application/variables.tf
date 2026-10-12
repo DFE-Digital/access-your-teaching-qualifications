@@ -96,6 +96,10 @@ variable "enable_dfe_analytics_federated_auth" {
   default     = false
 }
 
+variable "postgres_version" {
+  default = 16
+}
+
 locals {
   postgres_ssl_mode = var.enable_postgres_ssl ? "require" : "disable"
 

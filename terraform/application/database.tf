@@ -13,7 +13,7 @@ module "postgres" {
   azure_enable_backup_storage    = var.enable_postgres_backup_storage
   azure_sku_name                 = var.postgres_flexible_server_sku
   azure_enable_high_availability = var.postgres_enable_high_availability
-  server_version                 = "16"
+  server_version                 = var.postgres_version
 }
 
 module "redis-cache" {
