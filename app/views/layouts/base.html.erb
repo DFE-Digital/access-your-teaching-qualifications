@@ -35,6 +35,11 @@
       <%= link_to("Back", :back, class: "govuk-back-link") if content_for?(:dynamic_back_link) && request.referrer.present? %>
       <%= yield(:breadcrumbs) if content_for?(:breadcrumbs) %>
       <main class="govuk-main-wrapper" id="main-content" role="main">
+        <% if controller_path.start_with?("qualifications/") && FeatureFlags::FeatureFlag.active?(:aytq_unavailable_banner) %>
+          <%= govuk_notification_banner(title_text: "Important") do %>
+            <p class="govuk-body">Due to a technical issue, AYTQ is currently unavailable. Please try again later.</p>
+          <% end %>
+        <% end %>
         <% if FeatureFlags::FeatureFlag.active?(:downtime_banner) %>
           <%= govuk_notification_banner(title_text: "Important") do %>
             <p class="govuk-body">This service will be unavailable from 9am to 12pm on Monday 21 September 2026 while we make improvements.</p>

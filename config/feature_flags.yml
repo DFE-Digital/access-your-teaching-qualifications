@@ -41,3 +41,6 @@ feature_flags:
   downtime_banner:
     author: Richard Pattinson
     description: Display banner informing users of service downtime
+  aytq_unavailable_banner:
+    author: Access Your Teaching Qualifications team
+    description: Display a technical issue notification on AYTQ pages
