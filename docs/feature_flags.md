@@ -41,6 +41,10 @@ Controls the TRN disambiguation flow in CTR search. When active, if a name + dat
 
 Displays a notification banner on all AYTQ and CTR pages informing users of planned service downtime. This should normally be inactive and only activated during planned downtime windows. The wording is hardcoded in two layouts, `app/views/layouts/base.html.erb` (AYTQ and the Support Interface) and `app/views/layouts/check_records_layout.html.erb` (CTR). Update both before reactivating for a future window.
 
+### `aytq_unavailable_banner`
+
+Displays a technical issue notification on AYTQ pages only. Activate it through the Support Interface when AYTQ is unavailable, then deactivate it when the issue is resolved. The message is in `app/views/layouts/base.html.erb`.
+
 ## Unused flags
 
 These flags are defined in `config/feature_flags.yml` but are not checked anywhere in the application code.
