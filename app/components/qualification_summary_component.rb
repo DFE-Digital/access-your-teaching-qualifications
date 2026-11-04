@@ -16,8 +16,8 @@ class QualificationSummaryComponent < ApplicationComponent
            :qtls?,
            :eyts?,
            :induction_status,
-           :set_membership_active,
-           :set_membership_expired,
+           :qtls_membership_active,
+           :qtls_membership_expired,
            :name,
            :type,
            :qts_and_qtls,
@@ -202,7 +202,7 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def qtls_rows
-    if set_membership_active
+    if qtls_membership_active
       [
         {
           key: {
@@ -214,7 +214,7 @@ class QualificationSummaryComponent < ApplicationComponent
         },
         *certificate_rows
       ]
-    elsif !set_membership_active
+    elsif !qtls_membership_active
       [
         { key: { text: "Status" }, value: { text: "No QTS" } },
       ]
@@ -222,7 +222,7 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def qtls_awarded_at_text
-    if set_membership_active
+    if qtls_membership_active
       "#{awarded_at&.to_fs(:long_uk)} via qualified teacher learning and skills (QTLS) status"
     else
       awarded_at&.to_fs(:long_uk).to_s
@@ -230,7 +230,7 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def render_qts_induction_exemption_message?
-    qtls? && set_membership_active && !failed_induction?
+    qtls? && qtls_membership_active && !failed_induction?
   end
 
   def failed_induction?
@@ -238,6 +238,6 @@ class QualificationSummaryComponent < ApplicationComponent
   end
 
   def render_qtls_warning_message?
-    qtls? && set_membership_expired
+    qtls? && qtls_membership_expired
   end
 end

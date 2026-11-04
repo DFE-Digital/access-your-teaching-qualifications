@@ -19,7 +19,7 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
         type: :induction,
         qtls_only: false,
         qts_and_qtls: false,
-        set_membership_active: false,
+        qtls_membership_active: false,
         induction_status: :passed,
         details: induction
       )
@@ -58,8 +58,8 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
         name: "Induction summary",
         type: :induction,
         induction_status:,
-        set_membership_active: membership_active,
-        set_membership_expired: !membership_active,
+        qtls_membership_active: membership_active,
+        qtls_membership_expired: !membership_active,
       )
     end
 

@@ -48,7 +48,7 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
           "qts" => {
             "holdsFrom" => Time.current,
             "qtls_only" => false,
-            "set_membership_active" => false,
+            "qtls_membership_active" => false,
             "passed_induction" => true
           }
         )
@@ -139,7 +139,7 @@ RSpec.describe CheckRecords::TeacherProfileSummaryComponent, type: :component, t
       it { is_expected.to have_text("QTS via QTLS")}
     end
 
-    context "when teacher does not have QTS is exempt from induction via QTLS and SET membership expires" do
+    context "when teacher does not have QTS is exempt from induction via QTLS and QTLS membership expires" do
       let(:teacher) do
         QualificationsApi::Teacher.new(
           "qts" => {},

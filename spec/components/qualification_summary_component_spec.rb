@@ -59,7 +59,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         induction_status: :passed,
         qtls_only: false,
         qts_and_qtls: false,
-        set_membership_active: false,
+        qtls_membership_active: false,
         type: :qts,
       )
     end
@@ -80,7 +80,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     end
   end
 
-  describe "rendering QTLS with Set membership active" do
+  describe "rendering QTLS with QTLS membership active" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -95,7 +95,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         induction_status: :passed,
         qtls_only: true,
         qts_and_qtls: false,
-        set_membership_active: true,
+        qtls_membership_active: true,
         type: :qts,
       )
     end
@@ -118,7 +118,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     end
   end
 
-  describe "rendering QTLS with Set membership expired" do
+  describe "rendering QTLS with QTLS membership expired" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -133,7 +133,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         induction_status: :passed,
         qtls_only: true,
         qts_and_qtls: false,
-        set_membership_active: false,
+        qtls_membership_active: false,
         type: :qts,
       )
     end
@@ -165,7 +165,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         induction_status: :failed,
         qtls_only: true,
         qts_and_qtls: false,
-        set_membership_active: true,
+        qtls_membership_active: true,
         type: :qts,
       )
     end
@@ -204,7 +204,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         induction_status: :failed,
         qtls_only: false,
         qts_and_qtls: true,
-        set_membership_active: true,
+        qtls_membership_active: true,
         type: :qts,
       )
     end
@@ -235,7 +235,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         induction_status: :failed,
         qtls_only: false,
         qts_and_qtls: true,
-        set_membership_active: true,
+        qtls_membership_active: true,
         type: :qtls,
       )
     end
@@ -324,7 +324,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     end
   end
 
-  describe "rendering QTLS with Set membership active" do
+  describe "rendering QTLS with QTLS membership active" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -338,7 +338,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         name: "Qualified teacher status (QTS)",
         induction_status: :passed,
         qtls_only: true,
-        set_membership_active: true,
+        qtls_membership_active: true,
         type: :qts,
       )
     end
@@ -361,7 +361,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
     end
   end
 
-  describe "rendering QTLS with Set membership expired" do
+  describe "rendering QTLS with QTLS membership expired" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -375,7 +375,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         name: "Qualified teacher status (QTS)",
         induction_status: :passed,
         qtls_only: true,
-        set_membership_active: false,
+        qtls_membership_active: false,
         type: :qts,
       )
     end
@@ -406,7 +406,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         name: "Qualified teacher status (QTS)",
         induction_status: :exempt,
         qtls_only: true,
-        set_membership_active: true,
+        qtls_membership_active: true,
         type: :qts,
       )
     end
@@ -435,8 +435,8 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
         awarded_at: Date.new(2020, 1, 1),
         name: "QTS via qualified teacher learning and skills (QTLS) status",
         induction_status: :exempt,
-        set_membership_active: membership_active,
-        set_membership_expired: !membership_active,
+        qtls_membership_active: membership_active,
+        qtls_membership_expired: !membership_active,
         type: :qtls,
       )
     end
