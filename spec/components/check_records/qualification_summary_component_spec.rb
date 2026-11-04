@@ -64,7 +64,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         name: "Qualified teacher status (QTS)",
         qtls_only: false,
-        set_membership_active: false,
+        qtls_membership_active: false,
         induction_status: :none,
         qts_and_qtls: false,
         type: :qts,
@@ -87,7 +87,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
   end
 
-  describe "rendering QTS via QTLS when teacher doesnt have QTS and has set membership active" do
+  describe "rendering QTS via QTLS when teacher doesnt have QTS and has QTLS membership active" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -99,7 +99,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
-        set_membership_active: true,
+        qtls_membership_active: true,
         induction_status: :exempt,
         qts_and_qtls: false,
         name: "Qualified teacher status (QTS)",
@@ -127,7 +127,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
   end
 
-  describe "rendering QTS via QTLS when teacher doesnt have QTS and has set membership expired" do
+  describe "rendering QTS via QTLS when teacher doesnt have QTS and has QTLS membership expired" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -139,7 +139,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
-        set_membership_active: false,
+        qtls_membership_active: false,
         induction_status: :none,
         qts_and_qtls: false,
         name: "Qualified teacher status (QTS)",
@@ -163,7 +163,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
   end
 
-  describe "rendering QTS via QTLS when teacher has QTS and has set membership active" do
+  describe "rendering QTS via QTLS when teacher has QTS and has QTLS membership active" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -175,7 +175,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: false,
-        set_membership_active: true,
+        qtls_membership_active: true,
         induction_status: :exempt,
         qts_and_qtls: true,
         name: "Qualified teacher status (QTS)",
@@ -204,7 +204,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
   end
 
-  describe "rendering QTS when teacher has QTS and QTLS, no induction, set membership active" do
+  describe "rendering QTS when teacher has QTS and QTLS, no induction, QTLS membership active" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -216,7 +216,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: false,
-        set_membership_active: true,
+        qtls_membership_active: true,
         induction_status: :exempt,
         qts_and_qtls: true,
         name: "Qualified teacher status (QTS)",
@@ -244,7 +244,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
   end
 
-  describe "rendering Induction, teacher has QTS and QTLS, hasnt completed induction, has set membership active" do
+  describe "rendering Induction, teacher has QTS and QTLS, hasnt completed induction, has QTLS membership active" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -256,7 +256,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
-        set_membership_active: true,
+        qtls_membership_active: true,
         induction_status: :exempt,
         qts_and_qtls: true,
         name: "Induction",
@@ -282,7 +282,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
   end
 
-  describe "rendering Induction not passed when teacher has QTLS but not QTS and has set membership active" do
+  describe "rendering Induction not passed when teacher has QTLS but not QTS and has QTLS membership active" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -294,7 +294,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       Qualification.new(
         awarded_at: fake_quals_data.qts.holds_from&.to_date,
         qtls_only: true,
-        set_membership_active: true,
+        qtls_membership_active: true,
         induction_status: :exempt,
         qts_and_qtls: false,
         name: "Induction",
@@ -320,7 +320,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
     end
   end
 
-  describe "rendering Induction when teacher has QTLS but not QTS and has set membership expired" do
+  describe "rendering Induction when teacher has QTLS but not QTS and has QTLS membership expired" do
     let(:fake_quals_data) do
       Hashie::Mash.new(
         quals_data(trn: "1234567")
@@ -332,8 +332,8 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       Qualification.new(
         awarded_at: nil,
         qtls_only: true,
-        set_membership_active: false,
-        set_membership_expired: true,
+        qtls_membership_active: false,
+        qtls_membership_expired: true,
         induction_status: :none,
         qts_and_qtls: false,
         name: "Induction",
@@ -356,6 +356,98 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
 
     it "renders the status description" do
       expect(rows[0].text).to include("No induction")
+    end
+  end
+
+  describe "QTLS membership messages" do
+    subject(:rendered) { render_inline(described_class.new(qualification:)) }
+
+    context "with induction and active QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Induction",
+          type: :induction,
+          induction_status: :exempt,
+          qtls_only: true,
+          qtls_membership_active: true,
+          qtls_membership_expired: false,
+          details: CoercedDetails.new({ status: "Exempt" }),
+        )
+      end
+
+      it "explains the exemption depends on QTLS membership" do
+        aggregate_failures do
+          expect(rendered.text).to include(
+            "an active membership with the Education Training Foundation (ETF)"
+          )
+          expect(rendered.text).to include("They will need to complete induction if their ETF membership expires.")
+        end
+      end
+    end
+
+    context "with induction and expired QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Induction",
+          type: :induction,
+          induction_status: :none,
+          qtls_only: true,
+          qtls_membership_active: false,
+          qtls_membership_expired: true,
+          details: CoercedDetails.new({ status: "None" }),
+        )
+      end
+
+      it "warns the exemption ended with their QTLS membership" do
+        expect(rendered.text).to include(
+          "No longer exempt from induction because their Education Training Foundation (ETF) membership expired"
+        )
+      end
+    end
+
+    context "with QTS only via QTLS and active QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Qualified teacher status (QTS)",
+          type: :qts,
+          awarded_at: Date.new(2020, 1, 1),
+          induction_status: :exempt,
+          qtls_only: true,
+          qtls_membership_active: true,
+          qtls_membership_expired: false,
+        )
+      end
+
+      it "explains QTS and the exemption depend on QTLS membership" do
+        aggregate_failures do
+          expect(rendered.text).to include(
+            "they have QTLS status and an active membership with the Education Training Foundation (ETF)"
+          )
+          expect(rendered.text).to include(
+            "Will no longer hold QTS or be exempt from induction if their ETF membership expires."
+          )
+        end
+      end
+    end
+
+    context "with QTS only via QTLS and expired QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Qualified teacher status (QTS)",
+          type: :qts,
+          awarded_at: Date.new(2020, 1, 1),
+          induction_status: :none,
+          qtls_only: true,
+          qtls_membership_active: false,
+          qtls_membership_expired: true,
+        )
+      end
+
+      it "warns QTS via QTLS ended with their QTLS membership" do
+        expect(rendered.text).to include(
+          "No longer has QTS via QTLS status because their Education Training Foundation (ETF) membership expired"
+        )
+      end
     end
   end
 end

@@ -12,8 +12,8 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
            :induction?,
            :rtps?,
            :qtls_only,
-           :set_membership_active,
-           :set_membership_expired,
+           :qtls_membership_active,
+           :qtls_membership_expired,
            :mq?,
            :name,
            :type,
@@ -139,7 +139,7 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
 
   def qts_rows
     rows = [{ key: { text: "Status" }, value: { text: qts_status_text } }]
-    unless qtls_only && !set_membership_active
+    unless qtls_only && !qtls_membership_active
       rows.append( { key: { text: "Held since" }, value: { text: awarded_at&.to_fs(:long_uk) } } )
     end
     rows
@@ -147,7 +147,7 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
 
   def qts_status_text
     return "Qualified Teacher Status (QTS)" unless qtls_only
-    return "Qualified via qualified teacher learning and skills (QTLS) status" if set_membership_active
+    return "Qualified via qualified teacher learning and skills (QTLS) status" if qtls_membership_active
 
     "No QTS"
   end
@@ -165,21 +165,21 @@ class CheckRecords::QualificationSummaryComponent < ApplicationComponent
   end
 
   def render_induction_exemption_message?
-    induction? && set_membership_active && !failed_induction?
+    induction? && qtls_membership_active && !failed_induction?
   end
 
   def render_qts_induction_exemption_message
-    qts? && qtls_only && set_membership_active && !failed_induction?
+    qts? && qtls_only && qtls_membership_active && !failed_induction?
   end
 
   def render_induction_exemption_warning?
     induction? &&
-      set_membership_expired &&
+      qtls_membership_expired &&
       !failed_induction? &&
       !induction_exempt?
   end
 
   def render_qtls_warning_message?
-    qts? && qtls_only && set_membership_expired
+    qts? && qtls_only && qtls_membership_expired
   end
 end

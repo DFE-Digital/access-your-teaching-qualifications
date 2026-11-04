@@ -75,8 +75,8 @@ module QualificationsApi
 
     def teaching_status
       if qtls_only?
-        return "QTS via QTLS" if set_membership_active?
-        return "No QTS" if set_membership_expired?
+        return "QTS via QTLS" if qtls_membership_active?
+        return "No QTS" if qtls_membership_expired?
       end
       return "QTS and QTLS" if qts_and_qtls?
       return "QTS" if qts_awarded?
@@ -94,11 +94,13 @@ module QualificationsApi
       api_data.qtls_status.present?
     end
 
-    def set_membership_active?
+    # QTLS is held through membership of the Education Training Foundation (ETF),
+    # formerly the Society for Education and Training (SET)
+    def qtls_membership_active?
       api_data.qtls_status == "Active"
     end
 
-    def set_membership_expired?
+    def qtls_membership_expired?
       api_data.qtls_status == "Expired"
     end
 
@@ -161,7 +163,7 @@ module QualificationsApi
     end
 
     def exempt_from_induction_via_qts_via_qtls?
-      set_membership_active?
+      qtls_membership_active?
     end
 
     def no_induction?
@@ -201,11 +203,11 @@ module QualificationsApi
     end
 
     def render_qtls_expired_message?
-      api_data.qtls_status == "Expired" && !qts_awarded?
+      qtls_membership_expired? && !qts_awarded?
     end
 
     def render_has_qtls_message?
-      set_membership_active?
+      qtls_membership_active?
     end
 
     private
@@ -231,8 +233,8 @@ module QualificationsApi
             name: name,
             qtls_only: qtls_only?,
             qts_and_qtls: qts_and_qtls?,
-            set_membership_active: set_membership_active?,
-            set_membership_expired: set_membership_expired?,
+            qtls_membership_active: qtls_membership_active?,
+            qtls_membership_expired: qtls_membership_expired?,
             induction_status: induction_status,
             type: type,
             routes: [route]
@@ -364,8 +366,8 @@ module QualificationsApi
         details: CoercedDetails.new(api_data.induction),
         qtls_only: qtls_only?,
         qts_and_qtls: qts_and_qtls?,
-        set_membership_active: set_membership_active?,
-        set_membership_expired: set_membership_expired?,
+        qtls_membership_active: qtls_membership_active?,
+        qtls_membership_expired: qtls_membership_expired?,
         induction_status: induction_status,
         name: "Induction",
         type: :induction

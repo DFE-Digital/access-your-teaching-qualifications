@@ -21,7 +21,7 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
   end
 
   delegate :induction_status, :no_induction?, :no_restrictions?, :no_qts_or_eyts?, :teaching_status,
-           :set_membership_active?, :set_membership_expired?, :qtls_only?, :qts_and_qtls?,
+           :qtls_membership_active?, :qtls_membership_expired?, :qtls_only?, :qts_and_qtls?,
            :passed_induction?, :failed_induction?, :exempt_from_induction?,
            to: :teacher
 
@@ -46,9 +46,9 @@ class CheckRecords::TeacherProfileSummaryComponent < ApplicationComponent
 
   def teaching_status_tag_colour
     if qtls_only?
-      if set_membership_active?
+      if qtls_membership_active?
         return "green"
-      elsif set_membership_expired?
+      elsif qtls_membership_expired?
         return "blue"
       end
     end
