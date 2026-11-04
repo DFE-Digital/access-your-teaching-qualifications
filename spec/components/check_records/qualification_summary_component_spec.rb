@@ -358,4 +358,96 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       expect(rows[0].text).to include("No induction")
     end
   end
+
+  describe "QTLS membership messages" do
+    subject(:rendered) { render_inline(described_class.new(qualification:)) }
+
+    context "with induction and active QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Induction",
+          type: :induction,
+          induction_status: :exempt,
+          qtls_only: true,
+          set_membership_active: true,
+          set_membership_expired: false,
+          details: CoercedDetails.new({ status: "Exempt" }),
+        )
+      end
+
+      it "explains the exemption depends on QTLS membership" do
+        aggregate_failures do
+          expect(rendered.text).to include(
+            "an active membership with the Society for Education and Training (SET)"
+          )
+          expect(rendered.text).to include("They will need to complete induction if their SET membership expires.")
+        end
+      end
+    end
+
+    context "with induction and expired QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Induction",
+          type: :induction,
+          induction_status: :none,
+          qtls_only: true,
+          set_membership_active: false,
+          set_membership_expired: true,
+          details: CoercedDetails.new({ status: "None" }),
+        )
+      end
+
+      it "warns the exemption ended with their QTLS membership" do
+        expect(rendered.text).to include(
+          "No longer exempt from induction because their Society for Education and Training (SET) membership expired"
+        )
+      end
+    end
+
+    context "with QTS only via QTLS and active QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Qualified teacher status (QTS)",
+          type: :qts,
+          awarded_at: Date.new(2020, 1, 1),
+          induction_status: :exempt,
+          qtls_only: true,
+          set_membership_active: true,
+          set_membership_expired: false,
+        )
+      end
+
+      it "explains QTS and the exemption depend on QTLS membership" do
+        aggregate_failures do
+          expect(rendered.text).to include(
+            "they have QTLS status and an active membership with the Society for Education and Training (SET)"
+          )
+          expect(rendered.text).to include(
+            "Will no longer hold QTS or be exempt from induction if their SET membership expires."
+          )
+        end
+      end
+    end
+
+    context "with QTS only via QTLS and expired QTLS membership" do
+      let(:qualification) do
+        Qualification.new(
+          name: "Qualified teacher status (QTS)",
+          type: :qts,
+          awarded_at: Date.new(2020, 1, 1),
+          induction_status: :none,
+          qtls_only: true,
+          set_membership_active: false,
+          set_membership_expired: true,
+        )
+      end
+
+      it "warns QTS via QTLS ended with their QTLS membership" do
+        expect(rendered.text).to include(
+          "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired"
+        )
+      end
+    end
+  end
 end

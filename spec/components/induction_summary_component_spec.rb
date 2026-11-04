@@ -49,4 +49,42 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
       expect(rendered.css(".govuk-summary-list__key").map(&:text)).not_to include("End date")
     end
   end
+
+  describe "QTLS membership messages" do
+    subject(:rendered) { render_inline(described_class.new(qualification:)) }
+
+    let(:qualification) do
+      Qualification.new(
+        name: "Induction summary",
+        type: :induction,
+        induction_status:,
+        set_membership_active: membership_active,
+        set_membership_expired: !membership_active,
+      )
+    end
+
+    context "when QTLS membership is active" do
+      let(:membership_active) { true }
+      let(:induction_status) { :exempt }
+
+      it "reminds the teacher that the induction exemption depends on QTLS membership" do
+        expect(rendered.text).to include(
+          "You will no longer be exempt from induction if your " \
+          "Society for Education and Training (SET) membership expires"
+        )
+      end
+    end
+
+    context "when QTLS membership has expired" do
+      let(:membership_active) { false }
+      let(:induction_status) { :none }
+
+      it "warns the teacher that the induction exemption ended with their QTLS membership" do
+        expect(rendered.text).to include(
+          "You are no longer exempt from induction because your " \
+          "Society for Education and Training (SET) membership expired"
+        )
+      end
+    end
+  end
 end

@@ -17,12 +17,12 @@
       </h1>
 
       <% if @teacher.render_qtls_expired_message? %>
-        <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired") %>
+        <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their #{t("qtls_membership_body.name")} (#{t("qtls_membership_body.abbreviation")}) membership expired") %>
       <% end %>
 
       <% if @teacher.render_has_qtls_message? %>
         <%= govuk_notification_banner(title_text: "Important") do %>
-          <p>Qualified teacher learning and skills (QTLS) status will expire if <%= link_to("Society for Education and Training (SET)", "https://set.et-foundation.co.uk/your-career/qtls") %> membership is not renewed.</p>
+          <p>Qualified teacher learning and skills (QTLS) status will expire if <%= link_to("#{t("qtls_membership_body.name")} (#{t("qtls_membership_body.abbreviation")})", t("qtls_membership_body.qtls_url")) %> membership is not renewed.</p>
         <% end %>
       <% end %>
 

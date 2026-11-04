@@ -4,11 +4,11 @@
       <% if render_induction_exemption_reminder? %>
           <hr class="govuk-section-break govuk-section-break--visible">
           <p> </p>
-          <p>You will no longer be exempt from induction if your Society for Education and Training (SET) membership expires</p>
+          <p>You will no longer be exempt from induction if your <%= t("qtls_membership_body.name") %> (<%= t("qtls_membership_body.abbreviation") %>) membership expires</p>
       <% elsif render_induction_exemption_warning? %>
           <hr class="govuk-section-break govuk-section-break--visible">
           <p> </p>
-          <%= govuk_warning_text(text: "You are no longer exempt from induction because your Society for Education and Training (SET) membership expired") %>
+          <%= govuk_warning_text(text: "You are no longer exempt from induction because your #{t("qtls_membership_body.name")} (#{t("qtls_membership_body.abbreviation")}) membership expired") %>
       <% end %>
   <% end %>
 <% end %>

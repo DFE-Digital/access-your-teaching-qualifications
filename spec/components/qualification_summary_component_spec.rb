@@ -426,4 +426,41 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       expect(rows[1].text).to include("Download QTS certificate")
     end
   end
+
+  describe "QTS via QTLS membership messages" do
+    subject(:rendered) { render_inline(described_class.new(qualification:)) }
+
+    let(:qualification) do
+      Qualification.new(
+        awarded_at: Date.new(2020, 1, 1),
+        name: "QTS via qualified teacher learning and skills (QTLS) status",
+        induction_status: :exempt,
+        set_membership_active: membership_active,
+        set_membership_expired: !membership_active,
+        type: :qtls,
+      )
+    end
+
+    context "when QTLS membership is active" do
+      let(:membership_active) { true }
+
+      it "reminds the teacher that QTS via QTLS depends on QTLS membership" do
+        expect(rendered.text).to include(
+          "You will no longer have QTS via QTLS status if your " \
+          "Society for Education and Training (SET) membership expires"
+        )
+      end
+    end
+
+    context "when QTLS membership has expired" do
+      let(:membership_active) { false }
+
+      it "warns the teacher that QTS via QTLS ended with their QTLS membership" do
+        expect(rendered.text).to include(
+          "You no longer have QTS via QTLS status because your " \
+          "Society for Education and Training (SET) membership expired"
+        )
+      end
+    end
+  end
 end

@@ -4,20 +4,20 @@
   <%= govuk_summary_list(rows:) %>
     <% if render_induction_exemption_message? %>
       <%= govuk_inset_text do %>
-        <p>Exempt from induction via qualified teacher learning and skills (QTLS) status and an active membership with the <a href="https://set.et-foundation.co.uk/your-career/qtls">Society for Education and Training (SET)</a></p>
+        <p>Exempt from induction via qualified teacher learning and skills (QTLS) status and an active membership with the <a href="<%= t("qtls_membership_body.qtls_url") %>"><%= t("qtls_membership_body.name") %> (<%= t("qtls_membership_body.abbreviation") %>)</a></p>
 
-        <p>They will need to complete induction if their SET membership expires.</p>
+        <p>They will need to complete induction if their <%= t("qtls_membership_body.abbreviation") %> membership expires.</p>
       <% end %>
     <% elsif render_qts_induction_exemption_message %>
       <%= govuk_inset_text do %>
-        <p>Holds QTS and is Exempt from Induction as they have QTLS status and an active membership with the <a href="https://set.et-foundation.co.uk/your-career/qtls">Society for Education and Training (SET)</a></p>
+        <p>Holds QTS and is Exempt from Induction as they have QTLS status and an active membership with the <a href="<%= t("qtls_membership_body.qtls_url") %>"><%= t("qtls_membership_body.name") %> (<%= t("qtls_membership_body.abbreviation") %>)</a></p>
 
-        <p>Will no longer hold QTS or be exempt from induction if their SET membership expires.</p>
+        <p>Will no longer hold QTS or be exempt from induction if their <%= t("qtls_membership_body.abbreviation") %> membership expires.</p>
       <% end %>
     <% elsif render_qtls_warning_message? %>
-      <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired") %>
+      <%= govuk_warning_text(text: "No longer has QTS via QTLS status because their #{t("qtls_membership_body.name")} (#{t("qtls_membership_body.abbreviation")}) membership expired") %>
     <% elsif render_induction_exemption_warning? %>
-      <%= govuk_warning_text(text: "No longer exempt from induction because their Society for Education and Training (SET) membership expired") %>
+      <%= govuk_warning_text(text: "No longer exempt from induction because their #{t("qtls_membership_body.name")} (#{t("qtls_membership_body.abbreviation")}) membership expired") %>
     <% end %>
   </div>
 <% end %>
