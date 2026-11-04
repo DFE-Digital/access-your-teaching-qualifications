@@ -378,9 +378,9 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       it "explains the exemption depends on QTLS membership" do
         aggregate_failures do
           expect(rendered.text).to include(
-            "an active membership with the Society for Education and Training (SET)"
+            "an active membership with the Education Training Foundation (ETF)"
           )
-          expect(rendered.text).to include("They will need to complete induction if their SET membership expires.")
+          expect(rendered.text).to include("They will need to complete induction if their ETF membership expires.")
         end
       end
     end
@@ -400,7 +400,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
 
       it "warns the exemption ended with their QTLS membership" do
         expect(rendered.text).to include(
-          "No longer exempt from induction because their Society for Education and Training (SET) membership expired"
+          "No longer exempt from induction because their Education Training Foundation (ETF) membership expired"
         )
       end
     end
@@ -421,10 +421,10 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
       it "explains QTS and the exemption depend on QTLS membership" do
         aggregate_failures do
           expect(rendered.text).to include(
-            "they have QTLS status and an active membership with the Society for Education and Training (SET)"
+            "they have QTLS status and an active membership with the Education Training Foundation (ETF)"
           )
           expect(rendered.text).to include(
-            "Will no longer hold QTS or be exempt from induction if their SET membership expires."
+            "Will no longer hold QTS or be exempt from induction if their ETF membership expires."
           )
         end
       end
@@ -445,7 +445,7 @@ RSpec.describe CheckRecords::QualificationSummaryComponent, test: :with_fake_qua
 
       it "warns QTS via QTLS ended with their QTLS membership" do
         expect(rendered.text).to include(
-          "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired"
+          "No longer has QTS via QTLS status because their Education Training Foundation (ETF) membership expired"
         )
       end
     end

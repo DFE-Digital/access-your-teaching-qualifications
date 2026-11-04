@@ -447,7 +447,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       it "reminds the teacher that QTS via QTLS depends on QTLS membership" do
         expect(rendered.text).to include(
           "You will no longer have QTS via QTLS status if your " \
-          "Society for Education and Training (SET) membership expires"
+          "Education Training Foundation (ETF) membership expires"
         )
       end
     end
@@ -458,7 +458,7 @@ RSpec.describe QualificationSummaryComponent, test: :with_fake_quals_data, type:
       it "warns the teacher that QTS via QTLS ended with their QTLS membership" do
         expect(rendered.text).to include(
           "You no longer have QTS via QTLS status because your " \
-          "Society for Education and Training (SET) membership expired"
+          "Education Training Foundation (ETF) membership expired"
         )
       end
     end

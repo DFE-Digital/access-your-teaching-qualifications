@@ -94,7 +94,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
 
   def then_i_see_an_expired_qtls_message
     expect(page).to have_content(
-      "No longer has QTS via QTLS status because their Society for Education and Training (SET) membership expired"
+      "No longer has QTS via QTLS status because their Education Training Foundation (ETF) membership expired"
     )
   end
 

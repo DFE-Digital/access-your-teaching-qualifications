@@ -70,7 +70,7 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
       it "reminds the teacher that the induction exemption depends on QTLS membership" do
         expect(rendered.text).to include(
           "You will no longer be exempt from induction if your " \
-          "Society for Education and Training (SET) membership expires"
+          "Education Training Foundation (ETF) membership expires"
         )
       end
     end
@@ -82,7 +82,7 @@ RSpec.describe InductionSummaryComponent, test: :with_fake_quals_data, type: :co
       it "warns the teacher that the induction exemption ended with their QTLS membership" do
         expect(rendered.text).to include(
           "You are no longer exempt from induction because your " \
-          "Society for Education and Training (SET) membership expired"
+          "Education Training Foundation (ETF) membership expired"
         )
       end
     end

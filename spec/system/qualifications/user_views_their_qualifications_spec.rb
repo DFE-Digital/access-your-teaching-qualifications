@@ -117,7 +117,7 @@ RSpec.feature "User views their qualifications", type: :system do
   end
 
   def then_i_see_my_rtps_details
-    expect(page).to have_content("Route to QTLS: QTLS and SET Membership")
+    expect(page).to have_content("Route to QTLS: QTLS and ETF Membership")
     expect(page).to have_content("Status\tHolds")
   end
 
