@@ -203,7 +203,7 @@ module QualificationsApi
     end
 
     def render_qtls_expired_message?
-      api_data.qtls_status == "Expired" && !qts_awarded?
+      qtls_membership_expired? && !qts_awarded?
     end
 
     def render_has_qtls_message?
