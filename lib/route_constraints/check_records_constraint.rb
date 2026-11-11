@@ -5,7 +5,9 @@ module RouteConstraints
       request.host.in?(HostingEnvironment.check_records_domain) ||
         request.host.include?("aytq-review-pr") ||
         request.host.include?("check-a-teachers-record-pr-") ||
-        request.host.include?("check-a-teachers-record-temp")
+        request.host.include?("check-a-teachers-record-temp") ||
+        request.host.include?("check-a-teachers-record-test-temp") ||
+        request.host.include?("check-a-teachers-record-preprod-temp")
     end
   end
 end
