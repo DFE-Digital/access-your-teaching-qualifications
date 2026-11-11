@@ -5,8 +5,8 @@ class Qualification
                 :name,
                 :type,
                 :qtls_only,
-                :set_membership_active,
-                :set_membership_expired,
+                :qtls_membership_active,
+                :qtls_membership_expired,
                 :induction_status,
                 :qts_and_qtls,
                 :routes

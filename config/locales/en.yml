@@ -58,6 +58,12 @@ en:
       failed_induction_other_route: You cannot download this certificate because you failed induction on another route
       no_award_date: You cannot download this certificate because we do not have the date it was awarded
 
+  qtls_membership_body:
+    name: Education Training Foundation
+    abbreviation: ETF
+    qtls_url: https://set.et-foundation.co.uk/your-career/qtls
+    professional_register_url: https://set.et-foundation.co.uk/your-career/professional-status-register
+
   activemodel:
     errors:
       models:

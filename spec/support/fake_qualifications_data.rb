@@ -96,7 +96,7 @@ module FakeQualificationsData
           "routeToProfessionalStatusId": "qtls-route-id-33333",
           "routeToProfessionalStatusType": {
             "routeToProfessionalStatusTypeId": QualificationsApi::Teacher::QTLS_ROUTE_ID,
-            "name": "QTLS and SET Membership",
+            "name": "QTLS and ETF Membership",
             "professionalStatusType": "QualifiedTeacherStatus"
           },
           "status": "Holds",
@@ -116,7 +116,8 @@ module FakeQualificationsData
             "exemptionReasons": [
               {
                 "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
-                "name": "Exempt through QTLS status provided they maintain membership of SET"
+                "name": "Exempt through QTLS status provided they maintain membership of the " \
+                        "Education Training Foundation"
               }
             ]
           }

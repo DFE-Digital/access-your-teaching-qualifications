@@ -28,7 +28,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
           {
             "routeToProfessionalStatusType": {
               "routeToProfessionalStatusTypeId": "be6eaf8c-92dd-4eff-aad3-1c89c4bec18c",
-              "name": "QTLS and SET Membership",
+              "name": "QTLS and ETF Membership",
               "professionalStatusType": "QualifiedTeacherStatus"
             }
           }
@@ -42,7 +42,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
         "exemptionReasons": [
           {
             "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
-            "name": "Exempt through QTLS status provided they maintain membership of The Society of Education and Training"
+            "name": "Exempt through QTLS status provided they maintain membership of the Education Training Foundation"
           }
         ]
       },
@@ -51,7 +51,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
           "routeToProfessionalStatusId": "c4c6e6a8-2390-4129-90f4-e492e2faa1ab",
           "routeToProfessionalStatusType": {
             "routeToProfessionalStatusTypeId": "be6eaf8c-92dd-4eff-aad3-1c89c4bec18c",
-            "name": "QTLS and SET Membership",
+            "name": "QTLS and ETF Membership",
             "professionalStatusType": "QualifiedTeacherStatus"
           },
           "status": "Holds",
@@ -71,7 +71,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
             "exemptionReasons": [
               {
                 "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
-                "name": "Exempt through QTLS status provided they maintain membership of The Society of Education and Training"
+                "name": "Exempt through QTLS status provided they maintain membership of the Education Training Foundation"
               }
             ]
           }

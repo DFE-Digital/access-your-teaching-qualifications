@@ -135,7 +135,7 @@ RSpec.feature "User views their qualifications", type: :system do
 
   def then_i_see_appropriate_warnings
     expect(page).to have_content(
-      "You are no longer exempt from induction because your Society for Education and Training (SET) membership expired"
+      "You are no longer exempt from induction because your Education Training Foundation (ETF) membership expired"
     )
   end
 end

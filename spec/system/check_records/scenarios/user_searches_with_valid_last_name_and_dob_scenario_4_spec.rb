@@ -35,7 +35,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
           {
             "routeToProfessionalStatusType": {
               "routeToProfessionalStatusTypeId": "be6eaf8c-92dd-4eff-aad3-1c89c4bec18c",
-              "name": "QTLS and SET Membership",
+              "name": "QTLS and ETF Membership",
               "professionalStatusType": "QualifiedTeacherStatus"
             }
           }
@@ -49,7 +49,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
         "exemptionReasons": [
           {
             "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
-            "name": "Exempt through QTLS status provided they maintain membership of The Society of Education and Training"
+            "name": "Exempt through QTLS status provided they maintain membership of the Education Training Foundation"
           }
         ]
       },
@@ -82,7 +82,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
           "routeToProfessionalStatusId": "e66e5be2-28d5-4ecb-b245-fc71edc4df38",
           "routeToProfessionalStatusType": {
             "routeToProfessionalStatusTypeId": "be6eaf8c-92dd-4eff-aad3-1c89c4bec18c",
-            "name": "QTLS and SET Membership",
+            "name": "QTLS and ETF Membership",
             "professionalStatusType": "QualifiedTeacherStatus"
           },
           "status": "Holds",
@@ -102,7 +102,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
             "exemptionReasons": [
               {
                 "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
-                "name": "Exempt through QTLS status provided they maintain membership of The Society of Education and Training"
+                "name": "Exempt through QTLS status provided they maintain membership of the Education Training Foundation"
               }
             ]
           }
@@ -185,7 +185,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
   end
 
   def then_i_see_qts_rtps_details
-    expect(page).to have_content("Route to QTLS: QTLS and SET Membership")
+    expect(page).to have_content("Route to QTLS: QTLS and ETF Membership")
     expect(page).to have_content("Route to QTS: Apply for Qualified Teacher Status in England")
   end
 
@@ -195,7 +195,7 @@ RSpec.describe "Check Teacher Records", host: :check_records, type: :system do
   end
 
   def then_i_see_appropriate_warnings
-    expect(page).to have_content("They will need to complete induction if their SET membership expires.")
+    expect(page).to have_content("They will need to complete induction if their ETF membership expires.")
   end
 
   def and_a_search_timestamp_is_displayed

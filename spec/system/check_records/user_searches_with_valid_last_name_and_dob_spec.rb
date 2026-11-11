@@ -132,7 +132,7 @@ RSpec.describe "Teacher search", host: :check_records, type: :system do
   end
 
   def then_i_see_rtps_details
-    expect(page).to have_content("Route to QTLS: QTLS and SET Membership")
+    expect(page).to have_content("Route to QTLS: QTLS and ETF Membership")
     expect(page).to have_content("Result\tHolds")
   end
 

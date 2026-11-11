@@ -10,8 +10,8 @@ class InductionSummaryComponent < ApplicationComponent
            :details,
            :name,
            :qtls_only,
-           :set_membership_active,
-           :set_membership_expired,
+           :qtls_membership_active,
+           :qtls_membership_expired,
            :qts_and_qtls,
            :induction_status,
            to: :qualification
@@ -114,10 +114,10 @@ class InductionSummaryComponent < ApplicationComponent
   end
 
   def render_induction_exemption_reminder?
-    set_membership_active && induction_status != :failed
+    qtls_membership_active && induction_status != :failed
   end
 
   def render_induction_exemption_warning?
-    set_membership_expired && [:exempt, :failed].exclude?(induction_status)
+    qtls_membership_expired && [:exempt, :failed].exclude?(induction_status)
   end
 end

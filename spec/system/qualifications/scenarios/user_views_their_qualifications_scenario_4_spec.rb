@@ -34,7 +34,7 @@ RSpec.feature "User views their qualifications", type: :system do
           {
             "routeToProfessionalStatusType": {
               "routeToProfessionalStatusTypeId": "be6eaf8c-92dd-4eff-aad3-1c89c4bec18c",
-              "name": "QTLS and SET Membership",
+              "name": "QTLS and ETF Membership",
               "professionalStatusType": "QualifiedTeacherStatus"
             }
           }
@@ -48,7 +48,7 @@ RSpec.feature "User views their qualifications", type: :system do
         "exemptionReasons": [
           {
             "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
-            "name": "Exempt through QTLS status provided they maintain membership of The Society of Education and Training"
+            "name": "Exempt through QTLS status provided they maintain membership of the Education Training Foundation"
           }
         ]
       },
@@ -81,7 +81,7 @@ RSpec.feature "User views their qualifications", type: :system do
           "routeToProfessionalStatusId": "e66e5be2-28d5-4ecb-b245-fc71edc4df38",
           "routeToProfessionalStatusType": {
             "routeToProfessionalStatusTypeId": "be6eaf8c-92dd-4eff-aad3-1c89c4bec18c",
-            "name": "QTLS and SET Membership",
+            "name": "QTLS and ETF Membership",
             "professionalStatusType": "QualifiedTeacherStatus"
           },
           "status": "Holds",
@@ -101,7 +101,7 @@ RSpec.feature "User views their qualifications", type: :system do
             "exemptionReasons": [
               {
                 "inductionExemptionReasonId": "35caa6a3-49f2-4a63-bd5a-2ba5fa9dc5db",
-                "name": "Exempt through QTLS status provided they maintain membership of The Society of Education and Training"
+                "name": "Exempt through QTLS status provided they maintain membership of the Education Training Foundation"
               }
             ]
           }

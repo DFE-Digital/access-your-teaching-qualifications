@@ -9,7 +9,7 @@
       <div class="govuk-grid-column-two-thirds-from-desktop">
 
         <% if @teacher.render_qtls_expired_message? %>
-          <%= govuk_warning_text(text: "You no longer have QTS via QTLS status because your Society for Education and Training (SET) membership expired") %>
+          <%= govuk_warning_text(text: "You no longer have QTS via QTLS status because your #{t("qtls_membership_body.name")} (#{t("qtls_membership_body.abbreviation")}) membership expired") %>
         <% end %>
 
         <% unless @teacher.npq_data_available? %>
