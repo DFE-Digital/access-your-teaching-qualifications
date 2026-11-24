@@ -14,6 +14,7 @@ module "postgres" {
   azure_sku_name                 = var.postgres_flexible_server_sku
   azure_enable_high_availability = var.postgres_enable_high_availability
   server_version                 = var.postgres_version
+  use_airbyte                    = var.pg_airbyte_enabled
 }
 
 module "redis-cache" {
