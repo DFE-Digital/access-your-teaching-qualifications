@@ -301,7 +301,7 @@ GEM
       bindata
       faraday (~> 2.0)
       faraday-follow_redirects
-    jwt (2.10.1)
+    jwt (2.10.3)
       base64
     kramdown (2.5.1)
       rexml (>= 3.3.9)
