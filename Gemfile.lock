@@ -119,6 +119,8 @@ GEM
       public_suffix (>= 2.0.2, < 8.0)
     aes_key_wrap (1.1.0)
     amazing_print (1.8.1)
+    anonymous_loader (0.1.5)
+      version_gem (~> 1.1, >= 1.1.17)
     ast (2.4.3)
     attr_required (1.0.2)
     audits1984 (0.1.7)
@@ -126,6 +128,8 @@ GEM
       rinku
       rouge
       turbo-rails
+    auth-sanitizer (0.2.5)
+      version_gem (~> 1.1, >= 1.1.16)
     azure-blob (0.8.0)
       cgi
       rexml
@@ -371,13 +375,16 @@ GEM
       racc (~> 1.4)
     notifications-ruby-client (6.3.0)
       jwt (>= 1.5, < 4)
-    oauth2 (2.0.9)
-      faraday (>= 0.17.3, < 3.0)
-      jwt (>= 1.0, < 3.0)
+    oauth2 (2.1.0)
+      anonymous_loader (~> 0.1, >= 0.1.5)
+      auth-sanitizer (~> 0.2, >= 0.2.5)
+      faraday (>= 0.17.3, < 4.0)
+      jwt (>= 1.0, < 4.0)
+      logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
-      snaky_hash (~> 2.0)
-      version_gem (~> 1.1)
+      snaky_hash (~> 2.0, >= 2.0.9)
+      version_gem (~> 1.1, >= 1.1.17)
     okcomputer (1.19.0)
     omniauth (2.1.2)
       hashie (>= 3.4.6)
@@ -608,9 +615,9 @@ GEM
       rack (~> 2.2, >= 2.2.4)
       rack-protection (= 3.2.0)
       tilt (~> 2.0)
-    snaky_hash (2.0.1)
-      hashie
-      version_gem (~> 1.1, >= 1.1.1)
+    snaky_hash (2.0.9)
+      hashie (>= 0.1.0, < 6)
+      version_gem (~> 1.1, >= 1.1.16)
     solargraph (0.50.0)
       backport (~> 1.2)
       benchmark
@@ -667,7 +674,7 @@ GEM
     validate_url (1.0.15)
       activemodel (>= 3.0.0)
       public_suffix
-    version_gem (1.1.1)
+    version_gem (1.1.17)
     view_component (4.2.0)
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
